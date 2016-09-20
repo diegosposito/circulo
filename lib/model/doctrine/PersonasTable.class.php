@@ -35,7 +35,7 @@ class PersonasTable extends Doctrine_Table
     // Obtener obras sociales
     public static function obtenerProfesionales($estado=NULL)
     {
-        $sql ="SELECT per.idpersona, per.nombre, per.horarios, per.mostrarinfocontacto, per.apellido, per.direccion, per.nrodoc, per.nrolector as matricula, per.email, per.telefono, per.celular, per.ciudad
+        $sql ="SELECT per.idpersona, per.nombre, per.horarios, per.mostrarinfoemail, per.mostrarinfocelular, per.apellido, per.direccion, per.nrodoc, per.nrolector as matricula, per.email, per.telefono, per.celular, per.ciudad
         FROM personas per ";
 
         if($estado !== NULL)
