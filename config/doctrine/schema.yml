@@ -565,14 +565,15 @@ Personas:
     cantgrupofamiliar: { type: integer, primary: false, autoincrement: false, default: '1' }
     titulo: { type: string(100), primary: false, autoincrement: false, default: '' }
     email: { type: string(200), primary: false, notnull: true, default: '' }
+    mostrarinfoemail: { type: boolean, primary: false, notnull: true, default: 0 }
+    celular: { type: string(200), primary: false, notnull: true, default: '' }
+    mostrarinfocelular: { type: boolean, primary: false, notnull: true, default: 0 }  
     telefono: { type: string(200), primary: false, notnull: true, default: '' }
     ciudad: { type: string(200), primary: false, notnull: true, default: '' }
-    celular: { type: string(200), primary: false, notnull: true, default: '' }
     direccion: { type: string(200), primary: false, notnull: true, default: '' }
     tienefoto: { type: boolean, primary: false, notnull: true, default: 0 }  
     activo: { type: boolean, primary: false, notnull: true, default: 1 } 
     socio: { type: boolean, primary: false, notnull: true, default: 1 }   
-    mostrarinfocontacto: { type: boolean, primary: false, notnull: true, default: 0 }  
     nrolector: { type: string(10), primary: false, autoincrement: false, default: '' }
     otrainformacionrelevante: { type: string(2000) }
     horarios: { type: string(2000) }
