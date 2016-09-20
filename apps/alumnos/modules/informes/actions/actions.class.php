@@ -506,11 +506,11 @@ class informesActions extends sfActions
 		    $pdf->SetXY(90,$y);        
 		    $pdf->Cell(60,5,$opersona['matricula'],0,0,'L');        
 		    $pdf->SetXY(105,$y); 
-		    $pdf->Cell(10,5,$opersona['mostrarinfocontacto'] ? $opersona['direccion'].' ('. $opersona['ciudad']. ') ' : ' - ',0,0,'L'); 
+		    $pdf->Cell(10,5, $opersona['direccion'].' ('. $opersona['ciudad']. ') ' , 0,0,'L'); 
 		    $pdf->SetXY(180,$y); 
-		    $pdf->Cell(10,5,$opersona['mostrarinfocontacto'] ? $opersona['telefono'] : ' - ',0,0,'L'); 
+		    $pdf->Cell(10,5,$opersona['mostrarinfocelular'] ? $opersona['celular'] : ' - ',0,0,'L'); 
 		    $pdf->SetXY(215,$y); 
-		    $pdf->Cell(10,5,$opersona['mostrarinfocontacto'] ? $opersona['email'] : ' - ',0,0,'L'); 
+		    $pdf->Cell(10,5,$opersona['mostrarinfoemail'] ? $opersona['email'] : ' - ',0,0,'L'); 
 		    
 		
  			$y = $y + 5;  
