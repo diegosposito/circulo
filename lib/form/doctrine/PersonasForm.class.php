@@ -25,14 +25,16 @@ class PersonasForm extends BasePersonasForm
       $this->widgetSchema->setLabel('direccion', '<p align="left">Dirección:</p>');
       $this->widgetSchema->setLabel('ciudad', '<p align="left">Ciudad:</p>');
       $this->widgetSchema->setLabel('email', '<p align="left">Email:</p>');
-      $this->widgetSchema->setLabel('telefono', '<p align="left">Teléfono:</p>');
       $this->widgetSchema->setLabel('celular', '<p align="left">Celular:</p>');
+      $this->widgetSchema->setLabel('telefono', '<p align="left">Teléfono:</p>');
+      
       $this->widgetSchema->setLabel('nrolector', '<p align="left">Matrícula Nro.:</p>');
      /* $this->widgetSchema['idcobrador'] = new sfWidgetFormSelect(array('choices' => $arregloCobradores));
       $this->widgetSchema->setLabel('idcobrador', '<p align="left">Cobrador:</p>'); */
       $this->widgetSchema->setLabel('horarios', '<p align="left">Horarios:</p>');
       $this->widgetSchema->setLabel('otrainformacionrelevante', '<p align="left">Observaciones:</p>');
-      $this->widgetSchema->setLabel('mostrarinfocontacto', '<p align="left">Muestra Info Contacto?:</p>');
+      $this->widgetSchema->setLabel('mostrarinfoemail', '<p align="left">Muestra Info Email?:</p>');
+      $this->widgetSchema->setLabel('mostrarinfocelular', '<p align="left">Muestra Info Celular?:</p>');
 
       $this->setValidators(array(
         'apellido' => new sfValidatorString(array('required' => true), array('required' => 'El apellido es obligatorio.')),
