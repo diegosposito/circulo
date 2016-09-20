@@ -36,7 +36,8 @@
 	      <td width="40%" align="center" class="hed">Nombre</td>
 	      <td width="20%" align="center" class="hed">Matrícula Nro.</td>
 	      <td width="20%" align="center" class="hed">Nro. de Documento</td>
-	      <td width="20%" align="center" class="hed">Edicion</td>
+	      <td width="10%" align="center" class="hed">Usuario</td>
+	      <td width="10%" align="center" class="hed">Edicion</td>
 	    </tr>
 	  </thead>
 	  <tbody>
@@ -46,6 +47,7 @@
 	    <td width="40%" align="left"><a href="#" title="<?php echo $item['horarios'] ?>"> <?php echo $item['apellido'].', '.$item['nombre'] ?> </a></td>
 	      <td width="20%" align="center"><?php echo $item['nrolector'] ?></td>
 	      <td width="20%" align="center"><?php echo $item['nrodoc'] ?></td>
+	      <td width="10%" align="center"><?php echo $item['username'] ?></td>
 	      <td align="center"><?php echo link_to("Editar", 'personas/edit?idpersona='.$item['idpersona'] ,'class="mhead"'); ?></td>
 	    </tr>
             <?php $i++; ?>
