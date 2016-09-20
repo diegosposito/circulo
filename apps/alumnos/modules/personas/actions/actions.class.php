@@ -1023,10 +1023,15 @@ Sede: '.$oSede.'
       $personas->setNroDoc($nrodoc);
       $personas->setIdtipodoc($request->getPostParameter('personas[idtipodoc]'));
       $personas->setIdusuario($request->getPostParameter('personas[idusuario]'));
-      if ($request->getPostParameter('personas[mostrarinfocontacto]') == 'on') {
-   			$personas->setMostrarinfocontacto(1);
+      if ($request->getPostParameter('personas[mostrarinfoemail]') == 'on') {
+   			$personas->setMostrarinfoemail(1);
       } else {
-   			$personas->setMostrarinfocontacto(0);
+   			$personas->setMostrarinfoemail(0);
+      }
+      if ($request->getPostParameter('personas[mostrarinfocelular]') == 'on') {
+   			$personas->setMostrarinfocelular(1);
+      } else {
+   			$personas->setMostrarinfocelular(0);
       }
       $personas->setIdsexo($request->getPostParameter('personas[idsexo]'));
       $personas->save();
