@@ -35,6 +35,14 @@ class PersonasForm extends BasePersonasForm
       $this->widgetSchema->setLabel('otrainformacionrelevante', '<p align="left">Observaciones:</p>');
       $this->widgetSchema->setLabel('mostrarinfoemail', '<p align="left">Muestra Info Email?:</p>');
       $this->widgetSchema->setLabel('mostrarinfocelular', '<p align="left">Muestra Info Celular?:</p>');
+      $this->widgetSchema->setLabel('imagefile', '<p align="left">Foto Personal:</p>');
+
+      $this->widgetSchema['imagefile'] = new sfWidgetFormInputFile(array(
+                                          'label' => 'Foto Personal',
+                                        ));
+
+      $this->widgetSchema->setLabel('imagefile', '<p align="left">Foto Personal:</p>');
+
 
       $this->setValidators(array(
         'apellido' => new sfValidatorString(array('required' => true), array('required' => 'El apellido es obligatorio.')),
@@ -49,6 +57,7 @@ class PersonasForm extends BasePersonasForm
         'mostrarinfocontacto' => new sfValidatorString(array('required' => false)),
         'horarios' => new sfValidatorString(array('required' => false)),
         'otrainformacionrelevante' => new sfValidatorString(array('max_length' => 2000, 'required' => false)),
+        'imagefile' => new sfValidatorFile(),
         ));
 
       $this->validatorSchema->setOption('allow_extra_fields',true); 
