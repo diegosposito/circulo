@@ -36,6 +36,8 @@ class informesActions extends sfActions
 		// sentencias para retirar encabezados y pie por defecto
 		$pdf->setPrintHeader(false);
 		$pdf->setPrintFooter(false); 
+
+		$entidad='NULL';
  
         // add a page
 		$pdf->AddPage();
@@ -48,31 +50,29 @@ class informesActions extends sfActions
 		$pdf->writeHTML($encabezado, true, false, true, false, '');   
 		
 		$y = 45;
-		$pdf->SetXY(10,$y);
-		$pdf->Cell(15,5,'Entidad',0,0,'C');    
-		$pdf->SetXY(45,$y);
-		$pdf->Cell(120,5,'Autoridad',0,0,'C');    
-		$y = $y + 5;		
-		$contador = 1;
 		
-		$pdf->Line(10,$y,190,$y);
-		
-	    foreach ($oAutoridades as $oautoridad){	
+		foreach ($oAutoridades as $oautoridad){	
+
+	    	if($entidad<>$oautoridad['entidad']){
+                $entidad=$oautoridad['entidad'];
+	    		$pdf->SetXY(10,$y);
+	    		$pdf->SetFont('Times','B',10);
+	    		$pdf->Cell(56,10,$oautoridad['entidad'],0,0,'L'); 
+	    		$pdf->SetFont('Times','',10);   
+				$y = $y + 9;
+				$pdf->Line(10,$y,190,$y);
+				$contador = 1;
+	    	}
 		    			    		
 		   	$pdf->SetXY(0,$y-5);
             $pdf->SetXY(10,$y);
-		    $pdf->Cell(15,5,$oautoridad['entidad'],0,0,'L');
-		    $pdf->SetXY(100,$y);        
-		    $pdf->Cell(120,5,$oautoridad['autoridad'],0,0,'L');        
-		    $pdf->SetXY(130,$y); 
-		    
-		
+		    $pdf->Cell(15,5,$oautoridad['autoridad'],0,0,'L');
+		   
  			$y = $y + 5;  
 		 	// add a page
 			if($y>=265) {
 				$pdf->AddPage();
  
-	
 				$pdf->writeHTML($encabezado, true, false, true, false, '');   
 				$y=60;
 
