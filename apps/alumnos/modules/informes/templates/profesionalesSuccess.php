@@ -11,7 +11,7 @@
       <?php foreach ($profesionaless as $profesionales){ ?>
         
         <?php if (trim($ciudad) <> trim($profesionales->getCiudad())) { ?>
-                 <tr bgcolor="#7DBF0D"><td colspan=6><?php echo $profesionales->getCiudad() ?></td></tr>
+                 <tr bgcolor="#7DBF0D"><td colspan=6><p style="text-align:left;color: #FFFFFF;font-weight:bold;font-size:12px"><?php echo $profesionales->getCiudad() ?></p></td></tr>
                  <tr>
                   <td width="5%" align="center" class="hed">Matrícula</td>
                   <td width="30%" align="center" class="hed">Nombre</td>
