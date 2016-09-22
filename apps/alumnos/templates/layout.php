@@ -142,27 +142,27 @@
 				        <div class="box" style="width=200px"><br></div>	
 				        
 					    <div class="box" style="background-color:#7dbf0d;width=200px">
-								<p style="text-align:left;color:#ffffff;font-weight:bold"><a style="text-align:left;color:#ffffff;font-weight:bold" href="<?php echo url_for('guard/login') ?>">Administrador</a></p>
+								<p style="text-align:center;color:#ffffff;font-weight:bold"><a style="text-align:left;color:#ffffff;font-weight:bold" href="<?php echo url_for('guard/login') ?>">Administrador</a></p>
 						</div>
 						<div class="box" style="width=200px">
 							<a  href="<?php echo url_for('guard/login') ?>"><img alt="Smiley face"  src="<?php echo $sf_request->getRelativeUrlRoot();?>/images/login.png"></a>
 						</div>
                         <div class="box" style="background-color:#7dbf0d;width=200px">
-								<p style="text-align:left;color:#ffffff;font-weight:bold">Circulo Odontologico</p>
+								<p style="text-align:center;color:#ffffff;font-weight:bold">Circulo Odontologico</p>
 						</div>
 						<div class="box" style="width=200px">
 							<img alt="Smiley face" height="100" width="220" src="<?php echo $sf_request->getRelativeUrlRoot();?>/images/cop.jpeg">
 						</div>
                         <br>
 						<div class="box" style="background-color:#7dbf0d;width=200px">
-								<p style="text-align:left;color:#ffffff;font-weight:bold">&nbsp;&nbsp;Saludent</p>
+								<p style="text-align:center;color:#ffffff;font-weight:bold">&nbsp;&nbsp;Saludent</p>
 						</div>
 						<div class="box" style="width=200px">
 							<img alt="Smiley face" height="100" width="220" src="<?php echo $sf_request->getRelativeUrlRoot();?>/images/saludent.jpg">
 						</div>
                         <br>
                         <div class="box" style="background-color:#7dbf0d;width=200px">
-								<p style="text-align:left;color:#ffffff;font-weight:bold">&nbsp;&nbsp;S.O.S.P.E.</p>
+								<p style="text-align:center;color:#ffffff;font-weight:bold">&nbsp;&nbsp;S.O.S.P.E.</p>
 						</div>
 						<br>
                         <div class="box" style="width=200px">
