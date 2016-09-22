@@ -1,5 +1,25 @@
  <style type="text/css">
     p { margin-left:5em; /* Or another measurement unit, like px */ }
+    a.tooltip {outline:none; }
+
+    a.tooltip strong {line-height:30px;}
+    a.tooltip:hover {text-decoration:none;} 
+    a.tooltip span {
+        z-index:10;display:none; padding:14px 20px;
+        margin-top:-30px; margin-left:28px;
+        width:200px; line-height:16px;
+    }
+    a.tooltip:hover span{
+        display:inline; position:absolute; color:#111;
+        border:1px solid #DCA; background:#fffAF0;}
+    .callout {z-index:20;position:absolute;top:30px;border:0;left:-12px;}
+        
+    /*CSS3 extras*/
+    a.tooltip span
+    {
+        border-radius:4px;
+        box-shadow: 5px 5px 8px #CCC;
+    }
   </style>
   <br>
 <h1 align="center" style="color:black;">Profesionales Asociados</h1>
@@ -24,9 +44,10 @@
               } 
         ?>
 
+    
       <tr class="fila_<?php echo $i%2 ; ?>">
         <td width="5%" align="left"><?php echo $profesionales->getNrolector() ?></td>
-        <td width="30%" align="left"><a href="#" title="<?php echo $profesionales->getHorarios() ?>"> <?php echo $profesionales->getApellido().', '.$profesionales->getNombre() ?> </a></td>
+        <td width="30%" align="left"><a href="#" class="tooltip"><?php echo $profesionales->getApellido().', '.$profesionales->getNombre() ?><span><img style="align:center; width: 125px; height: 125px;" src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/<?php echo $profesionales->getImagefile() ?>' /><br><strong><?php echo $profesionales->getApellido().', '.$profesionales->getNombre() ?></strong><br/><?php echo $profesionales->getHorarios() ?></span></a></td>
         <td width="20%" align="left"><?php echo $profesionales->getDireccion()  ?></td>
         <td width="10%" align="left"><?php echo $profesionales->getTelefono()  ?></td>
         <td width="10%" align="left"><?php echo $profesionales->getMostrarinfocelular() ? $profesionales->getCelular() : ' - '  ?></td>
