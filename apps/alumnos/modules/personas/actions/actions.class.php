@@ -1035,8 +1035,27 @@ Sede: '.$oSede.'
       }
       $personas->setIdsexo($request->getPostParameter('personas[idsexo]'));
       $personas->save();
+      
 
-      $this->redirect('personas/edit?idpersona='.$personas->getIdpersona());
+      $folder_path_name = sfConfig::get('app_pathfiles_folder')."/profesionales/".$personas->getIdpersona();
+      
+      if (!is_dir($folder_path_name) && !mkdir($folder_path_name)){
+          die("Error creando carpeta $uploaddir");
+      }
+
+      foreach ($request->getFiles() as $fileName) {
+      	   $targetFolder = sfConfig::get('app_pathfiles_folder')."/profesionales/".$personas->getIdpersona().'/'.$fileName['imagefile']['name'];
+      	  // echo $targetFolder;
+      	   //$fileSize = $fileName['imagefile']['size'];
+		   //$fileType = $fileName['imagefile']['type'];
+		   //$theFileName = $fileName['imagefile']['name'];
+		   move_uploaded_file($fileName['imagefile']['tmp_name'], $targetFolder);
+		 
+		}
+		$personas->setImagefile($fileName['imagefile']['name']);
+		$personas->save();
+		
+        $this->redirect('personas/edit?idpersona='.$personas->getIdpersona());
     }
   }
 
