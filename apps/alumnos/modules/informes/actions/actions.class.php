@@ -191,7 +191,7 @@ class informesActions extends sfActions
 	{
 	    $this->profesionaless = Doctrine_Core::getTable('Personas')
 	      ->createQuery('a')
-	      ->orderBy('a.apellido')
+	      ->orderBy('a.ciudad, a.apellido')
 	      ->execute();
 	}
 	
@@ -482,15 +482,17 @@ class informesActions extends sfActions
 		
 		$y = 45;
 		$pdf->SetXY(10,$y);
-		$pdf->Cell(15,5,'Nombre',0,0,'C');    
-		$pdf->SetXY(45,$y);
-		$pdf->Cell(100,5,'Matrícula',0,0,'C');    
+		$pdf->Cell(15,5,'Matrícula',0,0,'C');    
+		$pdf->SetXY(15,$y);
+		$pdf->Cell(60,5,'Nombre',0,0,'C');    
 		$pdf->SetXY(20,$y);
-		$pdf->Cell(190,5,'Dirección',0,0,'C'); 
+		$pdf->Cell(150,5,'Domicilio',0,0,'C'); 
 		$pdf->SetXY(45,$y);
-		$pdf->Cell(300,5,'Teléfono',0,0,'C'); 
+		$pdf->Cell(260,5,'Teléfono',0,0,'C'); 
+		$pdf->SetXY(50,$y);
+		$pdf->Cell(292,5,'Celular',0,0,'C'); 
 		$pdf->SetXY(45,$y);
-		$pdf->Cell(350,5,'Email',0,0,'C'); 
+		$pdf->Cell(360,5,'Email',0,0,'C'); 
 		$pdf->SetXY(20,$y);
 		$y = $y + 5;		
 		$contador = 1;
@@ -502,14 +504,16 @@ class informesActions extends sfActions
 		    			    		
 		   	$pdf->SetXY(0,$y-5);
             $pdf->SetXY(10,$y);
-		    $pdf->Cell(15,5,$opersona['apellido'].", ".$opersona['nombre'],0,0,'L');
-		    $pdf->SetXY(90,$y);        
-		    $pdf->Cell(60,5,$opersona['matricula'],0,0,'L');        
-		    $pdf->SetXY(105,$y); 
+            $pdf->Cell(60,5,$opersona['matricula'],0,0,'L');    
+		    $pdf->SetXY(25,$y);        
+		    $pdf->Cell(25,5,$opersona['apellido'].", ".$opersona['nombre'],0,0,'L'); 
+		    $pdf->SetXY(85,$y); 
 		    $pdf->Cell(10,5, $opersona['direccion'].' ('. $opersona['ciudad']. ') ' , 0,0,'L'); 
-		    $pdf->SetXY(180,$y); 
+		    $pdf->SetXY(165,$y); 
+		    $pdf->Cell(60,5,$opersona['telefono'],0,0,'L');   
+		    $pdf->SetXY(190,$y);  
 		    $pdf->Cell(10,5,$opersona['mostrarinfocelular'] ? $opersona['celular'] : ' - ',0,0,'L'); 
-		    $pdf->SetXY(215,$y); 
+		    $pdf->SetXY(218,$y); 
 		    $pdf->Cell(10,5,$opersona['mostrarinfoemail'] ? $opersona['email'] : ' - ',0,0,'L'); 
 		    
 		
@@ -522,15 +526,17 @@ class informesActions extends sfActions
 		
 				$y = 45;
 				$pdf->SetXY(10,$y);
-				$pdf->Cell(15,5,'Nombre',0,0,'C');    
-				$pdf->SetXY(45,$y);
-				$pdf->Cell(100,5,'Matrícula',0,0,'C');    
+				$pdf->Cell(15,5,'Matrícula',0,0,'C');    
+				$pdf->SetXY(15,$y);
+				$pdf->Cell(60,5,'Nombre',0,0,'C');    
 				$pdf->SetXY(20,$y);
-				$pdf->Cell(190,5,'Dirección',0,0,'C'); 
+				$pdf->Cell(150,5,'Domicilio',0,0,'C'); 
 				$pdf->SetXY(45,$y);
-				$pdf->Cell(300,5,'Teléfono',0,0,'C'); 
+				$pdf->Cell(260,5,'Teléfono',0,0,'C'); 
+				$pdf->SetXY(50,$y);
+				$pdf->Cell(292,5,'Celular',0,0,'C'); 
 				$pdf->SetXY(45,$y);
-				$pdf->Cell(350,5,'Email',0,0,'C'); 
+				$pdf->Cell(360,5,'Email',0,0,'C'); 
 				$pdf->SetXY(20,$y);
 				$y = $y + 5;		
 				$contador = 1;
