@@ -58,7 +58,7 @@
         <td width="20%" align="left"><?php echo $profesionales->getDireccion()  ?></td>
         <td width="10%" align="left"><?php echo $profesionales->getTelefono()  ?></td>
         <td width="10%" align="left"><?php echo $profesionales->getMostrarinfocelular() ? $profesionales->getCelular() : ' - '  ?></td>
-        <td width="25%" align="left"><?php echo $profesionales->getEmail() ?></td>
+         <td width="25%" align="left"><?php echo $profesionales->getMostrarinfoemail() ? $profesionales->getEmail() : ' - '  ?></td>
       </tr>
       <?php $i++; ?>
       <?php } ?>
