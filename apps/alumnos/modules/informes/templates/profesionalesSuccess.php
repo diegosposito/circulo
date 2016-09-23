@@ -44,10 +44,17 @@
               } 
         ?>
 
-    
       <tr class="fila_<?php echo $i%2 ; ?>">
         <td width="5%" align="left"><?php echo $profesionales->getNrolector() ?></td>
-        <td width="30%" align="left"><a href="#" class="tooltip"><?php echo $profesionales->getApellido().', '.$profesionales->getNombre() ?><span><img style="align:center; width: 125px; height: 125px;" src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/<?php echo $profesionales->getImagefile() ?>' /><br><strong><?php echo $profesionales->getApellido().', '.$profesionales->getNombre() ?></strong><br/><?php echo $profesionales->getHorarios() ?></span></a></td>
+        
+        <?php if (trim($profesionales->getImagefile())<>''){ ?>
+                 
+                   <td width="30%" align="left"><a href="#" class="tooltip"><?php echo $profesionales->getApellido().', '.$profesionales->getNombre() ?><span><img style="align:center; width: 110px; height: 110px;" src='<?php echo $sf_request->getRelativeUrlRoot();?>/files/profesionales/<?php echo $profesionales->getIdpersona();?>/<?php echo $profesionales->getImagefile();?>' /><br><strong><?php echo $profesionales->getApellido().', '.$profesionales->getNombre() ?></strong><br><strong><?php echo "Horarios" ?></strong><br/><?php echo $profesionales->getHorarios() ?></span></a></td>
+
+        <?php } else { ?>
+                   <td width="30%" align="left"><a href="#" class="tooltip"><?php echo $profesionales->getApellido().', '.$profesionales->getNombre() ?><span><br><strong><?php echo $profesionales->getApellido().', '.$profesionales->getNombre() ?></strong><br><strong><?php echo "Horarios" ?></strong><br/><?php echo $profesionales->getHorarios() ?></span></a></td>
+        <?php } ?>
+        
         <td width="20%" align="left"><?php echo $profesionales->getDireccion()  ?></td>
         <td width="10%" align="left"><?php echo $profesionales->getTelefono()  ?></td>
         <td width="10%" align="left"><?php echo $profesionales->getMostrarinfocelular() ? $profesionales->getCelular() : ' - '  ?></td>
