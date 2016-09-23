@@ -57,7 +57,7 @@ class PersonasForm extends BasePersonasForm
         'mostrarinfocontacto' => new sfValidatorString(array('required' => false)),
         'horarios' => new sfValidatorString(array('required' => false)),
         'otrainformacionrelevante' => new sfValidatorString(array('max_length' => 2000, 'required' => false)),
-        'imagefile' => new sfValidatorFile(),
+        'imagefile' => new sfValidatorFile(array('required' => false)),
         ));
 
       $this->validatorSchema->setOption('allow_extra_fields',true); 
