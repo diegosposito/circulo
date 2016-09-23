@@ -4,7 +4,7 @@
   <br>
 <h1 align="center" style="color:black;">Listado de Obras Sociales</h1>
 
- <a href="<?php echo url_for('informes/obrassocialespdf') ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/printer.png' align='center' size='20' /></a>
+ <a target="_blank" href="<?php echo url_for('informes/obrassocialespdf') ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/printer.png' align='center' size='20' /></a>
 <table cellspacing="0" class="stats">
     <thead>
       <tr>
