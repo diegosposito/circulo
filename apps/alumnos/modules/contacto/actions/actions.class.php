@@ -14,6 +14,7 @@ class contactoActions extends sfActions
   {
     $this->contactos = Doctrine_Core::getTable('Contacto')
       ->createQuery('a')
+      ->orderBy('a.created_at DESC limit 100')
       ->execute();
   }
 
@@ -73,7 +74,7 @@ class contactoActions extends sfActions
     {
       $contacto = $form->save();
 
-      $this->redirect('contacto/edit?idcontacto='.$contacto->getIdcontacto());
+      $this->redirect('contacto/show?idcontacto='.$contacto->getIdcontacto());
     }
   }
 }

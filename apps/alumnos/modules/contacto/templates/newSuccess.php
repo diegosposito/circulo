@@ -8,7 +8,8 @@ table {
 
 }
 </style>
-<p style="font-weight: bold;"> Institucionales -> Como contactarnos </font> </p> 
+<br>
+<p style="color:#7dbf0d;font-weight: bold;"><font size="5px">Institucionales</font><font size="3px"> ->Como contactarnos</font></p> 
 <br>
 <h1 style="color:black;text-align:center">Por favor llene el formulario para enviarnos su consulta o comentario.</h1>
 <br>

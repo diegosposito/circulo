@@ -9,10 +9,6 @@
     <tfoot>
       <tr>
         <td colspan="2">
-          &nbsp;<a href="<?php echo url_for('contacto/index') ?>">Volver al listado</a>
-          <?php if (!$form->getObject()->isNew()): ?>
-            &nbsp;<?php echo link_to('Delete', 'contacto/delete?idcontacto='.$form->getObject()->getIdcontacto(), array('method' => 'delete', 'confirm' => 'Are you sure?')) ?>
-          <?php endif; ?>
           <input type="submit" value="Enviar" />
         </td>
       </tr>

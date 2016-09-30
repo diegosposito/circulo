@@ -1,44 +1,32 @@
-<h1>Contactos List</h1>
+ <style type="text/css">
+    p { margin-left:5em; /* Or another measurement unit, like px */ }
+  </style>
+  <br>
+<h1 align="center" style="color:#7dbf0d;">Eventos de Contacto</h1>
+<table width=100% cellspacing="0" class="stats">
+    <thead>
+      <tr>
+        <td width="35%" align="center" class="hed">Persona</td>
+        <td width="30%" align="center" class="hed">Empresa</td>
+        <td width="10%" align="center" class="hed">Telefono</td>
+        <td width="20%" align="center" class="hed">Email</td>
+        <td width="5%" align="center" class="hed">Ver</td>
+      </tr>
+    </thead>
+    <tbody>
+      <?php $i=0; ?>
+      <?php foreach ($contactos as $contacto){ ?>
+      <tr class="fila_<?php echo $i%2 ; ?>">
+        <td width="35%" align="left"><a href="#" title="<?php echo $contacto->getComentario() ?>"> <?php echo $contacto->getApellido().", ".$contacto->getNombre() ?> </a></td>
+        <td width="30%"><?php echo $contacto->getEmpresa() ?></td>
+        <td width="10%"><?php echo $contacto->getTelefono() ?></td>
+        <td width="20%"><?php echo $contacto->getEmail() ?></td>
+        <td align="center"><?php echo link_to("Ver", 'contacto/show?idcontacto='.$contacto->getIdcontacto() ,'class="mhead"'); ?></td>
+      </tr>
+      <?php $i++; ?>
+      <?php } ?>
 
-<table>
-  <thead>
-    <tr>
-      <th>Idcontacto</th>
-      <th>Nombre</th>
-      <th>Apellido</th>
-      <th>Empresa</th>
-      <th>Telefono</th>
-      <th>Direccion</th>
-      <th>Localidad</th>
-      <th>Pais</th>
-      <th>Email</th>
-      <th>Comentario</th>
-      <th>Created at</th>
-      <th>Updated at</th>
-      <th>Created by</th>
-      <th>Updated by</th>
-    </tr>
-  </thead>
-  <tbody>
-    <?php foreach ($contactos as $contacto): ?>
-    <tr>
-      <td><a href="<?php echo url_for('contacto/show?idcontacto='.$contacto->getIdcontacto()) ?>"><?php echo $contacto->getIdcontacto() ?></a></td>
-      <td><?php echo $contacto->getNombre() ?></td>
-      <td><?php echo $contacto->getApellido() ?></td>
-      <td><?php echo $contacto->getEmpresa() ?></td>
-      <td><?php echo $contacto->getTelefono() ?></td>
-      <td><?php echo $contacto->getDireccion() ?></td>
-      <td><?php echo $contacto->getLocalidad() ?></td>
-      <td><?php echo $contacto->getPais() ?></td>
-      <td><?php echo $contacto->getEmail() ?></td>
-      <td><?php echo $contacto->getComentario() ?></td>
-      <td><?php echo $contacto->getCreatedAt() ?></td>
-      <td><?php echo $contacto->getUpdatedAt() ?></td>
-      <td><?php echo $contacto->getCreatedBy() ?></td>
-      <td><?php echo $contacto->getUpdatedBy() ?></td>
-    </tr>
-    <?php endforeach; ?>
-  </tbody>
-</table>
-
-  <a href="<?php echo url_for('contacto/new') ?>">New</a>
+      <br>
+  
+    </tbody>
+  </table>
