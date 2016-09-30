@@ -925,42 +925,21 @@ CondicionesMesas:
     idcondicion: { type: integer, primary: true, autoincrement: true }
     condicion: { type: string(50), primary: false, notnull: true, default: '' } 
 
-Contactos:
+Contacto:
   actAs: 
     Timestampable: ~ 
     fzblameable: ~
   columns:
     idcontacto: { type: integer, primary: true, autoincrement: true }
-    idpersona:  { type: integer, primary: false, autoincrement: false }
-    idciudade:  { type: integer, primary: false, autoincrement: false }
-    callee:     { type: string(100), primary: false, autoincrement: false }
-    numeroe:    { type: string(50), primary: false, autoincrement: false }
-    barrioe:    { type: string(50), primary: false, autoincrement: false }
-    edificioe:  { type: string(50), primary: false, autoincrement: false }
-    pisoe:      { type: string(50), primary: false, autoincrement: false }
-    deptoe:     { type: string(50), primary: false, autoincrement: false }
-    idciudadt:  { type: integer, primary: false, autoincrement: false }
-    callet:     { type: string(100), primary: false, autoincrement: false }
-    numerot:    { type: string(50), primary: false, autoincrement: false }
-    barriot:    { type: string(50), primary: false, autoincrement: false }
-    edificiot:  { type: string(50), primary: false, autoincrement: false }
-    pisot:      { type: string(50), primary: false, autoincrement: false }
-    deptot:     { type: string(50), primary: false, autoincrement: false }
-    telefonofijocar:  { type: string(50), primary: false, autoincrement: false }
-    telefonofijonum:  { type: string(50), primary: false, autoincrement: false }
-    celularcar:  { type: string(50), primary: false, autoincrement: false }
-    celularnum:  { type: string(50), primary: false, autoincrement: false }
+    nombre:     { type: string(100), primary: false, autoincrement: false }
+    apellido:   { type: string(100), primary: false, autoincrement: false }
+    empresa:    { type: string(100), primary: false, autoincrement: false }
+    telefono:   { type: string(100), primary: false, autoincrement: false }
+    direccion:  { type: string(150), primary: false, autoincrement: false }
+    localidad:  { type: string(100), primary: false, autoincrement: false }
+    pais:       { type: string(100), primary: false, autoincrement: false }
     email:  { type: string(100), primary: false, autoincrement: false }
-    email1:  { type: string(100), primary: false, autoincrement: false }
-  relations:
-    Personas: 
-      local: idpersona
-      foreign: idpersona
-      foreignAlias: Personas
-    Ciudades: 
-      local: idciudade
-      foreign: idciudad
-      foreignAlias: Ciudades   
+    comentario: { type: string(2000) }
    
 Correlatividades:
   actAs: 
