@@ -434,7 +434,16 @@ autoridades:
     module:               autoridades
     prefix_path:          /autoridades
     column:               idautoridad
-    with_wildcard_routes: true    
+    with_wildcard_routes: true   
+
+contacto:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                Contacto
+    module:               contacto
+    prefix_path:          /contacto
+    column:               idcontacto
+    with_wildcard_routes: true      
 
 cargo_autoridades:
   class: sfDoctrineRouteCollection
