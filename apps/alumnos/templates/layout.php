@@ -95,7 +95,7 @@
 					<div class="dd">
 						<ul>
 							<li><a title="Ubicacion" href="<?php echo url_for('ingreso/ubicacion') ?>"><span class="sep-left"></span>Ubicación</a></li>
-							<li><a title="Concacto" href="<?php echo url_for('ingreso/contacto') ?>"><span class="sep-left"></span>Contacto</a></li>
+							<li><a title="Concacto" href="<?php echo url_for('contacto/new') ?>"><span class="sep-left"></span>Contacto</a></li>
 						</ul>
 					</div>
 				</li>
@@ -117,7 +117,7 @@
 			</div>
 			<!-- ЕND Content  -->
 			<!-- Sidebar -->
-			<?php if ($autenticated){ ?>
+			<?php if ($autenticated && $sf_user->getGuardUser()->getIsSuperAdmin()){ ?>
 					<div id="sidebar">
 						<div class="box">
 							<h2>Gestión General</h2>
@@ -132,6 +132,7 @@
 								<?php echo '<li>'.link_to('Autoridades', 'autoridades').'</li>' ; ?>
 								<?php echo '<li>'.link_to('Entidades', 'cargoautoridades/index').'</li>' ; ?>
 								<?php echo '<li>'.link_to('Gestión Contenido', 'personas/new').'</li>' ; ?>
+								<?php echo '<li>'.link_to('Gestión Contacto', 'contacto').'</li>' ; ?>
 								<?php echo '<li>'.link_to('Salir', 'sf_guard_signout').'</li>' ; ?>
 							</ul>
 						</div>
@@ -169,6 +170,13 @@
 							<img alt="Smiley face" height="100" width="220" src="<?php echo $sf_request->getRelativeUrlRoot();?>/images/sospe logo.gif">
 						</div>
                         <br>
+
+                        <?php if ($autenticated && !$sf_user->getGuardUser()->getIsSuperAdmin()){ ?>
+                        	<div class="box" style="background-color:#7dbf0d;width=200px">
+								<p style="text-align:center;color:#000000;font-weight:bold"><?php echo link_to('Salir', 'sf_guard_signout') ?></p>
+						</div>
+                        <br>
+                        <?php } ?>
 					
 					</div>	 
 			<?php } ?>	
