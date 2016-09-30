@@ -37,7 +37,8 @@
 	      <td width="20%" align="center" class="hed">Matrícula Nro.</td>
 	      <td width="20%" align="center" class="hed">Nro. de Documento</td>
 	      <td width="10%" align="center" class="hed">Usuario</td>
-	      <td width="10%" align="center" class="hed">Edicion</td>
+	      <td width="5%" align="center" class="hed">Edicion</td>
+	      <td width="5%" align="center" class="hed">Eliminar</td>
 	    </tr>
 	  </thead>
 	  <tbody>
@@ -49,6 +50,7 @@
 	      <td width="20%" align="center"><?php echo $item['nrodoc'] ?></td>
 	      <td width="10%" align="center"><?php echo $item['username'] ?></td>
 	      <td align="center"><?php echo link_to("Editar", 'personas/edit?idpersona='.$item['idpersona'] ,'class="mhead"'); ?></td>
+	       <td align="center"><?php echo link_to('Eliminar', 'personas/delete?idpersona='.$item['idpersona'], array('method' => 'delete', 'confirm' => 'Estas seguro de borrar el Profesional?')) ?>
 	    </tr>
             <?php $i++; ?>
 	    <?php } ?>
