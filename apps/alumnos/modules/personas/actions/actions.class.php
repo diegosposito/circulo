@@ -715,9 +715,10 @@ Sede: '.$oSede.'
 
   public function executeIndex(sfWebRequest $request)
   {
-    $this->personass = Doctrine_Core::getTable('Personas')
+    /*$this->personass = Doctrine_Core::getTable('Personas')
       ->createQuery('a')
-      ->execute();
+      ->execute();*/
+      $this->redirect('personas/buscar');
   }
 
   public function executeNew(sfWebRequest $request)
