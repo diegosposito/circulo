@@ -191,7 +191,7 @@ class informesActions extends sfActions
 	{
 	    $this->profesionaless = Doctrine_Core::getTable('Personas')
 	      ->createQuery('a')
-	      ->orderBy('a.ciudad, a.apellido')
+	      ->orderBy('a.ciudad, a.apellido, a.nombre')
 	      ->execute();
 	}
 	
@@ -465,7 +465,7 @@ class informesActions extends sfActions
 		$pdf = new PDF();
 
     	// settings
-		$pdf->SetFont("Times", "", 10);
+		$pdf->SetFont("Times", "", 11);
 		// sentencias para retirar encabezados y pie por defecto
 		$pdf->setPrintHeader(false);
 		$pdf->setPrintFooter(false); 
@@ -498,9 +498,20 @@ class informesActions extends sfActions
 		$contador = 1;
 		
 		$pdf->Line(10,$y,280,$y);
-
+		$ciudad = "|";
 
 	    foreach ($oPersonas as $opersona){	
+
+	    	if($ciudad<>$opersona['ciudad']){
+	    		$pdf->SetFont('Times','B',12); 
+	    		$y = $y + 5;  
+	    		$pdf->SetXY(0,$y-5);
+                $pdf->SetXY(10,$y);
+                $pdf->Cell(60,5,$opersona['ciudad'],0,0,'L'); 
+                $ciudad=$opersona['ciudad'];  
+                $y = $y + 5;  
+                $pdf->SetFont('Times','',11); 
+	    	}
 		    			    		
 		   	$pdf->SetXY(0,$y-5);
             $pdf->SetXY(10,$y);
@@ -508,7 +519,7 @@ class informesActions extends sfActions
 		    $pdf->SetXY(25,$y);        
 		    $pdf->Cell(25,5,$opersona['apellido'].", ".$opersona['nombre'],0,0,'L'); 
 		    $pdf->SetXY(85,$y); 
-		    $pdf->Cell(10,5, $opersona['direccion'].' ('. $opersona['ciudad']. ') ' , 0,0,'L'); 
+		    $pdf->Cell(10,5, $opersona['direccion'], 0,0,'L'); 
 		    $pdf->SetXY(165,$y); 
 		    $pdf->Cell(60,5,$opersona['telefono'],0,0,'L');   
 		    $pdf->SetXY(190,$y);  
