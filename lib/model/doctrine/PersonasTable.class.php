@@ -41,7 +41,7 @@ class PersonasTable extends Doctrine_Table
         if($estado !== NULL)
             $sql .=  " WHERE per.activo = ".$estado." "; 
 
-        $sql .= " ORDER BY per.apellido;";
+        $sql .= " ORDER BY per.ciudad,per.apellido, per.nombre;";
         
         $q = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($sql);
 
