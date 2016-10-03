@@ -11,7 +11,15 @@
 class contactoActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
-  {
+  { 
+    // Redirige al inicio si no tiene acceso
+    if ($this->getUser()->getGuardUser()) {
+       if (!$this->getUser()->getGuardUser()->getIsSuperAdmin())
+        $this->redirect('ingreso');
+    } else {
+       $this->redirect('ingreso');
+    }
+
     $this->contactos = Doctrine_Core::getTable('Contacto')
       ->createQuery('a')
       ->orderBy('a.created_at DESC limit 100')
@@ -42,6 +50,14 @@ class contactoActions extends sfActions
 
   public function executeEdit(sfWebRequest $request)
   {
+    // Redirige al inicio si no tiene acceso
+    if ($this->getUser()->getGuardUser()) {
+       if (!$this->getUser()->getGuardUser()->getIsSuperAdmin())
+        $this->redirect('ingreso');
+    } else {
+       $this->redirect('ingreso');
+    }
+     
     $this->forward404Unless($contacto = Doctrine_Core::getTable('Contacto')->find(array($request->getParameter('idcontacto'))), sprintf('Object contacto does not exist (%s).', $request->getParameter('idcontacto')));
     $this->form = new ContactoForm($contacto);
   }
@@ -59,6 +75,15 @@ class contactoActions extends sfActions
 
   public function executeDelete(sfWebRequest $request)
   {
+    // Redirige al inicio si no tiene acceso
+    if ($this->getUser()->getGuardUser()) {
+       if (!$this->getUser()->getGuardUser()->getIsSuperAdmin())
+        $this->redirect('ingreso');
+    } else {
+       $this->redirect('ingreso');
+    }
+     
+
     $request->checkCSRFProtection();
 
     $this->forward404Unless($contacto = Doctrine_Core::getTable('Contacto')->find(array($request->getParameter('idcontacto'))), sprintf('Object contacto does not exist (%s).', $request->getParameter('idcontacto')));
