@@ -11,6 +11,7 @@
         <td width="10%" align="center" class="hed">Telefono</td>
         <td width="20%" align="center" class="hed">Email</td>
         <td width="5%" align="center" class="hed">Ver</td>
+        <td width="5%" align="center" class="hed">Eliminar</td>
       </tr>
     </thead>
     <tbody>
@@ -22,6 +23,7 @@
         <td width="10%"><?php echo $contacto->getTelefono() ?></td>
         <td width="20%"><?php echo $contacto->getEmail() ?></td>
         <td align="center"><?php echo link_to("Ver", 'contacto/show?idcontacto='.$contacto->getIdcontacto() ,'class="mhead"'); ?></td>
+        <td align="center"><?php echo link_to('Eliminar', 'contacto/delete?idcontacto='.$contacto->getIdcontacto(), array('method' => 'delete', 'confirm' => 'Estas seguro de eliminar el comentario?')) ?></td>
       </tr>
       <?php $i++; ?>
       <?php } ?>
@@ -30,3 +32,5 @@
   
     </tbody>
   </table>
+
+  
