@@ -188,7 +188,7 @@
 			<!-- END Featured Products -->			
 			<!-- Footer  -->
 			<div id="footer">
-				<div id="footer-top"></div>
+				<!--<div id="footer-top"></div>
 				<div id="footer-middle">
 					<div class="col styles">
 						<h3>Quienes somos?</h3>
@@ -213,9 +213,9 @@
 						</form>
 					</div>
 					<div class="cl"></div>
-				</div>
+				</div> -->
 				<div id="footer-bottom">
-					<p>&copy;Copyright  Círculo Odontológico. Diseñado por <a href="#">C.del U.</a></p>
+					<p style="color:#7dbf0d;font-size:12px;">&copy;Copyright&nbsp&nbsp&nbsp<b>Círculo Odontológico.</b></p>
 				</div>
 			</div>
 			<!-- END Footer -->
