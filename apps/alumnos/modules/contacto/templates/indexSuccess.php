@@ -2,7 +2,7 @@
     p { margin-left:5em; /* Or another measurement unit, like px */ }
   </style>
   <br>
-<h1 align="center" style="color:#7dbf0d;">Eventos de Contacto</h1>
+<h1 align="center" style="color:black;">Eventos de Contacto</h1>
 <table width=100% cellspacing="0" class="stats">
     <thead>
       <tr>
