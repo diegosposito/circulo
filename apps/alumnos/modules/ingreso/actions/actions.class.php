@@ -12,7 +12,11 @@ class ingresoActions extends sfActions
 {		
   public function executeIndex(sfWebRequest $request)
   {
-	
+      $this->noticiass = Doctrine_Core::getTable('Noticia')
+      ->createQuery('n')
+      ->where('n.visible')
+      ->orderBy('n.idorden')
+      ->execute();	
   } 
 
   public function executeHistoria(sfWebRequest $request)
