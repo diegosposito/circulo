@@ -15,18 +15,30 @@ class NoticiaForm extends BaseNoticiaForm
   	  unset( $this['created_at'], $this['updated_at'], $this['created_by'], $this['updated_by'] );
      
       // Se define los labels
-	  $this->widgetSchema->setLabel('titulo', '<p align="left">Título:</p>');
- 	  $this->widgetSchema->setLabel('descripcion', '<p align="left">Noticia:</p>');
+	    $this->widgetSchema->setLabel('titulo', '<p align="left">Título:</p>');
+ 	    $this->widgetSchema->setLabel('descripcion', '<p align="left">Noticia:</p>');
       $this->widgetSchema->setLabel('copete', '<p align="left">Copete:</p>');
- 	  $this->widgetSchema->setLabel('idtiponoticia', '<p align="left">Categoría de Noticia:</p>');
+ 	    $this->widgetSchema->setLabel('idtiponoticia', '<p align="left">Categoría de Noticia:</p>');
       $this->widgetSchema->setLabel('visible', '<p align="left">Visible:</p>');
       $this->widgetSchema->setLabel('idorden', '<p align="left">Orden:</p>');
       $this->widgetSchema->setLabel('imagefile', '<p align="left">Imágen:</p>');
 
+     
+
       $arregloCategorias = array('1' => 'General', '2' => 'Para Profesional');
+
       $this->widgetSchema['imagefile'] = new sfWidgetFormInputFile(array(
                                                'label' => 'Imagen de Noticia',
                                              ));
+
+      $this->widgetSchema['descripcion'] = new sfWidgetFormTextareaTinyMCE(
+        array(
+          'config' => sfConfig::get('app_tiny_mce_simple')
+        )
+      );
+
+      $this->widgetSchema['titulo'] = new sfWidgetFormInputText(array(), array("style"=>'width: 365px;'));
+
      
       $this->widgetSchema->setLabel('imagefile', '<p align="left">Imagen de Noticia:</p>');
     
