@@ -1,11 +1,7 @@
-<div class="post">
-					<h2>CIRCULO ODONTOLOGICO Concepción del Uruguay</h2>
-					<p><strong>Fundado el 03/12/1979</strong> en la ciudad de Concepción del Uruguay, Provincia de Entre Ríos.<strong> Todos los presentes involucrados atestiguan el acontencimiento..</strong> Bienvenidos al sitio web online. </p>
-					<p><strong>Circulo Odontogócio Concepcion del Uruguay.</strong> En la ciudad de Concepción del Uruguay, Provincia de Entre Ríos, a los 3 días del mes de Diciembre de 1999 y siendo las 19 y 1/2 horas, los Doctores en Odontología y Dentistas al margen anotados reunidos en la casa del Dr. Víctor F. Perez y con la conformidad de los Dres. Perez Sosa, exteriorizando un anhelo colectivo dentro de la profesión de constituir una asociación de sus colegas con los objetivos más elevados en bien de los intereses morales, intelectuales y materiales de la profesión común, resolvieron constituir dicha asociación. A moción de la Dra. Lopez designó Presidente Provisional al Dr. Perez y Secretario al Dr. Miguel Gonzalez. Acto continuo el Dr. Perez presenta la moción, que fue aceptada, de que este centro llevara el nombre de 'Círculo Odontológico Concepción del Uruguay'...“</p>
-</div>
-
-<div class="post">
-					<h2>Bienvenido al nuevo sitio WEB Online</h2>
-					<img src="/images/1.jpg" alt="Silver half transparent with blue lights computer case" />
-					<p><strong>Bienvenido al nuevo sitio web Online.</strong> En la ciudad de Concepción del Uruguay, Provincia de Entre Ríos, a los 3 días del mes de Diciembre de 1999 y siendo las 19 y 1/2 horas, los Doctores en Odontología y Dentistas al margen anotados reunidos en la casa del Dr. Víctor F. Perez y con la conformidad de los Dres. Perez Sosa, exteriorizando un anhelo colectivo dentro de la profesión de constituir una asociación de sus colegas con los objetivos más elevados en bien de los intereses morales, intelectuales y materiales de la profesión común, resolvieron constituir dicha asociación. A moción de la Dra. Lopez designó Presidente Provisional al Dr. Perez y Secretario al Dr. Miguel Gonzalez. Acto continuo el Dr. Perez presenta la moción, que fue aceptada, de que este centro llevara el nombre de 'Círculo Odontológico Concepción del Uruguay'...“</p>
-</div>
+ <?php foreach ($noticiass as $noticias){ ?>
+ 	<div class="post">
+						<h2><?php echo $noticias->getTitulo(); ?></h2>
+						<p><?php echo html_entity_decode($noticias->getDescripcion()); ?></p>
+						
+	</div>
+<?php } ?>
