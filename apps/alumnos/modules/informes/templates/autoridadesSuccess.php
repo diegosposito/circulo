@@ -5,7 +5,7 @@
   <h1 style="color:#7dbf0d;font-size:24px">Institucionales </h1>
   <h2 style="color:#7dbf0d;font-size:20px">Autoridades del Círculo Odontológico de C. del Uruguay </h2>
 
-<h3 style="font-size:16px">NÓMINA DE LAS AUTORIDADES ELECTAS ASAMBLEA GENERAL ORDINARIA</h3>
+<h3 style="font-size:16px">Nómina de las autoridades electas Asamblea General Ordinaria</h3>
  <a target="_blank" href="<?php echo url_for('informes/autoridadespdf') ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/printer.png' align='center' size='20' /></a>
  <br>
  <?php $idcargoautoridad = 0; ?>
