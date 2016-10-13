@@ -22,7 +22,7 @@
     }
   </style>
   <br>
-<h1 align="center" style="color:black;">Profesionales Asociados</h1>
+<h1 align="center" style="color:#7dbf0d;font-size:24px;">Profesionales Asociados</h1>
 
  <a target="_blank" href="<?php echo url_for('informes/profesionalespdf') ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/printer.png' align='center' size='20' /></a>
 <table cellspacing="0" class="stats">
