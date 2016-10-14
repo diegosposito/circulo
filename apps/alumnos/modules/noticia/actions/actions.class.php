@@ -80,7 +80,7 @@ class noticiaActions extends sfActions
         $noticia->setVisible(0);
       }
      
-      $folder_path_name = sfConfig::get('app_pathfiles_folder')."/noticias/".$noticia->getId();
+      $folder_path_name = sfConfig::get('app_pathfiles_folder')."/../images";
       
       if (!is_dir($folder_path_name) && !mkdir($folder_path_name)){
           die("Error creando carpeta $uploaddir");
@@ -88,7 +88,7 @@ class noticiaActions extends sfActions
       
       $hasfile =false;
       foreach ($request->getFiles() as $fileName) {
-           $targetFolder = sfConfig::get('app_pathfiles_folder')."/noticias/".$noticia->getId().'/'.$fileName['imagefile']['name'];
+           $targetFolder = sfConfig::get('app_pathfiles_folder')."/../images".'/'.$fileName['imagefile']['name'];
            move_uploaded_file($fileName['imagefile']['tmp_name'], $targetFolder);
            $hasfile = true;
      
