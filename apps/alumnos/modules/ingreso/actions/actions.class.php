@@ -12,9 +12,16 @@ class ingresoActions extends sfActions
 {		
   public function executeIndex(sfWebRequest $request)
   {
-      $this->noticiass = Doctrine_Core::getTable('Noticia')
+    // Por defecto se muestra las noticias generales    
+    $tiponoticia=1; 
+    
+    if (sfContext::getInstance()->getUser()->isAuthenticated()) 
+       $tiponoticia=2;
+
+    $this->noticiass = Doctrine_Core::getTable('Noticia')
       ->createQuery('n')
       ->where('n.visible')
+      ->andWhere('n.idtiponoticia = ?', $tiponoticia)
       ->orderBy('n.idorden')
       ->execute();	
   } 
