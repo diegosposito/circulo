@@ -131,7 +131,7 @@
 								<?php echo '<li>'.link_to('Obras Sociales', 'obrassociales/index').'</li>' ; ?>
 								<?php echo '<li>'.link_to('Autoridades', 'autoridades').'</li>' ; ?>
 								<?php echo '<li>'.link_to('Entidades', 'cargoautoridades/index').'</li>' ; ?>
-								<?php echo '<li>'.link_to('Gestión Contenido', 'noticia/new').'</li>' ; ?>
+								<?php echo '<li>'.link_to('Gestión Contenido', 'noticia/index').'</li>' ; ?>
 								<?php echo '<li>'.link_to('Gestión Contacto', 'contacto').'</li>' ; ?>
 								<?php echo '<li>'.link_to('Salir', 'sf_guard_signout').'</li>' ; ?>
 							</ul>
