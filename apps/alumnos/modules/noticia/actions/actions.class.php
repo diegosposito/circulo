@@ -14,6 +14,7 @@ class noticiaActions extends sfActions
   {
     $this->noticias = Doctrine_Core::getTable('Noticia')
       ->createQuery('a')
+      ->orderBy('a.id DESC')
       ->execute();
   }
 
