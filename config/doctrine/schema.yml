@@ -29,7 +29,31 @@ CargoAutoridades:
   columns: 
     idcargoautoridad: { type: integer, primary: true, autoincrement: true }
     nombre: { type: string(200) }
-    orden: { type: integer, notnull: true, default: '0' } 
+    orden: { type: integer, notnull: true, default: '0' }
+
+Practicas:
+  actAs: 
+    Timestampable: ~ 
+    fzblameable: ~
+  columns: 
+    idpractica: { type: integer, primary: true, autoincrement: true }
+    nombre: { type: string(200) }
+    importe: { type: string(25) }
+    idtipopractica: { type: integer, notnull: true, default: '0' } 
+  relations:
+    TipoPracticas: 
+      local: idtipopractica
+      foreign: idtipopractica
+      foreignAlias: TipoPracticas       
+
+TipoPracticas:
+  actAs: 
+    Timestampable: ~ 
+    fzblameable: ~
+  columns: 
+    idtipopractica: { type: integer, primary: true, autoincrement: true }
+    nombre: { type: string(200) }
+    orden: { type: integer, notnull: true, default: '0' }     
 
 Carreras:
   actAs: 
