@@ -16,7 +16,7 @@
 Libre Elección del Profesional – Más de 80 Odontólogos </p>
 
 <br>
-<div align="center"><p><strong>NOMENCLADOR Y COSEGUROS</strong></p></div>
+<p><strong>NOMENCLADOR Y COSEGUROS</strong></p>
 
  <br>
  <?php $idtipopractica = 0; ?>
