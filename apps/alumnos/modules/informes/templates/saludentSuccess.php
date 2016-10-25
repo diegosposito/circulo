@@ -35,15 +35,16 @@ Libre Elección del Profesional – Más de 80 Odontólogos </p>
               <table align="center" width="550px" cellspacing="0" class="stats">
               <thead>
                <tr>
-               <td colspan="2" width="100%" align="left" class="hed"><?php echo $practicas->getTipoPracticas()->getNombre(); ?></td>
+               <td colspan="3" width="100%" align="left" class="hed"><?php echo $practicas->getTipoPracticas()->getNombre(); ?></td>
                </tr>
               </thead>
               <tbody>
   <?php } //endif ?>       
              
              <tr class="fila_<?php echo $i%2 ; ?>">
-             <td width="20%" align="center">&nbsp;</td>
+             <td width="10%" align="center"><?php echo $practicas->getCodigo() ?></td>
              <td width="80%" align="left"><?php echo $practicas->getNombre() ?></td>
+             <td width="10%" align="center"><?php echo $practicas->getImporte() ?></td>
             </tr>
             <?php $i++; ?>
 
