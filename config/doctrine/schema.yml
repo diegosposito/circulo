@@ -38,6 +38,7 @@ Practicas:
   columns: 
     idpractica: { type: integer, primary: true, autoincrement: true }
     nombre: { type: string(200) }
+    codigo: { type: integer, primary: false, default: '0', notnull: true }
     importe: { type: string(25) }
     idtipopractica: { type: integer, notnull: true, default: '0' } 
   relations:
