@@ -72,6 +72,11 @@ class practicasActions extends sfActions
     if ($form->isValid())
     {
       $practicas = $form->save();
+      $practicas->setImporte($request->getPostParameter('practicas[importe]'));
+      $practicas->setCodigo($request->getPostParameter('practicas[codigo]'));
+    
+
+      $practicas->save();
 
       $this->redirect('practicas/edit?idpractica='.$practicas->getIdpractica());
     }
