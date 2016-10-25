@@ -12,8 +12,8 @@
 <table cellspacing="0" class="stats">
     <thead>
       <tr>
-        <td width="40%" align="center" class="hed">Tipo</td>
-        <td width="10%" align="center" class="hed">Fecha</td>
+        <td width="70%" align="center" class="hed">Tipo</td>
+        <td width="10%" align="center" class="hed">Orden</td>
         <td width="10%" align="center" class="hed">Edicion</td>
       </tr>
     </thead>
@@ -21,8 +21,8 @@
       <?php $i=0; ?>
       <?php foreach ($tipo_practicass as $tipo_practicas){ ?>
       <tr class="fila_<?php echo $i%2 ; ?>">
-        <td width="40%" align="center"><?php echo $tipo_practicas->getNombre() ?></td>
-        <td width="10%"><?php echo date("d/m/Y", strtotime($tipo_practicas->getCreatedAt())) ?></td>
+        <td width="70%" align="center"><?php echo $tipo_practicas->getNombre() ?></td>
+        <td width="10%" align="center"><?php echo $tipo_practicas->getOrden() ?></td>
         <td align="center"><?php echo link_to("Editar", 'tipopracticas/edit?idtipopractica='.$tipo_practicas->getIdtipopractica() ,'class="mhead"'); ?></td>
       </tr>
       <?php $i++; ?>
