@@ -88,7 +88,16 @@ class informesActions extends sfActions
 				
 		return sfView::NONE;
   } 
-		
+  
+  public function executeSaludent(sfWebRequest $request)
+	{
+	    $this->practicass = Doctrine_Core::getTable('Practicas')
+	      ->createQuery('p')
+	      ->innerJoin('p.TipoPracticas tp')
+	      ->orderBy('tp.orden, p.codigo')
+	      ->execute();
+	}
+
 	public function executeObtenerpersonalnodocente(sfWebRequest $request)
 	{
 		$this->autoridades = Doctrine_Core::getTable('DesignacionesEmpleados')->obtenerAutoridades();
