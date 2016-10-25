@@ -86,7 +86,7 @@
 						<ul>
 							<li><a title="Autoridades" href="<?php echo url_for('informes/autoridades') ?>"><span class="sep-left"></span>Autoridades</a></li>
 							<li><a title="Historia" href="<?php echo url_for('ingreso/historia') ?>"><span class="sep-left"></span>Historia</a></li>
-							<li><a title="Saludent" href="<?php echo url_for('ingreso/saludent') ?>"><span class="sep-left"></span>Saludent</a></li>
+							<li><a title="Saludent" href="<?php echo url_for('informes/saludent') ?>"><span class="sep-left"></span>Saludent</a></li>
 						</ul>
 					</div>
 				</li>
