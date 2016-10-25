@@ -5,18 +5,18 @@
   <h1 style="color:#7dbf0d;font-size:24px">Institucionales </h1>
   <h2 style="color:#7dbf0d;font-size:20px">Saludent </h2>
 
-<h3 style="font-size:16px">Nómina de las autoridades electas Asamblea General Ordinaria</h3>
-
-<img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/printer.png' align='center' size='20' />
-
-<p>Es el nombre del Sistema de prestaciones de Salud odontológico solidario, creado por el Círculo Odontológico de Concepción del Uruguay. Tiene como característica fundamental poner a disposición del afiliado la libre elección del profesional odontólogo en el ámbito del Departamento Uruguay.
-Podrán ser beneficiarios del sistema en carácter de asociados aquellos que opten voluntariamente ingresar completando la solicitud de admisión correspondiente.
+<div align="center"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/saludent.jpg' width='200px' height='150px' />
+</div>
+<p>Es el nombre del Sistema de prestaciones de Salud odontológico solidario, creado por el <strong>Círculo Odontológico de Concepción del Uruguay.</strong>
+<br>Tiene como característica fundamental poner a disposición del afiliado la libre elección del profesional odontólogo en el ámbito del Departamento Uruguay.
+<br>Podrán ser beneficiarios del sistema en carácter de asociados aquellos que opten voluntariamente ingresar completando la solicitud de admisión correspondiente.
 </p> 
+<br>
 <p>Cuota Mensual por Persona $ 150,00 – 3 meses de carencia – 2 prácticas por mes – No se paga Plus
 Libre Elección del Profesional – Más de 80 Odontólogos </p>
 
-
-<p>NOMENCLADOR Y COSEGUROS</p>
+<br>
+<div align="center"><p><strong>NOMENCLADOR Y COSEGUROS</strong></p></div>
 
  <br>
  <?php $idtipopractica = 0; ?>
