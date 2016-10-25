@@ -133,6 +133,8 @@
 								<?php echo '<li>'.link_to('Entidades', 'cargoautoridades/index').'</li>' ; ?>
 								<?php echo '<li>'.link_to('Gestión Contenido', 'noticia/index').'</li>' ; ?>
 								<?php echo '<li>'.link_to('Gestión Contacto', 'contacto').'</li>' ; ?>
+								<?php echo '<li>'.link_to('Saludent Tipo Prácticas', 'tipopracticas/index').'</li>' ; ?>
+								<?php echo '<li>'.link_to('Saludent Prácticas', 'practicas/index').'</li>' ; ?>
 								<?php echo '<li>'.link_to('Salir', 'sf_guard_signout').'</li>' ; ?>
 							</ul>
 						</div>
