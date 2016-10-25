@@ -52,3 +52,8 @@ Libre Elección del Profesional – Más de 80 Odontólogos </p>
        
   </tbody>
   </table>  
+<br>
+ <p>Urgencias Odontológicas: 15 629 345 </p>
+ <br>
+ <p><strong>Promoción: Pago de cuotas, Tratamientos de Prótesis, Implantes, Ortodoncia, Ortopedia
+ con Tarjeta de Crédito hasta 12 cuotas </strong></p>
