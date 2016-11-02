@@ -54,7 +54,15 @@ TipoPracticas:
   columns: 
     idtipopractica: { type: integer, primary: true, autoincrement: true }
     nombre: { type: string(200) }
-    orden: { type: integer, notnull: true, default: '0' }     
+    orden: { type: integer, notnull: true, default: '0' }  
+
+SaludentContenido:
+  actAs: 
+    Timestampable: ~ 
+    fzblameable: ~
+  columns: 
+    id: { type: integer, primary: true, autoincrement: true }
+    descripcion: { type: string(2000) }       
 
 Carreras:
   actAs: 
