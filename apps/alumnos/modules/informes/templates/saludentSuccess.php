@@ -9,12 +9,11 @@
 </div>
 <p>Es el nombre del Sistema de prestaciones de Salud odontológico solidario, creado por el <strong>Círculo Odontológico de Concepción del Uruguay.</strong>
 <br>Tiene como característica fundamental poner a disposición del afiliado la libre elección del profesional odontólogo en el ámbito del Departamento Uruguay.
-<br>Podrán ser beneficiarios del sistema en carácter de asociados aquellos que opten voluntariamente ingresar completando la solicitud de admisión correspondiente.
-</p> 
 <br>
-<p>Cuota Mensual por Persona $ 150,00 – 3 meses de carencia – 2 prácticas por mes – No se paga Plus
-Libre Elección del Profesional – Más de 80 Odontólogos </p>
-
+<?php foreach ($contenidoss as $contenido){ 
+echo html_entity_decode($contenido->getDescripcion()); 
+}
+?>
 <br>
 <p><strong>NOMENCLADOR Y COSEGUROS</strong></p>
 
