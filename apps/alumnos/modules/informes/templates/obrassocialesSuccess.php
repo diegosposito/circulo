@@ -4,7 +4,7 @@
   <br>
 <h1 align="center" style="color:#7dbf0d;font-size:24px;">Listado de Obras Sociales</h1>
 
- <a target="_blank" href="<?php echo url_for('informes/obrassocialespdf') ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/printer.png' align='center' size='20' /></a>
+ <a target="_blank" href="<?php echo url_for('informes/obrassocialespdf') ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/printer.png' aling='center' size='20' /></a>
 <table cellspacing="0" class="stats">
     <thead>
       <tr>
@@ -26,33 +26,33 @@
         <td width="5%">
         <?php 
           if ($obras_sociales->getGeneral()){ ?>
-            <img width="20px" height="20px" src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/accept_ico.png' align='center' size='20' />
+            <img width="20px" height="20px" src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/accept_ico.png' aling='center' size='20' />
           <?php } else { ?>
-             <img width="20px" height="20px"  src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/wrong_ico.png' align='center' size='20' />
+             <img width="20px" height="20px"  src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/wrong_ico.png' aling='center' size='20' />
           <?php } ?> 
         </td>
         <td width="5%">
         <?php 
           if ($obras_sociales->getProtesis()){ ?>
-            <img width="20px" height="20px" src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/accept_ico.png' align='center' size='20' />
+            <img width="20px" height="20px" src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/accept_ico.png' aling='center' size='20' />
           <?php } else { ?>
-             <img width="20px" height="20px"  src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/wrong_ico.png' align='center' size='20' />
+             <img width="20px" height="20px"  src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/wrong_ico.png' aling='center' size='20' />
           <?php } ?> 
         </td>
         <td width="5%">
         <?php 
           if ($obras_sociales->getOrtodoncia()){ ?>
-            <img width="20px" height="20px" src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/accept_ico.png' align='center' size='20' />
+            <img width="20px" height="20px" src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/accept_ico.png' aling='center' size='20' />
           <?php } else { ?>
-             <img width="20px" height="20px"  src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/wrong_ico.png' align='center' size='20' />
+             <img width="20px" height="20px"  src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/wrong_ico.png' aling='center' size='20' />
           <?php } ?> 
         </td>
         <td width="5%">
         <?php 
           if ($obras_sociales->getImplantes()){ ?>
-            <img width="20px" height="20px" src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/accept_ico.png' align='center' size='20' />
+            <img width="20px" height="20px" src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/accept_ico.png' aling='center' size='20' />
           <?php } else { ?>
-             <img width="20px" height="20px"  src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/wrong_ico.png' align='center' size='20' />
+             <img width="20px" height="20px"  src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/wrong_ico.png' aling='center' size='20' />
           <?php } ?> 
         </td>
         <td align="center"><?php echo link_to("Visualizar", 'informes/mostrararchivos?idobrasocial='.$obras_sociales->getIdobrasocial() ,'class="mhead"'); ?></td>
