@@ -83,7 +83,7 @@
               if ($i>1){ ?>
                 <tr class="fila_<?php echo $i%2 ; ?>">
                   <td width="60%" align="center"><?php echo $fichero[0] ?></td>
-                  <td width="20%" align="center"> <a href="<?php echo $sf_request->getRelativeUrlRoot();?>/files/<?php echo $fichero[1] ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/<?php echo $fichero[2] ?>' align='center' size='24' height='24' width="24" /></a></td>
+                  <td width="20%" align="center"> <a target="_blank" href="<?php echo $sf_request->getRelativeUrlRoot();?>/files/<?php echo $fichero[1] ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/<?php echo $fichero[2] ?>' align='center' size='24' height='24' width="24" /></a></td>
                   <?php if ($sf_user->getGuardUser()->getIsSuperAdmin()) { ?>
                       <td width="20%" align="center"> <a onclick='deleteFile("<?php echo $fichero[1];?>")'><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/delete.png' align='center' size='24' height='24' width="24" /></a></td>
                   <?php } ?>                
