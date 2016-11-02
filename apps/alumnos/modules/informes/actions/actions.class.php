@@ -96,6 +96,10 @@ class informesActions extends sfActions
 	      ->innerJoin('p.TipoPracticas tp')
 	      ->orderBy('tp.orden, p.codigo')
 	      ->execute();
+
+	    $this->contenidoss = Doctrine_Core::getTable('SaludentContenido')
+      ->createQuery('a')
+      ->execute();  
 	}
 
 	public function executeObtenerpersonalnodocente(sfWebRequest $request)
