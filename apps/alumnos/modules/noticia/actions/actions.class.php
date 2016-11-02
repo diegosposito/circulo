@@ -97,7 +97,7 @@ class noticiaActions extends sfActions
       if ($hasfile && trim($fileName['imagefile']['name'])<>'') 
          $noticia->setImagefile($fileName['imagefile']['name']);
       
-      $noticia->setIdorden($noticia->getId());
+      $noticia->setIdorden($request->getPostParameter('noticia[idorden]'));
       $noticia->save();
 
       $this->redirect('noticia/edit?id='.$noticia->getId());
