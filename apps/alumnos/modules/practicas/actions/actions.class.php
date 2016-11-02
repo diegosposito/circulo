@@ -15,12 +15,24 @@ class practicasActions extends sfActions
     $this->practicass = Doctrine_Core::getTable('Practicas')
       ->createQuery('a')
       ->execute();
+
+    $this->tipo_practicass = Doctrine_Core::getTable('TipoPracticas')
+      ->createQuery('a')
+      ->execute();
+
+    $this->contenidoss = Doctrine_Core::getTable('SaludentContenido')
+      ->createQuery('a')
+      ->execute();
   }
 
   public function executeShow(sfWebRequest $request)
   {
     $this->practicas = Doctrine_Core::getTable('Practicas')->find(array($request->getParameter('idpractica')));
     $this->forward404Unless($this->practicas);
+  }
+
+  public function executeContenido(sfWebRequest $request)
+  {
   }
 
   public function executeNew(sfWebRequest $request)
