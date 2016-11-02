@@ -9,7 +9,7 @@
     <tfoot>
       <tr>
         <td colspan="2">
-          &nbsp;<a href="<?php echo url_for('tipopracticas/index') ?>">Volver al listado</a>
+          &nbsp;<a href="<?php echo url_for('practicas/index') ?>">Volver al listado</a>
           <input type="submit" value="Guardar" />
         </td>
       </tr>
