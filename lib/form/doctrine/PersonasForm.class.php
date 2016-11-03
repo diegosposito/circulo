@@ -41,6 +41,12 @@ class PersonasForm extends BasePersonasForm
                                           'label' => 'Foto Personal',
                                         ));
 
+      $this->widgetSchema['horarios'] = new sfWidgetFormTextareaTinyMCE(
+             array(
+              'config' => sfConfig::get('app_tiny_mce_simple')
+             )
+      );
+
       $this->widgetSchema->setLabel('imagefile', '<p align="left">Foto Personal:</p>');
 
 
