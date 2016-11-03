@@ -7,7 +7,7 @@
     a.tooltip span {
         z-index:10;display:none; padding:14px 20px;
         margin-top:-30px; margin-left:28px;
-        width:200px; line-height:16px;
+        width:250px; line-height:16px;
     }
     a.tooltip:hover span{
         display:inline; position:absolute; color:#111;
@@ -49,10 +49,11 @@
         
         <?php if (trim($profesionales->getImagefile())<>''){ ?>
                  
-                   <td width="30%" align="left"><a href="#" class="tooltip"><?php echo $profesionales->getApellido().', '.$profesionales->getNombre() ?><span><img style="align:center; width: 110px; height: 110px;" src='<?php echo $sf_request->getRelativeUrlRoot();?>/files/profesionales/<?php echo $profesionales->getIdpersona();?>/<?php echo $profesionales->getImagefile();?>' /><br><strong><?php echo $profesionales->getApellido().', '.$profesionales->getNombre() ?></strong><br><strong><?php echo "Horarios" ?></strong><br/><?php echo $profesionales->getHorarios() ?></span></a></td>
+                   <td width="30%" align="left"><a href="#" class="tooltip"><div style="align: left;"><?php echo $profesionales->getApellido().', '.$profesionales->getNombre() ?><span><img style="align:center; width: 110px; height: 110px;" src='<?php echo $sf_request->getRelativeUrlRoot();?>/files/profesionales/<?php echo $profesionales->getIdpersona();?>/<?php echo $profesionales->getImagefile();?>' /><br><strong><?php echo $profesionales->getApellido().', '.$profesionales->getNombre() ?></strong><br><strong><?php echo "Horarios" ?></strong><br>
+                   <?php echo htmlspecialchars_decode($profesionales->getHorarios()) ?></span></div"></a></td>
 
         <?php } else { ?>
-                   <td width="30%" align="left"><a href="#" class="tooltip"><?php echo $profesionales->getApellido().', '.$profesionales->getNombre() ?><span><br><strong><?php echo $profesionales->getApellido().', '.$profesionales->getNombre() ?></strong><br><strong><?php echo "Horarios" ?></strong><br/><?php echo $profesionales->getHorarios() ?></span></a></td>
+                   <td width="30%" align="left"><a href="#" class="tooltip"><div style="align: left;"><?php echo $profesionales->getApellido().', '.$profesionales->getNombre() ?><span><br><strong><?php echo $profesionales->getApellido().', '.$profesionales->getNombre() ?></strong><br><strong><?php echo "Horarios" ?></strong><br><?php echo htmlspecialchars_decode($profesionales->getHorarios()) ?></span></div></a></td>
         <?php } ?>
         
         <td width="20%" align="left"><?php echo $profesionales->getDireccion()  ?></td>
