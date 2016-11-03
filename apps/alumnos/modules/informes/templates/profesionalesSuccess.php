@@ -7,7 +7,7 @@
     a.tooltip span {
         z-index:10;display:none; padding:14px 20px;
         margin-top:-30px; margin-left:28px;
-        width:250px; line-height:16px;
+        width:300px; line-height:16px;
     }
     a.tooltip:hover span{
         display:inline; position:absolute; color:#111;
