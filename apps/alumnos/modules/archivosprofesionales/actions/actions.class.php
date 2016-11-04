@@ -30,7 +30,7 @@ class archivosprofesionalesActions extends sfActions
         $targetFolder = sfConfig::get('app_pathfiles_folder')."/../archivosprofesionales".'/'.$archivos->getNombre();  
          
       $image_file = 'image.png';
-      switch (pathinfo($archivos->getNombre(), PATHINFO_EXTENSION)) {
+      switch (pathinfo($archivos->getImagefile(), PATHINFO_EXTENSION)) {
           case 'pdf':
               $image_file = 'pdf.png';
               break;
