@@ -653,6 +653,17 @@ Noticia:
     idorden: { type: integer, primary: false, autoincrement: false, default: '1' }
     imagefile: { type: string(254), primary: false, autoincrement: false, default: '' }
 
+ArchivosProfesionales:
+  actAs: 
+    Timestampable: ~ 
+    fzblameable: ~
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    nombre: { type: string(100), primary: false, autoincrement: false, default: '' }
+    visible: { type: boolean, primary: false, notnull: true, default: 1 }
+    idorden: { type: integer, primary: false, autoincrement: false, default: '1' }
+    imagefile: { type: string(254), primary: false, autoincrement: false, default: '' }    
+
 MesesCobro:
   actAs: 
     Timestampable: ~ 
