@@ -10,9 +10,7 @@
       <tr>
         <td colspan="2">
           &nbsp;<a href="<?php echo url_for('archivosprofesionales/index') ?>">Volver al listado de archivos</a>
-          <?php if (!$form->getObject()->isNew()): ?>
-            &nbsp;<?php echo link_to('Delete', 'archivosprofesionales/delete?id='.$form->getObject()->getId(), array('method' => 'delete', 'confirm' => 'Seguro desea eliminar el archivo?')) ?>
-          <?php endif; ?>
+         
           <input type="submit" value="Guardar" />
         </td>
       </tr>
