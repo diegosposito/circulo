@@ -87,6 +87,9 @@
 							<li><a title="Autoridades" href="<?php echo url_for('informes/autoridades') ?>"><span class="sep-left"></span>Autoridades</a></li>
 							<li><a title="Historia" href="<?php echo url_for('ingreso/historia') ?>"><span class="sep-left"></span>Historia</a></li>
 							<li><a title="Saludent" href="<?php echo url_for('informes/saludent') ?>"><span class="sep-left"></span>Saludent</a></li>
+							<?php if ($autenticated){ ?>
+                                  <li><a title="Saludent" href="<?php echo url_for('informes/archivosprofesionales') ?>"><span class="sep-left"></span>Documentación</a></li>
+							<?php } ?>
 						</ul>
 					</div>
 				</li>
