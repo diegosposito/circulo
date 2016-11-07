@@ -28,7 +28,12 @@ class sfGuardAuthActions extends BasesfGuardAuthActions
 	    if ($user->isAuthenticated()) {
 			return $this->redirect('ingreso/index');
 	    }
-	  
+
+	    if((strpos($request->getReferer(),"login") === false) ) {
+           $this->getUser()->setAttribute('prevurl', $request->getReferer());
+        }
+
+	   
 	    $class = sfConfig::get('app_sf_guard_plugin_signin_form', 'sfGuardFormSignin'); 
 	    $this->form = new $class();
 	    
@@ -64,9 +69,12 @@ class sfGuardAuthActions extends BasesfGuardAuthActions
 			if (!$user->isAuthenticated()) {
 				$this->redirect('ingreso/error?msgerror='."El usuario no pudo ser autenticado para ingresar al sistema.");
 			} else { 
-				$this->redirect('ingreso/index');
+				header("Location: ".$this->getUser()->getAttribute('prevurl'));
+                die();
+				//$this->redirect('ingreso/index');
 			}    
-		}    
+		}  
+
 	}
 
   public function executeSignout($request)
