@@ -24,6 +24,60 @@ class informesActions extends sfActions
 	      ->execute();
 	}
 
+	public function executeArchivosprofesionales(sfWebRequest $request)
+	{
+
+		$archivos_profesionaless = Doctrine_Core::getTable('ArchivosProfesionales')
+      ->createQuery('a')
+      ->where(visible)
+      ->orderby(nombre)
+      ->execute();
+
+    $this->archivos_profesionaless = Doctrine_Core::getTable('ArchivosProfesionales')
+      ->createQuery('a')
+      ->where(visible)
+      ->orderby(nombre)
+      ->execute();  
+
+    $this->ficheros = array();  
+
+    foreach($archivos_profesionaless as $archivos){
+        $targetFolder = sfConfig::get('app_pathfiles_folder')."/../archivosprofesionales".'/'.$archivos->getNombre();  
+         
+      $image_file = 'image.png';
+      switch (pathinfo($archivos->getImagefile(), PATHINFO_EXTENSION)) {
+          case 'pdf':
+              $image_file = 'pdf.png';
+              break;
+          case 'doc':
+              $image_file = 'word.png';
+              break;
+          case 'docx':
+              $image_file = 'word.png';
+              break;
+          case 'xls':
+              $image_file = 'excel.png';
+              break;        
+          case 'xlsx':
+              $image_file = 'excel.png';
+              break;
+          case 'txt':
+              $image_file = 'wordpad.png';
+              break; 
+          case 'ppt':
+              $image_file = 'ppt.png';
+              break;
+          case 'pptx':
+              $image_file = 'ppt.png';
+              break;           
+      }
+
+      $this->ficheros[] = array($archivos->getNombre(), $archivos->getImagefile(), $image_file, $archivos->getId());
+    
+      sort($this->ficheros);
+    }  
+	}
+
 	public function executeAutoridadespdf(sfWebRequest $request){
 
 		$oAutoridades = Doctrine_Core::getTable('Autoridades')->obtenerAutoridades();
