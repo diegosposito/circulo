@@ -14,13 +14,11 @@ class archivosprofesionalesActions extends sfActions
   {
     $archivos_profesionaless = Doctrine_Core::getTable('ArchivosProfesionales')
       ->createQuery('a')
-      ->where(visible)
       ->orderby(nombre)
       ->execute();
 
     $this->archivos_profesionaless = Doctrine_Core::getTable('ArchivosProfesionales')
       ->createQuery('a')
-      ->where(visible)
       ->orderby(nombre)
       ->execute();  
 
@@ -57,7 +55,7 @@ class archivosprofesionalesActions extends sfActions
               break;           
       }
 
-      $this->ficheros[] = array($archivos->getNombre(), $archivos->getImagefile(), $image_file, $archivos->getId());
+      $this->ficheros[] = array($archivos->getNombre(), $archivos->getImagefile(), $image_file, $archivos->getId(), $archivos->getVisible());
     
       sort($this->ficheros);
     }  
