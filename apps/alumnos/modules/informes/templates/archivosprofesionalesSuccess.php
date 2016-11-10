@@ -14,9 +14,10 @@
       <?php $i=0; ?>
       <?php foreach ($ficheros as $fichero){ ?>
                 <tr class="fila_<?php echo $i%2 ; ?>">
-                  <td width="60%" align="center"><?php echo $fichero[0] ?></td>
+                  <td width="60%" align="left"><?php echo $fichero[0] ?></td>
                   <td width="20%" align="center"> <a target="_blank" href="<?php echo $sf_request->getRelativeUrlRoot();?>/archivosprofesionales/<?php echo $fichero[1] ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/<?php echo $fichero[2] ?>' align='center' size='24' height='24' width="24" /></a></td>
                  </tr>
+                 <?php $i++; ?>
        <?php  } ?>           
      
       <br>
