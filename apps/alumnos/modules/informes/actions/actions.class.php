@@ -74,7 +74,7 @@ class informesActions extends sfActions
 
       $this->ficheros[] = array($archivos->getNombre(), $archivos->getImagefile(), $image_file, $archivos->getId());
     
-      sort($this->ficheros);
+      //sort($this->ficheros);
     }  
 	}
 
