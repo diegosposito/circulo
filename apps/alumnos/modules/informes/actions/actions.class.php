@@ -30,13 +30,13 @@ class informesActions extends sfActions
 		$archivos_profesionaless = Doctrine_Core::getTable('ArchivosProfesionales')
       ->createQuery('a')
       ->where(visible)
-      ->orderby(nombre)
+      ->orderby(idorden)
       ->execute();
 
     $this->archivos_profesionaless = Doctrine_Core::getTable('ArchivosProfesionales')
       ->createQuery('a')
       ->where(visible)
-      ->orderby(nombre)
+      ->orderby(idorden)
       ->execute();  
 
     $this->ficheros = array();  
