@@ -134,11 +134,18 @@ class archivosprofesionalesActions extends sfActions
     {
       $archivos_profesionales = $form->save();
 
+
       if ($request->getPostParameter('archivos_profesionales[visible]') == 'on') {
         $archivos_profesionales->setVisible(1);
       } else {
         $archivos_profesionales->setVisible(0);
       }
+      $idorden = intval($request->getPostParameter('$archivos_profesionales[idorden]'));
+
+      if (($idorden<>"") && ($idorden !== NULL) && ($idorden>0)){
+            $archivos_profesionales->setIdorden($idorden);
+      }
+
 
       $folder_path_name = sfConfig::get('app_pathfiles_folder')."/../archivosprofesionales";
       
@@ -156,8 +163,8 @@ class archivosprofesionalesActions extends sfActions
     
       if ($hasfile && trim($fileName['imagefile']['name'])<>'') 
          $archivos_profesionales->setImagefile($fileName['imagefile']['name']);
-      
-      $archivos_profesionales->setIdorden($request->getPostParameter('$archivos_profesionales[idorden]'));
+   
+
       $archivos_profesionales->save();
 
       $this->redirect('archivosprofesionales/edit?id='.$archivos_profesionales->getId());
