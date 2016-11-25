@@ -62,6 +62,23 @@
 
 			<?php if ($autenticated){ ?>
 			<p align="right"><?php echo '<b>Usuario:</b> '.$sf_user->getGuardUser()->getUsername(); ?> </p>
+			<?php } else { ?>
+            <div align="right">     
+			<form action="/login" name="login" id="formLogin" method="post">
+				  <table border="0">
+				    <tbody>	  
+				    	<tr>
+						  <th><label for="signin_username"><p align="right">Usuario</p></label></th>
+						  <td><input type="text" name="signin[username]" id="signin_username" /></td>
+						  <th><label for="signin_password"><p align="right">Contraseña</p></label></th>
+						  <td><input type="password" name="signin[password]" id="signin_password" /></td>
+						  <td><input type="submit" value="Ingresar"></td> 
+						</tr>
+			</tbody>
+			</table>
+			</form>
+			</div>
+
 			<?php } ?>
 			
 		
