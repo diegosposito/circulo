@@ -15,6 +15,7 @@ class sfGuardFormSignin extends BasesfGuardFormSignin
    */
   public function configure()
   {
+  		$this->disableCSRFProtection();
   		//$this->widgetSchema['password']->setLabel('Contraseña');
        // $this->widgetSchema['remember']->setLabel('Recordar');
   }
