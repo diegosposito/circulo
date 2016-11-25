@@ -160,39 +160,30 @@
 							</ul>
 						</div>
 					</div>	
-			<?php } else { ?>	
+			<?php } else { ?>
+			         <?php 
+			         
+			         $banners = Doctrine_Core::getTable('Banners')
+				      ->createQuery('a')
+				      ->where('visible')
+				      ->orderby(idorden)
+				      ->execute();
+                     
+                     ?>  	
 				     <div id="sidebar">
 
 				        <div class="box" style="width=200px"><br></div>	
-				        
+                        
+                        <?php foreach($banners as $banner){ ?>				        
 					    <div class="box" style="background-color:#7dbf0d;width=200px">
-								<p style="margin-left: 0em;text-align:center;color:#ffffff;font-weight:bold"><a style="text-align:left;color:#ffffff;font-weight:bold" href="<?php echo url_for('guard/login') ?>">Administrador</a></p>
+								<p style="margin-left: 0em;text-align:center;color:#ffffff;font-weight:bold"><a target="_blank" style="text-align:left;color:#ffffff;font-weight:bold" href="<?php echo $banner->getUrl(); ?>"><?php echo $banner->getNombre(); ?></a></p>
 						</div>
 						<div class="box" style="width=200px">
-							<a  href="<?php echo url_for('guard/login') ?>"><img alt="Smiley face"  src="<?php echo $sf_request->getRelativeUrlRoot();?>/images/login.png"></a>
+							<a target="_blank" href="<?php echo $banner->getUrl(); ?>"><img alt="Smiley face" height="100" width="220"  src="<?php echo $sf_request->getRelativeUrlRoot();?>/banners/<?php echo $banner->getImagefile();?>"></a>
 						</div>
-                        <div class="box" style="background-color:#7dbf0d;width=200px">
-								<p style="margin-left: 0em;text-align:center;color:#ffffff;font-weight:bold">Circulo Odontologico</p>
-						</div>
-						<div class="box" style="width=200px">
-							<img alt="Smiley face" height="100" width="220" src="<?php echo $sf_request->getRelativeUrlRoot();?>/images/cop.jpeg">
-						</div>
+                        
                         <br>
-						<div class="box" style="background-color:#7dbf0d;width=200px">
-								<p style="margin-left: 0em;text-align:center;color:#ffffff;font-weight:bold">&nbsp;&nbsp;Saludent</p>
-						</div>
-						<div class="box" style="width=200px">
-							<img alt="Smiley face" height="100" width="220" src="<?php echo $sf_request->getRelativeUrlRoot();?>/images/saludent.jpg">
-						</div>
-                        <br>
-                        <div class="box" style="background-color:#7dbf0d;width=200px">
-								<p style="margin-left: 0em;text-align:center;color:#ffffff;font-weight:bold">&nbsp;&nbsp;S.O.S.P.E.</p>
-						</div>
-						<br>
-                        <div class="box" style="width=200px">
-							<img alt="Smiley face" height="100" width="220" src="<?php echo $sf_request->getRelativeUrlRoot();?>/images/sospe logo.gif">
-						</div>
-                        <br>
+                        <?php } ?>
 
                         <?php if ($autenticated && !$sf_user->getGuardUser()->getIsSuperAdmin()){ ?>
                         	<div class="box" style="background-color:#7dbf0d;width=200px">
