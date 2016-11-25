@@ -155,6 +155,7 @@
 								<?php echo '<li>'.link_to('Gestión Contacto', 'contacto').'</li>' ; ?>
 								<?php echo '<li>'.link_to('Gestión Saludent', 'practicas/index').'</li>' ; ?>
 								<?php echo '<li>'.link_to('Archivos Profesionales', 'archivosprofesionales/index').'</li>' ; ?>
+								<?php echo '<li>'.link_to('Banners del Menu', 'banners/index').'</li>' ; ?>
 								<?php echo '<li>'.link_to('Salir', 'sf_guard_signout').'</li>' ; ?>
 							</ul>
 						</div>
