@@ -15,7 +15,7 @@ class sfGuardRequestForgotPasswordForm extends BasesfGuardRequestForgotPasswordF
    */
   public function configure()
   {
-  //	$this->disableCSRFProtection();
+  	$this->disableCSRFProtection();
   //	$this->validatorSchema->setOption('allow_extra_fields',true); 	
   }
 }
