@@ -15,8 +15,9 @@ $(document).ready(function(){
 <table border="0" width="100%">      
    <tr>
    <td width="50%"><img src="<?php echo $sf_request->getRelativeUrlRoot();?>/images/logo-sao.png" border="0"></td>
+    <td width="50%"><p>Ingrese sus credenciales de acceso</p></td>
    <td width="50%"> 
-	<form action="<?php echo url_for('@sf_guard_signin') ?>" name="login" id="formLogin" method="post">
+	<!-- <form action="<?php echo url_for('@sf_guard_signin') ?>" name="login" id="formLogin" method="post">
 	  <table border="0">
 	    <tbody>	  
 	    	<?php echo $form ?>  	
@@ -51,6 +52,7 @@ $(document).ready(function(){
 	    </tfoot>
 	  </table>
 	</form>
+	-->
 	</td>
 	</tr>
 </table>	
