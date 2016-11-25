@@ -21,7 +21,7 @@
       <?php $i=0; ?>
       <?php foreach ($obras_socialess as $obras_sociales){ ?>
       <tr class="fila_<?php echo $i%2 ; ?>">
-        <td width="70%" align="center"><?php echo $obras_sociales->getDenominacion() ?></td>
+        <td width="70%" align="left"><?php echo $obras_sociales->getDenominacion() ?></td>
         <td width="5%"><?php echo $obras_sociales->getAbreviada() ?></td>
         <td align='center' width="5%">
         <?php 
