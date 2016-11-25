@@ -1229,7 +1229,7 @@ ObrasSociales:
     denominacion: { type: string(200), primary: false, notnull: true, default: '' }
     abreviada: { type: string(120), primary: false, notnull: true, default: '' }
     estado: { type: integer, primary: false, autoincrement: false } 
-    ninterno: { type: integer, primary: false, autoincrement: false } 
+    ninterno: { type: string(100), primary: false, notnull: true, default: '' }
     general: { type: boolean, primary: false, notnull: true, default: 0 } 
     protesis: { type: boolean, primary: false, notnull: true, default: 0 } 
     ortodoncia: { type: boolean, primary: false, notnull: true, default: 0 } 
