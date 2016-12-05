@@ -575,6 +575,51 @@ Profesiones:
     idprofesion: { type: integer, primary: true, autoincrement: true }
     descripcion: { type: string(100) } 
 
+Pacientes:
+  actAs: 
+    Timestampable: ~ 
+    fzblameable: ~
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    nombre: { type: string(100), primary: false, notnull: true, default: '' }
+    apellido: { type: string(100), primary: false, notnull: true, default: '' }
+    idsexo: { type: integer(4), primary: false, autoincrement: false, default: '1' }
+    nrodoc: { type: string(80), primary: false, notnull: true, default: '' }
+    fechanac: { type: date(25), primary: false, notnull: true, default: '2002-01-01' }
+    fechaingreso: { type: date(25), primary: false, notnull: true, default: '2002-01-01' }
+    idciudadnac: { type: integer, primary: false, autoincrement: false, default: '734' }
+    estadocivil: { type: integer, primary: false, autoincrement: false, default: '1' }
+    email: { type: string(200), primary: false, notnull: true, default: '' }
+    celular: { type: string(200), primary: false, notnull: true, default: '' }
+    telefono: { type: string(200), primary: false, notnull: true, default: '' }
+    direccion: { type: string(200), primary: false, notnull: true, default: '' }
+    titular: { type: string(200), primary: false, notnull: true, default: '' }
+    parentesco: { type: string(200), primary: false, notnull: true, default: '' }
+    ocupacion: { type: string(200), primary: false, notnull: true, default: '' }
+    siglas: { type: string(200), primary: false, notnull: true, default: '' }
+    plan: { type: string(200), primary: false, notnull: true, default: '' }
+    trabajo: { type: string(200), primary: false, notnull: true, default: '' }
+    jerarquia: { type: string(200), primary: false, notnull: true, default: '' }
+    credencial: { type: string(200), primary: false, notnull: true, default: '' }
+    anotaciones: { type: string(200), primary: false, notnull: true, default: '' }
+    activo: { type: boolean, primary: false, notnull: true, default: 1 } 
+    nroafiliado: { type: string(30), primary: false, autoincrement: false, default: '' }
+    historial: { type: string(2000) }   
+    imagefile: { type: string(254), primary: false, autoincrement: false, default: '' }
+  relations:
+    Ciudades: 
+      local: idciudadnac
+      foreign: idciudad
+      foreignAlias: Ciudades
+    EstadoCivil: 
+      local: estadocivil
+      foreign: idestadocivil
+      foreignAlias: EstadoCivil
+    Sexo: 
+      local: idsexo
+      foreign: idsexo
+      foreignAlias: Sexo    
+
 Personas:
   actAs: 
     Timestampable: ~ 
