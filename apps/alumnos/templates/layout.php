@@ -148,6 +148,7 @@
 							    	        } 
 							    	    } ?>   
 								<?php echo '<li>'.link_to('Profesionales', 'personas/buscar').'</li>' ; ?>
+								<?php echo '<li>'.link_to('Pacientes', 'pacientes/index').'</li>' ; ?>
 								<?php echo '<li>'.link_to('Obras Sociales', 'obrassociales/index').'</li>' ; ?>
 								<?php echo '<li>'.link_to('Autoridades', 'autoridades').'</li>' ; ?>
 								<?php echo '<li>'.link_to('Entidades', 'cargoautoridades/index').'</li>' ; ?>
