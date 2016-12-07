@@ -12,9 +12,23 @@ class pacientesActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
+    $this->criterio = '';
     $this->pacientess = Doctrine_Core::getTable('Pacientes')
       ->createQuery('a')
+      ->limit(200)
       ->execute();
+
+    if ($request->isMethod(sfRequest::POST) && $request->getParameter('idbuscarname')<>''){
+      
+      $this->pacientess = Doctrine_Core::getTable('Pacientes')
+      ->createQuery('a')
+      ->where('a.apellido  like "%'.$request->getParameter('idbuscarname').'%"')
+      ->execute();
+
+      $this->criterio = $request->getParameter('idbuscarname');
+
+    }  
+
   }
 
   public function executeShow(sfWebRequest $request)
@@ -72,6 +86,25 @@ class pacientesActions extends sfActions
     if ($form->isValid())
     {
       $pacientes = $form->save();
+
+      $folder_path_name = sfConfig::get('app_pathfiles_folder')."/pacientes/".$pacientes->getId();
+      
+      if (!is_dir($folder_path_name) && !mkdir($folder_path_name)){
+          die("Error creando carpeta $uploaddir");
+      }
+
+      $hasfile =false;
+      foreach ($request->getFiles() as $fileName) {
+           $targetFolder = sfConfig::get('app_pathfiles_folder')."/pacientes/".$pacientes->getId().'/'.$fileName['imagefile']['name'];
+           move_uploaded_file($fileName['imagefile']['tmp_name'], $targetFolder);
+           $hasfile = true;
+     
+      }
+    
+      if ($hasfile && trim($fileName['imagefile']['name'])<>'') 
+         $pacientes->setImagefile($fileName['imagefile']['name']);
+    
+      $pacientes->save();
 
       $this->redirect('pacientes/edit?id='.$pacientes->getId());
     }
