@@ -75,36 +75,7 @@ $(document).ready(function(){
         cargarComboCiudades('#idciudadnac', $(this).val(), 0);
     });       
 
-    $('#botonGuardarInfoPersonal').click(function() {
-      var validado = validarFormInfoPersonal();
-      $('#botonGuardarInfoPersonal').attr("disabled","disabled").delay(5000);
-      if(validado == true) {
-            // guardar la informacion personal del alumnos ingresada
-          $.post("<?php echo url_for('alumnos/guardarinformacionpersonal'); ?>",
-            $('#formGuardarInfoPersonal').serialize(),
-          function(data){
-              var obj = jQuery.parseJSON(data);
-            $('#mensajeInfoPersonal').html(obj.mensaje);
-          if (obj.idpersona!=0){
-              $('#idpersona').val(obj.idpersona);
-              $('#formGuardarInfoPersonal #idalumno').val(obj.idalumno);
-              $('#formGuardarContacto #idpersona').val(obj.idpersona);
-              $('#formGuardarDocumentacion #idpersona').val(obj.idpersona);
-              $('#formGuardarDocumentacionAdicional #idpersona').val(obj.idpersona);
-              $('#formGuardarDocumentacion #idalumno').val(obj.idalumno);
-              $('#formGuardarDocumentacionAdicional #idalumno').val(obj.idalumno);              
-          }
-            $('#tabs').tabs("option", "disabled", []);
-          }
-          );
-          
-    } else {
-      alert(validado);
-    } 
-      window.setTimeout( function(){ $('#botonGuardarInfoPersonal').removeAttr("disabled") }, 5000 );
-      //$('#botonGuardarInfoPersonal').removeAttr("disabled");
-    return false;
-    });   
+    
     
  
 // Valida el formulario
@@ -113,10 +84,10 @@ function validarFormInfoPersonal(){
   var regexpfecha = /^((?:0?[1-9])|(?:[12]\d)|(?:3[01]))\-((?:0?[1-9])|(?:1[0-2]))\-((?:19|20)\d\d)$/;
   var resultado = true;
     
-  if (!regexpfecha.test($('#fechanacimiento').val())) {
+  if (!regexpfecha.test($('#fechanac').val())) {
     resultado = "Debe ingresar una Fecha de Nacimiento válida.";
   }
-  if($("#ciudadnacimiento").attr('disabled')) {
+  if($("#idciudadnac").attr('disabled')) {
     resultado = "Debe seleccionar una Ciudad.";
   } 
   if($("#nombre").val()=="") {
@@ -127,14 +98,7 @@ function validarFormInfoPersonal(){
   }
   return resultado;
 } 
-function validarFormContacto(){
-  var resultado = true;
-  if($("#ciudadresidencia").attr('disabled')) {
-    resultado = "Debe seleccionar una Ciudad.";
-  } 
 
-  return resultado;
-} 
 //Cargar combo de ciudades
 function cargarComboCiudades(combo, id, idseleccionado){
     // cargar las ciudades de la carrera al combo
@@ -165,19 +129,10 @@ function cargarComboProvincias(combo, id, idseleccionado){
   );  
 } 
 
-//Cargar estudios previos
-function cargarEstudiosPrevios(id){
-  // obtener la lista de estudios previos de la persona
-  $.get("<?php echo url_for('personas/obtenerestudiosprevios'); ?>",
-      { idpersona: $('#idpersona').val(), idalumno: $('#idalumno').val() },
-    function(data){
-      $('#estudiosPrevios').html(data);
-    }
-  );    
-} 
 </script>
 
 <script type="text/javascript">
+
   function openCity(evt, cityName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
@@ -191,6 +146,33 @@ function cargarEstudiosPrevios(id){
     document.getElementById(cityName).style.display = "block";
     evt.currentTarget.className += " active";
 }
+
+  $('#botonGuardarInfoPersonal').click(function() {
+      var validado = validarFormInfoPersonal();
+      $('#botonGuardarInfoPersonal').attr("disabled","disabled").delay(5000);
+      if(validado == true) {
+            // guardar la informacion personal del alumnos ingresada
+          $.post("<?php echo url_for('alumnos/guardarinformacionpersonal'); ?>",
+            $('#formGuardarInfoPersonal').serialize(),
+          function(data){
+              var obj = jQuery.parseJSON(data);
+            $('#mensajeInfoPersonal').html(obj.mensaje);
+            if (obj.id!=0){
+                $('#id').val(obj.id);
+                $('#formGuardarInfoPersonal #nroafiliado').val(obj.nroafiliado);
+                $('#formGuardarContacto #id').val(obj.id);
+            }
+            //$('#tabs').tabs("option", "disabled", []);
+          }
+          );
+          
+    } else {
+      alert(validado);
+    } 
+      window.setTimeout( function(){ $('#botonGuardarInfoPersonal').removeAttr("disabled") }, 5000 );
+      //$('#botonGuardarInfoPersonal').removeAttr("disabled");
+    return false;
+    });   
 </script>
 
 <ul class="tab">
