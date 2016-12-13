@@ -31,6 +31,39 @@ class pacientesActions extends sfActions
 
   }
 
+  public function executeGuardarinformacionpersonal(sfWebRequest $request) {
+      
+      $numerodoc = $request->getParameter('nrodoc');
+      $nrodoc = preg_replace("/[^\d]/", "", $numerodoc);    
+    
+      $arr = explode('-', $request->getParameter('fechanac'));
+      $fechanacimiento = $arr[2]."-".$arr[1]."-".$arr[0];
+
+      $paciente = Doctrine::getTable('Pacientes')->getPacienteIdByNroDoc($request->getParameter('nrodoc'));
+      
+      if ($idpaciente<>'')
+         $oPaciente = Doctrine::getTable('Pacientes')->find($paciente->getId());
+      } else {
+        $oPaciente = new Pacientes();
+        $oPaciente->setIdtipodoc($request->getParameter('idtipodocumento'));
+        $oPaciente->setFechanac($fechanacimiento);
+        $oPaciente->setNrodoc($nrodoc);
+      }
+      // Guarda los datos personales
+      $oPaciente->setNrodoc($numerodoc);      
+      $oPaciente->setNombre(ucwords(strtolower($request->getParameter('nombre'))));
+      $oPaciente->setApellido(strtoupper($request->getParameter('apellido')));
+      $oPaciente->setIdsexo($request->getParameter('idsexo'));
+      $oPaciente->setEstadocivil($request->getParameter('estadocivil'));
+      $oPaciente->setIdciudadnac($request->getParameter('ciudadnacimiento'));
+      $oPaciente->setFechanac($fechanacimiento);
+      $oPersona->save();    
+
+      echo json_encode(array("idpaciente"=>$oPaciente->getId(),"mensaje"=>"El Paciente ha sido guardado correctamente."));
+
+    return sfView::NONE;
+  }
+
   public function executeShow(sfWebRequest $request)
   {
     $this->pacientes = Doctrine_Core::getTable('Pacientes')->find(array($request->getParameter('id')));
@@ -38,6 +71,11 @@ class pacientesActions extends sfActions
   }
 
   public function executeNew(sfWebRequest $request)
+  {
+    $this->form = new PacientesForm();
+  }
+
+  public function executeNuevo(sfWebRequest $request)
   {
     $this->form = new PacientesForm();
   }
