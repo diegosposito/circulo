@@ -41,7 +41,7 @@ class pacientesActions extends sfActions
 
       $paciente = Doctrine::getTable('Pacientes')->getPacienteIdByNroDoc($request->getParameter('nrodoc'));
       
-      if ($idpaciente<>'')
+      if ($idpaciente<>''){
          $oPaciente = Doctrine::getTable('Pacientes')->find($paciente->getId());
       } else {
         $oPaciente = new Pacientes();
