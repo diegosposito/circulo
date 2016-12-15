@@ -601,12 +601,22 @@ Pacientes:
     trabajo: { type: string(200), primary: false, notnull: true, default: '' }
     jerarquia: { type: string(200), primary: false, notnull: true, default: '' }
     credencial: { type: string(200), primary: false, notnull: true, default: '' }
-    anotaciones: { type: string(200), primary: false, notnull: true, default: '' }
+    anotaciones: { type: string(2000), primary: false, notnull: true, default: '' }
     activo: { type: boolean, primary: false, notnull: true, default: 1 } 
     nroafiliado: { type: string(30), primary: false, autoincrement: false, default: '' }
     historial: { type: string(2000) }   
     imagefile: { type: string(254), primary: false, autoincrement: false, default: '' }
+    idprovincia: { type: integer, primary: false, default: '0' }
+    idobrasocial: { type: integer, primary: false, default: '0' }
   relations:
+    Provincias: 
+      local: idprovincia
+      foreign: idprovincia
+      foreignAlias: Provincias
+    ObrasSociales: 
+      local: idobrasocial
+      foreign: idobrasocial
+      foreignAlias: ObrasSociales  
     Ciudades: 
       local: idciudadnac
       foreign: idciudad
