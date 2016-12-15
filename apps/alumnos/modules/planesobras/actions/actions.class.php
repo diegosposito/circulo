@@ -14,7 +14,10 @@ class planesobrasActions extends sfActions
   {
     $this->planes_obrass = Doctrine_Core::getTable('PlanesObras')
       ->createQuery('a')
+      ->innerJoin('a.ObrasSociales os')
+      ->orderBy('os.abreviada ASC, a.nombre ASC')
       ->execute();
+
   }
 
   public function executeShow(sfWebRequest $request)

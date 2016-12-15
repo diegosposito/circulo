@@ -1,3 +1,3 @@
-<h1>New Planes obras</h1>
+<h1>Nuevo Plan de Obra Social</h1>
 
 <?php include_partial('form', array('form' => $form)) ?>
