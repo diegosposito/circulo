@@ -52,18 +52,43 @@
         // cargar las ciudades de la carrera al combo
         cargarComboCiudades('#pacientes_idciudadnac', $(this).val(), 0);
     }); 
+    $('#pacientes_idobrasocial').change(function(){
+        // cargar las ciudades de la carrera al combo
+        cargarComboPlanes('#pacientes_idplan', $(this).val(), 0);
+    }); 
 
   });
 
     $('#pacientes_idprovincia').click(function() {
 		cargarComboCiudades('#pacientes_idciudadnac', $(this).val(), 0);
-   	});     
+   	}); 
+   	$('#pacientes_idobrasocial').click(function() {
+		cargarComboPlanes('#pacientes_idplan', $(this).val(), 0);
+   	});      
     
 	//Cargar combo de ciudades
 	function cargarComboCiudades(combo, id, idseleccionado){
 	    // cargar las ciudades de la carrera al combo
 	    $.post("<?php echo url_for('provincias/obtenerciudades'); ?>",
 	    { idprovincia: id },
+	    function(data){
+	      if (data){
+	        $(combo).html(data);
+	        $(combo).attr('disabled',false);
+	        $(combo).val(idseleccionado);             
+	      }else{
+	        $(combo).attr('disabled',true);
+	        $(combo).html("<option value='0' selected='selected' >----NINGUNA----</option>");
+	      }
+	    }
+	  );
+	}
+
+		//Cargar combo de planes de obras sociales
+	function cargarComboPlanes(combo, id, idseleccionado){
+	    // cargar las ciudades de la carrera al combo
+	    $.post("<?php echo url_for('obrassociales/obtenerplanes'); ?>",
+	    { idobrasocial: id },
 	    function(data){
 	      if (data){
 	        $(combo).html(data);
@@ -105,6 +130,7 @@
 </ul>
 
 <div id="Datos" class="tabcontent">
-<?php include_partial('form', array('form' => $form)) ?>
+<?php 
+include_partial('form', array('form' => $form, 'paciente' => $paciente)) ?>
  </div>
 

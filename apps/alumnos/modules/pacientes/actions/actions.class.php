@@ -95,6 +95,8 @@ class pacientesActions extends sfActions
   {
     $this->forward404Unless($pacientes = Doctrine_Core::getTable('Pacientes')->find(array($request->getParameter('id'))), sprintf('Object pacientes does not exist (%s).', $request->getParameter('id')));
     $this->form = new PacientesForm($pacientes);
+    $this->forward404Unless($this->paciente = Doctrine_Core::getTable('Pacientes')->find(array($request->getParameter('id'))), sprintf('Object pacientes does not exist (%s).', $request->getParameter('id')));
+    
   }
 
   public function executeUpdate(sfWebRequest $request)

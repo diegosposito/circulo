@@ -32,7 +32,11 @@
            <td rowspan="5" width="10%">
           </td>
            <td rowspan="5" width="10%">
-            <img style="align:center; width: 180px; height: 180px;" src='<?php echo $sf_request->getRelativeUrlRoot();?>/files/pacientes/3/angelina.jpg' align='center' size='20' />
+            <?php if ($form->getObject()->isNew()){ ?>
+            <img style="align:center; width: 180px; height: 180px;" align='center' size='20' />
+            <?php } else { ?>
+            <img style="align:center; width: 180px; height: 180px;" src='<?php echo $sf_request->getRelativeUrlRoot();?>/files/pacientes/<?php echo $form->getObject()->getId() ?>/<?php echo $paciente->getImagefile() ?>' align='center' size='20' />
+            <?php } ?>
           </td>
         </tr>  
         <tr>
@@ -118,10 +122,10 @@
         </tr>  
         <tr>
           <td width="10%">
-            <?php echo "<b>".$form['plan']->renderLabel()."</b>" ?>
+            <?php echo "<b>".$form['idplan']->renderLabel()."</b>" ?>
           </td>
           <td colspan=2>
-            <?php echo $form['plan']->render() ?>
+            <?php echo $form['idplan']->render() ?>
           </td>
         </tr>  
         <tr>
