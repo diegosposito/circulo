@@ -17,7 +17,7 @@
     <?php use_stylesheet('superfish-navbar.css') ?>
     <?php use_stylesheet('ddaccordion.css') ?>
     <?php use_stylesheet('style.css') ?>
-    <?php use_stylesheet('prettyCheckboxes.css') ?>
+    <?php //use_stylesheet('prettyCheckboxes.css') ?>
     
     <?php //use_javascript('webcam.js') ?>       
     <?php use_javascript('hoverIntent.js') ?>
@@ -31,7 +31,7 @@
     <?php use_javascript('jquery-1.7.min.js') ?>
     <?php use_javascript('jquery.jcarousel.js') ?>
     <?php use_javascript('DD_belatedPNG-min.js') ?>
-    <?php use_javascript('functions.js') ?>
+    <?php // use_javascript('functions.js') ?>
     <?php use_javascript('ddaccordion.js') ?>
  
     <?php include_stylesheets() ?>
