@@ -46,6 +46,37 @@
 
   <script>
 
+  $(document).ready(function(){
+ 
+    $('#pacientes_idprovincia').change(function(){
+        // cargar las ciudades de la carrera al combo
+        cargarComboCiudades('#pacientes_idciudadnac', $(this).val(), 0);
+    }); 
+
+  });
+
+    $('#pacientes_idprovincia').click(function() {
+		cargarComboCiudades('#pacientes_idciudadnac', $(this).val(), 0);
+   	});     
+    
+	//Cargar combo de ciudades
+	function cargarComboCiudades(combo, id, idseleccionado){
+	    // cargar las ciudades de la carrera al combo
+	    $.post("<?php echo url_for('provincias/obtenerciudades'); ?>",
+	    { idprovincia: id },
+	    function(data){
+	      if (data){
+	        $(combo).html(data);
+	        $(combo).attr('disabled',false);
+	        $(combo).val(idseleccionado);             
+	      }else{
+	        $(combo).attr('disabled',true);
+	        $(combo).html("<option value='0' selected='selected' >----NINGUNA----</option>");
+	      }
+	    }
+	  );
+	}
+
 	function openCity(evt, cityName) {
 	    var i, tabcontent, tablinks;
 	    tabcontent = document.getElementsByClassName("tabcontent");

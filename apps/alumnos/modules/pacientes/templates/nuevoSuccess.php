@@ -1,3 +1,46 @@
+<script>
+
+$(document).ready(function(){
+
+    $('#botonGuardarInfoPersonal').click(function() {
+      //var validado = validarFormInfoPersonal();
+      validado = true;
+      $('#botonGuardarInfoPersonal').attr("disabled","disabled").delay(5000);
+      if(validado == true) {
+            // guardar la informacion personal del alumnos ingresada
+          $.post("<?php echo url_for('pacientes/guardarinformacionpersonal'); ?>",
+            $('#formGuardarInfoPersonal').serialize(),
+          function(data){
+              var obj = jQuery.parseJSON(data);
+            $('#mensajeInfoPersonal').html(obj.mensaje);
+          if (obj.nroafiliado!=0){
+              //$('#idpersona').val(obj.idpersona);
+              //$('#formGuardarInfoPersonal #idpersona').val(obj.idpersona);
+             // $('#formGuardarContacto #idpersona').val(obj.idpersona);
+              //$('#formGuardarDocumentacion #idpersona').val(obj.idpersona);
+              //$('#formGuardarDocumentacionAdicional #idpersona').val(obj.idpersona);
+              //$('#formGuardarDocumentacion #idpersona').val(obj.idpersona);
+              //$('#formGuardarDocumentacionAdicional #idpersona').val(obj.idpersona);   
+            //  $('#formOtraInformacionRelevante #idpersona').val(obj.idpersona);
+            //  $('#formAgregarEstudio #idpersona').val(obj.idpersona);           
+          }
+            //$('#tabs').tabs("option", "disabled", []);
+          }
+          );
+          
+    } else {
+      alert(validado);
+    } 
+      window.setTimeout( function(){ $('#botonGuardarInfoPersonal').removeAttr("disabled") }, 5000 );
+      //$('#botonGuardarInfoPersonal').removeAttr("disabled");
+    return false;
+    });
+
+//  habilitarForm(false); 
+                    
+});
+</script>
+
 <h1>Modificar de Datos Personales de Alumnos</h1>
 
 <style>
@@ -45,95 +88,16 @@ ul.tab li a:focus, .active {
 }
 </style>
 
+
 <script>
-$(document).ready(function(){
-  var date = new Date();
-  var mes = date.getMonth()+1;
-  var dia = date.getDate();
-  var fecha = (dia<10 ? '0' : '') + dia + '-' + (mes<10 ? '0' : '') + mes + '-' +date.getFullYear();  
 
-  $('#nrodocumento').attr('readonly',true); 
-  $('#idciudadnac').attr('disabled',true);  
- 
-  <?php if ($idciudadnac==0){ ?>
-    $('#idprovincia').attr('disabled',true);
-    $('#idciudad').attr('disabled',true);
-  <?php }else{ ?>
-        cargarComboProvincias('#provincianacimiento', <?php echo $idpaisnac ?>, <?php echo $idprovincianac ?>);
-        cargarComboCiudades('#ciudadnacimiento', <?php echo $idprovincianac ?>, <?php echo $idciudadnac ?>);
-  <?php } ?>
-   $('#idprovincia').focusin(function() {
-      // cargar las ciudades de la carrera al combo
-        cargarComboCiudades('#idciudadnac', $(this).val(), 0);
-    });  
-    $('#idprovincia').change(function(){
-        // cargar las ciudades de la carrera al combo
-        cargarComboCiudades('#idciudadnac', $(this).val(), 0);
-    }); 
-    $('#idprovincia').change(function(){
-        // cargar las ciudades de la carrera al combo
-        cargarComboCiudades('#idciudadnac', $(this).val(), 0);
-    });       
+function habilitarForm(estado)
+{
+  $('#nombre').attr('disabled',estado);
+  $('#apellido').attr('disabled',estado);
+}
 
-    
-    
- 
-// Valida el formulario
-function validarFormInfoPersonal(){
-  //var regexp = /^\d{1,2}\-\d{1,2}\-\d{4}$/;
-  var regexpfecha = /^((?:0?[1-9])|(?:[12]\d)|(?:3[01]))\-((?:0?[1-9])|(?:1[0-2]))\-((?:19|20)\d\d)$/;
-  var resultado = true;
-    
-  if (!regexpfecha.test($('#fechanac').val())) {
-    resultado = "Debe ingresar una Fecha de Nacimiento válida.";
-  }
-  if($("#idciudadnac").attr('disabled')) {
-    resultado = "Debe seleccionar una Ciudad.";
-  } 
-  if($("#nombre").val()=="") {
-    resultado = "Debe ingresar un Nombre.";
-  } 
-  if($("#apellido").val()=="") {
-    resultado = "Debe ingresar un Apellido.";
-  }
-  return resultado;
-} 
-
-//Cargar combo de ciudades
-function cargarComboCiudades(combo, id, idseleccionado){
-    // cargar las ciudades de la carrera al combo
-    $.post("<?php echo url_for('provincias/obtenerciudades'); ?>",
-    { idprovincia: id },
-    function(data){
-      if (data){
-        $(combo).html(data);
-        $(combo).attr('disabled',false);
-        $(combo).val(idseleccionado);             
-      }else{
-        $(combo).attr('disabled',true);
-        $(combo).html("<option value='0' selected='selected' >----NINGUNA----</option>");
-      }
-    }
-  );
-} 
-// Cargar combo de provincias
-function cargarComboProvincias(combo, id, idseleccionado){
-    // cargar las ciudades de la carrera al combo
-    $.post("<?php echo url_for('paises/obtenerprovincias'); ?>",
-          { idpais: id },
-          function(data){
-            $(combo).html(data);
-            $(combo).attr('disabled',false);
-            $(combo).val(idseleccionado);
-          }
-  );  
-} 
-
-</script>
-
-<script type="text/javascript">
-
-  function openCity(evt, cityName) {
+function openCity(evt, cityName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
@@ -147,32 +111,6 @@ function cargarComboProvincias(combo, id, idseleccionado){
     evt.currentTarget.className += " active";
 }
 
-  $('#botonGuardarInfoPersonal').click(function() {
-      var validado = validarFormInfoPersonal();
-      $('#botonGuardarInfoPersonal').attr("disabled","disabled").delay(5000);
-      if(validado == true) {
-            // guardar la informacion personal del alumnos ingresada
-          $.post("<?php echo url_for('alumnos/guardarinformacionpersonal'); ?>",
-            $('#formGuardarInfoPersonal').serialize(),
-          function(data){
-              var obj = jQuery.parseJSON(data);
-            $('#mensajeInfoPersonal').html(obj.mensaje);
-            if (obj.id!=0){
-                $('#id').val(obj.id);
-                $('#formGuardarInfoPersonal #nroafiliado').val(obj.nroafiliado);
-                $('#formGuardarContacto #id').val(obj.id);
-            }
-            //$('#tabs').tabs("option", "disabled", []);
-          }
-          );
-          
-    } else {
-      alert(validado);
-    } 
-      window.setTimeout( function(){ $('#botonGuardarInfoPersonal').removeAttr("disabled") }, 5000 );
-      //$('#botonGuardarInfoPersonal').removeAttr("disabled");
-    return false;
-    });   
 </script>
 
 <ul class="tab">
@@ -189,7 +127,7 @@ function cargarComboProvincias(combo, id, idseleccionado){
       <tfoot>
         <tr>
           <td colspan="6" align="center">
-              <input type="submit" value="Guardar" id="botonGuardarInfoPersonal"/>
+             <input type="submit" id="botonGuardarInfoPersonal" name="botonGuardarInfoPersonal" value="Guardar" />
           </td>
         </tr>
       </tfoot>

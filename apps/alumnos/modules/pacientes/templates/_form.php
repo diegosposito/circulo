@@ -1,6 +1,7 @@
 <?php use_stylesheets_for_form($form) ?>
 <?php use_javascripts_for_form($form) ?>
 
+
 <form action="<?php echo url_for('pacientes/'.($form->getObject()->isNew() ? 'create' : 'update').(!$form->getObject()->isNew() ? '?id='.$form->getObject()->getId() : '')) ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
 <?php if (!$form->getObject()->isNew()): ?>
 <input type="hidden" name="sf_method" value="put" />
@@ -77,8 +78,8 @@
         <td colspan="3"><?php echo $form['direccion'] ?></td>
       </tr>  
        <tr>
-        <td colspan="1"><?php echo "<b>".$form['idciudadnac']->renderLabel()."</b>" ?></td>
-        <td colspan="3"><?php echo $form['idciudadnac'] ?></td>
+        <td colspan="1"><?php echo "<b>".$form['idprovincia']->renderLabel()."</b>" ?></td>
+        <td colspan="3"><?php echo $form['idprovincia'] ?></td>
       </tr> 
        <tr>
         <td colspan="1"><?php echo "<b>".$form['idciudadnac']->renderLabel()."</b>" ?></td>
@@ -104,40 +105,77 @@
       <tr>
         <th align="center" colspan=4><?php echo ''.'O T R A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I N F O R M A C I O N ' ?></th>
       </tr>
-       <tr>
-        <td><?php echo "<b>".$form['titular']->renderLabel()."</b>" ?></td>
-        <td><?php echo $form['titular'] ?></td>
-        <td align="left"><?php echo "<b>".$form['parentesco']->renderLabel()."</b>" ?></td>
-        <td align="left"><?php echo $form['parentesco'] ?></td>
-      </tr> 
-       <tr>
-        <td><?php echo "<b>".$form['ocupacion']->renderLabel()."</b>" ?></td>
-        <td><?php echo $form['ocupacion'] ?></td>
-        <td align="left"><?php echo "<b>".$form['siglas']->renderLabel()."</b>" ?></td>
-        <td align="left"><?php echo $form['siglas'] ?></td>
-      </tr> 
-       <tr>
-        <td><?php echo "<b>".$form['plan']->renderLabel()."</b>" ?></td>
-        <td><?php echo $form['plan'] ?></td>
-        <td align="left"><?php echo "<b>".$form['trabajo']->renderLabel()."</b>" ?></td>
-        <td align="left"><?php echo $form['trabajo'] ?></td>
-      </tr> 
-       <tr>
-        <td><?php echo "<b>".$form['jerarquia']->renderLabel()."</b>" ?></td>
-        <td><?php echo $form['jerarquia'] ?></td>
-        <td align="left"><?php echo "<b>".$form['credencial']->renderLabel()."</b>" ?></td>
-        <td align="left"><?php echo $form['credencial'] ?></td>
-      </tr> 
-       <tr>
-        <td><?php echo "<b>".$form['anotaciones']->renderLabel()."</b>" ?></td>
-        <td><?php echo $form['anotaciones'] ?></td>
-        <td align="left"><?php echo "<b>".$form['activo']->renderLabel()."</b>" ?></td>
-        <td align="left"><?php echo $form['activo'] ?></td>
+      <tr>
+          <td width="10%">
+            <?php echo "<b>".$form['idobrasocial']->renderLabel()."</b>" ?>
+          </td>
+          <td colspan=2>
+            <?php echo $form['idobrasocial'] ?>
+          </td>
+           <td rowspan="6" width="10%">
+            <img style="align:center; width: 180px; height: 180px;" src='<?php echo $sf_request->getRelativeUrlRoot();?>/files/pacientes/3/angelina.jpg' align='center' size='20' />
+          </td>
+        </tr>  
+        <tr>
+          <td width="10%">
+            <?php echo "<b>".$form['plan']->renderLabel()."</b>" ?>
+          </td>
+          <td colspan=2>
+            <?php echo $form['plan']->render() ?>
+          </td>
+        </tr>  
+        <tr>
+          <td width="10%">
+            <?php echo "<b>".$form['titular']->renderLabel()."</b>" ?>
+          </td>
+          <td colspan=2>
+            <?php echo $form['titular']->render() ?>
+          </td>
+        </tr> 
+        <tr>
+          <td width="10%">
+            <?php echo "<b>".$form['parentesco']->renderLabel()."</b>" ?>
+          </td>
+          <td colspan=2>
+            <?php echo $form['parentesco']->render() ?>
+          </td>
+        </tr>
+        <tr>
+          <td width="10%">
+            <?php echo "<b>".$form['ocupacion']->renderLabel()."</b>" ?>
+          </td>
+          <td colspan=2>
+            <?php echo $form['ocupacion']->render() ?>
+          </td>
+        </tr>
+        <tr>
+          <td width="10%">
+            <?php echo "<b>".$form['siglas']->renderLabel()."</b>" ?>
+          </td>
+          <td colspan=2>
+            <?php echo $form['siglas']->render() ?>
+          </td>
       </tr>
+        
+      <tr>
+        <td><?php echo "<b>".$form['trabajo']->renderLabel()."</b>" ?></td>
+        <td><?php echo $form['trabajo'] ?></td>
+        <td align="left"><?php echo "<b>".$form['jerarquia']->renderLabel()."</b>" ?></td>
+        <td align="left"><?php echo $form['jerarquia'] ?></td>
+      </tr> 
+      
+      <tr>
+        <td colspan="1"><?php echo "<b>".$form['anotaciones']->renderLabel()."</b>" ?></td>
+        <td colspan="3"><?php echo $form['anotaciones'] ?></td>
+      </tr> 
        <tr>
         <td colspan="1"><?php echo "<b>".$form['historial']->renderLabel()."</b>" ?></td>
         <td colspan="3"><?php echo $form['historial'] ?></td>
       </tr>  
+      <tr>
+         <td align="left"><?php echo "<b>".$form['credencial']->renderLabel()."</b>" ?></td>
+        <td align="left"><?php echo $form['credencial'] ?></td>
+      </tr> 
        <tr>
         <td align="left"><?php echo "<b>".$form['imagefile']->renderLabel()."</b>" ?></td>
         <td  colspan="3" align="left"><?php echo $form['imagefile'] ?></td>
