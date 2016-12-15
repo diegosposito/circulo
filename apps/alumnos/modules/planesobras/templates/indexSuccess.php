@@ -1,34 +1,34 @@
-<h1>Planes obrass List</h1>
+ <style type="text/css">
+    p { margin-left:5em; /* Or another measurement unit, like px */ }
+  </style>
+  <br>
+<h1 align="center" style="color:black;">Listado de Planes de Obras Sociales</h1>
+<br>
+<?php if($sf_user->getGuardUser()->getIsSuperAdmin()){ ?>
+         <img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/new.png' align='center' size='20' />
+         <a href="<?php echo url_for('planesobras/new') ?>">Nuevo Plan de Obra Social</a>
+  <?php } ?>
 
-<table>
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Nombre</th>
-      <th>Codigo</th>
-      <th>Importe</th>
-      <th>Idobrasocial</th>
-      <th>Created at</th>
-      <th>Updated at</th>
-      <th>Created by</th>
-      <th>Updated by</th>
-    </tr>
-  </thead>
-  <tbody>
-    <?php foreach ($planes_obrass as $planes_obras): ?>
-    <tr>
-      <td><a href="<?php echo url_for('planesobras/show?id='.$planes_obras->getId()) ?>"><?php echo $planes_obras->getId() ?></a></td>
-      <td><?php echo $planes_obras->getNombre() ?></td>
-      <td><?php echo $planes_obras->getCodigo() ?></td>
-      <td><?php echo $planes_obras->getImporte() ?></td>
-      <td><?php echo $planes_obras->getIdobrasocial() ?></td>
-      <td><?php echo $planes_obras->getCreatedAt() ?></td>
-      <td><?php echo $planes_obras->getUpdatedAt() ?></td>
-      <td><?php echo $planes_obras->getCreatedBy() ?></td>
-      <td><?php echo $planes_obras->getUpdatedBy() ?></td>
-    </tr>
-    <?php endforeach; ?>
-  </tbody>
-</table>
+<table cellspacing="0" class="stats">
+    <thead>
+      <tr>
+        <td width="70%" align="center" class="hed">Obra Social</td>
+        <td width="30%" align="center" class="hed">Plan</td>
+        <td width="10%" align="center" class="hed">Edicion</td>
+      </tr>
+    </thead>
+    <tbody>
+      <?php $i=0; ?>
+      <?php foreach ($planes_obrass as $planes_obras){ ?>
+      <tr class="fila_<?php echo $i%2 ; ?>">
+        <td width="70%"><?php echo  $planes_obras->getObrasSociales()->getAbreviada() ?></td>
+        <td width="30%" align="center"><?php echo $planes_obras->getNombre() ?></td>
+        <td align="center"><?php echo link_to("Editar", 'planesobras/edit?id='.$planes_obras->getId() ,'class="mhead"'); ?></td>
+      </tr>
+      <?php $i++; ?>
+      <?php } ?>
 
-  <a href="<?php echo url_for('planesobras/new') ?>">New</a>
+      <br>
+  
+    </tbody>
+  </table>
