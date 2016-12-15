@@ -27,7 +27,14 @@ class PlanesObrasForm extends BasePlanesObrasForm
   	$this->widgetSchema['idobrasocial'] = new sfWidgetFormSelect(array('choices' => $arrObras));
 	
 
-	$this->widgetSchema->setLabel('idobrasocial', '<p align="left">Obra Social:</p>');
+	  $this->widgetSchema->setLabel('idobrasocial', '<p align="left">Obra Social:</p>');
+
+    $this->setValidators(array(
+      'nombre' => new sfValidatorString(array('required' => true), array('required' => 'El nombre es obligatorio.')),
+      'idobrasocial' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('ObrasSociales'), 'required' => true)),
+    ));
+
+    $this->validatorSchema->setOption('allow_extra_fields',true); 
  	
   }
 }
