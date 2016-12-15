@@ -1294,6 +1294,21 @@ ObrasSociales:
     fechaaranceltexto: { type: string(120), primary: false, notnull: true, default: ' ', autoincrement: false }
     fechaultimoperiodotexto: { type: string(120), primary: false, notnull: true, default: ' ', autoincrement: false }
 
+PlanesObras:
+  actAs: 
+    Timestampable: ~ 
+    fzblameable: ~
+  columns: 
+    id: { type: integer, primary: true, autoincrement: true }
+    nombre: { type: string(200) }
+    activo: { type: boolean, notnull: true, default: 1 }
+    idobrasocial: { type: integer, notnull: true, default: '0' } 
+  relations:
+    ObrasSociales: 
+      local: idobrasocial
+      foreign: idobrasocial
+      foreignAlias: ObrasSociales
+
 Empleados:
   actAs: 
     Timestampable: ~ 
