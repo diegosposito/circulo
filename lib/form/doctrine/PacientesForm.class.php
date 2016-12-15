@@ -36,7 +36,7 @@ class PacientesForm extends BasePacientesForm
       $this->widgetSchema->setLabel('parentesco', '<p align="left">Parentesco:</p>');
       $this->widgetSchema->setLabel('ocupacion', '<p align="left">Ocupación:</p>');
       $this->widgetSchema->setLabel('siglas', '<p align="left">Siglas:</p>');
-      $this->widgetSchema->setLabel('plan', '<p align="left">Plan:</p>');
+      $this->widgetSchema->setLabel('idplan', '<p align="left">Plan:</p>');
       $this->widgetSchema->setLabel('trabajo', '<p align="left">Trabajo:</p>');
       $this->widgetSchema->setLabel('jerarquia', '<p align="left">Jerarquía:</p>');
       $this->widgetSchema->setLabel('credencial', '<p align="left">Credencial:</p>');
@@ -54,8 +54,6 @@ class PacientesForm extends BasePacientesForm
 
       $this->widgetSchema['direccion'] = new sfWidgetFormInputText(array(), array("style"=>'width: 250px;'));
       $this->widgetSchema->setLabel('direccion', '<p align="left">Dirección:</p>');
-      $this->widgetSchema['plan'] = new sfWidgetFormInputText(array(), array("style"=>'width: 250px;'));
-      $this->widgetSchema->setLabel('plan', '<p align="left">Plan:</p>');
       $this->widgetSchema['titular'] = new sfWidgetFormInputText(array(), array("style"=>'width: 250px;'));
       $this->widgetSchema->setLabel('titular', '<p align="left">Titular:</p>');
       $this->widgetSchema['parentesco'] = new sfWidgetFormInputText(array(), array("style"=>'width: 250px;'));
