@@ -597,7 +597,6 @@ Pacientes:
     parentesco: { type: string(200), primary: false, notnull: true, default: '' }
     ocupacion: { type: string(200), primary: false, notnull: true, default: '' }
     siglas: { type: string(200), primary: false, notnull: true, default: '' }
-    plan: { type: string(200), primary: false, notnull: true, default: '' }
     trabajo: { type: string(200), primary: false, notnull: true, default: '' }
     jerarquia: { type: string(200), primary: false, notnull: true, default: '' }
     credencial: { type: string(200), primary: false, notnull: true, default: '' }
@@ -608,6 +607,7 @@ Pacientes:
     imagefile: { type: string(254), primary: false, autoincrement: false, default: '' }
     idprovincia: { type: integer, primary: false, default: '0' }
     idobrasocial: { type: integer, primary: false, default: '0' }
+    idplan: { type: integer, primary: false, default: '0' }
   relations:
     Provincias: 
       local: idprovincia
@@ -621,6 +621,10 @@ Pacientes:
       local: idciudadnac
       foreign: idciudad
       foreignAlias: Ciudades
+    PlanesObras: 
+      local: idplan
+      foreign: id
+      foreignAlias: PlanesObras
     EstadoCivil: 
       local: estadocivil
       foreign: idestadocivil
@@ -628,7 +632,7 @@ Pacientes:
     Sexo: 
       local: idsexo
       foreign: idsexo
-      foreignAlias: Sexo    
+      foreignAlias: Sexo  
 
 Personas:
   actAs: 
