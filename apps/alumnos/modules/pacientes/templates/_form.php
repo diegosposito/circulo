@@ -117,7 +117,11 @@
             <?php echo $form['idobrasocial'] ?>
           </td>
            <td rowspan="6" width="10%">
+             <?php if ($form->getObject()->isNew()){ ?>
+            <img style="align:center; width: 180px; height: 180px;" align='center' size='20' />
+            <?php } else { ?>
             <img style="align:center; width: 180px; height: 180px;" src='<?php echo $sf_request->getRelativeUrlRoot();?>/files/pacientes/<?php echo $form->getObject()->getId() ?>/<?php echo $paciente->getCredencial() ?>' align='center' size='20' />
+            <?php } ?>
           </td>
         </tr>  
         <tr>
@@ -176,13 +180,13 @@
         <td colspan="1"><?php echo "<b>".$form['historial']->renderLabel()."</b>" ?></td>
         <td colspan="3"><?php echo $form['historial'] ?></td>
       </tr>  
-     <tr>
-        <td align="left"><?php echo "<b>".$form['credencial']->renderLabel()."</b>" ?></td>
-        <td  colspan="3" align="left"><?php echo $form['credencial']->render()  ?></td>
-      </tr>  
+      <tr>
+         <td align="left"><?php echo "<b>".$form['credencial']->renderLabel()."</b>" ?></td>
+        <td colspan="3" align="left"><?php echo $form['credencial'] ?></td>
+      </tr> 
        <tr>
         <td align="left"><?php echo "<b>".$form['imagefile']->renderLabel()."</b>" ?></td>
-        <td  colspan="3" align="left"><?php echo $form['imagefile']->render()  ?></td>
+        <td  colspan="3" align="left"><?php echo $form['imagefile'] ?></td>
       </tr>  
                 
     </tbody>
