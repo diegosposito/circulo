@@ -39,7 +39,6 @@ class PacientesForm extends BasePacientesForm
       $this->widgetSchema->setLabel('idplan', '<p align="left">Plan:</p>');
       $this->widgetSchema->setLabel('trabajo', '<p align="left">Trabajo:</p>');
       $this->widgetSchema->setLabel('jerarquia', '<p align="left">Jerarquía:</p>');
-      $this->widgetSchema->setLabel('credencial', '<p align="left">Credencial:</p>');
       $this->widgetSchema->setLabel('anotaciones', '<p align="left">Anotaciones:</p>');
       $this->widgetSchema->setLabel('activo', '<p align="left">Activo:</p>');
       $this->widgetSchema->setLabel('historial', '<p align="left">Historial:</p>');
@@ -48,6 +47,11 @@ class PacientesForm extends BasePacientesForm
                                                'label' => 'Archivo',
                                              ));
       $this->widgetSchema->setLabel('imagefile', '<p align="left">Foto:</p>');
+
+       $this->widgetSchema['credencial'] = new sfWidgetFormInputFile(array(
+                                               'label' => 'Archivo',
+                                             ));
+      $this->widgetSchema->setLabel('credencial', '<p align="left">Credencial:</p>');
          
       $range  = range(date('Y')-80, date('Y')+1);
 		  $years = array_combine($range,$range);
