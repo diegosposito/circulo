@@ -135,14 +135,20 @@ class pacientesActions extends sfActions
 
       $hasfile =false;
       foreach ($request->getFiles() as $fileName) {
-           $targetFolder = sfConfig::get('app_pathfiles_folder')."/pacientes/".$pacientes->getId().'/'.$fileName['imagefile']['name'];
-           move_uploaded_file($fileName['imagefile']['tmp_name'], $targetFolder);
-           $hasfile = true;
+
+           if (trim($fileName['imagefile']['name'])<>'') {
+              $targetFolder = sfConfig::get('app_pathfiles_folder')."/pacientes/".$pacientes->getId().'/'.$fileName['imagefile']['name'];
+              move_uploaded_file($fileName['imagefile']['tmp_name'], $targetFolder);
+              $pacientes->setImagefile($fileName['imagefile']['name']);
+           }   
+
+           if (trim($fileName['credencial']['name'])<>'') {
+              $targetFolder = sfConfig::get('app_pathfiles_folder')."/pacientes/".$pacientes->getId().'/'.$fileName['credencial']['name'];
+              move_uploaded_file($fileName['credencial']['tmp_name'], $targetFolder);
+              $pacientes->setCredencial($fileName['credencial']['name']); 
+           }  
      
-      }
-    
-      if ($hasfile && trim($fileName['imagefile']['name'])<>'') 
-         $pacientes->setImagefile($fileName['imagefile']['name']);
+      } 
     
       $pacientes->save();
 
