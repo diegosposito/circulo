@@ -125,7 +125,35 @@ class pacientesActions extends sfActions
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
     if ($form->isValid())
     {
+      
+      $this->forward404Unless($paciente = Doctrine_Core::getTable('Pacientes')->find(array($request->getPostParameter('pacientes[id]'))), sprintf('Object pacientes does not exist (%s).',$request->getPostParameter('pacientes[id]')));
+      $credencial_name= $paciente->getCredencial(); 
+      $imagefile_name= $paciente->getImagefile(); 
+
+      $i=0; $recuperar_credencial = false; $recuperar_imagefile =false;
+
+      foreach ($request->getFiles() as $fileName) {
+
+            if (strlen(trim($fileName['credencial']['name']))==0)
+                $recuperar_credencial = true;
+                 
+              
+            if (strlen(trim($fileName['imagefile']['name']))==0)
+                $recuperar_imagefile = true;
+                      
+      }
+
       $pacientes = $form->save();
+
+      if($recuperar_credencial)
+         $paciente->setCredencial($credencial_name);
+
+      if($recuperar_imagefile)
+         $paciente->setImagefile($imagefile_name);
+
+    // Graba cambios si corresponde de imagenes o recupera anteriores
+      $paciente->save();
+    
 
       $folder_path_name = sfConfig::get('app_pathfiles_folder')."/pacientes/".$pacientes->getId();
       
