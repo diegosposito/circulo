@@ -33,5 +33,17 @@ class ObrasSocialesTable extends Doctrine_Table
         return $q;
     } 
 
+    // Obtiene todas las OS ordeandas por campo abreviada
+    public static function obtenerTodas()
+    {
+        $q = Doctrine_Query::create()
+            ->select('o.*')
+            ->from('ObrasSociales o')
+            ->orderby('o.abreviada ASC ');
+
+        return $q->execute();
+    } 
+    
+
     // Obten
 }
