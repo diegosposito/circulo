@@ -27,8 +27,7 @@ class PacientesForm extends BasePacientesForm
       $this->widgetSchema->setLabel('direccion', '<p align="left">Dirección:</p>');
 
       $this->widgetSchema->setLabel('idprovincia', '<p align="left">Provincia:</p>');
-      $this->widgetSchema->setLabel('idobrasocial', '<p align="left">O. Social:</p>');
-      $this->widgetSchema->setLabel('idciudadnac', '<p align="left">Ciudad:</p>');
+       $this->widgetSchema->setLabel('idciudadnac', '<p align="left">Ciudad:</p>');
  	    $this->widgetSchema->setLabel('email', '<p align="left">Email:</p>');
       $this->widgetSchema->setLabel('celular', '<p align="left">Celular:</p>');
  	    $this->widgetSchema->setLabel('telefono', '<p align="left">Teléfono:</p>');
@@ -48,9 +47,20 @@ class PacientesForm extends BasePacientesForm
                                              ));
       $this->widgetSchema->setLabel('imagefile', '<p align="left">Foto:</p>');
 
-       $this->widgetSchema['credencial'] = new sfWidgetFormInputFile(array(
+     $this->widgetSchema['credencial'] = new sfWidgetFormInputFile(array(
                                                'label' => 'Archivo',
                                              ));
+      $this->widgetSchema->setLabel('credencial', '<p align="left">Foto:</p>');
+
+      $oss = Doctrine_Core::getTable('ObrasSociales')->obtenerTodas();
+      foreach($oss as $os){
+        $arregloOS[$os->getIdObrasocial()] = $os->getAbreviada(); 
+      }  
+        
+      $this->widgetSchema['idobrasocial'] = new sfWidgetFormSelect(array('choices' => $arregloOS));
+      $this->widgetSchema->setLabel('idobrasocial', '<p align="left">O. Social:</p>');
+     
+   
       $this->widgetSchema->setLabel('credencial', '<p align="left">Credencial:</p>');
          
       $range  = range(date('Y')-80, date('Y')+1);
