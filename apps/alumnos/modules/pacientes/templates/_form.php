@@ -110,6 +110,9 @@
         <th align="center" colspan=4><?php echo ''.'O T R A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I N F O R M A C I O N ' ?></th>
       </tr>
       <tr>
+        <th align="left" colspan=4><label id="osdescripcion" name="osdescripcion" for="osdescripcion">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></th>
+      </tr>
+      <tr>
           <td width="10%">
             <?php echo "<b>".$form['idobrasocial']->renderLabel()."</b>" ?>
           </td>

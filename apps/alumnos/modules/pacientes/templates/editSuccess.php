@@ -55,6 +55,7 @@
     $('#pacientes_idobrasocial').change(function(){
         // cargar las ciudades de la carrera al combo
         cargarComboPlanes('#pacientes_idplan', $(this).val(), 0);
+        actualizarOS('#osdescripcion', $(this).val(), 0);
     }); 
 
   });
@@ -83,6 +84,25 @@
 	    }
 	  );
 	}
+
+	//Cargar combo de ciudades
+	function actualizarOS(combo, id, idseleccionado){
+	    // cargar las ciudades de la carrera al combo
+	    $.post("<?php echo url_for('obrassociales/obtenerinfo'); ?>",
+	    { idobrasocial: id },
+	    function(data){
+	      if (data){
+	        $(combo).html(data);
+	        $(combo).attr('disabled',false);
+	     //   $(combo).val(idseleccionado);             
+	      }else{
+	        $(combo).attr('disabled',true);
+	        $(combo).html("");
+	      }
+	    }
+	  );
+	}
+
 
 		//Cargar combo de planes de obras sociales
 	function cargarComboPlanes(combo, id, idseleccionado){
