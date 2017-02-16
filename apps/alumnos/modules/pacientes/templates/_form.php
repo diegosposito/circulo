@@ -167,6 +167,15 @@
             <?php echo $form['siglas']->render() ?>
           </td>
       </tr>
+
+      <tr>
+          <td width="10%">
+            <?php echo "<b>".$form['idtipoiva']->renderLabel()."</b>" ?>
+          </td>
+          <td colspan=2>
+            <?php echo $form['idtipoiva']->render() ?>
+          </td>
+        </tr> 
         
       <tr>
         <td><?php echo "<b>".$form['trabajo']->renderLabel()."</b>" ?></td>
