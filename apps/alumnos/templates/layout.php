@@ -12,7 +12,7 @@
     <?php use_stylesheet('ui.jqgrid.css') ?>   
     <?php use_stylesheet('jquery.ui.timepicker.css') ?>
     <?php use_stylesheet('jquery.tablescroll.css') ?>
-    <?php use_stylesheet('superfish.css') ?>
+    <?php use_stylesheet('superfish-verticalfish.css') ?>
     <?php use_stylesheet('superfish-vertical.css') ?>
     <?php use_stylesheet('superfish-navbar.css') ?>
     <?php use_stylesheet('ddaccordion.css') ?>
@@ -28,12 +28,14 @@
     <?php use_javascript('tiny_mce/tiny_mce.js') ?>    
     <?php use_javascript('jquery.ui.timepicker.js') ?>
     <?php use_javascript('jquery.tablescroll.js') ?>
-    <?php use_javascript('jquery-1.7.min.js') ?>
+    
     <?php use_javascript('jquery.jcarousel.js') ?>
     <?php use_javascript('DD_belatedPNG-min.js') ?>
     <?php use_javascript('functions.js') ?>
     <?php use_javascript('ddaccordion.js') ?>
     <?php use_javascript('prettyCheckboxes.js') ?>
+
+    <?php use_javascript('jquery-1.7.min.js') ?>
    
  
     <?php include_stylesheets() ?>
