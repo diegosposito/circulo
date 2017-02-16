@@ -14,7 +14,7 @@ class obrassocialesActions extends sfActions
   {
     $this->obras_socialess = Doctrine_Core::getTable('ObrasSociales')
       ->createQuery('a')
-      ->orderBy('a.ninterno')
+      ->orderBy('a.ninterno') 
       ->execute();
   }
 
