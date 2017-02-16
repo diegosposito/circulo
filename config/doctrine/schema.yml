@@ -608,6 +608,7 @@ Pacientes:
     idprovincia: { type: integer, primary: false, default: '0' }
     idobrasocial: { type: integer, primary: false, default: '0' }
     idplan: { type: integer, primary: false, default: '0' }
+    idtipoiva: { type: integer, primary: false, default: '0' }
   relations:
     Provincias: 
       local: idprovincia
@@ -632,7 +633,29 @@ Pacientes:
     Sexo: 
       local: idsexo
       foreign: idsexo
-      foreignAlias: Sexo  
+      foreignAlias: Sexo
+    TipoIva: 
+      local: idtipoiva
+      foreign: id
+      foreignAlias: TipoIva   
+
+TipoIva:
+  actAs: 
+    Timestampable: ~ 
+    fzblameable: ~
+  columns: 
+    id: { type: integer, primary: true, autoincrement: true }
+    nombre: { type: string(200) }
+    orden: { type: integer, notnull: true, default: '0' }       
+
+CargoAutoridades:
+  actAs: 
+    Timestampable: ~ 
+    fzblameable: ~
+  columns: 
+    idcargoautoridad: { type: integer, primary: true, autoincrement: true }
+    nombre: { type: string(200) }
+    orden: { type: integer, notnull: true, default: '0' }    
 
 Personas:
   actAs: 
