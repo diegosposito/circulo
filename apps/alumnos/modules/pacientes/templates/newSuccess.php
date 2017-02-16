@@ -60,12 +60,12 @@
 
   });
 
-    $('#pacientes_idprovincia').click(function() {
+    /*$('#pacientes_idprovincia').click(function() {
 		cargarComboCiudades('#pacientes_idciudadnac', $(this).val(), 0);
    	});   
    	$('#pacientes_idobrasocial').click(function() {
 		cargarComboPlanes('#pacientes_idplan', $(this).val(), 0);
-   	});     
+   	}); */    
     
 	//Cargar combo de ciudades
 	function cargarComboCiudades(combo, id, idseleccionado){
@@ -92,7 +92,7 @@
 	    { idobrasocial: id },
 	    function(data){
 	      if (data){
-	        $(combo).html(data);
+	        $(combo).html(data.replace(/\d+/g, ''));
 	        $(combo).attr('disabled',false);
 	      //  $(combo).val(idseleccionado);             
 	      }else{
