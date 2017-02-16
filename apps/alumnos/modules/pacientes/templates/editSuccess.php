@@ -92,7 +92,7 @@
 	    { idobrasocial: id },
 	    function(data){
 	      if (data){
-	        $(combo).html(data);
+	        $(combo).html(data.replace(/\d+/g, ''));
 	        $(combo).attr('disabled',false);
 	     //   $(combo).val(idseleccionado);             
 	      }else{
