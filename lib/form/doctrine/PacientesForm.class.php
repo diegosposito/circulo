@@ -25,6 +25,7 @@ class PacientesForm extends BasePacientesForm
       $this->widgetSchema->setLabel('fechanac', '<p align="left">Fec. Nacimiento:</p>');
       $this->widgetSchema->setLabel('fechaingreso', '<p align="left">Fec. Ingreso:</p>');
       $this->widgetSchema->setLabel('direccion', '<p align="left">Dirección:</p>');
+      $this->widgetSchema->setLabel('idtipoiva', '<p align="left">IVA:</p>');
 
       $this->widgetSchema->setLabel('idprovincia', '<p align="left">Provincia:</p>');
        $this->widgetSchema->setLabel('idciudadnac', '<p align="left">Ciudad:</p>');
