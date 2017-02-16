@@ -125,10 +125,17 @@ class pacientesActions extends sfActions
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
     if ($form->isValid())
     {
+
+      $es_nuevo = true;$credencial_name= ''; $imagefile_name= ''; 
+      if ($request->getPostParameter('pacientes[id]')>0) 
+          $es_nuevo=false;
       
-      $this->forward404Unless($paciente = Doctrine_Core::getTable('Pacientes')->find(array($request->getPostParameter('pacientes[id]'))), sprintf('Object pacientes does not exist (%s).',$request->getPostParameter('pacientes[id]')));
-      $credencial_name= $paciente->getCredencial(); 
-      $imagefile_name= $paciente->getImagefile(); 
+      // Si es la edicion
+      if (!$es_nuevo){
+          $this->forward404Unless($paciente = Doctrine_Core::getTable('Pacientes')->find(array($request->getPostParameter('pacientes[id]'))), sprintf('Object pacientes does not exist (%s).',$request->getPostParameter('pacientes[id]')));
+          $credencial_name= $paciente->getCredencial(); 
+          $imagefile_name= $paciente->getImagefile();
+      } 
 
       $i=0; $recuperar_credencial = false; $recuperar_imagefile =false;
 
@@ -145,14 +152,15 @@ class pacientesActions extends sfActions
 
       $pacientes = $form->save();
 
-      if($recuperar_credencial)
+      if($recuperar_credencial && !$es_nuevo)
          $paciente->setCredencial($credencial_name);
 
-      if($recuperar_imagefile)
+      if($recuperar_imagefile && !$es_nuevo)
          $paciente->setImagefile($imagefile_name);
 
     // Graba cambios si corresponde de imagenes o recupera anteriores
-      $paciente->save();
+      if (!$es_nuevo)
+          $paciente->save();
     
 
       $folder_path_name = sfConfig::get('app_pathfiles_folder')."/pacientes/".$pacientes->getId();
