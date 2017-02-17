@@ -21,7 +21,10 @@
           <?php echo $form->renderGlobalErrors() ?>
         <tr>
         <th align="center" colspan=4><?php echo ''.'D A T O S &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;P E R S O N A L E S ' ?></th>
-        </tr>  
+        </tr> 
+       <tr>
+        <th align="left" colspan=4><label id="ostiponroafiliado" name="ostiponroafiliado" for="ostiponroafiliado">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></th>
+      </tr> 
         <tr>
           <td width="10%">
             <?php echo "<b>".$form['nroafiliado']->renderLabel()."</b>" ?>
