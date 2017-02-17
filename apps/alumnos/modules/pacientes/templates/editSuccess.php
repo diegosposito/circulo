@@ -56,6 +56,7 @@
         // cargar las ciudades de la carrera al combo
         cargarComboPlanes('#pacientes_idplan', $(this).val(), 0);
         actualizarOS('#osdescripcion', $(this).val(), 0);
+        actualizarFormato('#ostiponroafiliado', $(this).val(), 0);
     }); 
 
   });
@@ -95,6 +96,24 @@
 	        $(combo).html(data.replace(/\d+/g, ''));
 	        $(combo).attr('disabled',false);
 	     //   $(combo).val(idseleccionado);             
+	      }else{
+	        $(combo).attr('disabled',true);
+	        $(combo).html("");
+	      }
+	    }
+	  );
+	}
+
+	//Cargar combo de ciudades
+	function actualizarFormato(combo, id, idseleccionado){
+	    // cargar las ciudades de la carrera al combo
+	    $.post("<?php echo url_for('obrassociales/obtenerformato'); ?>",
+	    { idobrasocial: id },
+	    function(data){
+	      if (data){
+	        $(combo).html(data.substr(3,100));
+	        $(combo).attr('disabled',false);
+	      //  $(combo).val(idseleccionado);             
 	      }else{
 	        $(combo).attr('disabled',true);
 	        $(combo).html("");
