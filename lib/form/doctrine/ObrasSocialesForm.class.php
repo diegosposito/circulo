@@ -25,6 +25,7 @@ class ObrasSocialesForm extends BaseObrasSocialesForm
       $this->widgetSchema->setLabel('protesis', '<p align="left">Prótesis:</p>');
       $this->widgetSchema->setLabel('ortodoncia', '<p align="left">Ortodoncia:</p>');
       $this->widgetSchema->setLabel('implantes', '<p align="left">Implantes:</p>');
+      $this->widgetSchema->setLabel('formato', '<p align="left">Formato:</p>');
       
 
 
