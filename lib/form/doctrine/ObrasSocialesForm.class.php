@@ -64,6 +64,7 @@ class ObrasSocialesForm extends BaseObrasSocialesForm
         'fechaultimoperiodo' => new sfValidatorString(array('max_length' => 200, 'required' => false)),
         'fechaaranceltexto' => new sfValidatorString(array('max_length' => 200, 'required' => false)),
         'fechaultimoperiodotexto' => new sfValidatorString(array('max_length' => 200, 'required' => false)),
+        'formato' => new sfValidatorString(array('max_length' => 200, 'required' => false)),
         ));
 
       $this->validatorSchema->setOption('allow_extra_fields',true); 
