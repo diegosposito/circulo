@@ -30,6 +30,12 @@ class obrassocialesActions extends sfActions
     $this->oss = Doctrine_Core::getTable('ObrasSociales')->find(array($request->getParameter('idobrasocial')));
   }
 
+   public function executeObtenerformato(sfWebRequest $request)
+  {
+    echo $request->getParameter('idobrasocial'); 
+    $this->oss = Doctrine_Core::getTable('ObrasSociales')->find(array($request->getParameter('idobrasocial')));
+  }
+
   public function executeMostrar(sfWebRequest $request)
   {
     $this->obras_sociales = Doctrine_Core::getTable('ObrasSociales')->find(array($request->getParameter('idobrasocial')));
