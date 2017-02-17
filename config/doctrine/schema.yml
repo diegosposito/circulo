@@ -1320,6 +1320,7 @@ ObrasSociales:
     fechaultimoperiodo: { type: date, notnull: true }
     fechaaranceltexto: { type: string(120), primary: false, notnull: true, default: ' ', autoincrement: false }
     fechaultimoperiodotexto: { type: string(120), primary: false, notnull: true, default: ' ', autoincrement: false }
+    formato: { type: string(100), primary: false, notnull: true, default: '' }
 
 PlanesObras:
   actAs: 
