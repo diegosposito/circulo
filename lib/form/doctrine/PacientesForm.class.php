@@ -63,12 +63,16 @@ class PacientesForm extends BasePacientesForm
       
       $arregloTitular = array('1' => 'Si', '2' => 'No'); 
       $arregloParentesco = array('1' => 'Titular', '2' => 'Esposo/a', '3' => 'Hijo/a', '4' => 'Hermano/a', '5' => 'Padre/Madre'); 
+      $arregloTipoiva = array('1' => 'No Grabado', '2' => 'Grabado'); 
      
       $this->widgetSchema['titular'] = new sfWidgetFormSelect(array('choices' => $arregloTitular));
       $this->widgetSchema->setLabel('titular', '<p align="left">Titular:</p>');
 
       $this->widgetSchema['parentesco'] = new sfWidgetFormSelect(array('choices' => $arregloParentesco));
       $this->widgetSchema->setLabel('parentesco', '<p align="left">Parentesco:</p>');
+
+      $this->widgetSchema['idtipoiva'] = new sfWidgetFormSelect(array('choices' => $arregloTipoiva));
+      $this->widgetSchema->setLabel('idtipoiva', '<p align="left">IVA:</p>');
      
    
       $this->widgetSchema->setLabel('credencial', '<p align="left">Credencial:</p>');
