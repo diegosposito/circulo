@@ -93,7 +93,8 @@
 	    { idobrasocial: id },
 	    function(data){
 	      if (data){
-	        $(combo).html(data.substr(3,100));
+	        //$(combo).html(data.substr(3,100));
+	        $(combo).html(data.replace(/\d+/g, ''));
 	        $(combo).attr('disabled',false);
 	      //  $(combo).val(idseleccionado);             
 	      }else{
@@ -111,7 +112,9 @@
 	    { idobrasocial: id },
 	    function(data){
 	      if (data){
-	        $(combo).html(data.replace(/\d+/g, ''));
+	        //$(combo).html(data.replace(/\d+/g, ''));
+	        $(combo).html(data.substr(1,100));
+	        //$(combo).html(data);
 	        $(combo).attr('disabled',false);
 	      //  $(combo).val(idseleccionado);             
 	      }else{

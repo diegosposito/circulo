@@ -22,17 +22,15 @@
         <tr>
         <th align="center" colspan=4><?php echo ''.'D A T O S &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;P E R S O N A L E S ' ?></th>
         </tr> 
-       <tr>
-        <th align="left" colspan=4><label id="ostiponroafiliado" name="ostiponroafiliado" for="ostiponroafiliado">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></th>
-      </tr> 
+       
         <tr>
           <td width="10%">
-            <?php echo "<b>".$form['nroafiliado']->renderLabel()."</b>" ?>
+            <?php echo "<b>".$form['nombre']->renderLabel()."</b>" ?>
           </td>
           <td>
-            <?php echo $form['nroafiliado']->render() ?>
+            <?php echo $form['nombre']->render() ?>
           </td>
-           <td rowspan="5" width="10%">
+          <td rowspan="5" width="10%">
           </td>
            <td rowspan="5" width="10%">
             <?php if ($form->getObject()->isNew()){ ?>
@@ -40,14 +38,6 @@
             <?php } else { ?>
             <img style="align:center; width: 180px; height: 180px;" src='<?php echo $sf_request->getRelativeUrlRoot();?>/files/pacientes/<?php echo $form->getObject()->getId() ?>/<?php echo $paciente->getImagefile() ?>' align='center' size='20' />
             <?php } ?>
-          </td>
-        </tr>  
-        <tr>
-          <td width="10%">
-            <?php echo "<b>".$form['nombre']->renderLabel()."</b>" ?>
-          </td>
-          <td>
-            <?php echo $form['nombre']->render() ?>
           </td>
         </tr>  
         <tr>
@@ -73,12 +63,18 @@
           <td>
             <?php echo $form['fechanac']->render() ?>
           </td>
-        </tr>   
+        </tr>  
+        <tr>
+          <td width="10%">
+            <?php echo "<b>".$form['idsexo']->renderLabel()."</b>" ?>
+          </td>
+          <td>
+            <?php echo $form['idsexo']->render() ?>
+          </td>
+        </tr>  
       <tr>
-        <td><?php echo "<b>".$form['idsexo']->renderLabel()."</b>" ?></td>
-        <td><?php echo $form['idsexo'] ?></td>
-        <td align="left"><?php echo "<b>".$form['estadocivil']->renderLabel()."</b>" ?></td>
-        <td align="left"><?php echo $form['estadocivil'] ?></td>
+        <td colspan="1"><?php echo "<b>".$form['estadocivil']->renderLabel()."</b>" ?></td>
+        <td colspan="3"><?php echo $form['estadocivil'] ?></td>
       </tr>  
       <tr>
         <td colspan="1"><?php echo "<b>".$form['direccion']->renderLabel()."</b>" ?></td>
@@ -110,10 +106,10 @@
       <tr>
       </tr>
       <tr>
-        <th align="center" colspan=4><?php echo ''.'O T R A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I N F O R M A C I O N ' ?></th>
+        <th align="center" colspan=4><?php echo ''.'O B R A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;S O C I A L ' ?></th>
       </tr>
       <tr>
-        <th align="left" colspan=4><label id="osdescripcion" name="osdescripcion" for="osdescripcion">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></th>
+        <td align="left" colspan=4><b><label id="osdescripcion" name="osdescripcion" for="osdescripcion">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></b></td>
       </tr>
       <tr>
           <td width="10%">
@@ -138,6 +134,19 @@
             <?php echo $form['idplan']->render() ?>
           </td>
         </tr>  
+         <tr>
+          <td colspan=2 width="10%"><b>
+            <label id="ostiponroafiliado" name="ostiponroafiliado" for="ostiponroafiliado">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></b>
+          </td>
+         </tr> 
+        <tr>
+          <td width="10%">
+            <?php echo "<b>".$form['nroafiliado']->renderLabel()."</b>" ?>
+          </td>
+          <td colspan=2>
+            <?php echo $form['nroafiliado']->render() ?>
+          </td>
+        </tr>
         <tr>
           <td width="10%">
             <?php echo "<b>".$form['titular']->renderLabel()."</b>" ?>
