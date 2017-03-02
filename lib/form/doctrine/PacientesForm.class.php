@@ -60,6 +60,15 @@ class PacientesForm extends BasePacientesForm
         
       $this->widgetSchema['idobrasocial'] = new sfWidgetFormSelect(array('choices' => $arregloOS));
       $this->widgetSchema->setLabel('idobrasocial', '<p align="left">O. Social:</p>');
+      
+      $arregloTitular = array('1' => 'Si', '2' => 'No'); 
+      $arregloParentesco = array('1' => 'Titular', '2' => 'Esposo/a', '3' => 'Hijo/a', '4' => 'Hermano/a', '5' => 'Padre/Madre'); 
+     
+      $this->widgetSchema['titular'] = new sfWidgetFormSelect(array('choices' => $arregloTitular));
+      $this->widgetSchema->setLabel('titular', '<p align="left">Titular:</p>');
+
+      $this->widgetSchema['parentesco'] = new sfWidgetFormSelect(array('choices' => $arregloParentesco));
+      $this->widgetSchema->setLabel('parentesco', '<p align="left">Parentesco:</p>');
      
    
       $this->widgetSchema->setLabel('credencial', '<p align="left">Credencial:</p>');
@@ -69,9 +78,9 @@ class PacientesForm extends BasePacientesForm
 
       $this->widgetSchema['direccion'] = new sfWidgetFormInputText(array(), array("style"=>'width: 250px;'));
       $this->widgetSchema->setLabel('direccion', '<p align="left">Dirección:</p>');
-      $this->widgetSchema['titular'] = new sfWidgetFormInputText(array(), array("style"=>'width: 250px;'));
-      $this->widgetSchema->setLabel('titular', '<p align="left">Titular:</p>');
-      $this->widgetSchema['parentesco'] = new sfWidgetFormInputText(array(), array("style"=>'width: 250px;'));
+      /* $this->widgetSchema['titular'] = new sfWidgetFormInputText(array(), array("style"=>'width: 250px;'));
+      $this->widgetSchema->setLabel('titular', '<p align="left">Titular:</p>'); 
+      $this->widgetSchema['parentesco'] = new sfWidgetFormInputText(array(), array("style"=>'width: 250px;')); */
       $this->widgetSchema->setLabel('parentesco', '<p align="left">Parentesco:</p>');
       $this->widgetSchema['ocupacion'] = new sfWidgetFormInputText(array(), array("style"=>'width: 250px;'));
       $this->widgetSchema->setLabel('ocupacion', '<p align="left">Ocupación:</p>');
