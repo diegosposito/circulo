@@ -634,19 +634,6 @@ Pacientes:
       local: idsexo
       foreign: idsexo
       foreignAlias: Sexo
-    TipoIva: 
-      local: idtipoiva
-      foreign: id
-      foreignAlias: TipoIva   
-
-TipoIva:
-  actAs: 
-    Timestampable: ~ 
-    fzblameable: ~
-  columns: 
-    id: { type: integer, primary: true, autoincrement: true }
-    nombre: { type: string(200) }
-    orden: { type: integer, notnull: true, default: '0' }       
 
 CargoAutoridades:
   actAs: 
