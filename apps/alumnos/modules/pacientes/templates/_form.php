@@ -115,14 +115,14 @@
           <td width="10%">
             <?php echo "<b>".$form['idobrasocial']->renderLabel()."</b>" ?>
           </td>
-          <td colspan=2>
+          <td>
             <?php echo $form['idobrasocial'] ?>
           </td>
-           <td rowspan="6" width="10%">
+           <td align="center" colspan=2 rowspan="6" width="10%">
              <?php if ($form->getObject()->isNew()){ ?>
-            <img style="align:center; width: 180px; height: 180px;" align='center' size='20' />
+            <img style="align:center; width: 240px; height: 120px;" align='center' size='20' />
             <?php } else { ?>
-            <img style="align:center; width: 180px; height: 180px;" src='<?php echo $sf_request->getRelativeUrlRoot();?>/files/pacientes/<?php echo $form->getObject()->getId() ?>/<?php echo $paciente->getCredencial() ?>' align='center' size='20' />
+            <img style="align:center; width: 240px; height: 120px;" src='<?php echo $sf_request->getRelativeUrlRoot();?>/files/pacientes/<?php echo $form->getObject()->getId() ?>/<?php echo $paciente->getCredencial() ?>' align='center' size='20' />
             <?php } ?>
           </td>
         </tr>  
@@ -163,24 +163,7 @@
             <?php echo $form['parentesco']->render() ?>
           </td>
         </tr>
-        <tr>
-          <td width="10%">
-            <?php echo "<b>".$form['ocupacion']->renderLabel()."</b>" ?>
-          </td>
-          <td colspan=2>
-            <?php echo $form['ocupacion']->render() ?>
-          </td>
-        </tr>
-        <tr>
-          <td width="10%">
-            <?php echo "<b>".$form['siglas']->renderLabel()."</b>" ?>
-          </td>
-          <td colspan=2>
-            <?php echo $form['siglas']->render() ?>
-          </td>
-      </tr>
-
-      <tr>
+       <tr>
           <td width="10%">
             <?php echo "<b>".$form['idtipoiva']->renderLabel()."</b>" ?>
           </td>
