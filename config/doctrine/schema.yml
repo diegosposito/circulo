@@ -593,8 +593,8 @@ Pacientes:
     celular: { type: string(200), primary: false, notnull: true, default: '' }
     telefono: { type: string(200), primary: false, notnull: true, default: '' }
     direccion: { type: string(200), primary: false, notnull: true, default: '' }
-    titular: { type: string(200), primary: false, notnull: true, default: '' }
-    parentesco: { type: string(200), primary: false, notnull: true, default: '' }
+    titular: { type: integer, primary: false, default: '0' }
+    parentesco: { type: integer, primary: false, default: '0' }
     ocupacion: { type: string(200), primary: false, notnull: true, default: '' }
     siglas: { type: string(200), primary: false, notnull: true, default: '' }
     trabajo: { type: string(200), primary: false, notnull: true, default: '' }
