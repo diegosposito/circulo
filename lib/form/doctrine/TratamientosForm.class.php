@@ -57,6 +57,28 @@ class TratamientosForm extends BaseTratamientosForm
     
     $this->widgetSchema['nombre'] = new sfWidgetFormInputText(array(), array("style"=>'width: 250px;'));
     $this->widgetSchema->setLabel('nombre', '<p align="left">Tratamiento:</p>');
+
+    $this->setValidators(array(
+      'id'                 => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
+      'nombre' => new sfValidatorString(array('required' => true), array('required' => 'El tratamiento es obligatorio.')),
+      'abreviacion'        => new sfValidatorString(array('max_length' => 200, 'required' => false)),
+      'idgrupotratamiento'  => new sfValidatorInteger(array('required' => false)),
+      'idobrasocial'        => new sfValidatorInteger(array('required' => false)),
+      'idontologia'        => new sfValidatorInteger(array('required' => false)),
+      'garantia'           => new sfValidatorInteger(array('required' => false)),
+      'importe'            => new sfValidatorNumber(array('required' => false)),
+      'coseguro'           => new sfValidatorNumber(array('required' => false)),
+      'bono'               => new sfValidatorNumber(array('required' => false)),
+      'importeos'          => new sfValidatorNumber(array('required' => false)),
+      'idautorizacion'     => new sfValidatorInteger(array('required' => false)),
+      'visible'            => new sfValidatorInteger(array('required' => false)),
+      'descripcion'        => new sfValidatorString(array('max_length' => 400, 'required' => false)),
+      'normas'             => new sfValidatorString(array('max_length' => 2000, 'required' => false)),
+      'activo'             => new sfValidatorBoolean(array('required' => false)),
+    ));
+
+    $this->validatorSchema->setOption('allow_extra_fields',true); 
+
   
   }
 }
