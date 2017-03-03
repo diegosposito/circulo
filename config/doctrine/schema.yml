@@ -2645,3 +2645,43 @@ MateriasEquivalencias:
       foreign: idestadoequivalencia
       foreignAlias: EstadosEquivalencias
 
+Tratamientos:
+  actAs: 
+    Timestampable: ~ 
+    fzblameable: ~
+  columns: 
+    id: { type: integer, primary: true, autoincrement: true }
+    nombre: { type: string(200) }
+    abreviacion: { type: string(200) }
+    idgrupotratamiento: { type: integer, notnull: true, default: '0' } 
+    idobrasocial: { type: integer, primary: false, default: '0' }
+    idontologia: { type: integer, primary: false, default: '0' }
+    garantia: { type: integer, primary: false, autoincrement: false }
+    importe: { type: float, primary: false, notnull: true, default: '' }
+    coseguro: { type: float, primary: false, notnull: true, default: '' }
+    bono: { type: float, primary: false, notnull: true, default: '' }
+    importeos: { type: float, primary: false, notnull: true, default: '' }
+    idautorizacion: { type: integer, primary: false, default: '0' }
+    visible: { type: integer, primary: false, default: '0' }
+    descripcion: { type: string(400) }
+    normas: { type: string(2000) }
+    activo: { type: boolean, primary: false, notnull: true, default: 0 } 
+  relations:
+    GrupoTratamiento: 
+      local: idgrupotratamiento
+      foreign: id
+      foreignAlias: GrupoTratamiento
+    ObrasSociales: 
+      local: idobrasocial
+      foreign: idobrasocial
+      foreignAlias: ObrasSociales      
+
+GrupoTratamiento:
+  actAs: 
+    Timestampable: ~ 
+    fzblameable: ~
+  columns: 
+    id: { type: integer, primary: true, autoincrement: true }
+    nombre: { type: string(200) }
+    abreviacion: { type: string(200) }
+    activo: { type: boolean, primary: false, notnull: true, default: 0 } 
