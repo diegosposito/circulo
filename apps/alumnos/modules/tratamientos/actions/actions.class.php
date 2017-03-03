@@ -12,9 +12,7 @@ class tratamientosActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-    $this->tratamientoss = Doctrine_Core::getTable('Tratamientos')
-      ->createQuery('a')
-      ->execute();
+    $this->tratamientoss = Doctrine_Core::getTable('Tratamientos')->obtenerTratamientos();
   }
 
   public function executeShow(sfWebRequest $request)
