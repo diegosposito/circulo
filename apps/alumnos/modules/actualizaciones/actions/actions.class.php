@@ -81,6 +81,48 @@ class actualizacionesActions extends sfActions
 
   }
 
+   public function executeProcesarfile()
+  {
+    // Redirige al inicio si no tiene acceso
+      if (!$this->getUser()->getGuardUser()->getIsSuperAdmin())
+         $this->redirect('ingreso');
+
+     //  $archivo = Doctrine_Core::getTable('Actualizaciones')->find(array($request['id']));
+      $archivo = Doctrine_Core::getTable('Actualizaciones')->find(array(1));
+
+       $nombre_archivo = sfConfig::get('app_pathfiles_folder')."/../actualizaciones".'/'.$archivo->getImagefile();
+
+       $nombre_archivo = "/home/projects/circulo/web/actualizaciones/demo.csv";
+
+      // DATOS conexion
+      $dbhost = 'localhost';$dbname = 'circulo';  $dbuser = 'root'; $dbpass = 'root911';
+
+      $sqlTruncate = "TRUNCATE TABLE tmp_pacientes;";
+
+      $sqlLoadInput = "LOAD DATA LOCAL INFILE '/home/projects/circulo/web/actualizaciones/demo.csv'
+         INTO TABLE tmp_pacientes
+         FIELDS TERMINATED BY ','
+         OPTIONALLY ENCLOSED BY '\"'
+         LINES TERMINATED BY '\n'
+         IGNORE 1 LINES;"; 
+
+
+      $pdo = new \PDO('mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass, array(
+        \PDO::MYSQL_ATTR_LOCAL_INFILE => true
+      ));
+
+      //TRUNCAR TABLA TEMPORAL
+      $query = $pdo->prepare($sqlTruncate);
+      $query->execute();
+   
+      //PROCESAR INFORMACON DEL ARCHIVO
+      $query = $pdo->prepare($sqlLoadInput);
+      $query->execute();
+
+      return true;  
+
+  }
+
   public function executeShow(sfWebRequest $request)
   {
     $this->actualizaciones = Doctrine_Core::getTable('Actualizaciones')->find(array($request->getParameter('id')));
