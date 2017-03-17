@@ -733,6 +733,16 @@ ArchivosProfesionales:
     idorden: { type: integer, primary: false, autoincrement: false, default: '1' }
     imagefile: { type: string(254), primary: false, autoincrement: false, default: '' }  
 
+Actualizaciones:
+  actAs: 
+    Timestampable: ~ 
+    fzblameable: ~
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    nombre: { type: string(100), primary: false, autoincrement: false, default: '' }
+    idorden: { type: integer, primary: false, autoincrement: false, default: '1' }
+    imagefile: { type: string(254), primary: false, autoincrement: false, default: '' }     
+
 Banners:
   actAs: 
     Timestampable: ~ 
