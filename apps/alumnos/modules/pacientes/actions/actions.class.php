@@ -13,21 +13,25 @@ class pacientesActions extends sfActions
   public function executeIndex(sfWebRequest $request)
   {
     $this->criterio = '';
-    $this->pacientess = Doctrine_Core::getTable('Pacientes')
+    $f_apellido = NULL; $f_idobrasocial = NULL;
+    
+    if ( $request->getParameter('idbuscarname')<>'')
+      $f_apellido = $request->getParameter('idbuscarname');
+
+    if ( $request->getParameter('idobrasocial')>0)
+      $f_idobrasocial = $request->getParameter('idobrasocial');
+
+
+    $this->pacientess = Doctrine_Core::getTable('Pacientes')->obtenerPacientes($f_apellido,$f_idobrasocial, 1000);
+
+    $this->obss = Doctrine_Core::getTable('ObrasSociales')
       ->createQuery('a')
-      ->limit(200)
-      ->execute();
+      ->orderBy('abreviada')
+      ->where('estado=1')
+      ->execute();  
 
-    if ($request->isMethod(sfRequest::POST) && $request->getParameter('idbuscarname')<>''){
-      
-      $this->pacientess = Doctrine_Core::getTable('Pacientes')
-      ->createQuery('a')
-      ->where('a.apellido  like "%'.$request->getParameter('idbuscarname').'%"')
-      ->execute();
-
-      $this->criterio = $request->getParameter('idbuscarname');
-
-    }  
+    $this->criterio = $request->getParameter('idbuscarname');
+    $this->idobrasocial = $request->getParameter('idobrasocial');  
 
   }
 
