@@ -30,10 +30,28 @@
 <div align="center">
 <form action="<?php echo url_for('pacientes/index') ?>" method="post">
 <table cellspacing="0" class="stats" width="80%">
-         
  <tr>
- <td align="center"><INPUT type="text" id="idbuscarname" name="idbuscarname" size="30" value="<?php echo  $criterio  ?>"></td>
- </tr>
+  <td><b>Apellido:</b></td>
+  <td align="left"><INPUT type="text" id="idbuscarname" name="idbuscarname" size="30" value="<?php echo  $criterio  ?>"></td>
+</tr>
+ <tr>
+  <td><b>Obra Social:</b></td>
+  <td align="left">
+    <SELECT name="idobrasocial" id="idobrasocial"> 
+    <?php if (count($obss) > 0) {
+      //el bucle para cargar las opciones
+      echo "<option value='0' selected='selected' >----SELECCIONAR----</option>";
+      foreach ($obss as $obs){
+        if($obs->getIdobrasocial()==$idobrasocial){
+            echo "<option value=".$obs->getIdobrasocial() ." selected='selected'>".$obs->getAbreviada()."</option>";
+        } else {
+            echo "<option value=".$obs->getIdobrasocial() .">".$obs->getAbreviada()."</option>";
+        }    
+      }
+    } ?> 
+    </SELECT> 
+  </td>
+</tr>
         
 <tr>
   <td colspan="2" align="center"><input type="submit" value="Buscar" /></td>
@@ -41,6 +59,12 @@
 </table>
 </form>
 <a href="<?php echo url_for('pacientes/new') ?>">Agregar Nuevos Pacientes</a>
+ <div align="left">
+<?php if($sf_user->getGuardUser()->getIsSuperAdmin()){ ?>
+         <img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/new.png' align='center' size='20' />
+         <a href="<?php echo url_for('obrassociales/new') ?>">Nueva Obra Social</a>
+  <?php } ?>
+  </div>
 
 <?php if (count($pacientess) > 0){ ?>              
   <table cellspacing="0" class="stats">
@@ -48,9 +72,10 @@
         <td colspan="6" width="100%">Se han encontrado <?php echo count($pacientess); ?> coincidencias de la búsqueda.</td>
       </tr>
       <tr>
-        <td width="40%" align="center" class="hed">Paciente</td>
-        <td width="20%" align="center" class="hed">Nro Afiliado</td>
-        <td width="20%" align="center" class="hed">Documento</td>
+        <td width="35%" align="center" class="hed">Paciente</td>
+        <td width="25%" align="center" class="hed">Obra Social</td>
+        <td width="15%" align="center" class="hed">Nro Afiliado</td>
+        <td width="15%" align="center" class="hed">Documento</td>
         <td width="5%" align="center" class="hed">Edicion</td>
         <td width="5%" align="center" class="hed">Eliminar</td>
       </tr>
@@ -65,18 +90,16 @@
         <strong><?php echo "Historial" ?></strong><br>
         <?php echo htmlspecialchars_decode($item['historial']) ?></span></div"></a>
       </td>
-
-        <td width="20%" align="center"><?php echo $item['nroafiliado'] ?></td>
-        <td width="20%" align="center"><?php echo $item['nrodoc'] ?></td>
+        <td width="25%" align="center"><?php echo $item['abreviada'] ?></td>
+        <td width="15%" align="center"><?php echo $item['nroafiliado'] ?></td>
+        <td width="15%" align="center"><?php echo $item['nrodoc'] ?></td>
         <td align="center"><?php echo link_to("Editar", 'pacientes/edit?id='.$item['id'] ,'class="mhead"'); ?></td>
          <td align="center"><?php echo link_to('Eliminar', 'pacientes/delete?id='.$item['id'], array('method' => 'delete', 'confirm' => 'Estas seguro de borrar el Paciente?')) ?>
       </tr>
             <?php $i++; ?>
       <?php } ?>
 
-      <br>
-  
-  <br><br>
+     <br>
     </tbody>
   </table>
   <br>
