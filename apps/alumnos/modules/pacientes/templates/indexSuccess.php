@@ -62,7 +62,7 @@
  <div align="left">
 <?php if($sf_user->getGuardUser()->getIsSuperAdmin()){ ?>
          <img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/new.png' align='center' size='20' />
-         <a href="<?php echo url_for('obrassociales/new') ?>">Nueva Obra Social</a>
+         <a href="<?php echo url_for('actualizaciones/masivas') ?>">Gestión Actualizaciones Masivas</a>
   <?php } ?>
   </div>
 
