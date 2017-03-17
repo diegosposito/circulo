@@ -1,7 +1,7 @@
  <style type="text/css">
     p { margin-left:5em; /* Or another measurement unit, like px */ }
   </style>
-  <br>
+  <div id="mensajeInfo"></div>
 <h1 align="center" style="color:black;">Listado de Archivo de Profesionales</h1>
 <script>
 
@@ -10,6 +10,16 @@
           {id: parametro},
         function(data){
         $('#mensajeInfo').html("<p style='color:green;font-weight: bold;' align='center' >Archivo eliminado correctamente. Actualice página para ver estado actual</p><br>");
+        }
+      );
+      return false;
+  } 
+
+  function procesarFile(parametro){
+     $.post("<?php echo url_for('actualizaciones/procesarfile'); ?>",
+          {id: parametro},
+        function(data){
+        $('#mensajeInfo').html("<p style='color:green;font-weight: bold;' align='center' >Archivo procesado correctamente. Actualice página para ver estado actual</p><br>");
         }
       );
       return false;
@@ -34,10 +44,10 @@
             <td width="10%" align="center" class="hed">Editar</td>
         <?php } ?>
         <?php if ($sf_user->getGuardUser()->getIsSuperAdmin()) { ?>
-            <td width="10%" align="center" class="hed">Eliminar</td>
+            <td width="10%" align="center" class="hed">Procesar</td>
         <?php } ?>
         <?php if ($sf_user->getGuardUser()->getIsSuperAdmin()) { ?>
-            <td width="10%" align="center" class="hed">Eliminar</td>
+            <td width="10%" align="center" class="hed">Actualizar</td>
         <?php } ?>
         <?php if ($sf_user->getGuardUser()->getIsSuperAdmin()) { ?>
             <td width="10%" align="center" class="hed">Eliminar</td>
@@ -53,10 +63,10 @@
                       <td width="20%" align="center"> <a href="<?php echo url_for('actualizaciones/edit?id='.$fichero[3]) ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/edit.png' align='center' size='20'  height='20' width="20"  /></a></td>
                   <?php } ?> 
                   <?php if ($sf_user->getGuardUser()->getIsSuperAdmin()) { ?>
-                      <td width="20%" align="center"> <a onclick='deleteFile("<?php echo $fichero[3];?>")'><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/delete.png' align='center' size='24' height='20' width="20" /></a></td>
+                      <td width="20%" align="center"> <a onclick='procesarFile("<?php echo $fichero[3];?>")'><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/delete.png' align='center' size='24' height='20' width="20" /></a></td>
                   <?php } ?> 
                    <?php if ($sf_user->getGuardUser()->getIsSuperAdmin()) { ?>
-                      <td width="20%" align="center"> <a onclick='deleteFile("<?php echo $fichero[3];?>")'><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/delete.png' align='center' size='24' height='20' width="20" /></a></td>
+                      <td width="20%" align="center"> <a onclick='procesarFile("<?php echo $fichero[3];?>")'><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/delete.png' align='center' size='24' height='20' width="20" /></a></td>
                   <?php } ?> 
                    <?php if ($sf_user->getGuardUser()->getIsSuperAdmin()) { ?>
                       <td width="20%" align="center"> <a onclick='deleteFile("<?php echo $fichero[3];?>")'><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/delete.png' align='center' size='24' height='20' width="20" /></a></td>
