@@ -27,4 +27,27 @@ class PacientesTable extends Doctrine_Table
 	       
         return $q;
     }
+
+    // Obtener pacientes
+    public static function obtenerPacientes($apellido=NULL,$idobrasocial=NULL, $limit=NULL)
+    {
+        $sql ="SELECT pac.id as idpaciente, pac.nombre, pac.apellido, pac.idsexo, pac.nrodoc, pac.fechanac, pac.fechaingreso, pac.email, pac.nroafiliado, os.denominacion as obrasocial, os.abreviada 
+            FROM pacientes pac JOIN obras_sociales os ON pac.idobrasocial = os.idobrasocial WHERE 1=1 ";
+
+        if($apellido !== NULL)
+            $sql .=  " AND pac.apellido LIKE  '%".$apellido."%' "; 
+
+        if($idobrasocial !== NULL)
+            $sql .=  " AND pac.idobrasocial = ".$idobrasocial." "; 
+
+        $sql .= " ORDER BY pac.apellido;";
+
+        if($limit !== NULL)
+            $sql .=  " LIMIT ".$limit." "; 
+
+        $q = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($sql);
+
+        return $q;
+    } 
+
 }
