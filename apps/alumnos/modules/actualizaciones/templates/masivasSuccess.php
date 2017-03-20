@@ -2,7 +2,7 @@
     p { margin-left:5em; /* Or another measurement unit, like px */ }
   </style>
   <div id="mensajeInfo"></div>
-<h1 align="center" style="color:black;">Listado de Archivo de Profesionales</h1>
+<h1 align="center" style="color:black;">Listado de Archivos de Pacientes</h1>
 <script>
 
   function deleteFile(parametro){
