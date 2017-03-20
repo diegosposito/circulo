@@ -98,7 +98,8 @@ class actualizacionesActions extends sfActions
       $sqlTruncate = "TRUNCATE TABLE tmp_pacientes;";
 
       $sqlLoadInput = "LOAD DATA LOCAL INFILE '".$nombre_archivo."'
-         INTO TABLE tmp_pacientes
+         INTO TABLE tmp_pacientes 
+         CHARACTER SET UTF8 
          FIELDS TERMINATED BY ','
          OPTIONALLY ENCLOSED BY '\"'
          LINES TERMINATED BY '\n'
@@ -121,46 +122,71 @@ class actualizacionesActions extends sfActions
 
   }
 
-   public function executeGenerarfile(sfWebRequest $request)
+  public function executeGenerarfile(sfWebRequest $request)
   {
+    
+    // Variables
+    $sqlInsert = ''; $sqlUpdate='';
+
     // Redirige al inicio si no tiene acceso
       if (!$this->getUser()->getGuardUser()->getIsSuperAdmin())
          $this->redirect('ingreso');
 
       $archivo = Doctrine_Core::getTable('Actualizaciones')->find(array($request['id']));
-     // $archivo = Doctrine_Core::getTable('Actualizaciones')->find(array(5));
+     // $archivo = Doctrine_Core::getTable('Actualizaciones')->find(array(2));
 
       $arr = explode(".", $archivo->getImagefile(), 2);
       $first = $arr[0];
 
-      $nombre_archivo = '/tmp/'.$first;
+      $nombre_archivo_ins = '/tmp/ins_'.$first.".sql";
+      $nombre_archivo_upd = '/tmp/upd_'.$first.".sql";
 
       // DATOS conexion
       $dbhost = 'localhost';$dbname = 'circulo';  $dbuser = 'root'; $dbpass = 'root911';
-
-      $sqlquery = "SELECT tmp.* FROM tmp_pacientes tmp LEFT JOIN pacientes pac ON tmp.email = pac.email WHERE pac.email IS NULL GROUP BY tmp.email;";
 
       $pdo = new \PDO('mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass, array(
         \PDO::MYSQL_ATTR_LOCAL_INFILE => true
       ));
 
-      //TRUNCAR TABLA TEMPORAL
-      $query = $pdo->prepare($sqlTruncate);
-      $datoss = $query->execute();
+
+      // PRIMER PASO : ACTUALIZACION DE REGISTROS
 
       // SI existe el archivo previamente, lo borro
-      if (file_exists($nombre_archivo)) unlink($nombre_archivo); 
+      if (file_exists($nombre_archivo_upd)) unlink($nombre_archivo_upd); 
 
-      $fp=fopen($nombre_archivo,"w+");
-
+      // CONSULTA por registros a ACTUALIZAR (ya existe el email en la tabla de Pacientes)
+      $datoss =  $archivo = Doctrine_Core::getTable('Actualizaciones')->obtenerRegistrosAActualizar();
+      
+      $fp=fopen($nombre_archivo_upd,"w+");
+    
       foreach($datoss as $dato){
 
-        $sqlInsert = "INSERT INTO `pacientes` VALUES (NULL,'".$dato['nombre']."','".$dato['apellido']."','".$dato['sexo']."','".$dato['documento']."','".$dato['fechanac']."','".$dato['fechanac']."','".$dato['codCiudad']."','".$dato['ecivil']."','".$dato['email']."','".$dato['celular']."','".$dato['telefono']."','".$dato['direccion']."','".$dato['titular']."','".$dato['parentesco']."','','','".$dato['trabajo']."','".$dato['jerarquia']."','','".$dato['anotaciones']."','1','".$dato['nroafiliado']."','".$dato['historial']."','','".$dato['codProvincia']."','".$dato['codOSocial']."','".$dato['codPlan']."',NOW(), NOW(),1,1,'".$dato['idtipoiva']."');";
+            $sqlUpdate = "UPDATE `pacientes` SET nombre = '".$dato['nombre']."', apellido = '".$dato['apellido']."',idsexo = '".$dato['sexo']."',nrodoc = '".$dato['documento']."', fechanac='".$dato['fechanac']."',idciudadnac ='".$dato['codCiudad']."',estadocivil='".$dato['ecivil']."',celular='".$dato['celular']."',telefono='".$dato['telefono']."',direccion='".$dato['direccion']."',titular='".$dato['titular']."',parentesco='".$dato['parentesco']."',trabajo='".$dato['trabajo']."',jerarquia='".$dato['jerarquia']."',anotaciones='".$dato['anotaciones']."',nroafiliado='".$dato['nroafiliado']."',historial='".$dato['historial']."',idprovincia='".$dato['codProvincia']."',idobrasocial='".$dato['codOSocial']."',idplan='".$dato['codPlan']."',updated_at =NOW(),idtipoiva='".$dato['idtipoiva']."'  WHERE email='".$dato['email']."';";
 
-          fwrite($fp,$sqlInsert);
-      
+            fwrite($fp,$sqlUpdate);
+          
       }
+      fclose ($fp);
+      
+      
 
+     // SEGUNDO PASO : insercion de nuevos registros
+
+       // SI existe el archivo previamente, lo borro
+      if (file_exists($nombre_archivo_ins)) unlink($nombre_archivo_ins); 
+ 
+      // CONSULTA por registros a INSERTAR (no está el email en la tabla de Pacientes)
+      $datoss =  $archivo = Doctrine_Core::getTable('Actualizaciones')->obtenerRegistrosAInsertar();
+      
+      $fp=fopen($nombre_archivo_ins,"w+");
+    
+      foreach($datoss as $dato){
+
+            $sqlInsert = "INSERT INTO `pacientes` VALUES (NULL,'".$dato['nombre']."','".$dato['apellido']."','".$dato['sexo']."','".$dato['documento']."','".$dato['fechanac']."','".$dato['fechanac']."','".$dato['codCiudad']."','".$dato['ecivil']."','".$dato['email']."','".$dato['celular']."','".$dato['telefono']."','".$dato['direccion']."','".$dato['titular']."','".$dato['parentesco']."','','','".$dato['trabajo']."','".$dato['jerarquia']."','','".$dato['anotaciones']."','1','".$dato['nroafiliado']."','".$dato['historial']."','','".$dato['codProvincia']."','".$dato['codOSocial']."','".$dato['codPlan']."',NOW(), NOW(),1,1,'".$dato['idtipoiva']."');";
+
+            fwrite($fp,$sqlInsert);
+          
+      }
       fclose ($fp);
 
       return true;  
