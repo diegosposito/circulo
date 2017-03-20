@@ -73,8 +73,19 @@ class actualizacionesActions extends sfActions
 
        $archivo = Doctrine_Core::getTable('Actualizaciones')->find(array($request['id']));
 
-      unlink(sfConfig::get('app_pathfiles_folder')."/../actualizaciones".'/'.$archivo->getImagefile());
+      $arr = explode(".", $archivo->getImagefile(), 2);
+      $archivo = $arr[0];
 
+      $archivo = sfConfig::get('app_pathfiles_folder')."/../actualizaciones".'/'.$archivo->getImagefile();
+      $nombre_archivo_ins = sfConfig::get('app_pathfiles_folder')."/../actualizaciones".'/ins_'.$first.".sql";
+      $nombre_archivo_upd = sfConfig::get('app_pathfiles_folder')."/../actualizaciones".'/upd_'.$first.".sql";
+
+
+      if (file_exists($archivo)) unlink($archivo->getImagefile()); 
+      if (file_exists($nombre_archivo_ins)) unlink($nombre_archivo_ins); 
+      if (file_exists($nombre_archivo_upd)) unlink($nombre_archivo_upd); 
+
+     
       $archivo->delete();
 
       return true;  
@@ -138,8 +149,8 @@ class actualizacionesActions extends sfActions
       $arr = explode(".", $archivo->getImagefile(), 2);
       $first = $arr[0];
 
-      $nombre_archivo_ins = '/tmp/ins_'.$first.".sql";
-      $nombre_archivo_upd = '/tmp/upd_'.$first.".sql";
+      $nombre_archivo_ins = sfConfig::get('app_pathfiles_folder')."/../actualizaciones".'/ins_'.$first.".sql";
+      $nombre_archivo_upd = sfConfig::get('app_pathfiles_folder')."/../actualizaciones".'/upd_'.$first.".sql";
 
       // DATOS conexion
       $dbhost = 'localhost';$dbname = 'circulo';  $dbuser = 'root'; $dbpass = 'root911';
