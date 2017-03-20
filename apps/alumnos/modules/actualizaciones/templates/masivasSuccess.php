@@ -24,6 +24,26 @@
       );
       return false;
   } 
+
+   function generarFile(parametro){
+     $.post("<?php echo url_for('actualizaciones/generarfile'); ?>",
+          {id: parametro},
+        function(data){
+        $('#mensajeInfo').html("<p style='color:green;font-weight: bold;' align='center' >Archivo generado correctamente. Actualice página para ver estado actual</p><br>");
+        }
+      );
+      return false;
+  } 
+
+    function ejecutarFile(parametro){
+     $.post("<?php echo url_for('actualizaciones/ejecutarfile'); ?>",
+          {id: parametro},
+        function(data){
+        $('#mensajeInfo').html("<p style='color:green;font-weight: bold;' align='center' >Archivo generado correctamente. Actualice página para ver estado actual</p><br>");
+        }
+      );
+      return false;
+  } 
          
 </script>
 <br>
@@ -47,7 +67,10 @@
             <td width="10%" align="center" class="hed">Procesar</td>
         <?php } ?>
         <?php if ($sf_user->getGuardUser()->getIsSuperAdmin()) { ?>
-            <td width="10%" align="center" class="hed">Actualizar</td>
+            <td width="10%" align="center" class="hed">Generar</td>
+        <?php } ?>
+         <?php if ($sf_user->getGuardUser()->getIsSuperAdmin()) { ?>
+            <td width="10%" align="center" class="hed">Ejecutar</td>
         <?php } ?>
         <?php if ($sf_user->getGuardUser()->getIsSuperAdmin()) { ?>
             <td width="10%" align="center" class="hed">Eliminar</td>
@@ -66,7 +89,10 @@
                       <td width="20%" align="center"> <a onclick='procesarFile("<?php echo $fichero[3];?>")'><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/procesar.png' align='center' size='24' height='20' width="20" /></a></td>
                   <?php } ?> 
                    <?php if ($sf_user->getGuardUser()->getIsSuperAdmin()) { ?>
-                      <td width="20%" align="center"> <a onclick='procesarFile("<?php echo $fichero[3];?>")'><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/sincronizar.png' align='center' size='24' height='20' width="20" /></a></td>
+                      <td width="20%" align="center"> <a onclick='generarFile("<?php echo $fichero[3];?>")'><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/sincronizar.png' align='center' size='24' height='20' width="20" /></a></td>
+                  <?php } ?> 
+                   <?php if ($sf_user->getGuardUser()->getIsSuperAdmin()) { ?>
+                      <td width="20%" align="center"> <a onclick='ejecutarFile("<?php echo $fichero[3];?>")'><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/play.png' align='center' size='24' height='20' width="20" /></a></td>
                   <?php } ?> 
                    <?php if ($sf_user->getGuardUser()->getIsSuperAdmin()) { ?>
                       <td width="20%" align="center"> <a onclick='deleteFile("<?php echo $fichero[3];?>")'><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/delete.png' align='center' size='24' height='20' width="20" /></a></td>
