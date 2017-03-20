@@ -81,25 +81,23 @@ class actualizacionesActions extends sfActions
 
   }
 
-   public function executeProcesarfile()
+   public function executeProcesarfile(sfWebRequest $request)
   {
     // Redirige al inicio si no tiene acceso
       if (!$this->getUser()->getGuardUser()->getIsSuperAdmin())
          $this->redirect('ingreso');
 
-     //  $archivo = Doctrine_Core::getTable('Actualizaciones')->find(array($request['id']));
-      $archivo = Doctrine_Core::getTable('Actualizaciones')->find(array(1));
+      $archivo = Doctrine_Core::getTable('Actualizaciones')->find(array($request['id']));
+     // $archivo = Doctrine_Core::getTable('Actualizaciones')->find(array(5));
 
-       $nombre_archivo = sfConfig::get('app_pathfiles_folder')."/../actualizaciones".'/'.$archivo->getImagefile();
-
-       $nombre_archivo = "/home/projects/circulo/web/actualizaciones/demo.csv";
+      $nombre_archivo = sfConfig::get('app_pathfiles_folder')."/../actualizaciones".'/'.$archivo->getImagefile();
 
       // DATOS conexion
       $dbhost = 'localhost';$dbname = 'circulo';  $dbuser = 'root'; $dbpass = 'root911';
 
       $sqlTruncate = "TRUNCATE TABLE tmp_pacientes;";
 
-      $sqlLoadInput = "LOAD DATA LOCAL INFILE '/home/projects/circulo/web/actualizaciones/demo.csv'
+      $sqlLoadInput = "LOAD DATA LOCAL INFILE '".$nombre_archivo."'
          INTO TABLE tmp_pacientes
          FIELDS TERMINATED BY ','
          OPTIONALLY ENCLOSED BY '\"'
