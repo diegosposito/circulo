@@ -63,10 +63,10 @@
                       <td width="20%" align="center"> <a href="<?php echo url_for('actualizaciones/edit?id='.$fichero[3]) ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/edit.png' align='center' size='20'  height='20' width="20"  /></a></td>
                   <?php } ?> 
                   <?php if ($sf_user->getGuardUser()->getIsSuperAdmin()) { ?>
-                      <td width="20%" align="center"> <a onclick='procesarFile("<?php echo $fichero[3];?>")'><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/delete.png' align='center' size='24' height='20' width="20" /></a></td>
+                      <td width="20%" align="center"> <a onclick='procesarFile("<?php echo $fichero[3];?>")'><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/procesar.png' align='center' size='24' height='20' width="20" /></a></td>
                   <?php } ?> 
                    <?php if ($sf_user->getGuardUser()->getIsSuperAdmin()) { ?>
-                      <td width="20%" align="center"> <a onclick='procesarFile("<?php echo $fichero[3];?>")'><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/delete.png' align='center' size='24' height='20' width="20" /></a></td>
+                      <td width="20%" align="center"> <a onclick='procesarFile("<?php echo $fichero[3];?>")'><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/sincronizar.png' align='center' size='24' height='20' width="20" /></a></td>
                   <?php } ?> 
                    <?php if ($sf_user->getGuardUser()->getIsSuperAdmin()) { ?>
                       <td width="20%" align="center"> <a onclick='deleteFile("<?php echo $fichero[3];?>")'><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/delete.png' align='center' size='24' height='20' width="20" /></a></td>
