@@ -121,6 +121,53 @@ class actualizacionesActions extends sfActions
 
   }
 
+   public function executeGenerarfile(sfWebRequest $request)
+  {
+    // Redirige al inicio si no tiene acceso
+      if (!$this->getUser()->getGuardUser()->getIsSuperAdmin())
+         $this->redirect('ingreso');
+
+      $archivo = Doctrine_Core::getTable('Actualizaciones')->find(array($request['id']));
+     // $archivo = Doctrine_Core::getTable('Actualizaciones')->find(array(5));
+
+      $arr = explode(".", $archivo->getImagefile(), 2);
+      $first = $arr[0];
+
+      $nombre_archivo = '/tmp/'.$first;
+
+      // DATOS conexion
+      $dbhost = 'localhost';$dbname = 'circulo';  $dbuser = 'root'; $dbpass = 'root911';
+
+      $sqlquery = "SELECT tmp.* FROM tmp_pacientes tmp LEFT JOIN pacientes pac ON tmp.email = pac.email WHERE pac.email IS NULL GROUP BY tmp.email;";
+
+      $pdo = new \PDO('mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass, array(
+        \PDO::MYSQL_ATTR_LOCAL_INFILE => true
+      ));
+
+      //TRUNCAR TABLA TEMPORAL
+      $query = $pdo->prepare($sqlTruncate);
+      $datoss = $query->execute();
+
+      // SI existe el archivo previamente, lo borro
+      if (file_exists($nombre_archivo)) unlink($nombre_archivo); 
+
+      $fp=fopen($nombre_archivo,"w+");
+
+      foreach($datoss as $dato){
+
+        $sqlInsert = "INSERT INTO `pacientes` VALUES (NULL,'".$dato['nombre']."','".$dato['apellido']."','".$dato['sexo']."','".$dato['documento']."','".$dato['fechanac']."','".$dato['fechanac']."','".$dato['codCiudad']."','".$dato['ecivil']."','".$dato['email']."','".$dato['celular']."','".$dato['telefono']."','".$dato['direccion']."','".$dato['titular']."','".$dato['parentesco']."','','','".$dato['trabajo']."','".$dato['jerarquia']."','','".$dato['anotaciones']."','1','".$dato['nroafiliado']."','".$dato['historial']."','','".$dato['codProvincia']."','".$dato['codOSocial']."','".$dato['codPlan']."',NOW(), NOW(),1,1,'".$dato['idtipoiva']."');";
+
+          fwrite($fp,$sqlInsert);
+      
+      }
+
+      fclose ($fp);
+
+      return true;  
+
+  }
+
+
   public function executeShow(sfWebRequest $request)
   {
     $this->actualizaciones = Doctrine_Core::getTable('Actualizaciones')->find(array($request->getParameter('id')));
