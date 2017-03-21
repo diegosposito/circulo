@@ -73,18 +73,9 @@ class actualizacionesActions extends sfActions
 
        $archivo = Doctrine_Core::getTable('Actualizaciones')->find(array($request['id']));
 
-      $arr = explode(".", $archivo->getImagefile(), 2);
-      $archivo = $arr[0];
-
-      $archivo = sfConfig::get('app_pathfiles_folder')."/../actualizaciones".'/'.$archivo->getImagefile();
-      $nombre_archivo_ins = sfConfig::get('app_pathfiles_folder')."/../actualizaciones".'/ins_'.$first.".sql";
-      $nombre_archivo_upd = sfConfig::get('app_pathfiles_folder')."/../actualizaciones".'/upd_'.$first.".sql";
-
-
-      if (file_exists($archivo)) unlink($archivo->getImagefile()); 
-      if (file_exists($nombre_archivo_ins)) unlink($nombre_archivo_ins); 
-      if (file_exists($nombre_archivo_upd)) unlink($nombre_archivo_upd); 
-
+      $archivo_nombre = sfConfig::get('app_pathfiles_folder')."/../actualizaciones".'/'.$archivo->getImagefile();
+     
+      if (file_exists($archivo_nombre)) unlink($archivo_nombre); 
      
       $archivo->delete();
 
@@ -199,6 +190,19 @@ class actualizacionesActions extends sfActions
           
       }
       fclose ($fp);
+
+      return true;  
+
+  }
+
+  public function executeEjecutarfile(sfWebRequest $request)
+  {
+    
+    // Redirige al inicio si no tiene acceso
+      if (!$this->getUser()->getGuardUser()->getIsSuperAdmin())
+         $this->redirect('ingreso');
+
+      exec("/home/projects/circulo/web/actualizaciones/process.sh");
 
       return true;  
 
