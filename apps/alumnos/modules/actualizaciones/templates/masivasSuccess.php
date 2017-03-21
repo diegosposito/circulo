@@ -39,7 +39,7 @@
      $.post("<?php echo url_for('actualizaciones/ejecutarfile'); ?>",
           {id: parametro},
         function(data){
-        $('#mensajeInfo').html("<p style='color:green;font-weight: bold;' align='center' >Archivo generado correctamente. Actualice página para ver estado actual</p><br>");
+        $('#mensajeInfo').html("<p style='color:green;font-weight: bold;' align='center' >Archivo actualizado correctamente. Actualice página para ver estado actual</p><br>");
         }
       );
       return false;
