@@ -32,18 +32,7 @@ class ActualizacionesTable extends Doctrine_Table
 
     } 
 
-    // Obtener obras sociales
-    public static function obtenerRegistrosAActualizar()
-    {
-        //$sql ="SELECT tmp.* FROM tmp_pacientes tmp JOIN pacientes pac ON tmp.email = pac.email GROUP BY tmp.email; ";
-        $sql ="SELECT tmp.* FROM tmp_pacientes tmp JOIN pacientes pac ON tmp.documento = pac.nrodoc GROUP BY tmp.documento; ";
-
-
-        $q = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($sql);
-
-        return $q;
-    } 
-
+    
 
     //  VIEJAS FUNCIONES
 
