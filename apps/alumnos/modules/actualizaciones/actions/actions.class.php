@@ -120,6 +120,8 @@ class actualizacionesActions extends sfActions
       $query = $pdo->prepare($sqlLoadInput);
       $query->execute();
 
+      Doctrine_Core::getTable('Actualizaciones')->prepararRegistros();
+
       return true;  
 
   }
