@@ -32,12 +32,23 @@ class ActualizacionesTable extends Doctrine_Table
 
     } 
 
-    
+    // Obtener obras sociales
+    public static function insertarPacientes()
+    {
+        
+         // actualizar designaciones
+        $sql ="INSERT INTO `pacientes`
+                SELECT NULL, nombre, apellido, sexo, documento, fechanac, fechanac, codCiudad, ecivil, email, celular, telefono, direccion, titular, parentesco, trabajo, '', trabajo, jerarquia, '', anotaciones, 1 as activo, nroafiliado, historial, NULL, codProvincia, codOSocial, codPlan, NOW(), NOW(),1,1, iva
+                FROM tmp_pacientes WHERE actualizar = 0 GROUP BY documento;";
 
-    //  VIEJAS FUNCIONES
+        $q = Doctrine_Manager::getInstance()->getCurrentConnection();
+        
+        return $q->execute($sql); 
+
+    } 
 
     // Obtener obras sociales
-    public static function obtenerRegistrosAInsertar()
+    /* public static function obtenerRegistrosAInsertar()
     {
        // $sql ="SELECT tmp.* FROM tmp_pacientes tmp LEFT JOIN pacientes pac ON tmp.email = pac.email WHERE pac.email IS NULL GROUP BY tmp.email; ";
         $sql ="SELECT tmp.* FROM tmp_pacientes tmp LEFT JOIN pacientes pac ON tmp.documento = pac.nrodoc WHERE pac.nrodoc IS NULL GROUP BY tmp.documento; ";
@@ -46,13 +57,13 @@ class ActualizacionesTable extends Doctrine_Table
 		$q = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($sql);
 
         return $q;
-    } 
+    } */
 
     // Obtener obras sociales
     public static function obtenerRegistrosAActualizar()
     {
         //$sql ="SELECT tmp.* FROM tmp_pacientes tmp JOIN pacientes pac ON tmp.email = pac.email GROUP BY tmp.email; ";
-        $sql ="SELECT tmp.* FROM tmp_pacientes tmp JOIN pacientes pac ON tmp.documento = pac.nrodoc GROUP BY tmp.documento; ";
+        $sql ="SELECT tmp.* FROM tmp_pacientes tmp WHERE tmp.actualizar = 1; ";
 
 
 		$q = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($sql);
