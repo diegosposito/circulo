@@ -17,6 +17,36 @@ class ActualizacionesTable extends Doctrine_Table
         return Doctrine_Core::getTable('Actualizaciones');
     }
 
+    // NUEVAS FUNCIONES
+
+    // Obtener obras sociales
+    public static function prepararRegistros()
+    {
+        
+         // actualizar designaciones
+        $sql ="UPDATE tmp_pacientes tmp JOIN pacientes pac ON tmp.documento = pac.nrodoc SET actualizar = 1;";
+
+        $q = Doctrine_Manager::getInstance()->getCurrentConnection();
+        
+        return $q->execute($sql); 
+
+    } 
+
+    // Obtener obras sociales
+    public static function obtenerRegistrosAActualizar()
+    {
+        //$sql ="SELECT tmp.* FROM tmp_pacientes tmp JOIN pacientes pac ON tmp.email = pac.email GROUP BY tmp.email; ";
+        $sql ="SELECT tmp.* FROM tmp_pacientes tmp JOIN pacientes pac ON tmp.documento = pac.nrodoc GROUP BY tmp.documento; ";
+
+
+        $q = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($sql);
+
+        return $q;
+    } 
+
+
+    //  VIEJAS FUNCIONES
+
     // Obtener obras sociales
     public static function obtenerRegistrosAInsertar()
     {
