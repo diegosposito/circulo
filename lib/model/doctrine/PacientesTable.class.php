@@ -40,7 +40,7 @@ class PacientesTable extends Doctrine_Table
         if($idobrasocial !== NULL)
             $sql .=  " AND pac.idobrasocial = ".$idobrasocial." "; 
 
-        $sql .= " ORDER BY pac.apellido;";
+        $sql .= " ORDER BY pac.apellido ";
 
         if($limit !== NULL)
             $sql .=  " LIMIT ".$limit." "; 
