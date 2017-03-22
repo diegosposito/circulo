@@ -126,7 +126,7 @@ class actualizacionesActions extends sfActions
 
   }
 
-  public function executeGenerarfile(sfWebRequest $request)
+  public function executeViejoGenerarfile(sfWebRequest $request)
   {
     
     // Variables
@@ -192,6 +192,63 @@ class actualizacionesActions extends sfActions
           
       }
       fclose ($fp);
+
+      return true;  
+
+  }
+
+  public function executeGenerarfile(sfWebRequest $request)
+  {
+    
+    // Variables
+    $sqlInsert = ''; $sqlUpdate='';
+
+    // Redirige al inicio si no tiene acceso
+      if (!$this->getUser()->getGuardUser()->getIsSuperAdmin())
+         $this->redirect('ingreso');
+
+      // INSERTAR NUEVOS PACIENTES
+      Doctrine_Core::getTable('Actualizaciones')->insertarPacientes(); 
+
+      
+      $archivo = Doctrine_Core::getTable('Actualizaciones')->find(array($request['id']));
+     // $archivo = Doctrine_Core::getTable('Actualizaciones')->find(array(2));
+
+      $arr = explode(".", $archivo->getImagefile(), 2);
+      $first = $arr[0];
+
+      $nombre_archivo_upd = sfConfig::get('app_pathfiles_folder')."/../actualizaciones".'/upd_'.$first.".sql";
+
+      // DATOS conexion
+      $dbhost = 'localhost';$dbname = 'circulo';  $dbuser = 'root'; $dbpass = 'root911';
+
+      $pdo = new \PDO('mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass, array(
+        \PDO::MYSQL_ATTR_LOCAL_INFILE => true
+      ));
+
+
+      // PRIMER PASO : ACTUALIZACION DE REGISTROS
+
+      // SI existe el archivo previamente, lo borro
+      if (file_exists($nombre_archivo_upd)) unlink($nombre_archivo_upd); 
+
+      // CONSULTA por registros a ACTUALIZAR (ya existe el email en la tabla de Pacientes)
+      $datoss =  $archivo = Doctrine_Core::getTable('Actualizaciones')->obtenerRegistrosAActualizar();
+      
+      $fp=fopen($nombre_archivo_upd,"w+");
+    
+      foreach($datoss as $dato){
+
+            $sqlUpdate = "UPDATE `pacientes` SET nombre = '".$dato['nombre']."', apellido = '".$dato['apellido']."',idsexo = '".$dato['sexo']."',nrodoc = '".$dato['documento']."', fechanac='".$dato['fechanac']."',idciudadnac ='".$dato['codCiudad']."',estadocivil='".$dato['ecivil']."',celular='".$dato['celular']."',telefono='".$dato['telefono']."',direccion='".$dato['direccion']."',titular='".$dato['titular']."',parentesco='".$dato['parentesco']."',trabajo='".$dato['trabajo']."',jerarquia='".$dato['jerarquia']."',anotaciones='".$dato['anotaciones']."',nroafiliado='".$dato['nroafiliado']."',historial='".$dato['historial']."',idprovincia='".$dato['codProvincia']."',idobrasocial='".$dato['codOSocial']."',idplan='".$dato['codPlan']."',updated_at =NOW(),idtipoiva='".$dato['idtipoiva']."'  WHERE email='".$dato['email']."';";
+
+            fwrite($fp,$sqlUpdate);
+          
+      }
+      fclose ($fp);
+      
+      
+
+     
 
       return true;  
 
