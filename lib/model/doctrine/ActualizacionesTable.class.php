@@ -20,7 +20,9 @@ class ActualizacionesTable extends Doctrine_Table
     // Obtener obras sociales
     public static function obtenerRegistrosAInsertar()
     {
-        $sql ="SELECT tmp.* FROM tmp_pacientes tmp LEFT JOIN pacientes pac ON tmp.email = pac.email WHERE pac.email IS NULL GROUP BY tmp.email; ";
+       // $sql ="SELECT tmp.* FROM tmp_pacientes tmp LEFT JOIN pacientes pac ON tmp.email = pac.email WHERE pac.email IS NULL GROUP BY tmp.email; ";
+        $sql ="SELECT tmp.* FROM tmp_pacientes tmp LEFT JOIN pacientes pac ON tmp.documento = pac.nrodoc WHERE pac.nrodoc IS NULL GROUP BY tmp.documento; ";
+
 
 		$q = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($sql);
 
@@ -30,7 +32,9 @@ class ActualizacionesTable extends Doctrine_Table
     // Obtener obras sociales
     public static function obtenerRegistrosAActualizar()
     {
-        $sql ="SELECT tmp.* FROM tmp_pacientes tmp JOIN pacientes pac ON tmp.email = pac.email GROUP BY tmp.email; ";
+        //$sql ="SELECT tmp.* FROM tmp_pacientes tmp JOIN pacientes pac ON tmp.email = pac.email GROUP BY tmp.email; ";
+        $sql ="SELECT tmp.* FROM tmp_pacientes tmp JOIN pacientes pac ON tmp.documento = pac.nrodoc GROUP BY tmp.documento; ";
+
 
 		$q = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($sql);
 
