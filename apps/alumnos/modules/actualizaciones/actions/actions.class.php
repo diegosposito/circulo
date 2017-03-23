@@ -83,6 +83,8 @@ class actualizacionesActions extends sfActions
 
   }
 
+
+  // PASO 1  Procesar Archivo : agrega la informacion a la tabla tmp_pacientes
    public function executeProcesarfile(sfWebRequest $request)
   {
     // Redirige al inicio si no tiene acceso
@@ -120,10 +122,125 @@ class actualizacionesActions extends sfActions
       $query = $pdo->prepare($sqlLoadInput);
       $query->execute();
 
+      // POR DEFECTO ESTAN TODOS PARA INSERTAR, prepararRegistros marca los que son para actualizar
       Doctrine_Core::getTable('Actualizaciones')->prepararRegistros();
 
       return true;  
 
+  }
+
+  
+  // PASO 2 Generar archivo : genera un .sql con las consultas de UPDATE de pacientes
+  public function executeGenerarfile(sfWebRequest $request)
+  {
+    
+    // Variables
+    $sqlUpdate='';
+
+    // Redirige al inicio si no tiene acceso
+      if (!$this->getUser()->getGuardUser()->getIsSuperAdmin())
+         $this->redirect('ingreso');
+      
+      $archivo = Doctrine_Core::getTable('Actualizaciones')->find(array($request['id']));
+     // $archivo = Doctrine_Core::getTable('Actualizaciones')->find(array(2));
+
+      $arr = explode(".", $archivo->getImagefile(), 2);
+      $first = $arr[0];
+
+      $nombre_archivo_upd = sfConfig::get('app_pathfiles_folder')."/../actualizaciones".'/upd_'.$first.".sql";
+
+      // DATOS conexion
+      /*$dbhost = 'localhost';$dbname = 'circulo';  $dbuser = 'root'; $dbpass = 'root911';
+
+      $pdo = new \PDO('mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass, array(
+        \PDO::MYSQL_ATTR_LOCAL_INFILE => true
+      ));*/
+
+
+      // PRIMER PASO : ACTUALIZACION DE REGISTROS
+
+      // SI existe el archivo previamente, lo borro
+      if (file_exists($nombre_archivo_upd)) unlink($nombre_archivo_upd); 
+
+      // CONSULTA por registros a ACTUALIZAR (ya existe el email en la tabla de Pacientes)
+      //$datoss =  $archivo = Doctrine_Core::getTable('Actualizaciones')->obtenerRegistrosAActualizar();
+      
+      $fp=fopen($nombre_archivo_upd,"w+");
+
+      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizaciones')->obtenerRegistrosAActualizar('estadocivil','ecivil','N');
+      fwrite($fp,$sqlUpdate);
+
+      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizaciones')->obtenerRegistrosAActualizar('email','email','T');
+      fwrite($fp,$sqlUpdate);
+
+      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizaciones')->obtenerRegistrosAActualizar('celular','celular','T');
+      fwrite($fp,$sqlUpdate);
+
+      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizaciones')->obtenerRegistrosAActualizar('telefono','telefono','T');
+      fwrite($fp,$sqlUpdate);
+
+      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizaciones')->obtenerRegistrosAActualizar('direccion','direccion','T');
+      fwrite($fp,$sqlUpdate);
+
+      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizaciones')->obtenerRegistrosAActualizar('idprovincia','codProvincia','N');
+      fwrite($fp,$sqlUpdate);
+
+        $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizaciones')->obtenerRegistrosAActualizar('idciudadnac','codCiudad','N');
+      fwrite($fp,$sqlUpdate);
+
+      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizaciones')->obtenerRegistrosAActualizar('idobrasocial','codOSocial','N');
+      fwrite($fp,$sqlUpdate);
+
+        $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizaciones')->obtenerRegistrosAActualizar('idplan','codPlan','N');
+      fwrite($fp,$sqlUpdate);
+
+
+
+      fclose ($fp);
+  
+      return true;  
+
+  }
+
+ // PASO 3, se ejecuta la actualizacion de la tabla pacientes
+  public function executeEjecutarfile(sfWebRequest $request)
+  {
+    
+    // Redirige al inicio si no tiene acceso
+      if (!$this->getUser()->getGuardUser()->getIsSuperAdmin())
+         $this->redirect('ingreso');
+
+      // INSERTAR NUEVOS PACIENTES
+      Doctrine_Core::getTable('Actualizaciones')->insertarPacientes();  
+
+      // ACTUALIZAR PACIENTES EXISTENTES
+      exec("/home/projects/circulo/web/actualizaciones/process.sh");
+
+      return true;  
+
+  }
+
+
+  public function executeShow(sfWebRequest $request)
+  {
+    $this->actualizaciones = Doctrine_Core::getTable('Actualizaciones')->find(array($request->getParameter('id')));
+    $this->forward404Unless($this->actualizaciones);
+  }
+
+  public function executeNew(sfWebRequest $request)
+  {
+    $this->form = new ActualizacionesForm();
+  }
+
+  public function executeCreate(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod(sfRequest::POST));
+
+    $this->form = new ActualizacionesForm();
+
+    $this->processForm($request, $this->form);
+
+    $this->setTemplate('new');
   }
 
   public function executeViejoGenerarfile(sfWebRequest $request)
@@ -195,99 +312,6 @@ class actualizacionesActions extends sfActions
 
       return true;  
 
-  }
-
-  public function executeGenerarfile(sfWebRequest $request)
-  {
-    
-    // Variables
-    $sqlInsert = ''; $sqlUpdate='';
-
-    // Redirige al inicio si no tiene acceso
-      if (!$this->getUser()->getGuardUser()->getIsSuperAdmin())
-         $this->redirect('ingreso');
-
-      // INSERTAR NUEVOS PACIENTES
-      Doctrine_Core::getTable('Actualizaciones')->insertarPacientes(); 
-
-      
-      $archivo = Doctrine_Core::getTable('Actualizaciones')->find(array($request['id']));
-     // $archivo = Doctrine_Core::getTable('Actualizaciones')->find(array(2));
-
-      $arr = explode(".", $archivo->getImagefile(), 2);
-      $first = $arr[0];
-
-      $nombre_archivo_upd = sfConfig::get('app_pathfiles_folder')."/../actualizaciones".'/upd_'.$first.".sql";
-
-      // DATOS conexion
-      $dbhost = 'localhost';$dbname = 'circulo';  $dbuser = 'root'; $dbpass = 'root911';
-
-      $pdo = new \PDO('mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass, array(
-        \PDO::MYSQL_ATTR_LOCAL_INFILE => true
-      ));
-
-
-      // PRIMER PASO : ACTUALIZACION DE REGISTROS
-
-      // SI existe el archivo previamente, lo borro
-      if (file_exists($nombre_archivo_upd)) unlink($nombre_archivo_upd); 
-
-      // CONSULTA por registros a ACTUALIZAR (ya existe el email en la tabla de Pacientes)
-      $datoss =  $archivo = Doctrine_Core::getTable('Actualizaciones')->obtenerRegistrosAActualizar();
-      
-      $fp=fopen($nombre_archivo_upd,"w+");
-    
-      foreach($datoss as $dato){
-
-            $sqlUpdate = "UPDATE `pacientes` SET nombre = '".$dato['nombre']."', apellido = '".$dato['apellido']."',idsexo = '".$dato['sexo']."',nrodoc = '".$dato['documento']."', fechanac='".$dato['fechanac']."',idciudadnac ='".$dato['codCiudad']."',estadocivil='".$dato['ecivil']."',celular='".$dato['celular']."',telefono='".$dato['telefono']."',direccion='".$dato['direccion']."',titular='".$dato['titular']."',parentesco='".$dato['parentesco']."',trabajo='".$dato['trabajo']."',jerarquia='".$dato['jerarquia']."',anotaciones='".$dato['anotaciones']."',nroafiliado='".$dato['nroafiliado']."',historial='".$dato['historial']."',idprovincia='".$dato['codProvincia']."',idobrasocial='".$dato['codOSocial']."',idplan='".$dato['codPlan']."',updated_at =NOW(),idtipoiva='".$dato['idtipoiva']."'  WHERE email='".$dato['email']."';";
-
-            fwrite($fp,$sqlUpdate);
-          
-      }
-      fclose ($fp);
-      
-      
-
-     
-
-      return true;  
-
-  }
-
-  public function executeEjecutarfile(sfWebRequest $request)
-  {
-    
-    // Redirige al inicio si no tiene acceso
-      if (!$this->getUser()->getGuardUser()->getIsSuperAdmin())
-         $this->redirect('ingreso');
-
-      exec("/home/projects/circulo/web/actualizaciones/process.sh");
-
-      return true;  
-
-  }
-
-
-  public function executeShow(sfWebRequest $request)
-  {
-    $this->actualizaciones = Doctrine_Core::getTable('Actualizaciones')->find(array($request->getParameter('id')));
-    $this->forward404Unless($this->actualizaciones);
-  }
-
-  public function executeNew(sfWebRequest $request)
-  {
-    $this->form = new ActualizacionesForm();
-  }
-
-  public function executeCreate(sfWebRequest $request)
-  {
-    $this->forward404Unless($request->isMethod(sfRequest::POST));
-
-    $this->form = new ActualizacionesForm();
-
-    $this->processForm($request, $this->form);
-
-    $this->setTemplate('new');
   }
 
   public function executeEdit(sfWebRequest $request)
