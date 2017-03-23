@@ -60,14 +60,22 @@ class ActualizacionesTable extends Doctrine_Table
     } */
 
     // Obtener obras sociales
-    public static function obtenerRegistrosAActualizar()
+    public static function obtenerRegistrosAActualizar($campo_en_pacientes,$campo, $tipo_campo)
     {
         //$sql ="SELECT tmp.* FROM tmp_pacientes tmp JOIN pacientes pac ON tmp.email = pac.email GROUP BY tmp.email; ";
-        $sql ="SELECT tmp.* FROM tmp_pacientes tmp WHERE tmp.actualizar = 1 GROUP BY tmp.documento; ";
+        $sql ="UPDATE pacientes pac JOIN tmp_pacientes tmp ON pac.nrodoc = tmp.documento SET pac.".$campo_en_pacientes." = tmp.".$campo." WHERE tmp.actualizar = 1 ";
 
+        if ($tipo_campo=='N'){
+            $sql .=" AND tmp.".$campo." > 0 ";  
+        } else {
+            $sql .=" AND tmp.".$campo." IS NOT NULL AND tmp.".$campo." <> '' ";
+        }
+        
+        $sql .=" ; ";
+        //$sql .=" GROUP BY tmp.documento; ";
 
-		$q = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($sql);
+		//$q = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($sql);
 
-        return $q;
+        return $sql; // RETORNA el string con la consulta solamente
     } 
 }
