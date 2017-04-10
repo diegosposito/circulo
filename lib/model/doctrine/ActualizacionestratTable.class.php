@@ -37,7 +37,7 @@ class ActualizacionestratTable extends Doctrine_Table
 
          // actualizar designaciones
         $sql ="INSERT INTO `tratamientos`
-                SELECT NULL, nombre, abreviacion, idgrupotratamiento, idobrasocial, idontologia, garantia, importe, coseguro, importeos, idautorizacion, visible, descripcion, normas, activo
+                SELECT NULL, nombre, abreviacion, idgrupotratamiento, idobrasocial, idontologia, garantia, importe, coseguro, bono, importeos, idautorizacion, visible, descripcion, normas, activo, now(), now(), 1, 1 
                 FROM tmp_tratamiento WHERE actualizar = 0;";
 
         $q = Doctrine_Manager::getInstance()->getCurrentConnection();
