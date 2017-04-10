@@ -19,17 +19,17 @@ class actualizacionestratActions extends sfActions
 
   public function executeMasivas(sfWebRequest $request)
   {
-   
+
     $this->archivos_profesionaless = Doctrine_Core::getTable('Actualizacionestrat')
       ->createQuery('a')
       ->orderby(nombre)
-      ->execute();  
+      ->execute();
 
-    $this->ficheros = array();  
+    $this->ficheros = array();
 
     foreach($this->archivos_profesionaless as $archivos){
-        $targetFolder = sfConfig::get('app_pathfiles_folder')."/../actualizacionestrat".'/'.$archivos->getNombre();  
-         
+        $targetFolder = sfConfig::get('app_pathfiles_folder')."/../actualizacionestrat".'/'.$archivos->getNombre();
+
       $image_file = 'image.png';
       switch (pathinfo($archivos->getImagefile(), PATHINFO_EXTENSION)) {
           case 'pdf':
@@ -43,26 +43,26 @@ class actualizacionestratActions extends sfActions
               break;
           case 'xls':
               $image_file = 'excel.png';
-              break;        
+              break;
           case 'xlsx':
               $image_file = 'excel.png';
               break;
           case 'txt':
               $image_file = 'wordpad.png';
-              break; 
+              break;
           case 'ppt':
               $image_file = 'ppt.png';
               break;
           case 'pptx':
               $image_file = 'ppt.png';
-              break;           
+              break;
       }
 
       $this->ficheros[] = array($archivos->getNombre(), $archivos->getImagefile(), $image_file, $archivos->getId());
-    
+
       sort($this->ficheros);
-    }  
-      
+    }
+
   }
 
   public function executeDeletefile(sfWebRequest $request)
@@ -74,12 +74,12 @@ class actualizacionestratActions extends sfActions
        $archivo = Doctrine_Core::getTable('Actualizacionestrat')->find(array($request['id']));
 
       $archivo_nombre = sfConfig::get('app_pathfiles_folder')."/../actualizacionestrat".'/'.$archivo->getImagefile();
-     
-      if (file_exists($archivo_nombre)) unlink($archivo_nombre); 
-     
+
+      if (file_exists($archivo_nombre)) unlink($archivo_nombre);
+
       $archivo->delete();
 
-      return true;  
+      return true;
 
   }
 
@@ -99,15 +99,15 @@ class actualizacionestratActions extends sfActions
       // DATOS conexion
       $dbhost = 'localhost';$dbname = 'circulo';  $dbuser = 'root'; $dbpass = 'root911';
 
-      $sqlTruncate = "TRUNCATE TABLE tmp_tratamientos;";
+      $sqlTruncate = "TRUNCATE TABLE tmp_tratamiento;";
 
       $sqlLoadInput = "LOAD DATA LOCAL INFILE '".$nombre_archivo."'
-         INTO TABLE tmp_tratamientos 
-         CHARACTER SET UTF8 
+         INTO TABLE tmp_tratamiento
+         CHARACTER SET UTF8
          FIELDS TERMINATED BY ','
          OPTIONALLY ENCLOSED BY '\"'
          LINES TERMINATED BY '\n'
-         IGNORE 1 LINES;"; 
+         IGNORE 1 LINES;";
 
 
       $pdo = new \PDO('mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass, array(
@@ -117,7 +117,7 @@ class actualizacionestratActions extends sfActions
       //TRUNCAR TABLA TEMPORAL
       $query = $pdo->prepare($sqlTruncate);
       $query->execute();
-   
+
       //PROCESAR INFORMACON DEL ARCHIVO
       $query = $pdo->prepare($sqlLoadInput);
       $query->execute();
@@ -125,22 +125,22 @@ class actualizacionestratActions extends sfActions
       // POR DEFECTO ESTAN TODOS PARA INSERTAR, prepararRegistros marca los que son para actualizar
       Doctrine_Core::getTable('Actualizacionestrat')->prepararRegistros();
 
-      return true;  
+      return true;
 
   }
 
-  
+
   // PASO 2 Generar archivo : genera un .sql con las consultas de UPDATE de pacientes
   public function executeGenerarfile(sfWebRequest $request)
   {
-    
+
     // Variables
     $sqlUpdate='';
 
     // Redirige al inicio si no tiene acceso
       if (!$this->getUser()->getGuardUser()->getIsSuperAdmin())
          $this->redirect('ingreso');
-      
+
       $archivo = Doctrine_Core::getTable('Actualizacionestrat')->find(array($request['id']));
      // $archivo = Doctrine_Core::getTable('Actualizaciones')->find(array(2));
 
@@ -160,63 +160,63 @@ class actualizacionestratActions extends sfActions
       // PRIMER PASO : ACTUALIZACION DE REGISTROS
 
       // SI existe el archivo previamente, lo borro
-      if (file_exists($nombre_archivo_upd)) unlink($nombre_archivo_upd); 
+      if (file_exists($nombre_archivo_upd)) unlink($nombre_archivo_upd);
 
       // CONSULTA por registros a ACTUALIZAR (ya existe el email en la tabla de Pacientes)
       //$datoss =  $archivo = Doctrine_Core::getTable('Actualizaciones')->obtenerRegistrosAActualizar();
-      
+
       $fp=fopen($nombre_archivo_upd,"w+");
 
-      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionestrat')->obtenerRegistrosAActualizar('estadocivil','ecivil','N');
+      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionestrat')->obtenerRegistrosAActualizar('nombre','nombre','T');
       fwrite($fp,$sqlUpdate);
 
-      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionestrat')->obtenerRegistrosAActualizar('email','email','T');
+      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionestrat')->obtenerRegistrosAActualizar('abreviacion','abreviacion','T');
       fwrite($fp,$sqlUpdate);
 
-      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionestrat')->obtenerRegistrosAActualizar('celular','celular','T');
+      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionestrat')->obtenerRegistrosAActualizar('idgrupotratamiento','idgrupotratamiento','N');
       fwrite($fp,$sqlUpdate);
 
-      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionestrat')->obtenerRegistrosAActualizar('telefono','telefono','T');
+      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionestrat')->obtenerRegistrosAActualizar('idobrasocial','idobrasocial','N');
       fwrite($fp,$sqlUpdate);
 
-      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionestrat')->obtenerRegistrosAActualizar('direccion','direccion','T');
+      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionestrat')->obtenerRegistrosAActualizar('idontologia','idontologia','N');
       fwrite($fp,$sqlUpdate);
 
-      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionestrat')->obtenerRegistrosAActualizar('idprovincia','codProvincia','N');
+      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionestrat')->obtenerRegistrosAActualizar('garantia','garantia','N');
       fwrite($fp,$sqlUpdate);
 
-        $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionestrat')->obtenerRegistrosAActualizar('idciudadnac','codCiudad','N');
+        $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionestrat')->obtenerRegistrosAActualizar('importe','importe','N');
       fwrite($fp,$sqlUpdate);
 
-      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionestrat')->obtenerRegistrosAActualizar('idobrasocial','codOSocial','N');
+      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionestrat')->obtenerRegistrosAActualizar('coseguro','coseguro','N');
       fwrite($fp,$sqlUpdate);
 
-        $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionestrat')->obtenerRegistrosAActualizar('idplan','codPlan','N');
+        $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionestrat')->obtenerRegistrosAActualizar('importeos','importeos','N');
       fwrite($fp,$sqlUpdate);
 
 
 
       fclose ($fp);
-  
-      return true;  
+
+      return true;
 
   }
 
  // PASO 3, se ejecuta la actualizacion de la tabla pacientes
   public function executeEjecutarfile(sfWebRequest $request)
   {
-    
+
     // Redirige al inicio si no tiene acceso
       if (!$this->getUser()->getGuardUser()->getIsSuperAdmin())
          $this->redirect('ingreso');
 
       // INSERTAR NUEVOS PACIENTES
-      Doctrine_Core::getTable('Actualizacionestrat')->insertarPacientes();  
+      Doctrine_Core::getTable('Actualizacionestrat')->insertarTratamientos();
 
       // ACTUALIZAR PACIENTES EXISTENTES
-      exec("/home/projects/circulo/web/actualizacionestrat/process.sh");
+      exec("/home/projects/circulo/web/actualizaciones/process.sh");
 
-      return true;  
+      return true;
 
   }
 
@@ -243,7 +243,7 @@ class actualizacionestratActions extends sfActions
     $this->setTemplate('new');
   }
 
-  
+
   public function executeEdit(sfWebRequest $request)
   {
     $this->forward404Unless($actualizaciones = Doctrine_Core::getTable('Actualizacionestrat')->find(array($request->getParameter('id'))), sprintf('Object actualizaciones does not exist (%s).', $request->getParameter('id')));
@@ -286,22 +286,22 @@ class actualizacionestratActions extends sfActions
 
 
       $folder_path_name = sfConfig::get('app_pathfiles_folder')."/../actualizacionestrat";
-      
+
       if (!is_dir($folder_path_name) && !mkdir($folder_path_name)){
-          die("Error creando carpeta $uploaddir");
+          die("Error creando carpeta $folder_path_name");
       }
-      
+
       $hasfile =false;
       foreach ($request->getFiles() as $fileName) {
            $targetFolder = sfConfig::get('app_pathfiles_folder')."/../actualizacionestrat".'/'.$fileName['imagefile']['name'];
            move_uploaded_file($fileName['imagefile']['tmp_name'], $targetFolder);
            $hasfile = true;
-     
+
       }
-    
-      if ($hasfile && trim($fileName['imagefile']['name'])<>'') 
+
+      if ($hasfile && trim($fileName['imagefile']['name'])<>'')
          $actualizaciones->setImagefile($fileName['imagefile']['name']);
-   
+
 
       $actualizaciones->save();
 
