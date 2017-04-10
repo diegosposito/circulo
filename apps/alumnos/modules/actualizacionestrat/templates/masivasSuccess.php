@@ -2,59 +2,59 @@
     p { margin-left:5em; /* Or another measurement unit, like px */ }
   </style>
   <div id="mensajeInfo"></div>
-<h1 align="center" style="color:black;">Listado de Archivos de Pacientes</h1>
+<h1 align="center" style="color:black;">Archivos con Tratamientos</h1>
 <script>
 
   function deleteFile(parametro){
-     $.post("<?php echo url_for('actualizaciones/deletefile'); ?>",
+     $.post("<?php echo url_for('actualizacionestrat/deletefile'); ?>",
           {id: parametro},
         function(data){
         $('#mensajeInfo').html("<p style='color:green;font-weight: bold;' align='center' >Archivo eliminado correctamente. Actualice página para ver estado actual</p><br>");
         }
       );
       return false;
-  } 
+  }
 
   function procesarFile(parametro){
-     $.post("<?php echo url_for('actualizaciones/procesarfile'); ?>",
+     $.post("<?php echo url_for('actualizacionestrat/procesarfile'); ?>",
           {id: parametro},
         function(data){
         $('#mensajeInfo').html("<p style='color:green;font-weight: bold;' align='center' >Archivo procesado correctamente. Actualice página para ver estado actual</p><br>");
         }
       );
       return false;
-  } 
+  }
 
    function generarFile(parametro){
-     $.post("<?php echo url_for('actualizaciones/generarfile'); ?>",
+     $.post("<?php echo url_for('actualizacionestrat/generarfile'); ?>",
           {id: parametro},
         function(data){
         $('#mensajeInfo').html("<p style='color:green;font-weight: bold;' align='center' >Archivo generado correctamente. Actualice página para ver estado actual</p><br>");
         }
       );
       return false;
-  } 
+  }
 
     function ejecutarFile(parametro){
-     $.post("<?php echo url_for('actualizaciones/ejecutarfile'); ?>",
+     $.post("<?php echo url_for('actualizacionestrat/ejecutarfile'); ?>",
           {id: parametro},
         function(data){
         $('#mensajeInfo').html("<p style='color:green;font-weight: bold;' align='center' >Archivo actualizado correctamente. Actualice página para ver estado actual</p><br>");
         }
       );
       return false;
-  } 
-         
+  }
+
 </script>
 <br>
 <?php if($sf_user->getGuardUser()->getIsSuperAdmin()){ ?>
          <img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/new.png' align='center' size='20' />
-         <a href="<?php echo url_for('actualizaciones/new') ?>">Agregar Archivo de Pacientes a Actualizar</a>
+         <a href="<?php echo url_for('actualizacionestrat/new') ?>">Agregar Archivo con Tratamientos a Importar/Actualizar</a>
   <?php } ?>
 
 <br>
 <div align="center">
- <a href="<?php echo url_for('actualizaciones/masivas') ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/refresh.png' align='center' size='20' height='28' width="28" /></a>  
+ <a href="<?php echo url_for('actualizacionestrat/masivas') ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/refresh.png' align='center' size='20' height='28' width="28" /></a>
 </div>
 <table width="550px" cellspacing="0" class="stats">
     <thead>
@@ -84,24 +84,24 @@
                   <td width="60%" align="left"><?php echo $fichero[0] ?></td>
                   <?php if ($sf_user->getGuardUser()->getIsSuperAdmin()) { ?>
                       <td width="20%" align="center"> <a href="<?php echo url_for('actualizaciones/edit?id='.$fichero[3]) ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/edit.png' align='center' size='20'  height='20' width="20"  /></a></td>
-                  <?php } ?> 
+                  <?php } ?>
                   <?php if ($sf_user->getGuardUser()->getIsSuperAdmin()) { ?>
                       <td width="20%" align="center"> <a onclick='procesarFile("<?php echo $fichero[3];?>")'><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/procesar.png' align='center' size='24' height='20' width="20" /></a></td>
-                  <?php } ?> 
+                  <?php } ?>
                    <?php if ($sf_user->getGuardUser()->getIsSuperAdmin()) { ?>
                       <td width="20%" align="center"> <a onclick='generarFile("<?php echo $fichero[3];?>")'><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/sincronizar.png' align='center' size='24' height='20' width="20" /></a></td>
-                  <?php } ?> 
+                  <?php } ?>
                    <?php if ($sf_user->getGuardUser()->getIsSuperAdmin()) { ?>
                       <td width="20%" align="center"> <a onclick='ejecutarFile("<?php echo $fichero[3];?>")'><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/play.png' align='center' size='24' height='20' width="20" /></a></td>
-                  <?php } ?> 
+                  <?php } ?>
                    <?php if ($sf_user->getGuardUser()->getIsSuperAdmin()) { ?>
                       <td width="20%" align="center"> <a onclick='deleteFile("<?php echo $fichero[3];?>")'><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/delete.png' align='center' size='24' height='20' width="20" /></a></td>
-                  <?php } ?>                
+                  <?php } ?>
                  </tr>
                  <?php $i++; ?>
-       <?php  } ?>           
-     
+       <?php  } ?>
+
       <br>
-  
+
     </tbody>
   </table>
