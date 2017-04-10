@@ -9,11 +9,8 @@
     <tfoot>
       <tr>
         <td colspan="2">
-          &nbsp;<a href="<?php echo url_for('actualizacionestrat/index') ?>">Back to list</a>
-          <?php if (!$form->getObject()->isNew()): ?>
-            &nbsp;<?php echo link_to('Delete', 'actualizacionestrat/delete?id='.$form->getObject()->getId(), array('method' => 'delete', 'confirm' => 'Are you sure?')) ?>
-          <?php endif; ?>
-          <input type="submit" value="Save" />
+          &nbsp;<a href="<?php echo url_for('actualizacionestrat/masivas') ?>">Volver al listado de Archivos</a>
+          <input type="submit" value="Guardar" />
         </td>
       </tr>
     </tfoot>

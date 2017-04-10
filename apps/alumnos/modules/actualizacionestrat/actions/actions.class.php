@@ -229,14 +229,14 @@ class actualizacionestratActions extends sfActions
 
   public function executeNew(sfWebRequest $request)
   {
-    $this->form = new ActualizacionesForm();
+    $this->form = new ActualizacionestratForm();
   }
 
   public function executeCreate(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod(sfRequest::POST));
 
-    $this->form = new ActualizacionesForm();
+    $this->form = new ActualizacionestratForm();
 
     $this->processForm($request, $this->form);
 
@@ -247,14 +247,14 @@ class actualizacionestratActions extends sfActions
   public function executeEdit(sfWebRequest $request)
   {
     $this->forward404Unless($actualizaciones = Doctrine_Core::getTable('Actualizacionestrat')->find(array($request->getParameter('id'))), sprintf('Object actualizaciones does not exist (%s).', $request->getParameter('id')));
-    $this->form = new ActualizacionesForm($actualizaciones);
+    $this->form = new ActualizacionestratForm($actualizaciones);
   }
 
   public function executeUpdate(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
     $this->forward404Unless($actualizaciones = Doctrine_Core::getTable('Actualizacionestrat')->find(array($request->getParameter('id'))), sprintf('Object actualizaciones does not exist (%s).', $request->getParameter('id')));
-    $this->form = new ActualizacionesForm($actualizaciones);
+    $this->form = new ActualizacionestratForm($actualizaciones);
 
     $this->processForm($request, $this->form);
 
