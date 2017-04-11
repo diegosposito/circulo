@@ -12,6 +12,12 @@
          <img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/new.png' align='center' size='20' />
          <a href="<?php echo url_for('grupotratamiento/new') ?>">Nuevo Grupo de Tratamiento</a>
   <?php } ?>
+<div align="left">
+<?php if($sf_user->getGuardUser()->getIsSuperAdmin()){ ?>
+         <img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/new.png' align='center' size='20' />
+         <a href="<?php echo url_for('actualizacionestrat/masivas') ?>">Actualizaciones Masivas de Tratamientos</a>
+  <?php } ?>
+  </div>
 
  <br>
  <table cellspacing="0" class="stats">
