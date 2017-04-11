@@ -214,7 +214,7 @@ class actualizacionestratActions extends sfActions
       Doctrine_Core::getTable('Actualizacionestrat')->insertarTratamientos();
 
       // ACTUALIZAR PACIENTES EXISTENTES
-      exec("/home/projects/circulo/web/actualizaciones/process.sh");
+      exec("/home/projects/circulo/web/actualizacionestrat/process.sh");
 
       return true;
 
