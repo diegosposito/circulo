@@ -12,7 +12,9 @@
 <table cellspacing="0" class="stats">
     <thead>
       <tr>
-        <td width="70%" align="center" class="hed">Obra Social</td>
+        <td width="5%" align="center" class="hed">idOSocial</td>
+        <td width="60%" align="center" class="hed">Obra Social</td>
+        <td width="5%" align="center" class="hed">idPlan</td>
         <td width="30%" align="center" class="hed">Plan</td>
         <td width="10%" align="center" class="hed">Edicion</td>
       </tr>
@@ -21,7 +23,9 @@
       <?php $i=0; ?>
       <?php foreach ($planes_obrass as $planes_obras){ ?>
       <tr class="fila_<?php echo $i%2 ; ?>">
+        <td width="5%"><?php echo  $planes_obras->getObrasSociales()->getIdObrasocial() ?></td>
         <td width="70%"><?php echo  $planes_obras->getObrasSociales()->getAbreviada() ?></td>
+        <td width="5%"><?php echo  $planes_obras->getId() ?></td>
         <td width="30%" align="center"><?php echo $planes_obras->getNombre() ?></td>
         <td align="center"><?php echo link_to("Editar", 'planesobras/edit?id='.$planes_obras->getId() ,'class="mhead"'); ?></td>
       </tr>
@@ -29,6 +33,6 @@
       <?php } ?>
 
       <br>
-  
+
     </tbody>
   </table>
