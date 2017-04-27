@@ -104,7 +104,7 @@ class actualizacionesActions extends sfActions
       $sqlLoadInput = "LOAD DATA LOCAL INFILE '".$nombre_archivo."'
          INTO TABLE tmp_pacientes 
          CHARACTER SET UTF8 
-         FIELDS TERMINATED BY ','
+         FIELDS TERMINATED BY ';'
          OPTIONALLY ENCLOSED BY '\"'
          LINES TERMINATED BY '\n'
          IGNORE 1 LINES;"; 
