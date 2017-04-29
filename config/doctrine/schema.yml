@@ -2705,3 +2705,33 @@ GrupoTratamiento:
     nombre: { type: string(200) }
     abreviacion: { type: string(200) }
     activo: { type: boolean, primary: false, notnull: true, default: 0 } 
+
+Atenciones:
+  actAs: 
+    Timestampable: ~ 
+    fzblameable: ~
+  columns: 
+    id: { type: integer, primary: true, autoincrement: true }
+    nrodoc: { type: string(80), primary: false, notnull: true, default: '' }
+    mes: { type: integer, primary: false, autoincrement: false }
+    anio: { type: integer, primary: false, autoincrement: false }
+    idobrasocial: { type: integer, primary: false, default: '0' }
+    idtratamiento: { type: integer, notnull: true, default: '0' }
+    matricula: { type: string(10), primary: false, autoincrement: false, default: '' }
+    fecha: { type: date(25), primary: false, notnull: true, default: '2002-01-01' }
+    pieza: { type: string(10) }
+    caras: { type: string(10) }
+    tratamiento: { type: string(200) }
+    importe: { type: float, primary: false, notnull: true, default: '' }
+    coseguro: { type: float, primary: false, notnull: true, default: '' }
+    bono: { type: float, primary: false, notnull: true, default: '' }
+    importeos: { type: float, primary: false, notnull: true, default: '' }
+  relations:
+    ObrasSociales: 
+      local: idobrasocial
+      foreign: idobrasocial
+      foreignAlias: ObrasSociales
+    Tratamientos: 
+      local: idtratamiento
+      foreign: id
+      foreignAlias: Tratamientos      
