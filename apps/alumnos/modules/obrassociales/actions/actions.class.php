@@ -24,6 +24,11 @@ class obrassocialesActions extends sfActions
     $this->planes = $os->obtenerPlanes();
   }
 
+  public function executeObtenertratamientos(sfWebRequest $request)
+  {
+    $this->tratamientos = Doctrine_Core::getTable('Tratamientos')->obtenerPorObraSocial($request->getParameter('idobrasocial'), 1);
+  }
+
   public function executeObtenerinfo(sfWebRequest $request)
   {
     echo $request->getParameter('idobrasocial'); 
