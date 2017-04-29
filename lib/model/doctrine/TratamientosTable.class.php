@@ -36,4 +36,23 @@ class TratamientosTable extends Doctrine_Table
 
         return $q;
     } 
+
+    // Obtener obras sociales
+    public static function obtenerPorObraSocial($idobrasocial, $estado=NULL)
+    {
+        $sql ="SELECT t.id, t.nombre as tratamiento, t.abreviacion, t.idobrasocial, os.abreviada as osabreviada, os.denominacion as obrasocial,
+                t.idontologia, CASE t.idontologia WHEN 1 THEN 'General' WHEN 2 THEN 'Prótesis' WHEN 3 THEN 'Implantes' WHEN 4 THEN 'Ortodoncia' END AS odontologia, 
+                t.garantia, t.importe, t.coseguro, t.bono, t.importeos, t.idautorizacion, t.visible, t.activo
+                FROM tratamientos t
+                JOIN obras_sociales os ON t.idobrasocial = os.idobrasocial  ";
+
+        if($estado !== NULL)
+            $sql .=  " WHERE t.idobrasocial = ".$idobrasocial." AND t.activo = ".$estado." ";  
+
+        $sql .= " ORDER BY os.denominacion, t.nombre;";
+        
+        $q = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($sql);
+
+        return $q;
+    } 
 }
