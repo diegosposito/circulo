@@ -31,24 +31,17 @@
       <?php $i=0; ?>
       <?php foreach ($atencioness as $atenciones){ ?>
       <tr class="fila_<?php echo $i%2 ; ?>">
-        <td width="15%" align="center"><?php echo $atenciones['osabreviada'] ?></td>
-        <td width="50%" align="center"><?php echo $atenciones['tratamiento'] ?></td>
-        <td width="5%" align="center">
-        <?php if ($atenciones['activo']){ ?>
-             <img width="17px" height="17px" src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/accept_ico.png' align='center' size='20' />
-        <?php } else { ?>
-             <img width="14px" height="14px"  src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/wrong_ico.png' align='center' size='20' />
-        <?php }  ?>
-        </td>
-        <td width="10%" align="center"><?php echo $atenciones['garantia'] ?></td>
-        <td width="10%" align="center"><?php echo $atenciones['odontologia'] ?></td>
-       <td align="center"><?php echo link_to("Editar", 'tratamientos/edit?id='.$atenciones['id'] ,'class="mhead"'); ?></td>
+        <td width="15%" align="center"><?php echo $atenciones['id'] ?></td>
+        <td width="50%" align="center"><?php echo $atenciones['mes'].'-'.$atenciones['anio'] ?></td>
+        <td width="15%" align="center"><?php echo $atenciones['nrodoc'] ?></td>
+        <td width="10%" align="center"><?php echo $atenciones['matricula'] ?></td>
+        <td width="10%" align="center"><?php echo $atenciones['fecha'] ?></td>
+       <td align="center"><?php echo link_to("Editar", 'atenciones/edit?id='.$atenciones['id'] ,'class="mhead"'); ?></td>
       </tr>
       <?php $i++; ?>
       <?php } ?>
 
       <br>
-  
+
     </tbody>
   </table>
-
