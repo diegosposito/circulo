@@ -12,9 +12,7 @@ class atencionesActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-    $this->atencioness = Doctrine_Core::getTable('Atenciones')
-      ->createQuery('a')
-      ->execute();
+      $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerAtenciones();
   }
 
   public function executeShow(sfWebRequest $request)
