@@ -21,7 +21,7 @@ class ActualizacionesatenTable extends Doctrine_Table
     {
 
          // actualizar designaciones
-        $sql ="UPDATE tmp_tratamiento tmp JOIN tratamientos trat ON tmp.id = trat.id SET tmp.actualizar = 1;";
+        $sql ="UPDATE tmp_atenciones tmp SET tmp.actualizar = 0;";
 
         $q = Doctrine_Manager::getInstance()->getCurrentConnection();
 
@@ -30,13 +30,20 @@ class ActualizacionesatenTable extends Doctrine_Table
     }
 
     // Obtener obras sociales
-    public static function insertarTratamientos()
+    public static function insertarAtenciones()
     {
 
          // actualizar designaciones
-        $sql ="INSERT INTO `tratamientos`
-                SELECT NULL, nombre, abreviacion, idgrupotratamiento, idobrasocial, idontologia, garantia, importe, coseguro, bono, importeos, idautorizacion, visible, descripcion, normas, activo, now(), now(), 1, 1
-                FROM tmp_tratamiento WHERE actualizar = 0;";
+        $sql ="INSERT INTO `atenciones`
+                SELECT NULL,ta.nrodoc,ta.mes,ta.anio,ta.idobrasocial,t.id, ta.matricula,ta.fecha,ta.pieza,ta.caras,ta.tratamiento,ta.importe,ta.coseguro,ta.bono,ta.importeos,now(),now(),1,1 
+                FROM tmp_atenciones ta JOIN tratamientos t ON ta.tratamiento = t.nombre WHERE ta.actualizar = 0;";
+
+        $q = Doctrine_Manager::getInstance()->getCurrentConnection();
+
+        $resultado = $q->execute($sql);
+
+         // Marcar atenciones temporales para que no vuelvan a intertarse, por si sinquerer se da ejecutar de nuevo
+        $sql ="UPDATE tmp_atenciones tmp SET tmp.actualizar = 1;";
 
         $q = Doctrine_Manager::getInstance()->getCurrentConnection();
 
@@ -45,7 +52,7 @@ class ActualizacionesatenTable extends Doctrine_Table
     }
 
     // Obtener registros a actualizar
-    public static function obtenerRegistrosAActualizar($campo_en_tratamientos,$campo, $tipo_campo)
+   /* public static function obtenerRegistrosAActualizar($campo_en_tratamientos,$campo, $tipo_campo)
     {
         $sql ="UPDATE tratamientos trat JOIN tmp_tratamiento tmp ON trat.id = tmp.id SET trat.".$campo_en_tratamientos." = tmp.".$campo." WHERE tmp.actualizar = 1 ";
 
@@ -58,5 +65,5 @@ class ActualizacionesatenTable extends Doctrine_Table
         $sql .=" ; ";
 
         return $sql; // RETORNA el string con la consulta solamente
-    }
+    }*/
 }
