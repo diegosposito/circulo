@@ -157,6 +157,7 @@
 								<?php echo '<li>'.link_to('Autoridades', 'autoridades').'</li>' ; ?>
 								<?php echo '<li>'.link_to('Entidades', 'cargoautoridades/index').'</li>' ; ?>
 								<?php echo '<li>'.link_to('Gestión Tratamientos', 'tratamientos/index').'</li>' ; ?>
+								<?php echo '<li>'.link_to('Gestión Atenciones', 'atenciones/index').'</li>' ; ?>
 								<?php echo '<li>'.link_to('Gestión Contenido', 'noticia/index').'</li>' ; ?>
 								<?php echo '<li>'.link_to('Gestión Contacto', 'contacto').'</li>' ; ?>
 								<?php echo '<li>'.link_to('Gestión Saludent', 'practicas/index').'</li>' ; ?>
