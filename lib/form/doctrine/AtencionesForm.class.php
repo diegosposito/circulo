@@ -30,11 +30,11 @@ class AtencionesForm extends BaseAtencionesForm
     $this->widgetSchema->setLabel('coseguro', '<p align="left">Coseguro:</p>');
     $this->widgetSchema->setLabel('bono', '<p align="left">Bono:</p>');
     $this->widgetSchema->setLabel('importeos', '<p align="left">Importe O. Social:</p>');
-    
+
     $oss = Doctrine_Core::getTable('ObrasSociales')->obtenerTodas();
     foreach($oss as $os){
-        $arregloOS[$os->getIdObrasocial()] = $os->getAbreviada(); 
-    }  
+        $arregloOS[$os->getIdObrasocial()] = $os->getAbreviada();
+    }
 
     $arregloAnio = array();
 
@@ -48,14 +48,14 @@ class AtencionesForm extends BaseAtencionesForm
     $this->widgetSchema->setLabel('mes', '<p align="left">Mes:</p>');
 
     for ($anio = date("Y"); $anio > date("Y")-10; $anio=$anio-1) {
-        $arregloAnio[]= $anio;
+        $arregloAnio[$anio]=$anio;
     }
     $this->widgetSchema['mes'] = new sfWidgetFormSelect(array('choices' => $arregloMeses));
     $this->widgetSchema->setLabel('mes', '<p align="left">Mes:</p>');
-   
+
     $this->widgetSchema['anio'] = new sfWidgetFormSelect(array('choices' => $arregloAnio));
     $this->widgetSchema->setLabel('anio', '<p align="left">Año:</p>');
-   
+
 
    $this->setValidators(array(
       'id'           => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
@@ -67,7 +67,7 @@ class AtencionesForm extends BaseAtencionesForm
       'matricula'    => new sfValidatorString(array('max_length' => 10, 'required' => false)),
       'fecha'        => new sfValidatorDate(array('required' => false)),
       'pieza'        => new sfValidatorString(array('max_length' => 10, 'required' => false)),
-     // 'caras'        => new sfValidatorString(array('max_length' => 10, 'required' => false)),
+      'caras'        => new sfValidatorString(array('max_length' => 10, 'required' => false)),
      // 'tratamiento'  => new sfValidatorString(array('max_length' => 200, 'required' => false)),
       'importe'      => new sfValidatorNumber(array('required' => false)),
       'coseguro'     => new sfValidatorNumber(array('required' => false)),
@@ -76,8 +76,8 @@ class AtencionesForm extends BaseAtencionesForm
     ));
 
 
-    $this->validatorSchema->setOption('allow_extra_fields',true); 
+    $this->validatorSchema->setOption('allow_extra_fields',true);
 
-  
+
   }
 }
