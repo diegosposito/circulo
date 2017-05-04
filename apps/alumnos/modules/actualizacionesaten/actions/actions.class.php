@@ -92,7 +92,7 @@ class actualizacionesatenActions extends sfActions
          $this->redirect('ingreso');
 
       $archivo = Doctrine_Core::getTable('Actualizacionesaten')->find(array($request['id']));
-      $archivo = Doctrine_Core::getTable('Actualizacionesaten')->find(array(5));
+      //$archivo = Doctrine_Core::getTable('Actualizacionesaten')->find(array(5));
 
       $nombre_archivo = sfConfig::get('app_pathfiles_folder')."/../actualizacionesaten".'/'.$archivo->getImagefile();
 
