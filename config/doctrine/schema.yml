@@ -1,80 +1,80 @@
 Facultades:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
-  columns: 
+  columns:
     idfacultad: { type: integer, primary: true, autoincrement: true }
-    nombre: { type: string(1000) } 
-    decano: { type: string(200) } 
-    nombreabrev: { type: string(50) } 
+    nombre: { type: string(1000) }
+    decano: { type: string(200) }
+    nombreabrev: { type: string(50) }
 
 Autoridades:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
-  columns: 
+  columns:
     idautoridad: { type: integer, primary: true, autoincrement: true }
     nombre: { type: string(200) }
-    idcargoautoridad: { type: integer, notnull: true, default: '0' } 
+    idcargoautoridad: { type: integer, notnull: true, default: '0' }
   relations:
-    CargoAutoridades: 
+    CargoAutoridades:
       local: idcargoautoridad
       foreign: idcargoautoridad
-      foreignAlias: CargoAutoridades    
+      foreignAlias: CargoAutoridades
 
 CargoAutoridades:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
-  columns: 
+  columns:
     idcargoautoridad: { type: integer, primary: true, autoincrement: true }
     nombre: { type: string(200) }
     orden: { type: integer, notnull: true, default: '0' }
 
 Practicas:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
-  columns: 
+  columns:
     idpractica: { type: integer, primary: true, autoincrement: true }
     nombre: { type: string(200) }
     codigo: { type: integer, primary: false, default: '0', notnull: true }
     importe: { type: string(25) }
-    idtipopractica: { type: integer, notnull: true, default: '0' } 
+    idtipopractica: { type: integer, notnull: true, default: '0' }
   relations:
-    TipoPracticas: 
+    TipoPracticas:
       local: idtipopractica
       foreign: idtipopractica
-      foreignAlias: TipoPracticas       
+      foreignAlias: TipoPracticas
 
 TipoPracticas:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
-  columns: 
+  columns:
     idtipopractica: { type: integer, primary: true, autoincrement: true }
     nombre: { type: string(200) }
-    orden: { type: integer, notnull: true, default: '0' }  
+    orden: { type: integer, notnull: true, default: '0' }
 
 SaludentContenido:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
-  columns: 
+  columns:
     id: { type: integer, primary: true, autoincrement: true }
-    descripcion: { type: string(2000) }       
+    descripcion: { type: string(2000) }
 
 Carreras:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idcarrera: { type: integer, primary: true, autoincrement: true }
-    nombre: { type: string(255), primary: false, notnull: true } 
+    nombre: { type: string(255), primary: false, notnull: true }
     nombrereducido: { type: string(200), primary: false }
-    idfacultad: { type: integer, notnull: true, default: '0' } 
-    letra: { type: string(2), primary: false } 
-    titulo: { type: string(200), primary: false } 
+    idfacultad: { type: integer, notnull: true, default: '0' }
+    letra: { type: string(2), primary: false }
+    titulo: { type: string(200), primary: false }
     idtipocarrera: { type: integer, notnull: true, default: '0' }
     idmodalidad: { type: integer, notnull: true, default: '0' }
     termino: { type: integer, primary: false, default: '0', notnull: true }
@@ -89,53 +89,53 @@ Carreras:
     anioinicio: { type: integer, primary: false, autoincrement: false }
     idestadocarrera: { type: integer, notnull: true, default: '1' }
   relations:
-    Facultades: 
+    Facultades:
       local: idfacultad
       foreign: idfacultad
       foreignAlias: Facultades
-    AreasCarrera: 
+    AreasCarrera:
       local: idcarrera
       foreign: idcarrera
-      foreignAlias: AreasCarrera      
-    TiposCarreras: 
+      foreignAlias: AreasCarrera
+    TiposCarreras:
       local: idtipocarrera
       foreign: idtipocarrera
-      foreignAlias: TiposCarreras   
-    ModalidadesCarreras: 
+      foreignAlias: TiposCarreras
+    ModalidadesCarreras:
       local: idmodalidad
       foreign: idmodalidad
-      foreignAlias: ModalidadesCarreras             
-    EstadosCarreras: 
+      foreignAlias: ModalidadesCarreras
+    EstadosCarreras:
       local: idestadocarrera
       foreign: idestadocarrera
-      foreignAlias: EstadosCarreras             
-      
+      foreignAlias: EstadosCarreras
+
 TiposCarreras:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idtipocarrera: { type: integer, primary: true, autoincrement: true }
     nombre: { type: string(40), notnull: true, default: 'sin informacion' }
-    descripcion: { type: string(255), notnull: true, default: 'sin informacion' }       
+    descripcion: { type: string(255), notnull: true, default: 'sin informacion' }
     otorgatitulo: { type: boolean, notnull: true, default: 1 }
     reportaaraucano: { type: boolean, notnull: true, default: 1 }
     permitematricular: { type: boolean, notnull: true, default: 1 }
-    permiteinscribir: { type: boolean, notnull: true, default: 1 }  
+    permiteinscribir: { type: boolean, notnull: true, default: 1 }
     abreviacion: { type: string(5), notnull: true, default: '' }
-    
+
 ModalidadesCarreras:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idmodalidad: { type: integer, primary: true, autoincrement: true }
     nombre: { type: string(40), notnull: true, default: 'sin informacion' }
-    descripcion: { type: string(255), notnull: true, default: 'sin informacion' }       
+    descripcion: { type: string(255), notnull: true, default: 'sin informacion' }
 
 Titulos:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idtitulo: { type: integer, primary: true, autoincrement: true }
@@ -144,47 +144,47 @@ Titulos:
     idtipotitulo: { type: integer, notnull: true, default: '0' }
     niveltitulo: { type: integer, notnull: true, default: '1' }
     fechacreacion: { type: date(25), primary: false, notnull: true, default: '2002-01-01' }
-    nroresolucion: { type: string(15), primary: false } 
+    nroresolucion: { type: string(15), primary: false }
     fechacreacionministerial: { type: date(25), primary: false, notnull: true, default: '2002-01-01' }
-    nroresolucionministerial: { type: string(15), primary: false }  
-    duracion: { type: integer, primary: false, default: '0', notnull: true }         
+    nroresolucionministerial: { type: string(15), primary: false }
+    duracion: { type: integer, primary: false, default: '0', notnull: true }
     tiempotrabajofinal: { type: integer, primary: false, default: '0', notnull: true }
-    incumbencias: { type: string(255), notnull: true, default: 'sin informacion' }       
+    incumbencias: { type: string(255), notnull: true, default: 'sin informacion' }
     acreditacionconeau: { type: boolean, notnull: true, default: 1 }
     categorizacionconeau: { type: string(2), notnull: true, default: '' }
     fechabaja: { type: date(25), primary: false, notnull: true, default: '2002-01-01' }
     idestadotitulo: { type: integer, notnull: true, default: '0' }
   relations:
-    TiposTitulos: 
+    TiposTitulos:
       local: idtipotitulo
       foreign: idtipotitulo
       foreignAlias: TiposTitulos
-   
+
 TiposTitulos:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idtipotitulo: { type: integer, primary: true, autoincrement: true }
     nombre: { type: string(40), notnull: true, default: 'sin informacion' }
-    descripcion: { type: string(255), notnull: true, default: 'sin informacion' }       
+    descripcion: { type: string(255), notnull: true, default: 'sin informacion' }
     tiempotrabajofinal: { type: integer, primary: false, default: '0', notnull: true }
 
 TitulosPlanes:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idtituloplan: { type: integer, primary: true, autoincrement: true }
     idtitulo: { type: integer, primary: false, default: '0' }
-    idplanestudio: { type: integer, primary: false, default: '0' }    
+    idplanestudio: { type: integer, primary: false, default: '0' }
     tieneorientacion: { type: boolean, notnull: true, default: 1 }
     eligeorientacion: { type: boolean, notnull: true, default: 1 }
     totalcreditoegreso: { type: integer, primary: false, default: '0', notnull: true }
-    idmodoegreso: { type: integer, primary: false, default: '0' }     
-    sumacredito: { type: string(2), notnull: true, default: '' } 
+    idmodoegreso: { type: integer, primary: false, default: '0' }
+    sumacredito: { type: string(2), notnull: true, default: '' }
   relations:
-    Titulos: 
+    Titulos:
       local: idtitulo
       foreign: idtitulo
       foreignAlias: Titulos
@@ -198,39 +198,39 @@ TitulosPlanes:
       foreignAlias: ModosEgreso
 
 ModosEgreso:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idmodoegreso: { type: integer, primary: true, autoincrement: true }
     nombre: { type: string(40), notnull: true, default: 'sin informacion' }
-    descripcion: { type: string(255), notnull: true, default: 'sin informacion' }       
+    descripcion: { type: string(255), notnull: true, default: 'sin informacion' }
 
 Dependencias:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     iddependencia: { type: integer, primary: true, autoincrement: true }
-    nombre: { type: string(200), primary: false, notnull: true }    
+    nombre: { type: string(200), primary: false, notnull: true }
 
 TiposMaterias:
   actAs:
-    Timestampable: ~ 
+    Timestampable: ~
     fzblameable: ~
   columns:
     idtipomateria: { type: integer, primary: true, autoincrement: true }
-    descripcion: { type: string(15), notnull: true, default: 'sin informacion' }     
+    descripcion: { type: string(15), notnull: true, default: 'sin informacion' }
 
 Materias:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idmateria: { type: integer, primary: true, autoincrement: true }
-    nombre: { type: string(255), notnull: true, default: '' }  
+    nombre: { type: string(255), notnull: true, default: '' }
     nombrereducido: { type: string(100), notnull: true, default: '' }
-    contenidominimo: { type: string(255), notnull: true, default: '' }  
+    contenidominimo: { type: string(255), notnull: true, default: '' }
 
 MateriasPlanes:
   actAs:
@@ -240,8 +240,8 @@ MateriasPlanes:
     idmateriaplan: { type: integer, primary: true, autoincrement: true }
     idmateria: { type: integer, primary: false, default: '0' }
     idplanestudio: { type: integer, primary: false, default: '0' }
-    idtipomateria: { type: integer, primary: false, default: '0' }    
-    idtipocursada: { type: integer, primary: false, default: '0', notnull: true } 
+    idtipomateria: { type: integer, primary: false, default: '0' }
+    idtipocursada: { type: integer, primary: false, default: '0', notnull: true }
     obligatoria: { type: boolean, notnull: true, default: 1 }
     promediable: { type: boolean, notnull: true, default: 1 }
     saleanalitico: { type: boolean, notnull: true, default: 1 }
@@ -260,7 +260,7 @@ MateriasPlanes:
     vigencia: { type: integer, primary: false, default: '0', notnull: true }
     codmat: { type: string(6), notnull: false, default: '' }
     contenidominimo: { type: string(255), notnull: true, default: '' }
-    idmodoinscripcioncursada: { type: integer, primary: false, default: '0', notnull: true } 
+    idmodoinscripcioncursada: { type: integer, primary: false, default: '0', notnull: true }
   relations:
     Resoluciones:
       local: idresolucion
@@ -281,81 +281,81 @@ MateriasPlanes:
     TiposCursadas:
       local: idtipocursada
       foreign: idtipocursada
-      foreignAlias: TiposCursadas  
+      foreignAlias: TiposCursadas
     ModosInscripcionCursadas:
       local: idmodoinscripcioncursada
       foreign: idmodoinscripcioncursada
-      foreignAlias: ModosInscripcionCursadas     
+      foreignAlias: ModosInscripcionCursadas
 MateriasGenericas:
   actAs:
     Timestampable: ~
     fzblameable: ~
   columns:
     idmateriaplangenerica: { type: integer, primary: false, default: '0' }
-    idmateriaplan: { type: integer, primary: false, default: '0' } 
+    idmateriaplan: { type: integer, primary: false, default: '0' }
     valormateria: { type: integer, primary: false, default: '0', notnull: true }
   relations:
     MateriasPlanes:
       local: idmateriaplangenerica
       foreign: idmateriaplan
-      foreignAlias: MateriasPlanes  
+      foreignAlias: MateriasPlanes
     MateriasComponentes:
       local: idmateriaplan
       foreign: idmateriaplan
-      foreignAlias: MateriasPlanes      
-      
+      foreignAlias: MateriasPlanes
+
 TiposCursadas:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idtipocursada: { type: integer, primary: true, autoincrement: true }
-    descripcion: { type: string(50), notnull: true, default: '' } 
+    descripcion: { type: string(50), notnull: true, default: '' }
 
 ModosInscripcionCursadas:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idmodoinscripcioncursada: { type: integer, primary: true, autoincrement: true }
-    descripcion: { type: string(50), notnull: true, default: '' } 
-      
+    descripcion: { type: string(50), notnull: true, default: '' }
+
 Sedes:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
-  columns: 
+  columns:
     idsede: { type: integer, primary: true, autoincrement: true }
-    nombre: { type: string(255) } 
+    nombre: { type: string(255) }
     abreviacion: { type: string(5), notnull: true, default: '' }
-    direccion: { type: string(255) } 
+    direccion: { type: string(255) }
     idciudad: { type: integer }
-    telefonos: { type: string(255) } 
-    email: { type: string(255) } 
-    imgencabezado: { type: string(255) } 
-    imgpie: { type: string(255) } 
+    telefonos: { type: string(255) }
+    email: { type: string(255) }
+    imgencabezado: { type: string(255) }
+    imgpie: { type: string(255) }
     idtiposede: { type: integer }
   relations:
     TiposSedes:
       local: idtiposede
       foreign: idtiposede
       foreignAlias: TiposSedes
-    Ciudades: 
+    Ciudades:
       local: idciudad
       foreign: idciudad
-      foreignAlias: Ciudades 
+      foreignAlias: Ciudades
 
 TiposSedes:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idtiposede: { type: integer, primary: true, autoincrement: true }
     descripcion: { type: string(50), notnull: true, default: 'sin informacion' }
 
 TiposDocumentos:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idtipodoc: { type: integer, primary: true, autoincrement: true }
@@ -363,74 +363,74 @@ TiposDocumentos:
     idpais: { type: integer }
     formato: { type: string(100), notnull: true, default: 'sin informacion' }
   relations:
-    Paises: 
+    Paises:
       local: idpais
       foreign: idpais
-      foreignAlias: Paises    	 
-       
+      foreignAlias: Paises
+
 Paises:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idpais: { type: integer, primary: true, autoincrement: true }
-    descripcion: { type: string(50), notnull: true, default: 'sin informacion' } 
+    descripcion: { type: string(50), notnull: true, default: 'sin informacion' }
     abreviacion: { type: string(5), notnull: true, default: '' }
     gentiliciom: { type: string(50), notnull: true, default: 'sin informacion' }
     gentiliciof: { type: string(50), notnull: true, default: 'sin informacion' }
 
 Provincias:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idprovincia: { type: integer, primary: true, autoincrement: true }
     idpais: { type: integer, primary: false, default: '0' }
-    descripcion: { type: string(50), notnull: true, default: 'sin informacion' } 
+    descripcion: { type: string(50), notnull: true, default: 'sin informacion' }
   relations:
-    Paises: 
+    Paises:
       local: idpais
       foreign: idpais
-      foreignAlias: Provincias  
+      foreignAlias: Provincias
 
 Ciudades:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idciudad: { type: integer, primary: true, autoincrement: true }
     iddepartamento: { type: integer, primary: false, default: '0' }
     idprovincia: { type: integer, primary: false, default: '0' }
-    descripcion: { type: string(80), notnull: true, default: 'sin informacion' } 
-    codpostal:   { type: string(10), notnull: false, default: '' } 
-    chequeada:   { type: integer, primary: false, default: '0' } 
+    descripcion: { type: string(80), notnull: true, default: 'sin informacion' }
+    codpostal:   { type: string(10), notnull: false, default: '' }
+    chequeada:   { type: integer, primary: false, default: '0' }
   relations:
-    Provincias: 
+    Provincias:
       local: idprovincia
       foreign: idprovincia
-      foreignAlias: Provincias   
-    Departamentos: 
+      foreignAlias: Provincias
+    Departamentos:
       local: iddepartamento
       foreign: iddepartamento
-      foreignAlias: Departamentos  
+      foreignAlias: Departamentos
 
 Departamentos:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     iddepartamento: { type: integer, primary: true, autoincrement: true }
-    descripcion: { type: string(80), notnull: true, default: 'sin informacion' }     
+    descripcion: { type: string(80), notnull: true, default: 'sin informacion' }
     idprovincia: { type: integer, primary: false, default: '0' }
   relations:
-    Provincias: 
+    Provincias:
       local: idprovincia
       foreign: idprovincia
-      foreignAlias: Provincias  
-    
+      foreignAlias: Provincias
+
 PlanesEstudios:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idplanestudio: { type: integer, primary: true, autoincrement: true }
@@ -446,7 +446,7 @@ PlanesEstudios:
     nroresolucionconeau: { type: string(50), primary: false }
     duracionnumerica: { type: decimal, primary: false, autoincrement: false, default: '1' }
     horastotales: { type: integer, primary: false, autoincrement: false, default: '1' }
-    cantidadmaterias: { type: integer, primary: false, autoincrement: false, default: '0' } 
+    cantidadmaterias: { type: integer, primary: false, autoincrement: false, default: '0' }
     cantidadcomunes: { type: integer, primary: false, autoincrement: false, default: '1' }
     cantidadgenericas: { type: integer, primary: false, autoincrement: false, default: '1' }
     cantidadsubespacios: { type: integer, primary: false, autoincrement: false, default: '1' }
@@ -454,13 +454,13 @@ PlanesEstudios:
     cantidadoptativas: { type: integer, primary: false, autoincrement: false, default: '1' }
     cantidadextracurriculares: { type: integer, primary: false, autoincrement: false, default: '1' }
     cantidadseminarios: { type: integer, primary: false, autoincrement: false, default: '1' }
-    cantidadidiomas: { type: integer, primary: false, autoincrement: false, default: '1' }   
+    cantidadidiomas: { type: integer, primary: false, autoincrement: false, default: '1' }
     cantidadtesinas: { type: integer, primary: false, autoincrement: false, default: '1' }
-    cantidadtpfinal: { type: integer, primary: false, autoincrement: false, default: '0' }    
+    cantidadtpfinal: { type: integer, primary: false, autoincrement: false, default: '0' }
     fechavigencia: { type: date(25), primary: false, notnull: true, default: '2002-01-01' }
-    vigenciaminima: { type: integer, primary: false, autoincrement: false, default: '1' } 
+    vigenciaminima: { type: integer, primary: false, autoincrement: false, default: '1' }
     topecreditocursado: { type: integer, primary: false, autoincrement: false, default: '1' }
-    topecreditoregularidades: { type: integer, primary: false, autoincrement: false, default: '1' }        
+    topecreditoregularidades: { type: integer, primary: false, autoincrement: false, default: '1' }
     idtiporesolucion: { type: integer, primary: false, notnull: true, default: '0' }
     idplananterior: { type: integer, primary: false, notnull: true, default: '0' }
     idtipoplan: { type: integer, primary: false, notnull: true, default: '0' }
@@ -471,113 +471,113 @@ PlanesEstudios:
     aprobada: { type: boolean, primary: false, notnull: true, default: 0 }
     modalidadalumnolibre: { type: boolean, primary: false, notnull: true, default: 0 }
   relations:
-    Carreras: 
+    Carreras:
       local: idcarrera
       foreign: idcarrera
-      foreignAlias: Carreras      
-    TiposResoluciones: 
+      foreignAlias: Carreras
+    TiposResoluciones:
       local: idtiporesolucion
       foreign: idtiporesolucion
-      foreignAlias: TiposResoluciones 
-    TiposPlanes: 
+      foreignAlias: TiposResoluciones
+    TiposPlanes:
       local: idtipoplan
       foreign: idtipoplan
-      foreignAlias: TiposPlanes 
-    EstadosPlanes: 
+      foreignAlias: TiposPlanes
+    EstadosPlanes:
       local: idestadoplan
       foreign: idestadoplan
-      foreignAlias: EstadosPlanes    
-    EscalasNotas: 
-      local: idescalanota
-      foreign: idescalanota
-      foreignAlias: EscalasNotas            
-      
-EscalasNotas:
-  actAs: 
-    Timestampable: ~ 
-    fzblameable: ~
-  columns:
-    idescalanota: { type: integer, primary: true, autoincrement: true }
-    nombre: { type: string(255), primary: false, notnull: true, default: '' }  
-    activo: { type: boolean, primary: false, notnull: true, default: 0 }    
-
-DetalleNota:
-  actAs: 
-    Timestampable: ~ 
-    fzblameable: ~
-  columns:
-    iddetallenota: { type: integer, primary: true, autoincrement: true }
-    descripcion: { type: string(50), primary: false, notnull: true, default: '' }  
-    resultado: { type: string(15), primary: false, notnull: true, default: '' }
-    valorinferior: { type: float, primary: false, notnull: true, default: '' }
-    valorsuperior: { type: float, primary: false, notnull: true, default: '' }       
-    activo: { type: boolean, primary: false, notnull: true, default: 0 }
-    idescalanota: { type: integer, primary: false, autoincrement: false }    
-  relations:
-    EscalasNotas: 
+      foreignAlias: EstadosPlanes
+    EscalasNotas:
       local: idescalanota
       foreign: idescalanota
       foreignAlias: EscalasNotas
-      
+
+EscalasNotas:
+  actAs:
+    Timestampable: ~
+    fzblameable: ~
+  columns:
+    idescalanota: { type: integer, primary: true, autoincrement: true }
+    nombre: { type: string(255), primary: false, notnull: true, default: '' }
+    activo: { type: boolean, primary: false, notnull: true, default: 0 }
+
+DetalleNota:
+  actAs:
+    Timestampable: ~
+    fzblameable: ~
+  columns:
+    iddetallenota: { type: integer, primary: true, autoincrement: true }
+    descripcion: { type: string(50), primary: false, notnull: true, default: '' }
+    resultado: { type: string(15), primary: false, notnull: true, default: '' }
+    valorinferior: { type: float, primary: false, notnull: true, default: '' }
+    valorsuperior: { type: float, primary: false, notnull: true, default: '' }
+    activo: { type: boolean, primary: false, notnull: true, default: 0 }
+    idescalanota: { type: integer, primary: false, autoincrement: false }
+  relations:
+    EscalasNotas:
+      local: idescalanota
+      foreign: idescalanota
+      foreignAlias: EscalasNotas
+
 EstadosPlanes:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idestadoplan: { type: integer, primary: true, autoincrement: true }
-    nombre: { type: string(255), primary: false, notnull: true, default: '' }  
+    nombre: { type: string(255), primary: false, notnull: true, default: '' }
 
 EstadosCarreras:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idestadocarrera: { type: integer, primary: true, autoincrement: true }
-    nombre: { type: string(255), primary: false, notnull: true, default: '' }  
-    
+    nombre: { type: string(255), primary: false, notnull: true, default: '' }
+
 TiposResoluciones:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idtiporesolucion: { type: integer, primary: true, autoincrement: true }
-    nombre: { type: string(255), primary: false, notnull: true, default: '' }  
+    nombre: { type: string(255), primary: false, notnull: true, default: '' }
 
 TiposPlanes:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idtipoplan: { type: integer, primary: true, autoincrement: true }
-    nombre: { type: string(255), primary: false, notnull: true, default: '' }  
+    nombre: { type: string(255), primary: false, notnull: true, default: '' }
 
 EstadoCivil:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idestadocivil: { type: integer, primary: true, autoincrement: true }
     nombre: { type: string(255), primary: false, notnull: true, default: '' }
 
 Sexo:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idsexo: { type: integer, primary: true, autoincrement: true }
     nombre: { type: string(255), primary: false, notnull: true, default: '' }
 
 Profesiones:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idprofesion: { type: integer, primary: true, autoincrement: true }
-    descripcion: { type: string(100) } 
+    descripcion: { type: string(100) }
 
 Pacientes:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     id: { type: integer, primary: true, autoincrement: true }
@@ -601,52 +601,52 @@ Pacientes:
     jerarquia: { type: string(200), primary: false, notnull: true, default: '' }
     credencial: { type: string(200), primary: false, notnull: true, default: '' }
     anotaciones: { type: string(2000), primary: false, notnull: true, default: '' }
-    activo: { type: boolean, primary: false, notnull: true, default: 1 } 
+    activo: { type: boolean, primary: false, notnull: true, default: 1 }
     nroafiliado: { type: string(30), primary: false, autoincrement: false, default: '' }
-    historial: { type: string(2000) }   
+    historial: { type: string(2000) }
     imagefile: { type: string(254), primary: false, autoincrement: false, default: '' }
     idprovincia: { type: integer, primary: false, default: '0' }
     idobrasocial: { type: integer, primary: false, default: '0' }
     idplan: { type: integer, primary: false, default: '0' }
     idtipoiva: { type: integer, primary: false, default: '0' }
   relations:
-    Provincias: 
+    Provincias:
       local: idprovincia
       foreign: idprovincia
       foreignAlias: Provincias
-    ObrasSociales: 
+    ObrasSociales:
       local: idobrasocial
       foreign: idobrasocial
-      foreignAlias: ObrasSociales  
-    Ciudades: 
+      foreignAlias: ObrasSociales
+    Ciudades:
       local: idciudadnac
       foreign: idciudad
       foreignAlias: Ciudades
-    PlanesObras: 
+    PlanesObras:
       local: idplan
       foreign: id
       foreignAlias: PlanesObras
-    EstadoCivil: 
+    EstadoCivil:
       local: estadocivil
       foreign: idestadocivil
       foreignAlias: EstadoCivil
-    Sexo: 
+    Sexo:
       local: idsexo
       foreign: idsexo
       foreignAlias: Sexo
 
 CargoAutoridades:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
-  columns: 
+  columns:
     idcargoautoridad: { type: integer, primary: true, autoincrement: true }
     nombre: { type: string(200) }
-    orden: { type: integer, notnull: true, default: '0' }    
+    orden: { type: integer, notnull: true, default: '0' }
 
 Personas:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idpersona: { type: integer, primary: true, autoincrement: true }
@@ -669,13 +669,13 @@ Personas:
     email: { type: string(200), primary: false, notnull: true, default: '' }
     mostrarinfoemail: { type: boolean, primary: false, notnull: true, default: 0 }
     celular: { type: string(200), primary: false, notnull: true, default: '' }
-    mostrarinfocelular: { type: boolean, primary: false, notnull: true, default: 0 }  
+    mostrarinfocelular: { type: boolean, primary: false, notnull: true, default: 0 }
     telefono: { type: string(200), primary: false, notnull: true, default: '' }
     ciudad: { type: string(200), primary: false, notnull: true, default: '' }
     direccion: { type: string(200), primary: false, notnull: true, default: '' }
-    tienefoto: { type: boolean, primary: false, notnull: true, default: 0 }  
-    activo: { type: boolean, primary: false, notnull: true, default: 1 } 
-    socio: { type: boolean, primary: false, notnull: true, default: 1 }   
+    tienefoto: { type: boolean, primary: false, notnull: true, default: 0 }
+    activo: { type: boolean, primary: false, notnull: true, default: 1 }
+    socio: { type: boolean, primary: false, notnull: true, default: 1 }
     nrolector: { type: string(10), primary: false, autoincrement: false, default: '' }
     otrainformacionrelevante: { type: string(2000) }
     horarios: { type: string(2000) }
@@ -683,34 +683,34 @@ Personas:
     idusuario: { type: integer, primary: false, autoincrement: false, default: '1' }
     imagefile: { type: string(254), primary: false, autoincrement: false, default: '' }
   relations:
-    TiposDocumentos: 
+    TiposDocumentos:
       local: idtipodoc
       foreign: idtipodoc
-      foreignAlias: TiposDocumentos 
-    Paises: 
+      foreignAlias: TiposDocumentos
+    Paises:
       local: idnacionalidad
       foreign: idpais
-      foreignAlias: Paises 
-    Ciudades: 
+      foreignAlias: Paises
+    Ciudades:
       local: idciudadnac
       foreign: idciudad
       foreignAlias: Ciudades
-    EstadoCivil: 
+    EstadoCivil:
       local: estadocivil
       foreign: idestadocivil
       foreignAlias: EstadoCivil
-    Sexo: 
+    Sexo:
       local: idsexo
       foreign: idsexo
       foreignAlias: Sexo
-    sfGuardUser: 
+    sfGuardUser:
       local: idusuario
       foreign: id
-      foreignAlias: sfGuardUser  
+      foreignAlias: sfGuardUser
 
 Noticia:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     id: { type: integer, primary: true, autoincrement: true }
@@ -723,39 +723,49 @@ Noticia:
     imagefile: { type: string(254), primary: false, autoincrement: false, default: '' }
 
 ArchivosProfesionales:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     id: { type: integer, primary: true, autoincrement: true }
     nombre: { type: string(100), primary: false, autoincrement: false, default: '' }
     visible: { type: boolean, primary: false, notnull: true, default: 1 }
     idorden: { type: integer, primary: false, autoincrement: false, default: '1' }
-    imagefile: { type: string(254), primary: false, autoincrement: false, default: '' }  
+    imagefile: { type: string(254), primary: false, autoincrement: false, default: '' }
 
 Actualizaciones:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     id: { type: integer, primary: true, autoincrement: true }
     nombre: { type: string(100), primary: false, autoincrement: false, default: '' }
     idorden: { type: integer, primary: false, autoincrement: false, default: '1' }
-    imagefile: { type: string(254), primary: false, autoincrement: false, default: '' } 
+    imagefile: { type: string(254), primary: false, autoincrement: false, default: '' }
 
 Actualizacionestrat:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     id: { type: integer, primary: true, autoincrement: true }
     nombre: { type: string(100), primary: false, autoincrement: false, default: '' }
     idorden: { type: integer, primary: false, autoincrement: false, default: '1' }
-    imagefile: { type: string(254), primary: false, autoincrement: false, default: '' }        
+    imagefile: { type: string(254), primary: false, autoincrement: false, default: '' }
+
+Actualizacionesaten:
+  actAs:
+    Timestampable: ~
+    fzblameable: ~
+  columns:
+    id: { type: integer, primary: true, autoincrement: true }
+    nombre: { type: string(100), primary: false, autoincrement: false, default: '' }
+    idorden: { type: integer, primary: false, autoincrement: false, default: '1' }
+    imagefile: { type: string(254), primary: false, autoincrement: false, default: '' }
 
 Banners:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     id: { type: integer, primary: true, autoincrement: true }
@@ -763,33 +773,33 @@ Banners:
     url: { type: string(254), primary: false, autoincrement: false, default: '' }
     visible: { type: boolean, primary: false, notnull: true, default: 1 }
     idorden: { type: integer, primary: false, autoincrement: false, default: '1' }
-    imagefile: { type: string(254), primary: false, autoincrement: false, default: '' }       
+    imagefile: { type: string(254), primary: false, autoincrement: false, default: '' }
 
 MesesCobro:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idpersona: { type: integer, primary: false, autoincrement: false, default: '1' }
     mes: { type: integer, primary: false, autoincrement: false }
     descripcion: { type: string(255), notnull: true }
   relations:
-    Personas: 
+    Personas:
       local: idpersona
       foreign: idpersona
-      foreignAlias: Personas 
+      foreignAlias: Personas
 
 Meses:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     mes: { type: integer, primary: false, autoincrement: false }
     descripcion: { type: string(255), notnull: true }
 
 RecibosGenerados:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idpersona: { type: integer, primary: false, autoincrement: false, default: '1' }
@@ -800,14 +810,14 @@ RecibosGenerados:
     monto: { type: float, primary: false, notnull: true, default: '' }
     estado: { type: integer, primary: false, autoincrement: false }
   relations:
-    Personas: 
+    Personas:
       local: idpersona
       foreign: idpersona
-      foreignAlias: Personas             
+      foreignAlias: Personas
 
 NoDocentes:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     id: { type: integer, primary: true, autoincrement: true }
@@ -832,34 +842,34 @@ NoDocentes:
     area: { type: string(300), primary: false, autoincrement: false, default: '' }
     direccion: { type: string(150), primary: false, autoincrement: false, default: '' }
   relations:
-    TiposDocumentos: 
+    TiposDocumentos:
       local: idtipodoc
       foreign: idtipodoc
-      foreignAlias: TiposDocumentos 
-    Paises: 
+      foreignAlias: TiposDocumentos
+    Paises:
       local: idnacionalidad
       foreign: idpais
-      foreignAlias: Paises 
-    Ciudades: 
+      foreignAlias: Paises
+    Ciudades:
       local: idciudadnac
       foreign: idciudad
       foreignAlias: Ciudades
-    Sexo: 
+    Sexo:
       local: idsexo
       foreign: idsexo
-      foreignAlias: Sexo                      
+      foreignAlias: Sexo
 
 EstadosAlumno:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idestadoalumno: { type: integer, primary: true, autoincrement: true }
-    descripcion:  { type: string(100), primary: false, notnull: true, default: '' } 
+    descripcion:  { type: string(100), primary: false, notnull: true, default: '' }
 
 EstadosAlumnoHistorial:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idestadoalumno: { type: integer, primary: false, autoincrement: false }
@@ -867,26 +877,26 @@ EstadosAlumnoHistorial:
     fecha: { type: date(), primary: false, notnull: false }
     observaciones: { type: string(255), notnull: true }
   relations:
-    EstadosAlumno: 
+    EstadosAlumno:
       local: idestadoalumno
       foreign: idestadoalumno
       foreignAlias: EstadosAlumno
-    Alumnos: 
+    Alumnos:
       local: idalumno
       foreign: idalumno
-      foreignAlias: Alumnos   
+      foreignAlias: Alumnos
 
 EstadosMateria:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idestadomateria: { type: integer, primary: true, autoincrement: true }
-    descripcion:  { type: string(100), primary: false, notnull: true, default: '' }  
-   
+    descripcion:  { type: string(100), primary: false, notnull: true, default: '' }
+
 Alumnos:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idalumno: { type: integer, primary: true, autoincrement: true }
@@ -923,7 +933,7 @@ Alumnos:
     glucemia: { type: boolean, primary: false, notnull: true, default: 0 }
     estudiovdrl: { type: boolean, primary: false, notnull: true, default: 0 }
     activo: { type: boolean, primary: false, notnull: true, default: 0 }
-    promedio: { type: string(10), default: '' }        
+    promedio: { type: string(10), default: '' }
     idtipoinscripto: { type: integer, primary: false, notnull: true, default: '1' }
     idsede: { type: integer, primary: false, notnull: true, default: '1' }
     codadministracion: { type: string(10), primary: false, notnull: true, default: '0' }
@@ -931,42 +941,42 @@ Alumnos:
     aspirante: { type: boolean, primary: false, notnull: true, default: 0 }
     observaciones: { type: string(2000), notnull: true }
   relations:
-    Personas: 
+    Personas:
       local: idpersona
       foreign: idpersona
       foreignAlias: Personas
-    Sedes: 
+    Sedes:
       local: idsede
       foreign: idsede
-      foreignAlias: Sedes  
-    PlanesEstudios: 
+      foreignAlias: Sedes
+    PlanesEstudios:
       local: idplanestudio
       foreign: idplanestudio
       foreignAlias: PlanesEstudios
-    CiclosLectivos: 
+    CiclosLectivos:
       local: idciclolectivo
       foreign: id
       foreignAlias: CiclosLectivos
-    TiposInscriptos: 
+    TiposInscriptos:
       local: idtipoinscripto
       foreign: idtipoinscripto
-      foreignAlias: TiposInscriptos                
-    Estudios: 
+      foreignAlias: TiposInscriptos
+    Estudios:
       local: idestudioprevio
       foreign: idestudio
-      foreignAlias: Estudios                
+      foreignAlias: Estudios
 
 TiposInscriptos:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idtipoinscripto: { type: integer, primary: true, autoincrement: true }
-    descripcion: { type: string(255), notnull: true, default: 'sin informacion' }       
-    
+    descripcion: { type: string(255), notnull: true, default: 'sin informacion' }
+
 AluMat:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     id: { type: integer, primary: true, autoincrement: true }
@@ -979,114 +989,114 @@ AluMat:
     fecha: { type: date(25), primary: false, notnull: true, default: '2002-01-01' }
     fechavencimiento: { type: date(25), primary: false, notnull: true, default: '2002-01-01' }
   relations:
-    Alumnos: 
+    Alumnos:
       local: idalumno
       foreign: idalumno
       foreignAlias: Alumnos
-    Comisiones: 
+    Comisiones:
       local: idcomision
       foreign: idcomision
       foreignAlias: Comisiones
-    Catedras: 
+    Catedras:
       local: idcatedra
       foreign: idcatedra
-      foreignAlias: Catedras        
-    EstadosMateria: 
+      foreignAlias: Catedras
+    EstadosMateria:
       local: idestadomateria
       foreign: idestadomateria
-      foreignAlias: EstadosMateria 
-    Materias: 
+      foreignAlias: EstadosMateria
+    Materias:
       local: idmateria
       foreign: idmateria
-      foreignAlias: Materias   
+      foreignAlias: Materias
 TiposAreas:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idtipoarea: { type: integer, primary: true, autoincrement: true }
-    descripcion: { type: string(50), notnull: true, default: '' } 
+    descripcion: { type: string(50), notnull: true, default: '' }
 
 Areas:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idarea: { type: integer, primary: true, autoincrement: true }
     idtipoarea: { type: integer, primary: false, notnull: true, default: '0' }
     idareadependiente: { type: integer, primary: false, notnull: true, default: '0' }
-    descripcion: { type: string(80),  notnull: true, default: '' } 
+    descripcion: { type: string(80),  notnull: true, default: '' }
     letralegajo: { type: string(2),  notnull: true, default: '' }
-    abreviacion: { type: string(5),  notnull: true, default: '' }  
+    abreviacion: { type: string(5),  notnull: true, default: '' }
   relations:
-    TiposAreas: 
+    TiposAreas:
       local: idtipoarea
       foreign: idtipoarea
-      foreignAlias: TiposAreas  
+      foreignAlias: TiposAreas
 
 AreasCarrera:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     id: { type: integer, primary: true, autoincrement: true }
     idarea: { type: integer, primary: false, notnull: true, default: '0' }
     idcarrera: { type: integer, primary: false, notnull: true, default: '0' }
   relations:
-    Areas: 
+    Areas:
       local: idarea
       foreign: idarea
       foreignAlias: Areas
-    Carreras: 
+    Carreras:
       local: idcarrera
       foreign: idcarrera
       foreignAlias: Carreras
-      
+
 AreasCargos:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     id: { type: integer, primary: true, autoincrement: true }
     idtipoarea: { type: integer, primary: false, notnull: true, default: '0' }
     idtipocargo: { type: integer, primary: false, notnull: true, default: '0' }
   relations:
-    TiposAreas: 
+    TiposAreas:
       local: idtipoarea
       foreign: idtipoarea
       foreignAlias: TiposAreas
-    TiposCargos: 
+    TiposCargos:
       local: idtipocargo
       foreign: idtipocargo
       foreignAlias: TiposCargos
-      
+
 CategoriasTitulos:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idcategoriatitulo: { type: integer, primary: true, autoincrement: true }
-    descripcion: { type: string(50), primary: false, notnull: true, default: '' }    
+    descripcion: { type: string(50), primary: false, notnull: true, default: '' }
 
 UnidadesDeTiempo:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idunidadtiempo: { type: integer, primary: true, autoincrement: true }
-    descripcion: { type: string(50), primary: false, notnull: true, default: '' }  
-   
+    descripcion: { type: string(50), primary: false, notnull: true, default: '' }
+
 CondicionesMesas:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idcondicion: { type: integer, primary: true, autoincrement: true }
-    condicion: { type: string(50), primary: false, notnull: true, default: '' } 
+    condicion: { type: string(50), primary: false, notnull: true, default: '' }
 
 Contacto:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idcontacto: { type: integer, primary: true, autoincrement: true }
@@ -1099,10 +1109,10 @@ Contacto:
     pais:       { type: string(100), primary: false, autoincrement: false }
     email:  { type: string(100), primary: false, autoincrement: false }
     comentario: { type: string(2000) }
-   
+
 Correlatividades:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     id: { type: integer, primary: true, autoincrement: true }
@@ -1110,20 +1120,20 @@ Correlatividades:
     situacion:  { type: string(1), primary: false, autoincrement: false }
     condicion: { type: string(1), primary: false, autoincrement: false }
     idmateriaplanc: { type: integer, primary: false, autoincrement: false }
-    idtipocorrelatividad: { type: integer, primary: false, autoincrement: false, default: '1' }  
+    idtipocorrelatividad: { type: integer, primary: false, autoincrement: false, default: '1' }
   relations:
-    MateriasPlanes: 
+    MateriasPlanes:
       local: idmateriaplan
       foreign: idmateriaplan
       foreignAlias: MateriasPlanes
-    MateriasPlanes: 
+    MateriasPlanes:
       local: idmateriaplanc
       foreign: idmateriaplan
-      foreignAlias: MateriasPlanes   
-      
+      foreignAlias: MateriasPlanes
+
 TiposDesignaciones:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idtipodesignacion: { type: integer, primary: true, autoincrement: true }
@@ -1132,16 +1142,16 @@ TiposDesignaciones:
     idordinaria: { type: integer, primary: false, autoincrement: false }
 
 Sectores:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     id: { type: integer, primary: true, autoincrement: true }
     descripcion:  { type: string(100), primary: false, notnull: true, default: ' ', autoincrement: false }
-    
+
 Designaciones:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     iddesignacion: { type: integer, primary: true, autoincrement: true }
@@ -1163,84 +1173,84 @@ Designaciones:
     observaciones: { type: string(2000) }
     motivonuevadesignacion: { type: string(2000) }
   relations:
-    TiposDesignaciones: 
+    TiposDesignaciones:
       local: idtipodesignacion
       foreign: idtipodesignacion
       foreignAlias: TiposDesignaciones
-    Catedras: 
+    Catedras:
       local: idcatedra
       foreign: idcatedra
       foreignAlias: Catedras
-    Profesores: 
+    Profesores:
       local: idprofesor
       foreign: idprofesor
       foreignAlias: Profesores
-    ResolucionesProfesores: 
+    ResolucionesProfesores:
       local: idresolucionprofesor
       foreign: idresolucionprofesor
       foreignAlias: ResolucionesProfesores
-    ResolucionesProfesores: 
+    ResolucionesProfesores:
       local: idresolucioncsu
       foreign: idresolucionprofesor
-      foreignAlias: ResolucionesProfesores     
-    Dedicaciones: 
+      foreignAlias: ResolucionesProfesores
+    Dedicaciones:
       local: iddedicacion
       foreign: iddedicacion
       foreignAlias: Dedicaciones
-    EstadosDesignaciones: 
+    EstadosDesignaciones:
       local: idestadodesignacion
       foreign: idestadodesignacion
-      foreignAlias: EstadosDesignaciones      
-      
+      foreignAlias: EstadosDesignaciones
+
 TiposDesignacionesMesas:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idtipodesignacionmesa: { type: integer, primary: true, autoincrement: true }
     descripcion:  { type: string(100), primary: false, notnull: true, default: ' ', autoincrement: false }
-    
+
 TiposExamenes:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idtipoexamen: { type: integer, primary: true, autoincrement: true }
     descripcion:  { type: string(100), primary: false, notnull: true, default: ' ', autoincrement: false }
-    
+
 EstadosMesasExamenes:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idestadomesaexamen: { type: integer, primary: true, autoincrement: true }
     descripcion:  { type: string(100), primary: false, notnull: true, default: ' ', autoincrement: false }
-    
+
 EstadosMesasExamenesHistorial:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idestadomesaexamen: { type: integer, primary: false, autoincrement: false }
     idmesaexamen: { type: integer, primary: false, autoincrement: false }
     idusuario: { type: integer, primary: false, autoincrement: false }
   relations:
-    EstadosMesasExamenes: 
+    EstadosMesasExamenes:
       local: idestadomesaexamen
       foreign: idestadomesaexamen
       foreignAlias: EstadosMesasExamenes
-    MesasExamenes: 
+    MesasExamenes:
       local: idmesaexamen
       foreign: idmesaexamen
-      foreignAlias: MesasExamenes     
-    sfGuardUser: 
+      foreignAlias: MesasExamenes
+    sfGuardUser:
       local: idusuario
       foreign: id
-      foreignAlias: sfGuardUser         
-      
+      foreignAlias: sfGuardUser
+
 MesasExamenes:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idmesaexamen: { type: integer, primary: true, autoincrement: true }
@@ -1254,41 +1264,41 @@ MesasExamenes:
     hora : { type: string(8), primary: false, notnull: true, autoincrement: false }
     libro: { type: string(100), primary: false, notnull: true, autoincrement: false }
     folio: { type: string(10), primary: false, notnull: true, autoincrement: false }
-    idestadomesaexamen: { type: integer, primary: false, autoincrement: false }      
+    idestadomesaexamen: { type: integer, primary: false, autoincrement: false }
     activo: { type: boolean, notnull: true, default: 1 }
   relations:
-    CondicionesMesas: 
+    CondicionesMesas:
       local: idcondicion
       foreign: idcondicion
       foreignAlias: CondicionesMesas
-    TiposExamenes: 
+    TiposExamenes:
       local: idtipoexamen
       foreign: idtipoexamen
       foreignAlias: TiposExamenes
-    Catedras: 
+    Catedras:
       local: idcatedra
       foreign: idcatedra
       foreignAlias: Catedras
-    Materias: 
+    Materias:
       local: idmateria
       foreign: idmateria
       foreignAlias: Materias
-    EstadosMesasExamenes: 
+    EstadosMesasExamenes:
       local: idestadomesaexamen
       foreign: idestadomesaexamen
-      foreignAlias: EstadosMesasExamenes       
-    LibrosActas: 
+      foreignAlias: EstadosMesasExamenes
+    LibrosActas:
       local: idlibroacta
       foreign: idlibroacta
-      foreignAlias: LibrosActas           
-    LlamadosTurno: 
+      foreignAlias: LibrosActas
+    LlamadosTurno:
       local: idllamado
       foreign: idllamado
-      foreignAlias: LlamadosTurno     
-       
+      foreignAlias: LlamadosTurno
+
 DesignacionesMesas:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     id: { type: integer, primary: true, autoincrement: true }
@@ -1296,33 +1306,33 @@ DesignacionesMesas:
     idmesaexamen: { type: integer, primary: false, autoincrement: false }
     idtipodesignacionmesa: { type: integer, primary: false, autoincrement: false }
   relations:
-    Profesores: 
+    Profesores:
       local: idprofesor
       foreign: idprofesor
       foreignAlias: Profesores
-    TiposDesignacionesMesas: 
+    TiposDesignacionesMesas:
       local: idtipodesignacionmesa
       foreign: idtipodesignacionmesa
       foreignAlias: TiposDesignacionesMesas
-    MesasExamenes: 
+    MesasExamenes:
       local: idmesaexamen
       foreign: idmesaexamen
       foreignAlias: MesasExamenes
 
 ObrasSociales:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idobrasocial: { type: integer, primary: true, autoincrement: true }
     denominacion: { type: string(200), primary: false, notnull: true, default: '' }
     abreviada: { type: string(120), primary: false, notnull: true, default: '' }
-    estado: { type: integer, primary: false, autoincrement: false } 
+    estado: { type: integer, primary: false, autoincrement: false }
     ninterno: { type: string(100), primary: false, notnull: true, default: '' }
-    general: { type: boolean, primary: false, notnull: true, default: 0 } 
-    protesis: { type: boolean, primary: false, notnull: true, default: 0 } 
-    ortodoncia: { type: boolean, primary: false, notnull: true, default: 0 } 
-    implantes: { type: boolean, primary: false, notnull: true, default: 0 } 
+    general: { type: boolean, primary: false, notnull: true, default: 0 }
+    protesis: { type: boolean, primary: false, notnull: true, default: 0 }
+    ortodoncia: { type: boolean, primary: false, notnull: true, default: 0 }
+    implantes: { type: boolean, primary: false, notnull: true, default: 0 }
     fechaarancel: { type: date, notnull: true }
     fechaultimoperiodo: { type: date, notnull: true }
     fechaaranceltexto: { type: string(120), primary: false, notnull: true, default: ' ', autoincrement: false }
@@ -1330,23 +1340,23 @@ ObrasSociales:
     formato: { type: string(100), primary: false, notnull: true, default: '' }
 
 PlanesObras:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
-  columns: 
+  columns:
     id: { type: integer, primary: true, autoincrement: true }
     nombre: { type: string(200) }
     activo: { type: boolean, notnull: true, default: 1 }
-    idobrasocial: { type: integer, notnull: true, default: '0' } 
+    idobrasocial: { type: integer, notnull: true, default: '0' }
   relations:
-    ObrasSociales: 
+    ObrasSociales:
       local: idobrasocial
       foreign: idobrasocial
       foreignAlias: ObrasSociales
 
 Empleados:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idempleado: { type: integer, primary: true, autoincrement: true }
@@ -1354,14 +1364,14 @@ Empleados:
     legajo: { type: string(100), primary: false, notnull: true, default: ' ', autoincrement: false }
     activo: { type: boolean, notnull: true, default: 1 }
   relations:
-    Personas: 
+    Personas:
       local: idpersona
       foreign: idpersona
       foreignAlias: Personas
 
 DesignacionesEmpleados:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     id: { type: integer, primary: true, autoincrement: true }
@@ -1375,26 +1385,26 @@ DesignacionesEmpleados:
     activo: { type: boolean, notnull: true, default: 1 }
     nroresolucion: { type: string(15), primary: false }
   relations:
-    Areas: 
+    Areas:
       local: idarea
       foreign: idarea
       foreignAlias: Areas
-    TiposCargos: 
+    TiposCargos:
       local: idtipocargo
       foreign: idtipocargo
       foreignAlias: TiposCargos
-    Empleados: 
+    Empleados:
       local: idempleado
       foreign: idempleado
-      foreignAlias: Empleados  
-    Sedes: 
+      foreignAlias: Empleados
+    Sedes:
       local: idsede
       foreign: idsede
       foreignAlias: Sedes
 
 NivelesEstudios:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idnivelestudio: { type: integer, primary: true, autoincrement: true }
@@ -1403,8 +1413,8 @@ NivelesEstudios:
     formaciondocente: { type: boolean, notnull: true, default: 0 }
 
 Estudios:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idestudio: { type: integer, primary: true, autoincrement: true }
@@ -1427,30 +1437,30 @@ Estudios:
     formaciondocente: { type: boolean, notnull: true, default: 0 }
     otrotitulo: { type: string(255), primary: false,  autoincrement: false, default: ' ' }
   relations:
-    Personas: 
+    Personas:
       local: idpersona
       foreign: idpersona
       foreignAlias: Personas
-    NivelesEstudios: 
+    NivelesEstudios:
       local: idnivelestudio
       foreign: idnivelestudio
       foreignAlias: NivelesEstudios
-    CategoriasTitulos: 
+    CategoriasTitulos:
       local: idcategoriatitulo
       foreign: idcategoriatitulo
       foreignAlias: CategoriasTitulos
-      
+
 ModosEvaluaciones:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idmodoevaluacion: { type: integer, primary: true, autoincrement: true }
     descripcion:  { type: string(100), primary: false, notnull: true, default: ' ', autoincrement: false }
-    
+
 Examenes:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idexamen: { type: integer, primary: true, autoincrement: true }
@@ -1458,34 +1468,34 @@ Examenes:
     idmesaexamen: { type: integer, primary: false, autoincrement: false }
     escrito: { type: string(10), primary: false, autoincrement: false, default: '' }
     oral: { type: string(10), primary: false, autoincrement: false, default: '' }
-    promedio: { type: string(10), primary: false, autoincrement: false, default: '' }        
+    promedio: { type: string(10), primary: false, autoincrement: false, default: '' }
   relations:
-    Alumnos: 
+    Alumnos:
       local: idalumno
       foreign: idalumno
       foreignAlias: Alumnos
-    MesasExamenes: 
+    MesasExamenes:
       local: idmesaexamen
       foreign: idmesaexamen
       foreignAlias: MesasExamenes
-     
+
 LibrosActas:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idlibroacta: { type: integer, primary: true, autoincrement: true }
-    descripcion:  { type: string(100), primary: false, notnull: true, default: ' ', autoincrement: false } 
+    descripcion:  { type: string(100), primary: false, notnull: true, default: ' ', autoincrement: false }
     idarea: { type: integer, primary: false, autoincrement: false }
   relations:
-    Areas: 
+    Areas:
       local: idarea
       foreign: idarea
       foreignAlias: Areas
-      
+
 PlanesDependientes:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idgrupo: { type: integer, primary: true, autoincrement: true }
@@ -1493,18 +1503,18 @@ PlanesDependientes:
     idplanestudiod: { type: integer, primary: false, autoincrement: false }
     orden: { type: integer, primary: false, autoincrement: false }
   relations:
-    PlanesEstudios: 
+    PlanesEstudios:
       local: idplanestudio
       foreign: idplanestudio
       foreignAlias: PlanesEstudios
-    PlanesEstudiosDependiente: 
+    PlanesEstudiosDependiente:
       local: idplanestudiod
       foreign: idplanestudio
-      foreignAlias: PlanesEstudios 
-            
+      foreignAlias: PlanesEstudios
+
 Profesores:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idprofesor: { type: integer, primary: true, autoincrement: true }
@@ -1512,35 +1522,35 @@ Profesores:
     idfacultad: { type: integer, primary: false, autoincrement: false }
     legajo: { type: string(100), primary: false, notnull: true, default: ' ', autoincrement: false }
   relations:
-    Personas: 
+    Personas:
       local: idpersona
       foreign: idpersona
       foreignAlias: Personas
-    Facultades: 
+    Facultades:
       local: idfacultad
       foreign: idfacultad
-      foreignAlias: Facultades    
-      
+      foreignAlias: Facultades
+
 TiposCargos:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idtipocargo: { type: integer, primary: true, autoincrement: true }
-    descripcion:  { type: string(100), primary: false, notnull: true, default: ' ', autoincrement: false }  
-    descripcionfemenina:  { type: string(100), primary: false, notnull: true, default: ' ', autoincrement: false }  
-    
+    descripcion:  { type: string(100), primary: false, notnull: true, default: ' ', autoincrement: false }
+    descripcionfemenina:  { type: string(100), primary: false, notnull: true, default: ' ', autoincrement: false }
+
 TiposCorrelatividades:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idtipocorrelatividad: { type: integer, primary: true, autoincrement: true }
     descripcion:  { type: string(100), primary: false, notnull: true, default: ' ', autoincrement: false }
-    
+
 DocLaboral:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     iddoclaboral: { type: integer, primary: true, autoincrement: true }
@@ -1553,18 +1563,18 @@ DocLaboral:
     certificado: { type: integer, primary: false, autoincrement: false }
     trabaja: { type: integer, primary: false, autoincrement: false }
   relations:
-    Personas: 
+    Personas:
       local: idpersona
       foreign: idpersona
-      foreignAlias: Personas   
-    Profesiones: 
+      foreignAlias: Personas
+    Profesiones:
       local: idprofesion
       foreign: idprofesion
-      foreignAlias: Profesiones   
-      
+      foreignAlias: Profesiones
+
 MovimientosAlumnos:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idmovimiento: { type: integer, primary: true, autoincrement: true }
@@ -1574,18 +1584,18 @@ MovimientosAlumnos:
     idalumno: { type: integer, primary: false, autoincrement: false }
     idresponsable: { type: integer, primary: false, autoincrement: false }
   relations:
-    Estados: 
+    Estados:
       local: idestado
       foreign: idestado
-      foreignAlias: Estados   
-    Alumnos: 
+      foreignAlias: Estados
+    Alumnos:
       local: idalumno
       foreign: idalumno
       foreignAlias: Alumnos
-      
+
 Solicitudes:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idcarrera:  { type: integer, notnull: true  }
@@ -1595,10 +1605,10 @@ Solicitudes:
     resuelta:    { type: boolean, notnull: true, default: 1 }
     respuesta:   { type: string(500), notnull: true }
     is_active: { type: boolean, notnull: true, default: 0 }
-    
+
 Noticias:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idsede:   { type: integer, notnull: true }
@@ -1607,119 +1617,119 @@ Noticias:
     descripcion: { type: string(4000), notnull: true }
     idusuario:   { type: integer, notnull: true }
     orden:   { type: integer, notnull: true }
-    inicio:   { type: date, notnull: true } 
-    fin:   { type: date, notnull: true }     
+    inicio:   { type: date, notnull: true }
+    fin:   { type: date, notnull: true }
     leer_mas: { type: boolean, notnull: true, default: 0 }
-    is_active: { type: boolean, notnull: true, default: 0 }    
-    privada: { type: boolean, notnull: true, default: 0 } 
+    is_active: { type: boolean, notnull: true, default: 0 }
+    privada: { type: boolean, notnull: true, default: 0 }
   relations:
-    Sedes: 
+    Sedes:
       local: idsede
       foreign: idsede
-      foreignAlias: Sedes 
-     
+      foreignAlias: Sedes
+
 NoticiasCarrera:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idnoticia:   { type: integer, notnull: true }
     idcarrera:   { type: integer, notnull: true }
   relations:
-    Noticias: 
+    Noticias:
       local: idnoticia
       foreign: id
-      foreignAlias: Noticias   
-    Carreras: 
+      foreignAlias: Noticias
+    Carreras:
       local: idcarrera
       foreign: idcarrera
-      foreignAlias: Carreras  
-      
+      foreignAlias: Carreras
+
 CiclosLectivos:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     ciclo:  { type: string(60) }
-    inicio:   { type: date, notnull: true } 
-    fin:   { type: date, notnull: true } 
+    inicio:   { type: date, notnull: true }
+    fin:   { type: date, notnull: true }
     activo: { type: boolean, primary: false, notnull: true, default: 0 }
-    
+
 InscripcionesCicloLectivo:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idalumno:  { type: integer }
     idciclolectivo:  { type: integer }
-    fecha:   { type: date } 
+    fecha:   { type: date }
     hora:    { type: time }
   relations:
-    CiclosLectivos: { local: idciclolectivo, foreign: id }  
+    CiclosLectivos: { local: idciclolectivo, foreign: id }
     Alumnos: {local: idalumno, foreign: idalumno }
-    
+
 LibredeudaTramites:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idalumno:  { type: integer }
-    fecha:   { type: date } 
+    fecha:   { type: date }
     hora:    { type: time }
   relations:
     Alumnos: {local: idalumno, foreign: idalumno }
 
 SolicitudesLibredeuda:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idusuarioorigen: { type: integer, notnull: true }
     idusuariodestino: { type: integer, notnull: true }
     idalumno: { type: integer, notnull: true }
     idestadosolicitud: { type: integer, notnull: true }
-    fecha: { type: date } 
-    hora: { type: time }  
+    fecha: { type: date }
+    hora: { type: time }
     mensaje: { type: string(255), notnull: true }
     observaciones: { type: string(255), notnull: true }
   relations:
-    sfGuardUserOrigen: 
+    sfGuardUserOrigen:
       local: idusuarioorigen
       foreign: id
-      foreignAlias: sfGuardUser  
-    sfGuardUserDestino: 
+      foreignAlias: sfGuardUser
+    sfGuardUserDestino:
       local: idusuariodestino
       foreign: id
-      foreignAlias: sfGuardUser  
-    Alumnos: 
+      foreignAlias: sfGuardUser
+    Alumnos:
       local: idalumno
       foreign: idalumno
       foreignAlias: Alumnos
-    EstadosSolicitudes: 
+    EstadosSolicitudes:
       local: idestadosolicitud
       foreign: id
-      foreignAlias: EstadosSolicitudes 
-    
+      foreignAlias: EstadosSolicitudes
+
 EstadosSolicitudes:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
-    descripcion: { type: string(60), notnull: true }  
-    
+    descripcion: { type: string(60), notnull: true }
+
 HistoricoConsultas:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     persona: { type: string(500), notnull: true }
     carrera: { type: string(500), notnull: true }
     mensaje: { type: string(500), notnull: true }
-    usuario:  { type: string(500), notnull: true }    
-    
+    usuario:  { type: string(500), notnull: true }
+
 Menu:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     credencial: { type: string(20), notnull: true }
@@ -1731,29 +1741,29 @@ Menu:
     idsistema:  { type: integer, notnull: true, default: 1  }
   relations:
     Grupomenu: {local: idgrupomenu, foreign: id }
-    Sistemas: {local: idsistema, foreign: id }    
+    Sistemas: {local: idsistema, foreign: id }
 
 Grupomenu:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     descripcion: { type: string(20), notnull: true }
     orden:  { type: integer }
 
 Sistemas:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
-    descripcion: { type: string(20), notnull: true } 
-    url: { type: string(255), notnull: true } 
-    url128: { type: string(255), notnull: true } 
-    url192: { type: string(255), notnull: true } 
+    descripcion: { type: string(20), notnull: true }
+    url: { type: string(255), notnull: true }
+    url128: { type: string(255), notnull: true }
+    url192: { type: string(255), notnull: true }
 
 Calendarios:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idcalendario: { type: integer, primary: true, autoincrement: true }
@@ -1764,92 +1774,92 @@ Calendarios:
     resolucion: { type: string(255), notnull: true }
     activo: { type: boolean, notnull: true, default: 0 }
   relations:
-    Facultades: 
+    Facultades:
       local: idfacultad
       foreign: idfacultad
       foreignAlias: Facultades
-    Sedes: 
+    Sedes:
       local: idsede
       foreign: idsede
-      foreignAlias: Sedes 
-      
+      foreignAlias: Sedes
+
 FechasCalendario:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idfecha: { type: integer, primary: true, autoincrement: true }
     idcalendario:   { type: integer, notnull: true }
     idtipo:   { type: integer, notnull: true }
     descripcion: { type: string(500), notnull: true }
-    inicio:   { type: date, notnull: true } 
-    fin:   { type: date, notnull: true }     
+    inicio:   { type: date, notnull: true }
+    fin:   { type: date, notnull: true }
   relations:
-    Calendarios: 
+    Calendarios:
       local: idcalendario
       foreign: idcalendario
       foreignAlias: Calendarios
-    TiposFechasCalendario: 
+    TiposFechasCalendario:
       local: idtipo
       foreign: idtipo
       foreignAlias: TiposFechasCalendario
-      
+
 TiposFechasCalendario:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idtipo: { type: integer, primary: true, autoincrement: true }
     descripcion: { type: string(255), notnull: true }
 
 LlamadosTurno:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idllamado: { type: integer, primary: true, autoincrement: true }
     idfecha:   { type: integer, notnull: true }
     descripcion: { type: string(255), notnull: true }
-    inicio:   { type: date, notnull: true } 
-    fin:   { type: date, notnull: true }   
+    inicio:   { type: date, notnull: true }
+    fin:   { type: date, notnull: true }
   relations:
-    FechasCalendario: 
+    FechasCalendario:
       local: idfecha
       foreign: idfecha
       foreignAlias: FechasCalendario
 
 PeriodosCiclos:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     id: { type: integer, primary: true, autoincrement: true }
     idfecha:   { type: integer, notnull: true }
     idciclo:   { type: integer, notnull: true }
   relations:
-    FechasCalendario: 
+    FechasCalendario:
       local: idfecha
       foreign: idfecha
       foreignAlias: FechasCalendario
-    CiclosLectivos: 
+    CiclosLectivos:
       local: idciclo
       foreign: id
-      foreignAlias: CiclosLectivos      
+      foreignAlias: CiclosLectivos
 
 PeriodosCursadas:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     id: { type: integer, primary: true, autoincrement: true }
     idfecha:   { type: integer, notnull: true }
     periododecursada: { type: integer, primary: false, default: '0', notnull: true }
   relations:
-    FechasCalendario: 
+    FechasCalendario:
       local: idfecha
       foreign: idfecha
       foreignAlias: FechasCalendario
-            
+
 Catedras:
   actAs:
     Timestampable: ~
@@ -1868,10 +1878,10 @@ Catedras:
       local: idsede
       foreign: idsede
       foreignAlias: Sedes
-      
+
 Comisiones:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idcomision: { type: integer, primary: true, autoincrement: true }
@@ -1895,18 +1905,18 @@ Comisiones:
       local: idcatedra
       foreign: idcatedra
       foreignAlias: Catedras
-      
+
 EstadosComisiones:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idestadocomision: { type: integer, primary: true, autoincrement: true }
     descripcion: { type: string(255), notnull: true }
-    
+
 CarrerasSede:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     id: { type: integer, primary: true, autoincrement: true }
@@ -1922,25 +1932,25 @@ CarrerasSede:
     iddependenciaaraucano: { type: integer, primary: false, notnull: true, default: '0' }
     idtituloaraucano: { type: integer, primary: false, notnull: true, default: '0' }
   relations:
-    Sedes: 
+    Sedes:
       local: idsede
       foreign: idsede
       foreignAlias: Sedes
-    Carreras: 
+    Carreras:
       local: idcarrera
       foreign: idcarrera
       foreignAlias: Carreras
 
 Edificios:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idedificio: { type: integer, primary: true, autoincrement: true }
     nombre: { type: string(60), notnull: true }
-    direccion: { type: string(255) } 
-    telefono: { type: string(255) } 
-    idciudad: { type: integer, primary: false, notnull: true, default: '0' }    
+    direccion: { type: string(255) }
+    telefono: { type: string(255) }
+    idciudad: { type: integer, primary: false, notnull: true, default: '0' }
     idsede: { type: integer, primary: false, notnull: true, default: '0' }
   relations:
     Ciudades:
@@ -1952,44 +1962,44 @@ Edificios:
       foreign: idsede
       foreignAlias: Sedes
 Aulas:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idaula: { type: integer, primary: true, autoincrement: true }
     nombre: { type: string(30), notnull: true }
-    ubicacion: { type: string(40) } 
-    piso: { type: string(5) } 
+    ubicacion: { type: string(40) }
+    piso: { type: string(5) }
     capacidad:   { type: integer }
     descripcion: { type: string(255), notnull: true }
-    idedificio: { type: integer, primary: false, notnull: true, default: '0' }    
+    idedificio: { type: integer, primary: false, notnull: true, default: '0' }
     idtipoaula: { type: integer, primary: false, notnull: true, default: '0' }
   relations:
     Edificios:
       local: idedificio
       foreign: idedificio
-      foreignAlias: Edificios   
+      foreignAlias: Edificios
     TiposAulas:
       local: idtipoaula
       foreign: idtipoaula
-      foreignAlias: TiposAulas   
-      
+      foreignAlias: TiposAulas
+
 TiposAulas:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idtipoaula: { type: integer, primary: true, autoincrement: true }
     descripcion: { type: string(50), notnull: true }
     descripcionreducido: { type: string(20), notnull: true }
-   
+
 Asignaciones:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idasignacion: { type: integer, primary: true, autoincrement: true }
-    idaula: { type: integer, primary: false, notnull: true, default: '0' }        
+    idaula: { type: integer, primary: false, notnull: true, default: '0' }
     dia:   { type: string(1) }
     inicio:   { type: date, notnull: true }
     fin:   { type: date, notnull: true }
@@ -2000,25 +2010,25 @@ Asignaciones:
     Aulas:
       local: idaula
       foreign: idaula
-      foreignAlias: Aulas     
+      foreignAlias: Aulas
 
 AsignacionesClases:
   inheritance:
     type:             concrete
     extends:          Asignaciones
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
-    idcomision: { type: integer, primary: false, notnull: true, default: '0' }    
+    idcomision: { type: integer, primary: false, notnull: true, default: '0' }
     idtipoclase: { type: integer, primary: false, notnull: true, default: '0' }
     # Periodicidad: S=Semanal Q=Quincenal M=Mensual
-    periodicidad: { type: string(1), notnull: true, default: 'S' }    
+    periodicidad: { type: string(1), notnull: true, default: 'S' }
   relations:
     Comisiones:
       local: idcomision
       foreign: idcomision
-      foreignAlias: Comisiones   
+      foreignAlias: Comisiones
     TiposClases:
       local: idtipoclase
       foreign: idtipoclase
@@ -2028,28 +2038,28 @@ AsignacionesMesas:
   inheritance:
     type:             concrete
     extends:          Asignaciones
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
-    idmesaexamen: { type: integer, primary: false, notnull: true, default: '0' }     
+    idmesaexamen: { type: integer, primary: false, notnull: true, default: '0' }
   relations:
     MesasExamenes:
       local: idmesaexamen
       foreign: idmesaexamen
-      foreignAlias: MesasExamenes    
+      foreignAlias: MesasExamenes
 
 TiposClases:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idtipoclase: { type: integer, primary: true, autoincrement: true }
     descripcion: { type: string(100), notnull: true }
 
 Clases:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idclase: { type: integer, primary: true, autoincrement: true }
@@ -2063,11 +2073,11 @@ Clases:
     AsignacionesClases:
       local: idasignacion
       foreign: idasignacion
-      foreignAlias: AsignacionesClases 
+      foreignAlias: AsignacionesClases
 
 Auditoria:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     fechaactividad:   { type: date, notnull: true }
@@ -2089,15 +2099,15 @@ Auditoria:
     Facultades:
       local: idfacultad
       foreign: idfacultad
-      foreignAlias: Facultades  
+      foreignAlias: Facultades
     Sedes:
       local: idsede
       foreign: idsede
       foreignAlias: Sedes
 
 TransicionesPlanes:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idtransicionplan: { type: integer, primary: true, autoincrement: true }
@@ -2111,15 +2121,15 @@ TransicionesPlanes:
     PlanesDestino:
       local: idplanorigen
       foreign: idplanorigen
-      foreignAlias: PlanesEstudios  
+      foreignAlias: PlanesEstudios
 
 TransicionesMaterias:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idtransicionmateria: { type: integer, primary: true, autoincrement: true }
-    idtransicionplan: { type: integer, primary: false, notnull: true, default: '0' }    
+    idtransicionplan: { type: integer, primary: false, notnull: true, default: '0' }
     idmateriaorigen: { type: integer, primary: false, notnull: true, default: '0' }
     idmateriadestino: { type: integer, primary: false, notnull: true, default: '0' }
     valormateria: { type: integer, primary: false, default: '0', notnull: true }
@@ -2135,11 +2145,11 @@ TransicionesMaterias:
     MateriasDestino:
       local: idmateriadestino
       foreign: idmateriaplan
-      foreignAlias: MateriasPlanes   
+      foreignAlias: MateriasPlanes
 
 ExpedientesEgresados:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idexpediente: { type: integer, primary: true, autoincrement: true }
@@ -2162,32 +2172,32 @@ ExpedientesEgresados:
     registrome: { type: string(20), notnull: true }
     registrocertificadome: { type: string(20), notnull: true }
     nrorecibo1: { type: string(10), notnull: true }
-    nrorecibo2: { type: string(10), notnull: true }    
+    nrorecibo2: { type: string(10), notnull: true }
   relations:
     Titulos:
       local: idtitulo
       foreign: idtitulo
-      foreignAlias: Titulos 
+      foreignAlias: Titulos
     Alumnos:
       local: idalumno
       foreign: idalumno
-      foreignAlias: Alumnos 
+      foreignAlias: Alumnos
     Sedes:
       local: idsede
       foreign: idsede
-      foreignAlias: Sedes 
+      foreignAlias: Sedes
     DerivacionesBiblioteca:
       local: idderivacionbiblioteca
       foreign: idderivacion
-      foreignAlias: ExpedientesDerivaciones  
+      foreignAlias: ExpedientesDerivaciones
     DerivacionesAdministracion:
       local: idderivacionadministracion
       foreign: idderivacion
       foreignAlias: ExpedientesDerivaciones
-      
+
 ExpedientesDerivaciones:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idderivacion: { type: integer, primary: true, autoincrement: true }
@@ -2202,15 +2212,15 @@ ExpedientesDerivaciones:
     AreasOrigen:
       local: idareaorigen
       foreign: idarea
-      foreignAlias: Areas  
+      foreignAlias: Areas
     AreasDestino:
       local: idareadestino
       foreign: idarea
       foreignAlias: Areas
-    
+
 Documentacion:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     iddocumentacion: { type: integer, primary: true, autoincrement: true }
@@ -2220,10 +2230,10 @@ Documentacion:
     activo: { type: boolean, notnull: true, default: 1 }
   relations:
     TiposDocumentacion: { local: idtipodocumentacion, foreign: idtipodocumentacion }
-    
+
 DocumentacionExpedientes:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     iddocumentacion: { type: integer, notnull: true }
@@ -2234,8 +2244,8 @@ DocumentacionExpedientes:
     Expedientes: { local: idexpediente, foreign: idexpediente }
 
 DocumentacionPlanesEstudios:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     iddocumentacion: { type: integer, notnull: true }
@@ -2245,10 +2255,10 @@ DocumentacionPlanesEstudios:
   relations:
     Documentacion: { local: iddocumentacion, foreign: iddocumentacion }
     PlanesEstudios: { local: idplanestudio, foreign: idplanestudio }
-    
+
 DocumentacionAlumnos:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     iddocumentacion: { type: integer, notnull: true }
@@ -2256,11 +2266,11 @@ DocumentacionAlumnos:
     activo: { type: boolean, notnull: true, default: 1 }
   relations:
     Documentacion: { local: iddocumentacion, foreign: iddocumentacion }
-    Alumnos: { local: idalumno, foreign: idalumno }    
+    Alumnos: { local: idalumno, foreign: idalumno }
 
 TiposDocumentacion:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idtipodocumentacion: { type: integer, primary: true, autoincrement: true }
@@ -2270,17 +2280,17 @@ TiposDocumentacion:
     orden: { type: integer, notnull: true }
 
 Condiciones:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idcondicion: { type: integer, primary: true, autoincrement: true }
     descripcion: { type: string(1000), notnull: true }
     activo: { type: boolean, notnull: true, default: 1 }
-    
+
 CondicionesExpedientes:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idcondicion: { type: integer, notnull: true }
@@ -2291,8 +2301,8 @@ CondicionesExpedientes:
     Expedientes: { local: idexpediente, foreign: idexpediente }
 
 FichaAlumnos:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idficha: { type: integer, primary: true, autoincrement: true }
@@ -2301,12 +2311,12 @@ FichaAlumnos:
     idlibroacta: { type: integer, primary: false, autoincrement: false }
     fecha: { type: date(25), primary: false, notnull: true, autoincrement: false }
     folio: { type: string(10), primary: false, notnull: true, autoincrement: false }
-    promedio: { type: string(10), primary: false, autoincrement: false, default: '' } 
+    promedio: { type: string(10), primary: false, autoincrement: false, default: '' }
     idestadomateria: { type: integer, primary: false, autoincrement: false }
     fechavencimiento: { type: date(25), primary: false, notnull: true, autoincrement: false }
     controlado: { type: boolean, notnull: true, default: 0 }
     transferido: { type: boolean, notnull: true, default: 0 }
-    observacion: { type: string(200), primary: false, autoincrement: false, default: '' } 
+    observacion: { type: string(200), primary: false, autoincrement: false, default: '' }
   relations:
     MateriasPlanes:
       local: idmateriaplan
@@ -2322,8 +2332,8 @@ FichaAlumnos:
       foreignAlias: EstadosMateria
 
 FichaAlumnos:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idficha: { type: integer, primary: true, autoincrement: true }
@@ -2332,7 +2342,7 @@ FichaAlumnos:
     idlibroacta: { type: integer }
     fecha: { type: date(25),  notnull: true }
     folio: { type: string(10),  notnull: true }
-    promedio: { type: string(10),  default: '' } 
+    promedio: { type: string(10),  default: '' }
     idestadomateria: { type: integer,  }
     fechavencimiento: { type: date(25),  notnull: true }
     controlado: { type: boolean, notnull: true, default: 0 }
@@ -2352,8 +2362,8 @@ FichaAlumnos:
       foreignAlias: EstadosMateria
 
 FichaCarga:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idficha: { type: integer, primary: true, autoincrement: true }
@@ -2362,7 +2372,7 @@ FichaCarga:
     idlibroacta: { type: integer }
     fecha: { type: date(25),  notnull: true }
     folio: { type: string(10),  notnull: true }
-    promedio: { type: string(10),  default: '' } 
+    promedio: { type: string(10),  default: '' }
     idestadomateria: { type: integer, notnull: false }
     fechavencimiento: { type: date(25),  notnull: true }
     controlado: { type: boolean, notnull: true, default: 0 }
@@ -2387,8 +2397,8 @@ FichaCarga:
       foreignAlias: EstadosMateria
 
 BajasAlumnos:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idbaja: { type: integer, primary: true, autoincrement: true }
@@ -2396,18 +2406,18 @@ BajasAlumnos:
     fecha: { type: date(25), primary: false, notnull: true, autoincrement: false }
     fechabaja: { type: date(25), primary: false, notnull: true, autoincrement: false }
     # Tipo de Solicitud: O=Oficio S=Solicitada
-    tiposolicitud: { type: string(1), notnull: true, default: 'O' }    
+    tiposolicitud: { type: string(1), notnull: true, default: 'O' }
     # Tipo de Baja: P=Parcial T=Total
-    tipobaja: { type: string(1), notnull: true, default: 'P' }    
+    tipobaja: { type: string(1), notnull: true, default: 'P' }
     otromotivo: { type: string(255), notnull: true }
   relations:
     Alumnos:
       local: idalumno
       foreign: idalumno
-      foreignAlias: Alumnos   
+      foreignAlias: Alumnos
 
-MateriasBajas: 
-  actAs: 
+MateriasBajas:
+  actAs:
     Timestampable: ~
     fzblameable: ~
   columns:
@@ -2418,18 +2428,18 @@ MateriasBajas:
    BajasAlumnos:
       local: idbaja
       foreign: idbaja
-      foreignAlias: BajasAlumnos   
+      foreignAlias: BajasAlumnos
    MateriasPlanes:
       local: idmateriaplan
       foreign: idmateriaplan
       foreignAlias: MateriasPlanes
 
 MotivosBajas:
-  actAs: 
+  actAs:
     Timestampable: ~
     fzblameable: ~
   columns:
-    idmotivo: { type: integer, primary: false, autoincrement: false }    
+    idmotivo: { type: integer, primary: false, autoincrement: false }
     idbaja: { type: integer, primary: false, autoincrement: false }
   relations:
     Motivos:
@@ -2442,16 +2452,16 @@ MotivosBajas:
       foreignAlias: BajasAlumnos
 
 Motivos:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idmotivo: { type: integer, primary: true, autoincrement: true }
-    descripcion: { type: string(255), notnull: true }  
+    descripcion: { type: string(255), notnull: true }
 
 InscripcionesMesas:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idinscripcion: { type: integer, primary: true, autoincrement: true }
@@ -2461,12 +2471,12 @@ InscripcionesMesas:
     idcondicionmesa: { type: integer, primary: false, autoincrement: false }
     idmesaexamen: { type: integer, primary: false, autoincrement: false }
     confirmado: { type: boolean, notnull: true, default: 0 }
-    transferido: { type: boolean, notnull: true, default: 0 }  
-    comentario: { type: string(255), notnull: true }    
+    transferido: { type: boolean, notnull: true, default: 0 }
+    comentario: { type: string(255), notnull: true }
   indexes:
     owner_name:
       fields: [idalumno, idcatedra, idllamado]
-      type: unique  
+      type: unique
   relations:
     Alumnos:
       local: idalumno
@@ -2482,12 +2492,12 @@ InscripcionesMesas:
       foreignAlias: LlamadosTurno
 
 CondicionesMesasCatedras:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idcatedra: { type: integer, primary: true, autoincrement: false }
-    idcondicion: { type: integer, primary: true, autoincrement: false }   
+    idcondicion: { type: integer, primary: true, autoincrement: false }
   relations:
     CondicionesMesas:
       local: idcondicion
@@ -2499,16 +2509,16 @@ CondicionesMesasCatedras:
       foreignAlias: Catedras
 
 CategoriaDesignaciones:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idcategoriadesignacion: { type: integer, primary: true, autoincrement: true }
     descripcion:  { type: string(100), primary: false, notnull: true, default: ' ', autoincrement: false }
 
 ResolucionesProfesores:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idresolucionprofesor: { type: integer, primary: true, autoincrement: true }
@@ -2520,18 +2530,18 @@ ResolucionesProfesores:
     resolucion_csu: { type: boolean, notnull: true, default: 0 }
     activa: { type: boolean, notnull: true, default: 1 }
   relations:
-    Sedes: 
+    Sedes:
       local: idsede
       foreign: idsede
-      foreignAlias: Sedes 
-    Facultades: 
+      foreignAlias: Sedes
+    Facultades:
       local: idfacultad
       foreign: idfacultad
       foreignAlias: Facultades
 
 Dedicaciones:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     iddedicacion: { type: integer, primary: true, autoincrement: true }
@@ -2539,64 +2549,64 @@ Dedicaciones:
     rangohorario: { type: string(100), primary: false, notnull: true, default: ' ', autoincrement: false }
     is_default: { type: boolean, notnull: true, default: 0 }
   relations:
-    Designaciones: 
+    Designaciones:
       local: iddedicacion
       foreign: iddedicacion
       foreignAlias: Designaciones
 
 EstadosDesignaciones:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idestadodesignacion: { type: integer, primary: true, autoincrement: true }
-    descripcion:  { type: string(100), primary: false, notnull: true, default: ' ', autoincrement: false } 
-    detalle:  { type: string(100), primary: false, notnull: true, default: ' ', autoincrement: false }           
+    descripcion:  { type: string(100), primary: false, notnull: true, default: ' ', autoincrement: false }
+    detalle:  { type: string(100), primary: false, notnull: true, default: ' ', autoincrement: false }
   relations:
-    Designaciones: 
+    Designaciones:
       local: idestadodesignacion
       foreign: idestadodesignacion
       foreignAlias: Designaciones
 
 LogEventosDesignaciones:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     id: { type: integer, primary: true, autoincrement: true }
-    sede:  { type: string(100), primary: false, notnull: true, default: ' ', autoincrement: false } 
+    sede:  { type: string(100), primary: false, notnull: true, default: ' ', autoincrement: false }
     facultad:  { type: string(100), primary: false, notnull: true, default: ' ', autoincrement: false }
     idfacultad:   { type: integer, notnull: true }
     idsede:   { type: integer, notnull: true }
-    estado:  { type: string(100), primary: false, notnull: true, default: ' ', autoincrement: false } 
+    estado:  { type: string(100), primary: false, notnull: true, default: ' ', autoincrement: false }
     observaciones:  { type: string(1000), primary: false, notnull: true, default: ' ', autoincrement: false }
-    origen:  { type: string(200), primary: false, notnull: true, default: ' ', autoincrement: false } 
+    origen:  { type: string(200), primary: false, notnull: true, default: ' ', autoincrement: false }
     destinatario:  { type: string(200), primary: false, notnull: true, default: ' ', autoincrement: false }
 
 Encuestas:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idencuesta: { type: integer, primary: true, autoincrement: true }
     idcarrera: { type: integer, primary: false, autoincrement: false }
     idsede: { type: integer, primary: false, autoincrement: false }
-    nombre: { type: string(255), primary: false, notnull: true } 
+    nombre: { type: string(255), primary: false, notnull: true }
     descripcion:  { type: string(100), primary: false, notnull: true, default: ' ' }
-    fecha:  { type: date, notnull: true } 
+    fecha:  { type: date, notnull: true }
   relations:
-    Carreras: 
+    Carreras:
       local: idcarrera
       foreign: idcarrera
       foreignAlias: Carreras
-    Sedes: 
+    Sedes:
       local: idsede
       foreign: idsede
       foreignAlias: Sedes
 
 EncuestasAlumnos:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     id: { type: integer, primary: true, autoincrement: true }
@@ -2604,26 +2614,26 @@ EncuestasAlumnos:
     idalumno: { type: integer, primary: false, autoincrement: false }
     fecha:   { type: date, notnull: true }
   relations:
-    Encuestas: 
+    Encuestas:
       local: idencuesta
       foreign: idencuesta
-      foreignAlias: Encuestas 
-    Alumnos: 
+      foreignAlias: Encuestas
+    Alumnos:
       local: idalumno
       foreign: idalumno
       foreignAlias: Alumnos
 
 EstadosEquivalencias:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idestadoequivalencia: { type: integer, primary: true, autoincrement: true }
     descripcion: { type: string(255), notnull: true }
 
 EquivalenciasAlumnos:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
   columns:
     idequivalencia: { type: integer, primary: true, autoincrement: true }
@@ -2634,15 +2644,15 @@ EquivalenciasAlumnos:
     observaciones: { type: string(255), notnull: true }
     cantidadprogramas: { type: string(10), notnull: false, default: '' }
     nrorecibo1: { type: string(10), notnull: true }
-    nrorecibo2: { type: string(10), notnull: true }    
+    nrorecibo2: { type: string(10), notnull: true }
   relations:
     Alumnos:
       local: idalumno
       foreign: idalumno
-      foreignAlias: Alumnos   
+      foreignAlias: Alumnos
 
-MateriasEquivalencias: 
-  actAs: 
+MateriasEquivalencias:
+  actAs:
     Timestampable: ~
     fzblameable: ~
   columns:
@@ -2655,7 +2665,7 @@ MateriasEquivalencias:
    EquivalenciasAlumnos:
       local: idequivalencia
       foreign: idequivalencia
-      foreignAlias: EquivalenciasAlumnos   
+      foreignAlias: EquivalenciasAlumnos
    MateriasPlanes:
       local: idmateriaplan
       foreign: idmateriaplan
@@ -2666,14 +2676,14 @@ MateriasEquivalencias:
       foreignAlias: EstadosEquivalencias
 
 Tratamientos:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
-  columns: 
+  columns:
     id: { type: integer, primary: true, autoincrement: true }
     nombre: { type: string(200) }
     abreviacion: { type: string(200) }
-    idgrupotratamiento: { type: integer, notnull: true, default: '0' } 
+    idgrupotratamiento: { type: integer, notnull: true, default: '0' }
     idobrasocial: { type: integer, primary: false, default: '0' }
     idontologia: { type: integer, primary: false, default: '0' }
     garantia: { type: integer, primary: false, autoincrement: false }
@@ -2685,32 +2695,32 @@ Tratamientos:
     visible: { type: integer, primary: false, default: '0' }
     descripcion: { type: string(400) }
     normas: { type: string(2000) }
-    activo: { type: boolean, primary: false, notnull: true, default: 0 } 
+    activo: { type: boolean, primary: false, notnull: true, default: 0 }
   relations:
-    GrupoTratamiento: 
+    GrupoTratamiento:
       local: idgrupotratamiento
       foreign: id
       foreignAlias: GrupoTratamiento
-    ObrasSociales: 
+    ObrasSociales:
       local: idobrasocial
       foreign: idobrasocial
-      foreignAlias: ObrasSociales      
+      foreignAlias: ObrasSociales
 
 GrupoTratamiento:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
-  columns: 
+  columns:
     id: { type: integer, primary: true, autoincrement: true }
     nombre: { type: string(200) }
     abreviacion: { type: string(200) }
-    activo: { type: boolean, primary: false, notnull: true, default: 0 } 
+    activo: { type: boolean, primary: false, notnull: true, default: 0 }
 
 Atenciones:
-  actAs: 
-    Timestampable: ~ 
+  actAs:
+    Timestampable: ~
     fzblameable: ~
-  columns: 
+  columns:
     id: { type: integer, primary: true, autoincrement: true }
     nrodoc: { type: string(80), primary: false, notnull: true, default: '' }
     mes: { type: integer, primary: false, autoincrement: false }
@@ -2727,11 +2737,11 @@ Atenciones:
     bono: { type: float, primary: false, notnull: true, default: '' }
     importeos: { type: float, primary: false, notnull: true, default: '' }
   relations:
-    ObrasSociales: 
+    ObrasSociales:
       local: idobrasocial
       foreign: idobrasocial
       foreignAlias: ObrasSociales
-    Tratamientos: 
+    Tratamientos:
       local: idtratamiento
       foreign: id
-      foreignAlias: Tratamientos      
+      foreignAlias: Tratamientos
