@@ -92,24 +92,24 @@ class actualizacionesatenActions extends sfActions
          $this->redirect('ingreso');
 
       $archivo = Doctrine_Core::getTable('Actualizacionesaten')->find(array($request['id']));
-     // $archivo = Doctrine_Core::getTable('Actualizaciones')->find(array(5));
+      $archivo = Doctrine_Core::getTable('Actualizacionesaten')->find(array(5));
 
       $nombre_archivo = sfConfig::get('app_pathfiles_folder')."/../actualizacionesaten".'/'.$archivo->getImagefile();
 
       // DATOS conexion
-      $dbhost = 'localhost';$dbname = 'circulo';  $dbuser = 'circulo'; $dbpass = 'circulo911';
+      $dbhost = 'localhost';$dbname = 'circulo';  $dbuser = 'root'; $dbpass = 'root911';
 
-      $sqlTruncate = "TRUNCATE TABLE tmp_tratamiento;";
+      $sqlTruncate = "TRUNCATE TABLE tmp_atenciones;";
 
       $sqlLoadInput = "LOAD DATA LOCAL INFILE '".$nombre_archivo."'
-         INTO TABLE tmp_tratamiento
+         INTO TABLE tmp_atenciones
          CHARACTER SET UTF8
          FIELDS TERMINATED BY ';'
          OPTIONALLY ENCLOSED BY '\"'
          LINES TERMINATED BY '\n'
          IGNORE 1 LINES;";
 
-
+      
       $pdo = new \PDO('mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass, array(
         \PDO::MYSQL_ATTR_LOCAL_INFILE => true
       ));
@@ -162,39 +162,7 @@ class actualizacionesatenActions extends sfActions
       // SI existe el archivo previamente, lo borro
       if (file_exists($nombre_archivo_upd)) unlink($nombre_archivo_upd);
 
-      // CONSULTA por registros a ACTUALIZAR (ya existe el email en la tabla de Pacientes)
-      //$datoss =  $archivo = Doctrine_Core::getTable('Actualizaciones')->obtenerRegistrosAActualizar();
-
-      $fp=fopen($nombre_archivo_upd,"w+");
-
-      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionesaten')->obtenerRegistrosAActualizar('nombre','nombre','T');
-      fwrite($fp,$sqlUpdate);
-
-      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionesaten')->obtenerRegistrosAActualizar('abreviacion','abreviacion','T');
-      fwrite($fp,$sqlUpdate);
-
-      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionesaten')->obtenerRegistrosAActualizar('idgrupotratamiento','idgrupotratamiento','N');
-      fwrite($fp,$sqlUpdate);
-
-      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionesaten')->obtenerRegistrosAActualizar('idobrasocial','idobrasocial','N');
-      fwrite($fp,$sqlUpdate);
-
-      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionesaten')->obtenerRegistrosAActualizar('idontologia','idontologia','N');
-      fwrite($fp,$sqlUpdate);
-
-      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionesaten')->obtenerRegistrosAActualizar('garantia','garantia','N');
-      fwrite($fp,$sqlUpdate);
-
-        $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionesaten')->obtenerRegistrosAActualizar('importe','importe','N');
-      fwrite($fp,$sqlUpdate);
-
-      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionesaten')->obtenerRegistrosAActualizar('coseguro','coseguro','N');
-      fwrite($fp,$sqlUpdate);
-
-        $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionesaten')->obtenerRegistrosAActualizar('importeos','importeos','N');
-      fwrite($fp,$sqlUpdate);
-
-
+      // NO HAY ACTUALIZACIONES EN ESTE MODULO, ASI QUE NO SE HACE NADA
 
       fclose ($fp);
 
@@ -211,10 +179,10 @@ class actualizacionesatenActions extends sfActions
          $this->redirect('ingreso');
 
       // INSERTAR NUEVOS PACIENTES
-      Doctrine_Core::getTable('Actualizacionesaten')->insertarTratamientos();
+      Doctrine_Core::getTable('Actualizacionesaten')->insertarAtenciones();
 
       // ACTUALIZAR PACIENTES EXISTENTES
-      exec("/home/projects/circulo/web/Actualizacionesaten/process.sh");
+      //exec("/home/projects/circulo/web/Actualizacionesaten/process.sh");
 
       return true;
 
