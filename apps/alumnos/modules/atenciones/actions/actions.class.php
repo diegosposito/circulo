@@ -12,13 +12,77 @@ class atencionesActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-      $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerAtenciones();
+    $this->criterio = '';
+    $f_apellido = NULL; $f_nrodoc = NULL;
+
+    if ( $request->getParameter('idbuscarname')<>''){
+
+      if ( $request->getParameter('idtipobusqueda')==1)
+        $f_apellido = $request->getParameter('idbuscarname');
+
+      if ( $request->getParameter('idtipobusqueda')==2)
+          $f_nrodoc = $request->getParameter('idbuscarname');
+    }
+
+    $this->pacientess = Doctrine_Core::getTable('Pacientes')->obtenerPacientes($f_apellido,NULL, $f_nrodoc, 10);
+
+    $this->criterio = $request->getParameter('idbuscarname');
+    $this->idtipobusqueda = $request->getParameter('idtipobusqueda');
+
   }
 
   public function executeShow(sfWebRequest $request)
   {
     $this->atenciones = Doctrine_Core::getTable('Atenciones')->find(array($request->getParameter('id')));
     $this->forward404Unless($this->atenciones);
+  }
+
+  public function executeMasivas(sfWebRequest $request)
+  {
+
+    $this->archivos_profesionaless = Doctrine_Core::getTable('Actualizacionestrat')
+      ->createQuery('a')
+      ->orderby(nombre)
+      ->execute();
+
+    $this->ficheros = array();
+
+    foreach($this->archivos_profesionaless as $archivos){
+        $targetFolder = sfConfig::get('app_pathfiles_folder')."/../actualizacionestrat".'/'.$archivos->getNombre();
+
+      $image_file = 'image.png';
+      switch (pathinfo($archivos->getImagefile(), PATHINFO_EXTENSION)) {
+          case 'pdf':
+              $image_file = 'pdf.png';
+              break;
+          case 'doc':
+              $image_file = 'word.png';
+              break;
+          case 'docx':
+              $image_file = 'word.png';
+              break;
+          case 'xls':
+              $image_file = 'excel.png';
+              break;
+          case 'xlsx':
+              $image_file = 'excel.png';
+              break;
+          case 'txt':
+              $image_file = 'wordpad.png';
+              break;
+          case 'ppt':
+              $image_file = 'ppt.png';
+              break;
+          case 'pptx':
+              $image_file = 'ppt.png';
+              break;
+      }
+
+      $this->ficheros[] = array($archivos->getNombre(), $archivos->getImagefile(), $image_file, $archivos->getId());
+
+      sort($this->ficheros);
+    }
+
   }
 
   public function executeNew(sfWebRequest $request)
