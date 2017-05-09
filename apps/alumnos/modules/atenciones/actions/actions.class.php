@@ -24,7 +24,7 @@ class atencionesActions extends sfActions
           $f_nrodoc = $request->getParameter('idbuscarname');
     }
 
-    $this->pacientess = Doctrine_Core::getTable('Pacientes')->obtenerPacientes($f_apellido,NULL, $f_nrodoc, 10);
+    $this->pacientess = Doctrine_Core::getTable('Pacientes')->obtenerPacientes($f_apellido,NULL, $f_nrodoc, 300);
 
     $this->criterio = $request->getParameter('idbuscarname');
     $this->idtipobusqueda = $request->getParameter('idtipobusqueda');
