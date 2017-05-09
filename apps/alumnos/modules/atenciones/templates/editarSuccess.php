@@ -163,11 +163,16 @@
 
 <ul class="tab">
   <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Datos')">Datos Personales</a></li>
-  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Contacto')">Prestaciones</a></li>
+  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Prestaciones')">Prestaciones</a></li>
   <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Documentacion')">Odontograma</a></li>
 </ul>
 
 <div id="Datos" class="tabcontent">
 <?php
 include_partial('formpaciente', array('form' => $form, 'paciente' => $paciente)) ?>
- </div>
+</div>
+
+ <div id="Prestaciones" class="tabcontent">
+ <?php
+ include_partial('formatenciones', array('form' => $form, 'paciente' => $paciente)) ?>
+</div>
