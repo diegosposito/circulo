@@ -14,7 +14,7 @@ class grupotratamientoActions extends sfActions
   {
     $this->grupo_tratamientos = Doctrine_Core::getTable('GrupoTratamiento')
       ->createQuery('a')
-      ->orderBy('nombre')
+      ->orderBy('abreviacion')
       ->execute();
   }
 
