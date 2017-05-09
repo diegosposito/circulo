@@ -31,6 +31,15 @@ class atencionesActions extends sfActions
 
   }
 
+  public function executeEditar(sfWebRequest $request)
+  {
+    $this->forward404Unless($pacientes = Doctrine_Core::getTable('Pacientes')->find(array($request->getParameter('id'))), sprintf('Object pacientes does not exist (%s).', $request->getParameter('id')));
+    $this->form = new PacientesForm($pacientes);
+    $this->paciente = $pacientes;
+  //  $this->forward404Unless($this->paciente = Doctrine_Core::getTable('Pacientes')->find(array($request->getParameter('id'))), sprintf('Object pacientes does not exist (%s).', $request->getParameter('id')));
+
+  }
+
   public function executeShow(sfWebRequest $request)
   {
     $this->atenciones = Doctrine_Core::getTable('Atenciones')->find(array($request->getParameter('id')));
