@@ -86,7 +86,7 @@
       <td width="25%" align="center"><?php echo $item['abreviada'] ?></td>
       <td width="15%" align="center"><?php echo $item['nroafiliado'] ?></td>
       <td width="15%" align="center"><?php echo $item['nrodoc'] ?></td>
-      <td align="center"><?php echo link_to("Atenciones", 'pacientes/edit?id='.$item['id'] ,'class="mhead"'); ?></td>
+      <td align="center"><?php echo link_to("Atenciones", 'atenciones/editar?id='.$item['id'] ,'class="mhead"'); ?></td>
     </tr>
           <?php $i++; ?>
     <?php } ?>
