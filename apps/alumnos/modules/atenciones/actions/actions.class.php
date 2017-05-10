@@ -54,9 +54,15 @@ class atencionesActions extends sfActions
      if ( $request->getParameter('idobrasocial')>0)
        $f_idobrasocial = $request->getParameter('idobrasocial');
 
-
      $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerAtencionesPorPaciente($request->getParameter('id'));
-    
+
+     if ($request->getParameter('idatencion')>0){
+       $this->forward404Unless($atencion = Doctrine_Core::getTable('Atenciones')->find(array($request->getParameter('idatencion'))), sprintf('Object atenciones does not exist (%s).', $request->getParameter('id')));
+       $this->formatenciones = new AtencionesForm($atencion);
+     }
+
+
+     // TERCER TAB
   }
 
   public function executeShow(sfWebRequest $request)
@@ -133,17 +139,28 @@ class atencionesActions extends sfActions
   {
     $this->forward404Unless($atenciones = Doctrine_Core::getTable('Atenciones')->find(array($request->getParameter('id'))), sprintf('Object atenciones does not exist (%s).', $request->getParameter('id')));
     $this->form = new AtencionesForm($atenciones);
+    $this->idpaciente = $request->getParameter('idpaciente');
+    $this->forward404Unless($paciente = Doctrine_Core::getTable('Pacientes')->find(array($request->getParameter('idpaciente'))), sprintf('Object pacientes does not exist (%s).', $request->getParameter('id')));
+    $this->paciente = $paciente;
   }
 
   public function executeUpdate(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
     $this->forward404Unless($atenciones = Doctrine_Core::getTable('Atenciones')->find(array($request->getParameter('id'))), sprintf('Object atenciones does not exist (%s).', $request->getParameter('id')));
-    $this->form = new AtencionesForm($atenciones);
+
+    $atenciones->setMes($request->getPostParameter('atenciones[mes]'));
+    $atenciones->setImporte($request->getPostParameter('atenciones[importe]'));
+    $atenciones->save();
+
+    $this->redirect('atenciones/editar?id='.$request->getParameter('idpaciente'));
+
+
+    /*$this->form = new AtencionesForm($atenciones);
 
     $this->processForm($request, $this->form);
 
-    $this->setTemplate('edit');
+    $this->setTemplate('edit'); */
   }
 
   public function executeDelete(sfWebRequest $request)
