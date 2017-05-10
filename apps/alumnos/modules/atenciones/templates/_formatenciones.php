@@ -25,10 +25,11 @@
   p { margin-left:5em; /* Or another measurement unit, like px */ }
 </style>
 <br>
-<h1 align="center" style="color:black;">Consulta Pacientes</h1>
+<h1 align="center" style="color:black;">Historial de atenciones</h1>
 <br>
 <div align="center">
-<form action="<?php echo url_for('atenciones/index') ?>" method="post">
+<!--<form action="<?php echo url_for('atenciones/editar?id='.$paciente->getId()) ?>" method="post">
+  <input type="hidden" name="selectedtab" id="selectedtab" value="<?php echo $selectedtab ?>">
 <table cellspacing="0" class="stats" width="80%">
 <tr>
 <td><b>Apellido:</b></td>
@@ -58,34 +59,29 @@
 <td colspan="2" align="center"><input type="submit" value="Buscar" /></td>
 </tr>
 </table>
-</form>
+</form>  -->
 
-<?php if (count($pacientess) > 0){ ?>
+<?php if (count($atencioness) > 0){ ?>
 <table cellspacing="0" class="stats">
     <tr>
-      <td colspan="6" width="100%">Se han encontrado <?php echo count($pacientess); ?> coincidencias de la búsqueda.</td>
+      <td colspan="6" width="100%">Se han encontrado <?php echo count($atencioness); ?> coincidencias de la búsqueda.</td>
     </tr>
     <tr>
-      <td width="35%" align="center" class="hed">Paciente</td>
-      <td width="25%" align="center" class="hed">Obra Social</td>
-      <td width="15%" align="center" class="hed">Nro Afiliado</td>
-      <td width="15%" align="center" class="hed">Documento</td>
+      <td width="25%" align="center" class="hed">Mes-Año</td>
+      <td width="15%" align="center" class="hed">Fecha</td>
+      <td width="15%" align="center" class="hed">Matrícula</td>
+      <td width="15%" align="center" class="hed">Importe</td>
       <td width="10%" align="center" class="hed">Edicion</td>
     </tr>
   </thead>
   <tbody>
           <?php $i=0; ?>
-    <?php foreach($pacientess as $item){ ?>
+    <?php foreach($atencioness as $item){ ?>
     <tr class="fila_<?php echo $i%2 ; ?>">
-    <td width="40%" align="left"><a href="#" class="tooltip"><div style="align: left;"><?php echo $item['apellido'].', '.$item['nombre'] ?><span><img style="align:center; width: 110px; height: 110px;" src='<?php echo $sf_request->getRelativeUrlRoot();?>/files/pacientes/<?php echo $item['id'];?>/<?php echo $item['imagefile'];?>' /><br>
-      <strong><?php echo $item['apellido'].', '.$item['nombre'] ?></strong><br>
-      <strong><?php echo 'Email: ' ?></strong><?php echo $item['email'] ?><br>
-      <strong><?php echo "Historial" ?></strong><br>
-      <?php echo htmlspecialchars_decode($item['historial']) ?></span></div"></a>
-    </td>
-      <td width="25%" align="center"><?php echo $item['abreviada'] ?></td>
-      <td width="15%" align="center"><?php echo $item['nroafiliado'] ?></td>
-      <td width="15%" align="center"><?php echo $item['nrodoc'] ?></td>
+      <td width="25%" align="center"><?php echo $item['mes'].'-'.$item['anio'] ?></td>
+      <td width="15%" align="center"><?php echo $item['fecha'] ?></td>
+      <td width="15%" align="center"><?php echo $item['matricula'] ?></td>
+      <td width="15%" align="center"><?php echo $item['importe'] ?></td>
       <td align="center"><?php echo link_to("Atenciones", 'atenciones/editar?id='.$item['id'] ,'class="mhead"'); ?></td>
     </tr>
           <?php $i++; ?>

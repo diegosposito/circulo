@@ -36,7 +36,7 @@
 
 	/* Style the tab content */
 	.tabcontent {
-	    display: none;
+	    display: block;
 	    padding: 6px 12px;
 	    border: 1px solid #ccc;
 	    border-top: none;
@@ -47,6 +47,19 @@
  <script>
 
   $(document).ready(function(){
+    switch($('input[name="selectedtab"]').val()) {
+       case '0':
+            openCity('Datos',0);
+           break;
+       case '1':
+           openCity('Prestaciones',1);
+           break;
+       case '2':
+           openCity('Documentacion',2);
+           break;
+       default:
+            openCity('Datos',0);
+   }
 
     $('#pacientes_idprovincia').change(function(){
         // cargar las ciudades de la carrera al combo
@@ -141,7 +154,7 @@
 	  );
 	}
 
-	function openCity(evt, cityName) {
+	function openCity(cityName, idseleccionado) {
 	    var i, tabcontent, tablinks;
 	    tabcontent = document.getElementsByClassName("tabcontent");
 	    for (i = 0; i < tabcontent.length; i++) {
@@ -152,7 +165,22 @@
 	        tablinks[i].className = tablinks[i].className.replace(" active", "");
 	    }
 	    document.getElementById(cityName).style.display = "block";
-	    evt.currentTarget.className += " active";
+	    tablinks[idseleccionado].className += " active";
+
+      switch(idseleccionado) {
+         case 0:
+             $('input[name="selectedtab"]').val('0');
+             break;
+         case 1:
+             $('input[name="selectedtab"]').val('1');
+             break;
+         case 2:
+             $('input[name="selectedtab"]').val('2');
+             break;
+         default:
+             $('input[name="selectedtab"]').val('0');
+     }
+     //document.getElementById('selectedtab').value = idseleccionado;
 	}
 
 </script>
@@ -162,17 +190,19 @@
 <br>
 
 <ul class="tab">
-  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Datos')">Datos Personales</a></li>
-  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Prestaciones')">Prestaciones</a></li>
-  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Documentacion')">Odontograma</a></li>
+  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity('Datos',0)">Datos Personales</a></li>
+  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity('Prestaciones',1)">Prestaciones</a></li>
+  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity('Documentacion',2)">Odontograma</a></li>
 </ul>
+
+
 
 <div id="Datos" class="tabcontent">
 <?php
-include_partial('formpaciente', array('form' => $form, 'paciente' => $paciente)) ?>
+include_partial('formpaciente', array('form' => $form, 'paciente' => $paciente, 'selectedtab' => $selectedtab)) ?>
 </div>
 
  <div id="Prestaciones" class="tabcontent">
  <?php
- include_partial('formatenciones', array('form' => $form, 'paciente' => $paciente)) ?>
+ include_partial('formatenciones', array('form' => $form, 'paciente' => $paciente, 'atencioness' => $atencioness, 'selectedtab' => $selectedtab)) ?>
 </div>

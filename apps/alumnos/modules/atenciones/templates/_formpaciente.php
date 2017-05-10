@@ -3,6 +3,7 @@
 
 
 <form action="<?php echo url_for('pacientes/'.($form->getObject()->isNew() ? 'create' : 'update').(!$form->getObject()->isNew() ? '?id='.$form->getObject()->getId() : '')) ?>" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
+<input type="hidden" name="selectedtab" id="selectedtab" value="<?php echo $selectedtab ?>">
 <?php if (!$form->getObject()->isNew()): ?>
 <input type="hidden" name="sf_method" value="put" />
 <?php endif; ?>
