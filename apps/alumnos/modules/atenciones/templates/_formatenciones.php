@@ -24,9 +24,7 @@
 <style type="text/css">
   p { margin-left:5em; /* Or another measurement unit, like px */ }
 </style>
-<br>
 <h1 align="center" style="color:black;">Historial de atenciones</h1>
-<br>
 <div align="center">
 <!--<form action="<?php echo url_for('atenciones/editar?id='.$paciente->getId()) ?>" method="post">
   <input type="hidden" name="selectedtab" id="selectedtab" value="<?php echo $selectedtab ?>">
@@ -82,7 +80,7 @@
       <td width="15%" align="center"><?php echo $item['fecha'] ?></td>
       <td width="15%" align="center"><?php echo $item['matricula'] ?></td>
       <td width="15%" align="center"><?php echo $item['importe'] ?></td>
-      <td align="center"><?php echo link_to("Atenciones", 'atenciones/editar?id='.$item['id'] ,'class="mhead"'); ?></td>
+      <td align="center"><?php echo link_to("Atenciones", 'atenciones/edit?id='.$item['id'].'&idpaciente='.$paciente->getId() ,'class="mhead"'); ?></td>
     </tr>
           <?php $i++; ?>
     <?php } ?>
