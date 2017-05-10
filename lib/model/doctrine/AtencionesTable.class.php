@@ -35,4 +35,23 @@ class AtencionesTable extends Doctrine_Table
 
         return $q;
     }
+
+    // Obtener obras sociales
+    public static function obtenerAtencionesPorPaciente($idpaciente=NULL)
+    {
+        $sql ="SELECT at.id, at.nrodoc, at.mes, at.anio, at.matricula, at.fecha, at.pieza, at.caras, at.tratamiento, at.importe, at.coseguro, at.bono, at.importe,
+            pac.apellido, pac.nombre, os.denominacion, os.abreviada as obrasocial, concat(per.apellido,', ' , per.nombre) as profesional
+            FROM atenciones at JOIN pacientes pac ON at.nrodoc = pac.nrodoc
+            JOIN obras_sociales os ON at.idobrasocial = os.idobrasocial
+            JOIN personas per ON at.matricula = per.nrolector ";
+
+		 if($idpaciente !== NULL)
+		    $sql .=  " WHERE pac.id = ".$idpaciente." ";
+
+		$sql .= " ORDER BY os.abreviada, at.fecha DESC;";
+
+        $q = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($sql);
+
+        return $q;
+    }
 }
