@@ -77,4 +77,4 @@
 
 </script>
 
-<?php include_partial('form', array('form' => $form)) ?>
+<?php include_partial('form', array('form' => $form, 'paciente' => $paciente, 'idpaciente' => $idpaciente)) ?>
