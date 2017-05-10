@@ -33,11 +33,30 @@ class atencionesActions extends sfActions
 
   public function executeEditar(sfWebRequest $request)
   {
+     // PRIMER TAB - Obtener paciente seleccionado
     $this->forward404Unless($pacientes = Doctrine_Core::getTable('Pacientes')->find(array($request->getParameter('id'))), sprintf('Object pacientes does not exist (%s).', $request->getParameter('id')));
     $this->form = new PacientesForm($pacientes);
     $this->paciente = $pacientes;
-  //  $this->forward404Unless($this->paciente = Doctrine_Core::getTable('Pacientes')->find(array($request->getParameter('id'))), sprintf('Object pacientes does not exist (%s).', $request->getParameter('id')));
 
+    if($request->getParameter('selectedtab')>0)
+        $this->selectedtab = $request->getParameter('selectedtab');
+     else {
+        $this->selectedtab = '';
+     }
+
+     // SEGUNDO TAB - Obtener pacientes segun filtro
+     $this->criterio = '';
+     $f_apellido = NULL; $f_idobrasocial = NULL;
+
+     if ( $request->getParameter('idbuscarname')<>'')
+       $f_apellido = $request->getParameter('idbuscarname');
+
+     if ( $request->getParameter('idobrasocial')>0)
+       $f_idobrasocial = $request->getParameter('idobrasocial');
+
+
+     $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerAtencionesPorPaciente($request->getParameter('id'));
+    
   }
 
   public function executeShow(sfWebRequest $request)
