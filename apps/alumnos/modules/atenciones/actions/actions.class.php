@@ -41,7 +41,7 @@ class atencionesActions extends sfActions
     if($request->getParameter('selectedtab')>0)
         $this->selectedtab = $request->getParameter('selectedtab');
      else {
-        $this->selectedtab = '';
+        $this->selectedtab = '1';
      }
 
      // SEGUNDO TAB - Obtener pacientes segun filtro
@@ -142,6 +142,12 @@ class atencionesActions extends sfActions
     $this->idpaciente = $request->getParameter('idpaciente');
     $this->forward404Unless($paciente = Doctrine_Core::getTable('Pacientes')->find(array($request->getParameter('idpaciente'))), sprintf('Object pacientes does not exist (%s).', $request->getParameter('id')));
     $this->paciente = $paciente;
+
+    // Obtener usuario logueado
+    $user_id = $this->getUser()->getGuardUser()->getId();
+    $persona = Doctrine_Core::getTable('Personas')->obtenerProfesionalxUser($user_id);
+    var_dump($persona);exit;
+
   }
 
   public function executeUpdate(sfWebRequest $request)
