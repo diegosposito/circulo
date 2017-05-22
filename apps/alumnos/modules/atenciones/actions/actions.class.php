@@ -146,7 +146,7 @@ class atencionesActions extends sfActions
     // Obtener usuario logueado
     $user_id = $this->getUser()->getGuardUser()->getId();
     $persona = Doctrine_Core::getTable('Personas')->obtenerProfesionalxUser($user_id);
-    var_dump($persona);exit;
+    $matricula = $persona[0]['matricula'];
 
   }
 
