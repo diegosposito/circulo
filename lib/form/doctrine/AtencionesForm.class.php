@@ -26,7 +26,7 @@ class AtencionesForm extends BaseAtencionesForm
     $this->widgetSchema->setLabel('pieza', '<p align="left">Pieza:</p>');
     $this->widgetSchema->setLabel('fecha', '<p align="left">Fecha:</p>');
     $this->widgetSchema->setLabel('caras', '<p align="left">Caras:</p>');
-    $this->widgetSchema->setLabel('importe', '<p align="left">Importe:</p>');
+    $this->widgetSchema->setLabel('importe', '<p align="left">Importe Profesional:</p>');
     $this->widgetSchema->setLabel('coseguro', '<p align="left">Coseguro:</p>');
     $this->widgetSchema->setLabel('bono', '<p align="left">Bono:</p>');
     $this->widgetSchema->setLabel('importeos', '<p align="left">Importe O. Social:</p>');
@@ -55,6 +55,8 @@ class AtencionesForm extends BaseAtencionesForm
 
     $this->widgetSchema['anio'] = new sfWidgetFormSelect(array('choices' => $arregloAnio));
     $this->widgetSchema->setLabel('anio', '<p align="left">Año:</p>');
+
+    
 
 
    $this->setValidators(array(
