@@ -20,7 +20,7 @@
     </tfoot>
     <tbody>
           <?php echo $form->renderGlobalErrors() ?>
-        <th align="center" colspan=4><?php echo $paciente->getApellido().', '.$paciente->getNombre(); ?></th>
+        <th align="left" colspan=4><?php echo 'Paciente : '.$paciente->getApellido().', '.$paciente->getNombre(); ?></th>
       <tr>
         <td colspan="1"><?php echo "<b>".$form['mes']->renderLabel()."</b>" ?></td>
         <td colspan="3"><?php echo $form['mes'] ?></td>
@@ -30,13 +30,25 @@
         <td colspan="3"><?php echo $form['anio'] ?></td>
       </tr>
        <tr>
-        <td colspan="1"><?php echo "<b>".$form['importe']->renderLabel()."</b>" ?></td>
-        <td colspan="3"><?php echo $form['importe'] ?></td>
-      </tr>
-       <tr>
         <td align="left"><?php echo "<b>".$form['caras']->renderLabel()."</b>" ?></td>
         <td  colspan="3" align="left"><?php echo $form['caras'] ?></td>
       </tr>
+      <tr>
+       <td align="left"><?php echo "<b>".$form['pieza']->renderLabel()."</b>" ?></td>
+       <td  colspan="3" align="left"><?php echo $form['pieza'] ?></td>
+     </tr>
+     <tr>
+      <td colspan="1"><?php echo "<b>".$form['importe']->renderLabel()."</b>" ?></td>
+      <td colspan="3"><?php echo $form['importe'] ?></td>
+    </tr>
+    <tr>
+     <td colspan="1"><?php echo "<b>".$form['coseguro']->renderLabel()."</b>" ?></td>
+     <td colspan="3"><?php echo $form['coseguro'] ?></td>
+   </tr>
+   <tr>
+    <td colspan="1"><?php echo "<b>".$form['fecha']->renderLabel()."</b>" ?></td>
+    <td colspan="3"><?php echo $form['fecha'] ?></td>
+  </tr>
 
     </tbody>
   </table>
