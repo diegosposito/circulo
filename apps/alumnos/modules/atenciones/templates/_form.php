@@ -19,8 +19,13 @@
       </tr>
     </tfoot>
     <tbody>
-          <?php echo $form->renderGlobalErrors() ?>
-        <th align="left" colspan=4><?php echo 'Paciente : '.$paciente->getApellido().', '.$paciente->getNombre(); ?></th>
+      <?php echo $form->renderGlobalErrors() ?>
+      <tr>
+          <td colspan="4"><?php echo '<b>'.'Paciente : '.$paciente->getApellido().', '.$paciente->getNombre().'</b>' ?></td>
+      </tr>
+      <tr>
+          <td colspan="4"><?php echo '<b>'.'Tratamiento : '.$atenciones->getTratamiento().'</b>' ?></td>
+      </tr>
       <tr>
         <td colspan="1"><?php echo "<b>".$form['mes']->renderLabel()."</b>" ?></td>
         <td colspan="3"><?php echo $form['mes'] ?></td>
@@ -49,6 +54,10 @@
     <td colspan="1"><?php echo "<b>".$form['fecha']->renderLabel()."</b>" ?></td>
     <td colspan="3"><?php echo $form['fecha'] ?></td>
   </tr>
+  <tr>
+   <td colspan="1"><?php echo "<b>".$form['idautorizacion']->renderLabel()."</b>" ?></td>
+   <td colspan="3"><?php echo $form['idautorizacion'] ?></td>
+ </tr>
 
     </tbody>
   </table>
