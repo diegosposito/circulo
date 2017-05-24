@@ -24,7 +24,7 @@ class AtencionesForm extends BaseAtencionesForm
  	$this->widgetSchema->setLabel('idobrasocial', '<p align="left">Obra Social:</p>');
     $this->widgetSchema->setLabel('matricula', '<p align="left">Matrícula:</p>');
     $this->widgetSchema->setLabel('pieza', '<p align="left">Pieza:</p>');
-    $this->widgetSchema->setLabel('fecha', '<p align="left">Fecha:</p>');
+
     $this->widgetSchema->setLabel('caras', '<p align="left">Caras:</p>');
     $this->widgetSchema->setLabel('importe', '<p align="left">Importe Profesional:</p>');
     $this->widgetSchema->setLabel('coseguro', '<p align="left">Coseguro:</p>');
@@ -56,7 +56,18 @@ class AtencionesForm extends BaseAtencionesForm
     $this->widgetSchema['anio'] = new sfWidgetFormSelect(array('choices' => $arregloAnio));
     $this->widgetSchema->setLabel('anio', '<p align="left">Año:</p>');
 
-    
+    $range  = range(date('Y')-80, date('Y')+1);
+    $years = array_combine($range,$range);
+    $this->widgetSchema['fecha'] =
+    new sfWidgetFormDate(array('format' => '%day%/%month%/%year%','years' => $years));
+    $this->widgetSchema->setLabel('fecha', '<p align="left">Fecha:</p>');
+
+    // arreglos estaticos
+    $arregloAutorizacion = array('1' => 'No Autoriza', '2' => 'Autorización Previa','3' => 'Con Presentación de Orden', '4' => 'Con Bono de COCU');
+    $this->widgetSchema['idautorizacion'] = new sfWidgetFormSelect(array('choices' => $arregloAutorizacion));
+    $this->widgetSchema->setLabel('idautorizacion', '<p align="left">Autorización:</p>');
+
+
 
 
    $this->setValidators(array(
@@ -67,7 +78,7 @@ class AtencionesForm extends BaseAtencionesForm
       'idobrasocial' => new sfValidatorInteger(array('required' => false)),
       'idtratamiento' => new sfValidatorInteger(array('required' => false)),
       'matricula'    => new sfValidatorString(array('max_length' => 10, 'required' => false)),
-      'fecha'        => new sfValidatorDate(array('required' => false)),
+    //  'fecha'        => new sfValidatorDate(array('required' => false)),
       'pieza'        => new sfValidatorString(array('max_length' => 10, 'required' => false)),
       'caras'        => new sfValidatorString(array('max_length' => 10, 'required' => false)),
      // 'tratamiento'  => new sfValidatorString(array('max_length' => 200, 'required' => false)),
