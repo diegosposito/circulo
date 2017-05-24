@@ -3,7 +3,7 @@
   </style>
 
 <br>
-<h1 align="center" style="color:black;">Editar atenciones</h1>
+<h1 align="center" style="color:black;">Editar Atención</h1>
 <br>
 
 <script>
