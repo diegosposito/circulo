@@ -2736,6 +2736,13 @@ Atenciones:
     coseguro: { type: float, primary: false, notnull: true, default: '' }
     bono: { type: float, primary: false, notnull: true, default: '' }
     importeos: { type: float, primary: false, notnull: true, default: '' }
+    idautorizacion: { type: integer, primary: false, default: '1' }
+    idestadoatencion: { type: integer, primary: false, default: '1' }
+    idestadopago: { type: integer, primary: false, default: '1' }
+    autorizada: { type: boolean, notnull: true, default: 1 }
+    anotacion: { type: string(4000), notnull: true }
+    nombrearchivo: { type: string(200), primary: false, autoincrement: false, default: '' }
+    imagefile: { type: string(254), primary: false, autoincrement: false, default: '' }
   relations:
     ObrasSociales:
       local: idobrasocial
