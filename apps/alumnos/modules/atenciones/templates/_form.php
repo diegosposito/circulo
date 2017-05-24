@@ -21,10 +21,15 @@
     <tbody>
       <?php echo $form->renderGlobalErrors() ?>
       <tr>
-          <td colspan="4"><?php echo '<b>'.'Paciente : '.$paciente->getApellido().', '.$paciente->getNombre().'</b>' ?></td>
+          <td colspan="2"><?php echo ''.'</b>' ?></td>
+          <td colspan="2"><?php echo '<b>'.'Paciente : '.$paciente->getApellido().', '.$paciente->getNombre().'</b>' ?></td>
       </tr>
       <tr>
-          <td colspan="4"><?php echo '<b>'.'Tratamiento : '.$atenciones->getTratamiento().'</b>' ?></td>
+          <td colspan="2"><?php echo ''.'</b>' ?></td>
+          <td colspan="2"><?php echo '<b>'.'Tratamiento : '.$atenciones->getTratamiento().'</b>' ?></td>
+      </tr>
+      <tr>
+          <td colspan="4"  align="center"><?php echo '<b>&nbsp;</b>' ?></td>
       </tr>
       <tr>
         <td colspan="1"><?php echo "<b>".$form['mes']->renderLabel()."</b>" ?></td>
@@ -58,6 +63,14 @@
    <td colspan="1"><?php echo "<b>".$form['idautorizacion']->renderLabel()."</b>" ?></td>
    <td colspan="3"><?php echo $form['idautorizacion'] ?></td>
  </tr>
+ <tr>
+  <td colspan="1"><?php echo "<b>".$form['autorizada']->renderLabel()."</b>" ?></td>
+  <td colspan="3"><?php echo $form['autorizada'] ?></td>
+</tr>
+<tr>
+ <td colspan="1"><?php echo "<b>".$form['anotacion']->renderLabel()."</b>" ?></td>
+ <td colspan="3"><?php echo $form['anotacion'] ?></td>
+</tr>
 
     </tbody>
   </table>
