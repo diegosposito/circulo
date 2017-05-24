@@ -18,16 +18,18 @@ class AtencionesForm extends BaseAtencionesForm
   	$arr_tratamientos = array();
 
   	// Se define los labels
-	$this->widgetSchema->setLabel('nrodoc', '<p align="left">Paciente:</p>');
- 	$this->widgetSchema->setLabel('mes', '<p align="left">Mes:</p>');
+	  $this->widgetSchema->setLabel('nrodoc', '<p align="left">Paciente:</p>');
+   	$this->widgetSchema->setLabel('mes', '<p align="left">Mes:</p>');
     $this->widgetSchema->setLabel('anio', '<p align="left">Año:</p>');
- 	$this->widgetSchema->setLabel('idobrasocial', '<p align="left">Obra Social:</p>');
+ 	  $this->widgetSchema->setLabel('idobrasocial', '<p align="left">Obra Social:</p>');
     $this->widgetSchema->setLabel('matricula', '<p align="left">Matrícula:</p>');
     $this->widgetSchema->setLabel('pieza', '<p align="left">Pieza:</p>');
 
     $this->widgetSchema->setLabel('caras', '<p align="left">Caras:</p>');
+    $this->widgetSchema->setLabel('autorizada', '<p align="left">Autorizada:</p>');
     $this->widgetSchema->setLabel('importe', '<p align="left">Importe Profesional:</p>');
     $this->widgetSchema->setLabel('coseguro', '<p align="left">Coseguro:</p>');
+    $this->widgetSchema->setLabel('anotacion', '<p align="left">Anotación:</p>');
     $this->widgetSchema->setLabel('bono', '<p align="left">Bono:</p>');
     $this->widgetSchema->setLabel('importeos', '<p align="left">Importe O. Social:</p>');
 
