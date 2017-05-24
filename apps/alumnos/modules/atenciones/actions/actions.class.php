@@ -157,6 +157,17 @@ class atencionesActions extends sfActions
 
     $atenciones->setMes($request->getPostParameter('atenciones[mes]'));
     $atenciones->setImporte($request->getPostParameter('atenciones[importe]'));
+    $atenciones->setCaras($request->getPostParameter('atenciones[caras]'));
+    $atenciones->setPieza($request->getPostParameter('atenciones[pieza]'));
+    $fecha = $request->getPostParameter('atenciones[fecha][year]').'-'.$request->getPostParameter('atenciones[fecha][month]').'-'.$request->getPostParameter('atenciones[fecha][day]');
+    $atenciones->setFecha($fecha);
+    $atenciones->setIdAutorizacion($request->getPostParameter('atenciones[idautorizacion]'));
+    $atenciones->setAnotacion($request->getPostParameter('atenciones[anotacion]'));
+    if ($request->getPostParameter('atenciones[autorizada]') == 'on') {
+      $atenciones->setAutorizada(1);
+    } else {
+      $atenciones->setAutorizada(0);
+    }
     $atenciones->save();
 
     $this->redirect('atenciones/editar?id='.$request->getParameter('idpaciente'));
