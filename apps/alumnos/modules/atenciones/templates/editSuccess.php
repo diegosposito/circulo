@@ -10,6 +10,9 @@
 
   $(document).ready(function(){
 
+    $('#atenciones_importe').attr('disabled',true);
+    $('#atenciones_coseguro').attr('disabled',true);
+
     cargarComboTratamientos('#atenciones_idtratamiento', $('#atenciones_idobrasocial').val(), 0);
 
     $('#atenciones_idobrasocial').change(function(){
@@ -77,4 +80,4 @@
 
 </script>
 
-<?php include_partial('form', array('form' => $form, 'paciente' => $paciente, 'idpaciente' => $idpaciente)) ?>
+<?php include_partial('form', array('form' => $form, 'paciente' => $paciente, 'atenciones' => $atenciones, 'idpaciente' => $idpaciente)) ?>
