@@ -69,7 +69,7 @@
       <td width="15%" align="center" class="hed">Fecha</td>
       <td width="15%" align="center" class="hed">Matrícula</td>
       <td width="15%" align="center" class="hed">Importe</td>
-      <td width="10%" align="center" class="hed">Edicion</td>
+      <td colspan="2" width="20%" align="center" class="hed">Edicion</td>
     </tr>
   </thead>
   <tbody>
@@ -80,7 +80,8 @@
       <td width="15%" align="center"><?php echo $item['fecha'] ?></td>
       <td width="15%" align="center"><?php echo $item['matricula'] ?></td>
       <td width="15%" align="center"><?php echo $item['importe'] ?></td>
-      <td align="center"><?php echo link_to("Atenciones", 'atenciones/edit?id='.$item['id'].'&idpaciente='.$paciente->getId() ,'class="mhead"'); ?></td>
+      <td width="20%" align="center"> <a title="Editar registro" href="<?php echo url_for('atenciones/edit?id='.$item['id'].'&idpaciente='.$paciente->getId()) ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/edit.png' align='center' size='20'  height='20' width="20"  /></a></td>
+ 
     </tr>
           <?php $i++; ?>
     <?php } ?>
