@@ -9,17 +9,17 @@
 <script>
 
   $(document).ready(function(){
- 
+
     $('#atenciones_idobrasocial').change(function(){
         // cargar las ciudades de la carrera al combo
         cargarComboTratamientos('#atenciones_idtratamiento', $(this).val(), 0);
-    }); 
+    });
     $('#pacientes_idobrasocial').change(function(){
         // cargar las ciudades de la carrera al combo
         cargarComboTratamientos('#atenciones_idtratamiento', $(this).val(), 0);
         //actualizarOS('#osdescripcion', $(this).val(), 0);
         //actualizarFormato('#ostiponroafiliado', $(this).val(), 0);
-    }); 
+    });
 
   });
 
@@ -33,7 +33,7 @@
 	        //$(combo).html(data.substr(3,100));
 	        $(combo).html(data.replace(/\d+/g, ''));
 	        $(combo).attr('disabled',false);
-	      //  $(combo).val(idseleccionado);             
+	      //  $(combo).val(idseleccionado);
 	      }else{
 	        $(combo).attr('disabled',true);
 	        $(combo).html("");
@@ -53,7 +53,7 @@
 	        $(combo).html(data.substr(1,100));
 	        //$(combo).html(data);
 	        $(combo).attr('disabled',false);
-	      //  $(combo).val(idseleccionado);             
+	      //  $(combo).val(idseleccionado);
 	      }else{
 	        $(combo).attr('disabled',true);
 	        $(combo).html("");
@@ -71,7 +71,7 @@
 	      if (data){
 	        $(combo).html(data);
 	        $(combo).attr('disabled',false);
-	        $(combo).val(idseleccionado);             
+	        $(combo).val(idseleccionado);
 	      }else{
 	        $(combo).attr('disabled',true);
 	        $(combo).html("<option value='0' selected='selected' >----NINGUNA----</option>");
@@ -96,4 +96,4 @@
 
 </script>
 
-<?php include_partial('form', array('form' => $form)) ?>
+<?php include_partial('formnew', array('form' => $form, 'paciente' => $paciente, 'idpaciente' => $idpaciente)) ?>
