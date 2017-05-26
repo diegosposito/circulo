@@ -25,6 +25,11 @@
   p { margin-left:5em; /* Or another measurement unit, like px */ }
 </style>
 <h1 align="center" style="color:black;">Historial de atenciones</h1>
+<br>
+<?php if($sf_user->getGuardUser()->getIsSuperAdmin()){ ?>
+       <img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/new.png' align='center' size='20' />
+       <a href="<?php echo url_for('atenciones/new?idpaciente='.$paciente->getId()) ?>">Registrar Nueva Atención</a>
+<?php } ?>
 <div align="center">
 <!--<form action="<?php echo url_for('atenciones/editar?id='.$paciente->getId()) ?>" method="post">
   <input type="hidden" name="selectedtab" id="selectedtab" value="<?php echo $selectedtab ?>">
@@ -81,7 +86,7 @@
       <td width="15%" align="center"><?php echo $item['matricula'] ?></td>
       <td width="15%" align="center"><?php echo $item['importe'] ?></td>
       <td width="20%" align="center"> <a title="Editar registro" href="<?php echo url_for('atenciones/edit?id='.$item['id'].'&idpaciente='.$paciente->getId()) ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/edit.png' align='center' size='20'  height='20' width="20"  /></a></td>
- 
+
     </tr>
           <?php $i++; ?>
     <?php } ?>
