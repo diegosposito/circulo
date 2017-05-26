@@ -122,17 +122,38 @@ class atencionesActions extends sfActions
   public function executeNew(sfWebRequest $request)
   {
     $this->form = new AtencionesForm();
+    $this->idpaciente = $request->getParameter('idpaciente');
+    $this->forward404Unless($paciente = Doctrine_Core::getTable('Pacientes')->find(array($request->getParameter('idpaciente'))), sprintf('Object pacientes does not exist (%s).', $request->getParameter('id')));
+    $this->paciente = $paciente;
   }
 
   public function executeCreate(sfWebRequest $request)
   {
     $this->forward404Unless($request->isMethod(sfRequest::POST));
 
-    $this->form = new AtencionesForm();
+    $this->forward404Unless($paciente = Doctrine_Core::getTable('Pacientes')->find(array($request->getParameter('idpaciente'))), sprintf('Object pacientes does not exist (%s).', $request->getParameter('id')));
 
-    $this->processForm($request, $this->form);
+    $atenciones = new Atenciones();
+    $atenciones->setNrodoc($paciente->getNrodoc());
+    $atenciones->setIdobrasocial($paciente->getIdobrasocial());
+    $atenciones->setMes($request->getPostParameter('atenciones[mes]'));
+    $atenciones->setAnio($request->getPostParameter('atenciones[anio]'));
+    $atenciones->setImporte($request->getPostParameter('atenciones[importe]'));
+    $atenciones->setCaras($request->getPostParameter('atenciones[caras]'));
+    $atenciones->setPieza($request->getPostParameter('atenciones[pieza]'));
+    $fecha = $request->getPostParameter('atenciones[fecha][year]').'-'.$request->getPostParameter('atenciones[fecha][month]').'-'.$request->getPostParameter('atenciones[fecha][day]');
+    $atenciones->setFecha($fecha);
+    $atenciones->setIdAutorizacion($request->getPostParameter('atenciones[idautorizacion]'));
+    $atenciones->setAnotacion($request->getPostParameter('atenciones[anotacion]'));
+    if ($request->getPostParameter('atenciones[autorizada]') == 'on') {
+      $atenciones->setAutorizada(1);
+    } else {
+      $atenciones->setAutorizada(0);
+    }
+    $atenciones->save();
 
-    $this->setTemplate('new');
+    $this->redirect('atenciones/editar?id='.$request->getParameter('idpaciente'));
+
   }
 
   public function executeEdit(sfWebRequest $request)
@@ -156,6 +177,7 @@ class atencionesActions extends sfActions
     $this->forward404Unless($atenciones = Doctrine_Core::getTable('Atenciones')->find(array($request->getParameter('id'))), sprintf('Object atenciones does not exist (%s).', $request->getParameter('id')));
 
     $atenciones->setMes($request->getPostParameter('atenciones[mes]'));
+    $atenciones->setAnio($request->getPostParameter('atenciones[anio]'));
     $atenciones->setImporte($request->getPostParameter('atenciones[importe]'));
     $atenciones->setCaras($request->getPostParameter('atenciones[caras]'));
     $atenciones->setPieza($request->getPostParameter('atenciones[pieza]'));
