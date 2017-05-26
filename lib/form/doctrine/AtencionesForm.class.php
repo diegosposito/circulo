@@ -38,11 +38,18 @@ class AtencionesForm extends BaseAtencionesForm
         $arregloOS[$os->getIdObrasocial()] = $os->getAbreviada();
     }
 
+    if ($this->getOption('idpaciente')!==NULL){
+      $tss = Doctrine_Core::getTable('Tratamientos')->obtenerPorPaciente($this->getOption('idpaciente'), 1);
+      foreach($tss as $ts){
+          $arregloTS[$ts['id']] = $ts['tratamiento'];
+      }
+    }
+
     $arregloAnio = array();
 
     $this->widgetSchema['idobrasocial'] = new sfWidgetFormSelect(array('choices' => $arregloOS));
     $this->widgetSchema->setLabel('idobrasocial', '<p align="left">Obra Social:</p>');
-    $this->widgetSchema['idtratamiento'] = new sfWidgetFormSelect(array('choices' => $arr_tratamientos));
+    $this->widgetSchema['idtratamiento'] = new sfWidgetFormSelect(array('choices' => $arregloTS));
     $this->widgetSchema->setLabel('idtratamiento', '<p align="left">Tratamiento:</p>');
 
     $arregloMeses = array('1' => 'Enero', '2' => 'Febrero','3' => 'Marzo', '4' => 'Abril','5' => 'Mayo', '6' => 'Junio','7' => 'Julio', '8' => 'Agosto','9' => 'Setiembre', '10' => 'Octubre','11' => 'Noviembre', '12' => 'Diciembre');
