@@ -121,7 +121,8 @@ class atencionesActions extends sfActions
 
   public function executeNew(sfWebRequest $request)
   {
-    $this->form = new AtencionesForm();
+    $this->form = new AtencionesForm(array(), array('idpaciente' => $request->getParameter('idpaciente')));
+
     $this->idpaciente = $request->getParameter('idpaciente');
     $this->forward404Unless($paciente = Doctrine_Core::getTable('Pacientes')->find(array($request->getParameter('idpaciente'))), sprintf('Object pacientes does not exist (%s).', $request->getParameter('id')));
     $this->paciente = $paciente;
@@ -132,13 +133,23 @@ class atencionesActions extends sfActions
     $this->forward404Unless($request->isMethod(sfRequest::POST));
 
     $this->forward404Unless($paciente = Doctrine_Core::getTable('Pacientes')->find(array($request->getParameter('idpaciente'))), sprintf('Object pacientes does not exist (%s).', $request->getParameter('id')));
+    $this->forward404Unless($tratamiento = Doctrine_Core::getTable('Tratamientos')->find(array($request->getPostParameter('atenciones[idtratamiento]'))), sprintf('Object pacientes does not exist (%s).', $request->getPostParameter('atenciones[idtratamiento]')));
+
+    // Obtener usuario logueado
+    $user_id = $this->getUser()->getGuardUser()->getId();
+    $persona = Doctrine_Core::getTable('Personas')->obtenerProfesionalxUser($user_id);
+    $matricula = $persona[0]['matricula'];
 
     $atenciones = new Atenciones();
     $atenciones->setNrodoc($paciente->getNrodoc());
+    $atenciones->setMatricula($matricula);
     $atenciones->setIdobrasocial($paciente->getIdobrasocial());
+    $atenciones->setIdtratamiento($tratamiento->getId());
+    $atenciones->setTratamiento($tratamiento->getNombre());
     $atenciones->setMes($request->getPostParameter('atenciones[mes]'));
     $atenciones->setAnio($request->getPostParameter('atenciones[anio]'));
     $atenciones->setImporte($request->getPostParameter('atenciones[importe]'));
+    $atenciones->setCoseguro($request->getPostParameter('atenciones[coseguro]'));
     $atenciones->setCaras($request->getPostParameter('atenciones[caras]'));
     $atenciones->setPieza($request->getPostParameter('atenciones[pieza]'));
     $fecha = $request->getPostParameter('atenciones[fecha][year]').'-'.$request->getPostParameter('atenciones[fecha][month]').'-'.$request->getPostParameter('atenciones[fecha][day]');
@@ -178,7 +189,7 @@ class atencionesActions extends sfActions
 
     $atenciones->setMes($request->getPostParameter('atenciones[mes]'));
     $atenciones->setAnio($request->getPostParameter('atenciones[anio]'));
-    $atenciones->setImporte($request->getPostParameter('atenciones[importe]'));
+    //$atenciones->setImporte($request->getPostParameter('atenciones[importe]'));
     $atenciones->setCaras($request->getPostParameter('atenciones[caras]'));
     $atenciones->setPieza($request->getPostParameter('atenciones[pieza]'));
     $fecha = $request->getPostParameter('atenciones[fecha][year]').'-'.$request->getPostParameter('atenciones[fecha][month]').'-'.$request->getPostParameter('atenciones[fecha][day]');
