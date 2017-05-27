@@ -21,6 +21,11 @@ class tratamientosActions extends sfActions
     $this->forward404Unless($this->tratamientos);
   }
 
+  // Obtiene tratamiento por idtratamiento
+  public function executeObtenertratamiento(sfWebRequest $request)  {
+    $this->tratamiento = Doctrine_Core::getTable('Tratamientos')->find($request->getParameter('idtratamiento'));
+  }
+
   public function executeNew(sfWebRequest $request)
   {
     $this->form = new TratamientosForm();
