@@ -40,6 +40,7 @@ class AtencionesForm extends BaseAtencionesForm
 
     if ($this->getOption('idpaciente')!==NULL){
       $tss = Doctrine_Core::getTable('Tratamientos')->obtenerPorPaciente($this->getOption('idpaciente'), 1);
+      $arregloTS[0] = '---Seleccionar---';
       foreach($tss as $ts){
           $arregloTS[$ts['id']] = $ts['tratamiento'];
       }
