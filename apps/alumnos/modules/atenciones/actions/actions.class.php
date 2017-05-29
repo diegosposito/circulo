@@ -31,6 +31,101 @@ class atencionesActions extends sfActions
 
   }
 
+  public function executeCerrar(sfWebRequest $request)
+  {
+
+    $aniohasta = date ("Y");
+    $aniodesde = $aniohasta - 25;
+
+    $this->aAnios = array();
+    $this->aMeses = array();
+
+    // Obtener usuario logueado
+    $user_id = $this->getUser()->getGuardUser()->getId();
+    $persona = Doctrine_Core::getTable('Personas')->obtenerProfesionalxUser($user_id);
+    $matricula = $persona[0]['matricula'];
+
+    for( $i= $aniohasta ; $i >= $aniodesde ; $i-- )
+    {
+      $this->aAnios[$i] =  $i;
+    }
+
+    $mes = '';
+
+    for( $i= 1 ; $i <= 12 ; $i++ )
+    {
+        switch($i) {
+          case 1:
+          $mes = 'Enero';
+          break;
+
+          case 2:
+          $mes = 'Febrero';
+          break;
+
+          case 3:
+          $mes = 'Marzo';
+          break;
+
+          case 4:
+          $mes = 'abril';
+          break;
+
+          case 5:
+          $mes = 'Mayo';
+          break;
+
+          case 6:
+          $mes = 'Junio';
+          break;
+
+          case 7:
+          $mes = 'Julio';
+          break;
+
+          case 8:
+          $mes = 'Agosto';
+          break;
+
+          case 9:
+          $mes = 'Septiembre';
+          break;
+
+          case 10:
+          $mes = 'Octubre';
+          break;
+
+          case 11:
+          $mes = 'Noviembre';
+          break;
+
+          case 12:
+          $mes = 'Diciembre';
+          break;
+
+          default:
+
+          $mes = 'Enero';
+
+          }
+
+          $this->aMeses[$i] =  $mes;
+    }
+
+    $this->criterio = '';
+    $f_apellido = NULL; $f_nrodoc = NULL;
+
+    if ( $request->getParameter('idAnio')<>'' && $request->getParameter('idMes')<>''){
+
+      $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerAtencionesPorProfesionalPeriodo($matricula, $request->getParameter('idMes'), $request->getParameter('idAnio'));
+
+    }
+
+    $this->idAnio = $request->getParameter('idAnio');
+    $this->idMes = $request->getParameter('idMes');
+
+  }
+
   public function executeEditar(sfWebRequest $request)
   {
      // PRIMER TAB - Obtener paciente seleccionado
@@ -121,7 +216,7 @@ class atencionesActions extends sfActions
 
   public function executeNew(sfWebRequest $request)
   {
-    
+
     $atencion = new Atenciones();
     $this->form = new AtencionesForm($atencion, array('idpaciente' => $request->getParameter('idpaciente')));
 
