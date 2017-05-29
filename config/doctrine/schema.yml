@@ -2728,7 +2728,7 @@ Atenciones:
     idobrasocial: { type: integer, primary: false, default: '0' }
     idtratamiento: { type: integer, notnull: true, default: '0' }
     matricula: { type: string(10), primary: false, autoincrement: false, default: '' }
-    fecha: { type: date(25), primary: false, notnull: true, default: '2002-01-01' }
+    fecha: { type: date(25), primary: false, notnull: true }
     pieza: { type: string(10) }
     caras: { type: string(10) }
     tratamiento: { type: string(200) }
