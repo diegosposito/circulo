@@ -66,10 +66,13 @@ class AtencionesForm extends BaseAtencionesForm
     $this->widgetSchema['anio'] = new sfWidgetFormSelect(array('choices' => $arregloAnio));
     $this->widgetSchema->setLabel('anio', '<p align="left">Año:</p>');
 
-    $range  = range(date('Y')-80, date('Y')+1);
+    $dt = new DateTime();
+    $dtf = $dt->format('Y-m-d H:i:s');
+
+    $range  = range(date('Y')-20, date('Y')+1);
     $years = array_combine($range,$range);
     $this->widgetSchema['fecha'] =
-    new sfWidgetFormDate(array('format' => '%day%/%month%/%year%','years' => $years));
+    new sfWidgetFormDate(array('label'=>'fechita','format' => '%day%/%month%/%year%','years' => $years,'default' => $dtf));
     $this->widgetSchema->setLabel('fecha', '<p align="left">Fecha:</p>');
 
     // arreglos estaticos
