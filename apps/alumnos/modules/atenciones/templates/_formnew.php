@@ -6,6 +6,8 @@ $(document).ready(function(){
     $('#atenciones_coseguro').attr('disabled','disabled');
 
     $('#botonGuardarAtencion').click(function() {
+      $('#atenciones_importe').attr('disabled', false);
+      $('#atenciones_coseguro').attr('disabled',false);
       var validado = validarFormAtencion();
       $('#botonGuardarAtencion').attr("disabled","disabled").delay(5000);
       if(validado == true) {
@@ -18,31 +20,34 @@ $(document).ready(function(){
             $('#mensajeError').html('');
           }
           );
-          
+
+          $('#atenciones_importe').attr('disabled','disabled');
+          $('#atenciones_coseguro').attr('disabled','disabled');
+
     } else {
       $('#mensajeError').html(validado);
       $('#mensajeSuccess').html('');
-    } 
+    }
       window.setTimeout( function(){ $('#botonGuardarAtencion').removeAttr("disabled") }, 5000 );
       //$('#botonGuardarInfoPersonal').removeAttr("disabled");
     return false;
-    }); 
+    });
 
     $('#atenciones_idtratamiento').change(function(){
         cargarImportes($("#atenciones_idtratamiento").val());
-    });   
-    
-     
+    });
+
+
 });
 
 function validarFormAtencion(){
   var resultado = true;
   if($("#atenciones_idtratamiento").val() <= 0) {
     resultado = "Debe seleccionar un Tratamiento.";
-  } 
+  }
 
   return resultado;
-} 
+}
 
 //Cargar estudios previos
 function cargarImportes(id){
@@ -57,8 +62,8 @@ function cargarImportes(id){
       $('#atenciones_importe').val(importe);
       $('#atenciones_coseguro').val(coseguro);
     }
-  );    
-} 
+  );
+}
 
 </script>
 
@@ -89,12 +94,12 @@ function cargarImportes(id){
           <td colspan="4">
             <b><font color="red"><div align="center" id="mensajeError"></div></font></b>
           </td>
-      </tr> 
+      </tr>
        <tr>
           <td colspan="4">
             <b><font color="green"><div align="center" id="mensajeSuccess"></div></font></b>
           </td>
-      </tr> 
+      </tr>
       <tr>
           <td colspan="2"><?php echo ''.'</b>' ?></td>
           <td colspan="2"><?php echo '<b>'.'Paciente : '.$paciente->getApellido().', '.$paciente->getNombre().'</b>' ?></td>
