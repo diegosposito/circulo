@@ -71,6 +71,17 @@
 </table>
 </form>
 
+<form action="<?php echo url_for('atenciones/cerrarperiodo') ?>" method="post">
+<input type="hidden" id="idAnion" name="idAnion" value="<?php echo $idAnio; ?>">
+<input type="hidden" id="idMesn" name="idMesn" value="<?php echo $idMes; ?>">
+<table cellspacing="0" class="stats" width="80%">
+<tr>
+<td colspan="2" align="center"><input type="submit" value="Cerrar Período Seleccionado" /></td>
+</tr>
+</table>
+</form>
+
+
 <?php if (count($atencioness) > 0){ ?>
 <table cellspacing="0" class="stats">
     <tr>
