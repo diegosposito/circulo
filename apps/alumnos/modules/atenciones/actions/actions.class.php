@@ -126,6 +126,27 @@ class atencionesActions extends sfActions
 
   }
 
+  public function executeCerrarperiodo(sfWebRequest $request)
+  {
+     
+    $this->idAnio = $request->getParameter('idAnion');
+    $this->idMes = $request->getParameter('idMesn'); 
+
+    // Obtener usuario logueado
+    $user_id = $this->getUser()->getGuardUser()->getId();
+    $persona = Doctrine_Core::getTable('Personas')->obtenerProfesionalxUser($user_id);
+    $matricula = $persona[0]['matricula'];
+
+    if ( $this->idAnio <>'' && $this->idMes <>'' && $matricula <> ''){
+
+      Doctrine_Core::getTable('Atenciones')->cerrarAtencionesPorProfesionalPeriodo($matricula, $this->idMes, $this->idAnio);
+      $this->mensaje = 'Período cerrado exitosamente :  '.$this->idMes.'/'.$this->idAnio;
+    } else {
+       $this->mensaje = 'El Período no pudo ser cerrado, consulte al administrador :  '.$this->idMes.'/'.$this->idAnio;
+    }
+
+  }
+
   public function executeEditar(sfWebRequest $request)
   {
      // PRIMER TAB - Obtener paciente seleccionado
