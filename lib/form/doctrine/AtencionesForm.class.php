@@ -48,6 +48,8 @@ class AtencionesForm extends BaseAtencionesForm
 
     $arregloAnio = array();
 
+    $mesito = date("m") + 1 - 1;
+
     $this->widgetSchema['idobrasocial'] = new sfWidgetFormSelect(array('choices' => $arregloOS));
     $this->widgetSchema->setLabel('idobrasocial', '<p align="left">Obra Social:</p>');
     $this->widgetSchema['idtratamiento'] = new sfWidgetFormSelect(array('choices' => $arregloTS));
@@ -60,7 +62,7 @@ class AtencionesForm extends BaseAtencionesForm
     for ($anio = date("Y"); $anio > date("Y")-10; $anio=$anio-1) {
         $arregloAnio[$anio]=$anio;
     }
-    $this->widgetSchema['mes'] = new sfWidgetFormSelect(array('choices' => $arregloMeses));
+    $this->widgetSchema['mes'] = new sfWidgetFormSelect(array('choices' => $arregloMeses,'default' => $mesito));
     $this->widgetSchema->setLabel('mes', '<p align="left">Mes:</p>');
 
     $this->widgetSchema['anio'] = new sfWidgetFormSelect(array('choices' => $arregloAnio));
