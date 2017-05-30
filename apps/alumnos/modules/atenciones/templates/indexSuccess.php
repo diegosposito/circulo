@@ -27,6 +27,16 @@
 <br>
 <h1 align="center" style="color:black;">Consulta Pacientes</h1>
 <br>
+<table cellspacing="0" width="80%">
+<tr>
+<td colspan="2" align="left">
+<?php if($sf_user->getGuardUser()->getIsSuperAdmin()){ ?>
+       <img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/new.png' align='center' size='20' />
+       <a href="<?php echo url_for('atenciones/cerrar') ?>"><b>Cierre de Períodos</b></a>
+<?php } ?>
+</td>
+</tr>
+</table>
 <div align="center">
 <form action="<?php echo url_for('atenciones/index') ?>" method="post">
 <table cellspacing="0" class="stats" width="80%">
@@ -57,7 +67,10 @@
 <tr>
 <td colspan="2" align="center"><input type="submit" value="Buscar" /></td>
 </tr>
+<br>
 </table>
+<br>
+
 </form>
 
 <?php if (count($pacientess) > 0){ ?>
