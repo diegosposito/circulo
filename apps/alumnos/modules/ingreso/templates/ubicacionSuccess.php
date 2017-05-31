@@ -2,7 +2,7 @@
 			<h2 class="title">Datos de contacto</h2>
 			<p><b>Dirección: </b>Rocamora 471, E.R., Argentina</p>
 			<p><abbr title="Phone">Tel</abbr>: +54 3442 42-2957</p>
-			<p><abbr title="Email">Email</abbr>: <a href="mailto:cocu@arnetbiz.com.ar">cocu@arnetbiz.com.ar</a>
+			<p><abbr title="Email">Email</abbr>: <a href="mailto:cocu@arnet.com.ar">cocu@arnet.com.ar</a>
 			</p>
 			<p><abbr title="Hours">Horarios</abbr>: Lunes - Viernes: 08 a 16 hs</p>
 			<br>
