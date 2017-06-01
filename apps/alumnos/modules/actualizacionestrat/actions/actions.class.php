@@ -94,7 +94,7 @@ class actualizacionestratActions extends sfActions
       $archivo = Doctrine_Core::getTable('Actualizacionestrat')->find(array($request['id']));
      // $archivo = Doctrine_Core::getTable('Actualizaciones')->find(array(5));
 
-      $nombre_archivo = sfConfig::get('app_pathfiles_folder')."/../actualizacionestrat".'/'.$archivo->getImagefile(); 
+      $nombre_archivo = sfConfig::get('app_pathfiles_folder')."/../actualizacionestrat".'/'.$archivo->getImagefile();
 
       // DATOS conexion
       $dbhost = 'localhost';$dbname = 'circulo';  $dbuser = 'root'; $dbpass = 'root911';
@@ -177,6 +177,9 @@ class actualizacionestratActions extends sfActions
       fwrite($fp,$sqlUpdate);
 
       $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionestrat')->obtenerRegistrosAActualizar('idobrasocial','idobrasocial','N');
+      fwrite($fp,$sqlUpdate);
+
+      $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionestrat')->obtenerRegistrosAActualizar('idplan','idplan','N');
       fwrite($fp,$sqlUpdate);
 
       $sqlUpdate = $archivo = Doctrine_Core::getTable('Actualizacionestrat')->obtenerRegistrosAActualizar('idontologia','idontologia','N');
