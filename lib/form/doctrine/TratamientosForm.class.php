@@ -31,6 +31,7 @@ class TratamientosForm extends BaseTratamientosForm
     $this->widgetSchema->setLabel('descripcion', '<p align="left">Descripción:</p>');
  	$this->widgetSchema->setLabel('normas', '<p align="left">Normas de Trabajo:</p>');
  	$this->widgetSchema->setLabel('activo', '<p align="left">Activo?:</p>');
+  $this->widgetSchema->setLabel('idplan', '<p align="left">Plan:</p>');
 
     $oss = Doctrine_Core::getTable('ObrasSociales')->obtenerTodas();
     foreach($oss as $os){
@@ -72,6 +73,7 @@ class TratamientosForm extends BaseTratamientosForm
       'abreviacion'        => new sfValidatorString(array('max_length' => 200, 'required' => false)),
       'idgrupotratamiento'  => new sfValidatorInteger(array('required' => false)),
       'idobrasocial'        => new sfValidatorInteger(array('required' => false)),
+      'idplan'        => new sfValidatorInteger(array('required' => false)),
       'idontologia'        => new sfValidatorInteger(array('required' => false)),
       'garantia'           => new sfValidatorInteger(array('required' => false)),
       'importe'            => new sfValidatorNumber(array('required' => false)),
