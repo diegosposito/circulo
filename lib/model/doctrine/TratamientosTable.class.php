@@ -64,10 +64,11 @@ class TratamientosTable extends Doctrine_Table
                 t.garantia, t.importe, t.coseguro, t.bono, t.importeos, t.idautorizacion, t.visible, t.activo
                 FROM tratamientos t
                 JOIN obras_sociales os ON t.idobrasocial = os.idobrasocial
-                JOIN pacientes pac ON os.idobrasocial = pac.idobrasocial ";
+                JOIN pacientes pac ON os.idobrasocial = pac.idobrasocial 
+                JOIN planes_obras po ON pac.idobrasocial = po.idobrasocial AND pac.idplan = po.id ";
 
         if($estado !== NULL)
-            $sql .=  " WHERE pac.id = ".$idpaciente." AND t.activo = ".$estado." ";
+            $sql .=  " WHERE pac.id = ".$idpaciente." AND t.activo = ".$estado." AND po.activo = ".$estado." ";
 
         $sql .= " ORDER BY os.denominacion, t.nombre;";
 
