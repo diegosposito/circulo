@@ -16,11 +16,11 @@ class TratamientosForm extends BaseTratamientosForm
   	    unset( $this['created_at'], $this['updated_at'], $this['created_by'], $this['updated_by'] );
 
   	// Se define los labels
-	$this->widgetSchema->setLabel('nombre', '<p align="left">Tratamiento:</p>');
- 	$this->widgetSchema->setLabel('abreviacion', '<p align="left">Abreviación:</p>');
+	  $this->widgetSchema->setLabel('nombre', '<p align="left">Tratamiento:</p>');
+ 	  $this->widgetSchema->setLabel('abreviacion', '<p align="left">Abreviación:</p>');
     $this->widgetSchema->setLabel('idobrasocial', '<p align="left">Obra Social:</p>');
- 	$this->widgetSchema->setLabel('idontologia', '<p align="left">Odontología:</p>');
- 	$this->widgetSchema->setLabel('idgrupotratamiento', '<p align="left">Código Común:</p>');
+ 	  $this->widgetSchema->setLabel('idontologia', '<p align="left">Odontología:</p>');
+ 	  $this->widgetSchema->setLabel('idgrupotratamiento', '<p align="left">Código Común:</p>');
     $this->widgetSchema->setLabel('garantia', '<p align="left">Garantía:</p>');
     $this->widgetSchema->setLabel('importe', '<p align="left">Importe:</p>');
     $this->widgetSchema->setLabel('coseguro', '<p align="left">Coseguro:</p>');
@@ -29,9 +29,9 @@ class TratamientosForm extends BaseTratamientosForm
     $this->widgetSchema->setLabel('idautorizacion', '<p align="left">Autorización:</p>');
     $this->widgetSchema->setLabel('visible', '<p align="left">Visible:</p>');
     $this->widgetSchema->setLabel('descripcion', '<p align="left">Descripción:</p>');
- 	$this->widgetSchema->setLabel('normas', '<p align="left">Normas de Trabajo:</p>');
- 	$this->widgetSchema->setLabel('activo', '<p align="left">Activo?:</p>');
-  $this->widgetSchema->setLabel('idplan', '<p align="left">Plan:</p>');
+ 	  $this->widgetSchema->setLabel('normas', '<p align="left">Normas de Trabajo:</p>');
+ 	  $this->widgetSchema->setLabel('activo', '<p align="left">Activo?:</p>');
+    $this->widgetSchema->setLabel('idplan', '<p align="left">Plan:</p>');
 
     $oss = Doctrine_Core::getTable('ObrasSociales')->obtenerTodas();
     foreach($oss as $os){
@@ -40,6 +40,9 @@ class TratamientosForm extends BaseTratamientosForm
 
     $this->widgetSchema['idobrasocial'] = new sfWidgetFormSelect(array('choices' => $arregloOS));
     $this->widgetSchema->setLabel('idobrasocial', '<p align="left">Obra Social:</p>');
+
+    $this->widgetSchema['idplan'] = new sfWidgetFormSelect(array('choices' => array()));
+    $this->widgetSchema->setLabel('idplan', '<p align="left">Plan de Obra Social:</p>');
 
     $oss = Doctrine_Core::getTable('GrupoTratamiento')->obtenerTodos();
     foreach($oss as $os){
@@ -73,7 +76,7 @@ class TratamientosForm extends BaseTratamientosForm
       'abreviacion'        => new sfValidatorString(array('max_length' => 200, 'required' => false)),
       'idgrupotratamiento'  => new sfValidatorInteger(array('required' => false)),
       'idobrasocial'        => new sfValidatorInteger(array('required' => false)),
-      'idplan'        => new sfValidatorInteger(array('required' => false)),
+      'idplan'        => new sfValidatorInteger(array('required' => true), array('required' => 'El Plan de Obra Social es obligatorio.')),
       'idontologia'        => new sfValidatorInteger(array('required' => false)),
       'garantia'           => new sfValidatorInteger(array('required' => false)),
       'importe'            => new sfValidatorNumber(array('required' => false)),
