@@ -5,7 +5,7 @@
 <h1 align="center" style="color:black;">Listado de Tratamientos</h1>
 <?php if($sf_user->getGuardUser()->getIsSuperAdmin()){ ?>
          <img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/new.png' align='center' size='20' />
-         <a href="<?php echo url_for('tratamientos/new') ?>">Nuevo tratamiento</a>
+         <a href="<?php echo url_for('tratamientos/new') ?>">Nuevo Tratamiento</a>
   <?php } ?>
   <br>
   <?php if($sf_user->getGuardUser()->getIsSuperAdmin()){ ?>
