@@ -52,11 +52,19 @@ class planesobrasActions extends sfActions
   {
     $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
     $this->forward404Unless($planes_obras = Doctrine_Core::getTable('PlanesObras')->find(array($request->getParameter('id'))), sprintf('Object planes_obras does not exist (%s).', $request->getParameter('id')));
-    $this->form = new PlanesObrasForm($planes_obras);
+   // $this->form = new PlanesObrasForm($planes_obras);
 
-    $this->processForm($request, $this->form);
+    //$this->processForm($request, $this->form);
+   
+    if ($request->getPostParameter('planes_obras[activo]') == 'on') {
+      $planes_obras->setActivo(1);
+    } else {
+      $planes_obras->setActivo(0);
+    }
+    $planes_obras->setNombre($request->getPostParameter('planes_obras[nombre]'));
+    $planes_obras->save();
 
-    $this->setTemplate('edit');
+    $this->redirect('planesobras/index');
   }
 
   public function executeDelete(sfWebRequest $request)
