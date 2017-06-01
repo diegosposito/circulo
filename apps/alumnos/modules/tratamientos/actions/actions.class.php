@@ -46,6 +46,8 @@ class tratamientosActions extends sfActions
   {
     $this->forward404Unless($tratamientos = Doctrine_Core::getTable('Tratamientos')->find(array($request->getParameter('id'))), sprintf('Object tratamientos does not exist (%s).', $request->getParameter('id')));
     $this->form = new TratamientosForm($tratamientos);
+    $this->idplan = $tratamientos->getIdplan();
+    $this->idobrasocial = $tratamientos->getIdobrasocial();
   }
 
   public function executeUpdate(sfWebRequest $request)
