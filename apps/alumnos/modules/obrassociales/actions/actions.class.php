@@ -14,7 +14,7 @@ class obrassocialesActions extends sfActions
   {
     $this->obras_socialess = Doctrine_Core::getTable('ObrasSociales')
       ->createQuery('a')
-      ->orderBy('a.ninterno') 
+      ->orderBy('a.ninterno')
       ->execute();
   }
 
@@ -22,6 +22,7 @@ class obrassocialesActions extends sfActions
   {
     $os = Doctrine_Core::getTable('ObrasSociales')->find($request->getParameter('idobrasocial'));
     $this->planes = $os->obtenerPlanes();
+    $this->idplan = $request->getParameter('idplan');
   }
 
   public function executeObtenertratamientos(sfWebRequest $request)
@@ -31,13 +32,13 @@ class obrassocialesActions extends sfActions
 
   public function executeObtenerinfo(sfWebRequest $request)
   {
-    echo $request->getParameter('idobrasocial'); 
+    //echo $request->getParameter('idobrasocial');
     $this->oss = Doctrine_Core::getTable('ObrasSociales')->find(array($request->getParameter('idobrasocial')));
   }
 
    public function executeObtenerformato(sfWebRequest $request)
   {
-    echo $request->getParameter('idobrasocial'); 
+    //echo $request->getParameter('idobrasocial');
     $this->oss = Doctrine_Core::getTable('ObrasSociales')->find(array($request->getParameter('idobrasocial')));
   }
 
@@ -52,12 +53,12 @@ class obrassocialesActions extends sfActions
         for($i=0; $i<count($_FILES['upload']['name']); $i++) {
           //Get the temp file path
             $tmpFilePath = $_FILES['upload']['tmp_name'][$i];
-            
-            
+
+
 
             //Make sure we have a filepath
             if($tmpFilePath != ""){
-            
+
                 //save the filename
                 $shortname = $_FILES['upload']['name'][$i];
 
@@ -70,7 +71,7 @@ class obrassocialesActions extends sfActions
                 if(move_uploaded_file($tmpFilePath, $filePath)) {
 
                     $files[] = $shortname;
-                    //insert into db 
+                    //insert into db
                     //use $shortname for the filename
                     //use $filePath for the relative url to the file
 
@@ -84,7 +85,7 @@ class obrassocialesActions extends sfActions
     $gestor_dir = opendir($directorio);
     $this->ficheros = array();
     while (false !== ($nombre_fichero = readdir($gestor_dir))) {
-      
+
       $image_file = 'image.png';
       switch (pathinfo($nombre_fichero, PATHINFO_EXTENSION)) {
           case 'pdf':
@@ -98,13 +99,13 @@ class obrassocialesActions extends sfActions
               break;
           case 'xls':
               $image_file = 'excel.png';
-              break;        
+              break;
           case 'xlsx':
               $image_file = 'excel.png';
               break;
           case 'txt':
               $image_file = 'wordpad.png';
-              break;    
+              break;
       }
 
       $this->ficheros[] = array($nombre_fichero, $this->obras_sociales->getIdObrasocial()."/".$nombre_fichero, $image_file);
@@ -158,68 +159,68 @@ class obrassocialesActions extends sfActions
          $this->redirect('ingreso');
 
       $obras_sociales = Doctrine_Core::getTable('ObrasSociales')->obtenerObrasSociales();
-      
-     
+
+
       $pdf = new PDF();
 
 $pdf->SetFont("Times", "", 9);
 $pdf->setPrintHeader(false);
-$pdf->setPrintFooter(false); 
- 
+$pdf->setPrintFooter(false);
+
 $pdf->AddPage();
 $current_date = date("Y");
 $encabezado = '
       <div style="text-align: center; font-family: Times New Roman,Times,serif;"><span
       style="font-size: 12;"><img src="'.$request->getRelativeUrlRoot().'/images/alcec3.jpg" width="550px">
-      Generar recibos: '.$current_date.'</div>';        
+      Generar recibos: '.$current_date.'</div>';
 
-$pdf->writeHTML($encabezado, true, false, true, false, '');   
-    
+$pdf->writeHTML($encabezado, true, false, true, false, '');
+
 $y = 60;
 $pdf->SetXY(10,$y);
-$pdf->Cell(10,5,'Obra Social',0,0,'C');    
+$pdf->Cell(10,5,'Obra Social',0,0,'C');
 $pdf->SetXY(20,$y);
-$pdf->Cell(80,5,'Abrev.',0,0,'C');    
+$pdf->Cell(80,5,'Abrev.',0,0,'C');
 $pdf->SetXY(20,$y);
-$pdf->Cell(225,5,'Fecha1',0,0,'C'); 
+$pdf->Cell(225,5,'Fecha1',0,0,'C');
 $pdf->SetXY(20,$y);
-$pdf->Cell(280,5,'Fecha2',0,0,'C'); 
+$pdf->Cell(280,5,'Fecha2',0,0,'C');
 $pdf->SetXY(20,$y);
-$y = $y + 5;    
+$y = $y + 5;
 $contador = 1;
-    
+
 $pdf->Line(10,$y,199,$y);
-    
-    foreach ($obras_sociales as $osocial){ 
+
+    foreach ($obras_sociales as $osocial){
 
         $pdf->SetXY(0,$y-5);
         $pdf->SetXY(10,$y);
         $pdf->Cell(10,5,$osocial['idobrasocial'],0,0,'L');
-        $pdf->SetXY(20,$y);        
-        $pdf->Cell(80,5,$osocial['idobrasocial'],0,0,'L');        
-        $pdf->SetXY(120,$y); 
-        $pdf->Cell(10,5,$osocial['idobrasocial'],0,0,'L'); 
-        $pdf->SetXY(160,$y); 
-        $pdf->Cell(10,5,$osocial['idobrasocial'],0,0,'L'); 
-            
-        $y = $y + 5;  
+        $pdf->SetXY(20,$y);
+        $pdf->Cell(80,5,$osocial['idobrasocial'],0,0,'L');
+        $pdf->SetXY(120,$y);
+        $pdf->Cell(10,5,$osocial['idobrasocial'],0,0,'L');
+        $pdf->SetXY(160,$y);
+        $pdf->Cell(10,5,$osocial['idobrasocial'],0,0,'L');
+
+        $y = $y + 5;
         // add a page
         if($y>=265) {
             $pdf->AddPage();
 
             $encabezado = '
               <div style="text-align: center; font-family: Times New Roman,Times,serif;"><span
-              style="font-size: 12;"><img src="'.$request->getRelativeUrlRoot().'/images/alcec3.jpg" width="550px">Generar Recibos: '.$current_date.'</div>';        
-      
-            $pdf->writeHTML($encabezado, true, false, true, false, '');   
+              style="font-size: 12;"><img src="'.$request->getRelativeUrlRoot().'/images/alcec3.jpg" width="550px">Generar Recibos: '.$current_date.'</div>';
+
+            $pdf->writeHTML($encabezado, true, false, true, false, '');
             $y=60;
          }
-      
-      } // fin (foreach)  
 
-       
+      } // fin (foreach)
+
+
      $pdf->Output('recibos.pdf', 'I');
- 
+
      return sfView::NONE;
   }
 
@@ -240,7 +241,7 @@ $pdf->Line(10,$y,199,$y);
          // Redirige al inicio si no tiene acceso
       if (!$this->getUser()->getGuardUser()->getIsSuperAdmin())
          $this->redirect('ingreso');
-       
+
     $request->checkCSRFProtection();
 
     $this->forward404Unless($obras_sociales = Doctrine_Core::getTable('ObrasSociales')->find(array($request->getParameter('idobrasocial'))), sprintf('Object obras_sociales does not exist (%s).', $request->getParameter('idobrasocial')));
@@ -255,11 +256,11 @@ $pdf->Line(10,$y,199,$y);
       if (!$this->getUser()->getGuardUser()->getIsSuperAdmin())
          $this->redirect('ingreso');
 
-      $filePath = sfConfig::get('app_pathfiles_folder')."/".$request['nombrearchivo']; 
-       
+      $filePath = sfConfig::get('app_pathfiles_folder')."/".$request['nombrearchivo'];
+
       unlink($filePath);
 
-      return sfView::NONE;  
+      return sfView::NONE;
 
   }
 
@@ -275,7 +276,7 @@ $pdf->Line(10,$y,199,$y);
 
 
       $obras_sociales->setNinterno($request->getPostParameter('obras_sociales[ninterno]'));
-      
+
       if ($request->getPostParameter('obras_sociales[general]') == 'on') {
         $obras_sociales->setGeneral(1);
       } else {
@@ -303,7 +304,7 @@ $pdf->Line(10,$y,199,$y);
       $obras_sociales->save();
 
       $folder_path_name = sfConfig::get('app_pathfiles_folder')."/".$obras_sociales->getIdobrasocial();
-      
+
       if (!is_dir($folder_path_name) && !mkdir($folder_path_name)){
           die("Error creating folder $uploaddir");
       }
