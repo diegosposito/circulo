@@ -22,9 +22,10 @@ class TratamientosTable extends Doctrine_Table
     {
         $sql ="SELECT t.id, t.nombre as tratamiento, t.abreviacion, grt.nombre as grupo, t.idobrasocial, os.abreviada as osabreviada, os.denominacion as obrasocial,
 				t.idontologia, CASE t.idontologia WHEN 1 THEN 'General' WHEN 2 THEN 'Prótesis' WHEN 3 THEN 'Implantes' WHEN 4 THEN 'Ortodoncia' END AS odontologia,
-				t.garantia, t.importe, t.coseguro, t.bono, t.importeos, t.idautorizacion, t.visible, t.activo
+				t.garantia, t.importe, t.coseguro, t.bono, t.importeos, t.idautorizacion, t.visible, t.activo, po.nombre as planos, concat(os.abreviada,' - ', po.nombre) as obraplan
 				FROM tratamientos t
 				JOIN obras_sociales os ON t.idobrasocial = os.idobrasocial
+        JOIN planes_obras po ON t.idplan = po.id
 				JOIN grupo_tratamiento grt ON t.idgrupotratamiento = grt.id ";
 
 		if($estado !== NULL)
