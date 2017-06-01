@@ -23,8 +23,8 @@
  <table cellspacing="0" class="stats">
     <thead>
       <tr>
-        <td width="15%" align="center" class="hed">Obra Social</td>
-        <td width="50%" align="center" class="hed">Tratamiento</td>
+        <td width="35%" align="center" class="hed">Obra Social</td>
+        <td width="30%" align="center" class="hed">Tratamiento</td>
         <td width="5%" align="center" class="hed">Activo</td>
         <td width="10%" align="center" class="hed">Garantía</td>
         <td width="10%" align="center" class="hed">Odontología</td>
@@ -35,8 +35,8 @@
       <?php $i=0; ?>
       <?php foreach ($tratamientoss as $tratamientos){ ?>
       <tr class="fila_<?php echo $i%2 ; ?>">
-        <td width="15%" align="center"><?php echo $tratamientos['osabreviada'] ?></td>
-        <td width="50%" align="center"><?php echo $tratamientos['tratamiento'] ?></td>
+        <td width="35%" align="center"><?php echo $tratamientos['obraplan'] ?></td>
+        <td width="30%" align="center"><?php echo $tratamientos['tratamiento'] ?></td>
         <td width="5%" align="center">
         <?php if ($tratamientos['activo']){ ?>
              <img width="17px" height="17px" src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/accept_ico.png' align='center' size='20' />
@@ -52,6 +52,6 @@
       <?php } ?>
 
       <br>
-  
+
     </tbody>
   </table>
