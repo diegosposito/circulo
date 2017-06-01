@@ -25,7 +25,7 @@
 	      if (data){
 	        $(combo).html(data);
 	        $(combo).attr('disabled',false);
-	        $(combo).val(idseleccionado);
+	        $(combo).val($("#idplan").val());
 	      }else{
 	        $(combo).attr('disabled',true);
 	        $(combo).html("<option value='0' selected='selected' >----NINGUNA----</option>");
