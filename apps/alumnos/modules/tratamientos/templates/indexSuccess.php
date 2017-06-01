@@ -23,7 +23,8 @@
  <table cellspacing="0" class="stats">
     <thead>
       <tr>
-        <td width="35%" align="center" class="hed">Obra Social</td>
+        <td width="4%" align="center" class="hed">Id</td>
+        <td width="31%" align="center" class="hed">Obra Social</td>
         <td width="30%" align="center" class="hed">Tratamiento</td>
         <td width="5%" align="center" class="hed">Activo</td>
         <td width="10%" align="center" class="hed">Garantía</td>
@@ -35,7 +36,8 @@
       <?php $i=0; ?>
       <?php foreach ($tratamientoss as $tratamientos){ ?>
       <tr class="fila_<?php echo $i%2 ; ?>">
-        <td width="35%" align="center"><?php echo $tratamientos['obraplan'] ?></td>
+        <td width="4%" align="center"><?php echo $tratamientos['id'] ?></td>
+        <td width="31%" align="center"><?php echo $tratamientos['obraplan'] ?></td>
         <td width="30%" align="center"><?php echo $tratamientos['tratamiento'] ?></td>
         <td width="5%" align="center">
         <?php if ($tratamientos['activo']){ ?>
