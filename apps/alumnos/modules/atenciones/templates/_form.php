@@ -36,14 +36,6 @@
       <tr>
           <td colspan="4"  align="center"><?php echo '<b>&nbsp;</b>' ?></td>
       </tr>
-      <tr>
-        <td colspan="1"><?php echo "<b>".$form['mes']->renderLabel()."</b>" ?></td>
-        <td colspan="3"><?php echo $form['mes'] ?></td>
-      </tr>
-      <tr>
-        <td colspan="1"><?php echo "<b>".$form['anio']->renderLabel()."</b>" ?></td>
-        <td colspan="3"><?php echo $form['anio'] ?></td>
-      </tr>
        <tr>
         <td align="left"><?php echo "<b>".$form['caras']->renderLabel()."</b>" ?></td>
         <td  colspan="3" align="left"><?php echo $form['caras'] ?></td>
