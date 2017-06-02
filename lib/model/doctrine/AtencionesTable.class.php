@@ -84,11 +84,49 @@ class AtencionesTable extends Doctrine_Table
         return $q;
     }
 
-    // Cerrar atenciones por periodo por Profesional
-    public static function cerrarAtencionesPorProfesionalPeriodo($matricula, $idmes, $idanio)
+    // Obtener obras sociales
+    public static function obtenerAtencionesAbiertasPorProfesional($matricula)
     {
+        $sql ="SELECT at.id, at.nrodoc, at.mes, at.anio, at.matricula, at.fecha, at.pieza, at.caras, at.tratamiento, at.importe, at.coseguro, at.bono, at.importe,
+            pac.apellido, pac.nombre, os.denominacion, os.abreviada as obrasocial, concat(per.apellido,', ' , per.nombre) as profesional,
+            CASE at.mes WHEN 1 THEN 'Enero' WHEN 2 THEN 'Febrero' WHEN 3 THEN 'Marzo' WHEN 4 THEN 'Abril' WHEN 5 THEN 'Mayo' WHEN 6 THEN 'Junio' WHEN 7 THEN 'Julio' WHEN 8 THEN 'Agosto' WHEN 9 THEN 'Septiembre' WHEN 10 THEN 'Octubre' WHEN 11 THEN 'Noviembre' WHEN 12 THEN 'Diciembre'   ELSE 'Enero'  END as mesdetalle,
+            CASE at.idestadoatencion WHEN 1 THEN 'Abierta' WHEN 0 THEN 'Cerrada' END as estadoatencion
+            FROM atenciones at JOIN pacientes pac ON at.nrodoc = pac.nrodoc
+            JOIN obras_sociales os ON at.idobrasocial = os.idobrasocial
+            JOIN personas per ON at.matricula = per.nrolector
+            WHERE at.idestadoatencion = 1 ";
 
-        $sql ="UPDATE atenciones SET idestadoatencion = 0 WHERE matricula = '".$matricula."' AND anio = ".$idanio." AND mes = ".$idmes.";";
+         if($matricula !== NULL)
+            $sql .=  " AND at.matricula = ".$matricula." ";
+
+        $sql .= " ORDER BY os.abreviada, pac.apellido;";
+
+        $q = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($sql);
+
+        return $q;
+    }
+
+    // Cerrar atenciones por periodo por Profesional
+    public static function cerrarAtencionesPorProfesionalPeriodo($matricula, $idmes, $idanio, $arrAtenciones)
+    {
+        
+        // Recorro atenciones que no deben cerrarse y preparo string
+        $datos=''; $cantidad=0;
+        if ( count($arrAtenciones)>0 ){
+
+            foreach($arrAtenciones as $info)
+                $datos .= $info.', ';
+
+            $datos = substr($datos, 0, strlen($datos)-2);
+
+        }
+
+        $sql ="UPDATE atenciones SET idestadoatencion = 0, anio = ".$idanio.", mes = ".$idmes." WHERE idestadoatencion=1 AND matricula = '".$matricula."' ";
+
+        if ($datos<>'')
+            $sql .= " AND id NOT IN (".$datos.") ";
+
+        $sql .= "; ";
 
         $q = Doctrine_Manager::getInstance()->getCurrentConnection();
 
