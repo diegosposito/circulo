@@ -31,21 +31,65 @@ class atencionesActions extends sfActions
 
   }
 
+    /** Actual month last day **/
+  public function data_last_month_day() { 
+      $month = date('m');
+      $year = date('Y');
+      $day = date("d", mktime(0,0,0, $month+1, 0, $year));
+ 
+      return date('Y-m-d', mktime(0,0,0, $month, $day, $year));
+  }
+
+  /** Actual month first day **/
+  public function data_first_month_day() {
+      $month = date('m');
+      $year = date('Y');
+      return date('Y-m-d', mktime(0,0,0, $month, 1, $year));
+  }
+
+  public function ultimo_dia_del_mes() { 
+      $month = date('m');
+      $year = date('Y');
+      $day = date("d", mktime(0,0,0, $month+1, 0, $year));
+ 
+      return date('d', mktime(0,0,0, $month, $day, $year));
+  }
+
   public function executeCerrar(sfWebRequest $request)
   {
 
-    $aniohasta = date ("Y");
+    /*$aniohasta = date ("Y");
     $aniodesde = $aniohasta - 25;
 
     $this->aAnios = array();
-    $this->aMeses = array();
+    $this->aMeses = array();*/
+    $this->periodo = '';
+    $this->mostrar_boton_cerrar =false;
 
     // Obtener usuario logueado
     $user_id = $this->getUser()->getGuardUser()->getId();
     $persona = Doctrine_Core::getTable('Personas')->obtenerProfesionalxUser($user_id);
     $matricula = $persona[0]['matricula'];
+    $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerAtencionesAbiertasPorProfesional($matricula);
 
-    for( $i= $aniohasta ; $i >= $aniodesde ; $i-- )
+    $fechaactual = date('Y-m-j');
+    $fechaanterior = strtotime ( '-1 month' , strtotime ( $fechaactual ) ) ;
+    
+    // si es primer o segundo dia muestra periodo del mes anterior
+    if (date('j')==1 OR date('j')==2){
+        $this->periodo = date ( 'Y-m' , $fechaanterior );
+        $this->mostrar_boton_cerrar = true;
+    } else { // sino analiza si es ultimo o ante ultimo dia del mes
+        $ultimo_dia = $this->ultimo_dia_del_mes();
+        $anterior_ultimo_dia = $ultimo_dia - 1;
+        if (date('j')==$ultimo_dia OR date('j')==$anterior_ultimo_dia){
+           $this->periodo = date('Y-m');
+           $this->mostrar_boton_cerrar = true;
+        }  
+    }
+
+   
+   /* for( $i= $aniohasta ; $i >= $aniodesde ; $i-- )
     {
       $this->aAnios[$i] =  $i;
     }
@@ -122,27 +166,37 @@ class atencionesActions extends sfActions
     }
 
     $this->idAnio = $request->getParameter('idAnio');
-    $this->idMes = $request->getParameter('idMes');
+    $this->idMes = $request->getParameter('idMes');*/
 
   }
 
   public function executeCerrarperiodo(sfWebRequest $request)
   {
      
-    $this->idAnio = $request->getParameter('idAnion');
-    $this->idMes = $request->getParameter('idMesn'); 
+    // Obtiene atenciones seleccionadoas para no cerrar
+    $idcase = $request->getParameter('idcase', '');
+    $periodo = $request->getParameter('periodo');
+    // $arr[0]  es año, $arr[1] es mes
+    $arr = explode('-', $periodo);
+    $arr_asignaciones = array();
 
     // Obtener usuario logueado
     $user_id = $this->getUser()->getGuardUser()->getId();
     $persona = Doctrine_Core::getTable('Personas')->obtenerProfesionalxUser($user_id);
     $matricula = $persona[0]['matricula'];
 
-    if ( $this->idAnio <>'' && $this->idMes <>'' && $matricula <> ''){
+    foreach($idcase as $seleccionados){
+      if(is_numeric($seleccionados)) 
+          $arr_asignaciones[] = $seleccionados;
+    }
 
-      Doctrine_Core::getTable('Atenciones')->cerrarAtencionesPorProfesionalPeriodo($matricula, $this->idMes, $this->idAnio);
-      $this->mensaje = 'Período cerrado exitosamente :  '.$this->idMes.'/'.$this->idAnio;
+    // Se cierran las atenciones seleccionadas
+    if ( count($arr_asignaciones)>0 ){
+        Doctrine_Core::getTable('Atenciones')->cerrarAtencionesPorProfesionalPeriodo($matricula, $arr[1], $arr[0], $arr_asignaciones);
+        $this->mensaje = 'Período cerrado exitosamente :  '.$arr[1].'/'.$arr[0];
     } else {
-       $this->mensaje = 'El Período no pudo ser cerrado, consulte al administrador :  '.$this->idMes.'/'.$this->idAnio;
+        Doctrine_Core::getTable('Atenciones')->cerrarAtencionesPorProfesionalPeriodo($matricula, $arr[1], $arr[0]);
+        $this->mensaje = 'Período cerrado exitosamente :  '.$arr[1].'/'.$arr[0];
     }
 
   }
