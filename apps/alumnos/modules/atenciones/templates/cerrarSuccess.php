@@ -25,10 +25,10 @@
   p { margin-left:5em; /* Or another measurement unit, like px */ }
 </style>
 <br>
-<h1 align="center" style="color:black;">Atenciones Por Período / Cerrar Período</h1>
+<h1 align="center" style="color:black;">Cerrar Período</h1>
 <br>
 <div align="center">
-<form action="<?php echo url_for('atenciones/cerrar') ?>" method="post">
+<!-- <form action="<?php echo url_for('atenciones/cerrar') ?>" method="post">
 <table cellspacing="0" class="stats" width="80%">
 <tr>
 <td><b>Año:</b></td>
@@ -69,27 +69,34 @@
 <td colspan="2" align="center"><input type="submit" value="Buscar" /></td>
 </tr>
 </table>
-</form>
+</form> -->
 
 <form action="<?php echo url_for('atenciones/cerrarperiodo') ?>" method="post">
-<input type="hidden" id="idAnion" name="idAnion" value="<?php echo $idAnio; ?>">
-<input type="hidden" id="idMesn" name="idMesn" value="<?php echo $idMes; ?>">
+<input type="hidden" id="periodo" name="periodo" value="<?php echo $periodo; ?>">
 <table cellspacing="0" class="stats" width="80%">
+<?php if ($mostrar_boton_cerrar){ ?>
 <tr>
-<td colspan="2" align="center"><input type="submit" value="Cerrar Período Seleccionado" /></td>
+<td colspan="2" align="center"><input type="submit" value="<?php echo "Cerrar Período ".$periodo; ?>" /></td>
 </tr>
+<?php }  else { ?>
+<tr>
+<td colspan="2" align="center"><b><?php echo "El Período actual no se encuentra habilitado aún para Cerrar"; ?></b></td>
+</tr>
+<?php }  ?>
+
 </table>
-</form>
+
 
 
 <?php if (count($atencioness) > 0){ ?>
 <table cellspacing="0" class="stats">
     <tr>
-      <td colspan="6" width="100%">Se han encontrado <?php echo count($pacientess); ?> coincidencias de la búsqueda.</td>
+      <td colspan="6" width="100%">Por defecto todas las atenciones se cierran. <b>Marque las que no desee cerrar</b>.<br> Se han encontrado <?php echo count($atencioness); ?> coincidencias de la búsqueda.</td>
     </tr>
     <tr>
-      <td width="5%" align="center" class="hed">Período</td>
-      <td width="35%" align="center" class="hed">Paciente</td>
+      <td width="2%" align="center" class="hed"></td>
+      <td width="14%" align="center" class="hed">Obra Social</td>
+      <td width="24%" align="center" class="hed">Paciente</td>
       <td width="10%" align="center" class="hed">Fecha</td>
       <td width="15%" align="center" class="hed">Tratamiento</td>
       <td width="10%" align="center" class="hed">Importe</td>
@@ -102,8 +109,9 @@
     <?php foreach($atencioness as $item){
       $fecha_formateada = date("d/m/Y", strtotime($item['fecha'])); ?>
     <tr class="fila_<?php echo $i%2 ; ?>">
-      <td width="5%" align="center"><?php echo $item['mes'].'-'.$item['anio'] ?></td>
-      <td width="35%" align="center"><?php echo $item['apellido'].', '.$item['nombre'].'('.$item['obrasocial'].')' ?></td>
+      <td align="center"><input type="checkbox" id="idcase" class="idcase" name="idcase[]" value="<?php echo $item['id'] ?>" /></td>
+      <td width="14%" align="center"><?php echo $item['obrasocial'] ?></td>
+      <td width="24%" align="center"><?php echo $item['apellido'].', '.$item['nombre'] ?></td>
       <td width="10%" align="center"><?php echo $fecha_formateada ?></td>
       <td width="15%" align="center"><?php echo $item['tratamiento'] ?></td>
       <td width="10%" align="center"><?php echo $item['importe'] ?></td>
@@ -116,6 +124,7 @@
    <br>
   </tbody>
 </table>
+</form>  
 <br>
 <?php } ?>
 </div>
