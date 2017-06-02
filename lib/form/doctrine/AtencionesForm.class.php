@@ -13,14 +13,14 @@ class AtencionesForm extends BaseAtencionesForm
   public function configure()
   {
 
-  	unset( $this['created_at'], $this['updated_at'], $this['created_by'], $this['updated_by'], $this['tratamiento'] );
+  	unset( $this['created_at'], $this['updated_at'], $this['created_by'], $this['updated_by'], $this['tratamiento'], $this['mes'], $this['anio'] );
 
   	$arr_tratamientos = array();
 
   	// Se define los labels
 	  $this->widgetSchema->setLabel('nrodoc', '<p align="left">Paciente:</p>');
-   	$this->widgetSchema->setLabel('mes', '<p align="left">Mes:</p>');
-    $this->widgetSchema->setLabel('anio', '<p align="left">Año:</p>');
+   //	$this->widgetSchema->setLabel('mes', '<p align="left">Mes:</p>');
+   // $this->widgetSchema->setLabel('anio', '<p align="left">Año:</p>');
  	  $this->widgetSchema->setLabel('idobrasocial', '<p align="left">Obra Social:</p>');
     $this->widgetSchema->setLabel('matricula', '<p align="left">Matrícula:</p>');
     $this->widgetSchema->setLabel('pieza', '<p align="left">Pieza:</p>');
@@ -55,7 +55,7 @@ class AtencionesForm extends BaseAtencionesForm
     $this->widgetSchema['idtratamiento'] = new sfWidgetFormSelect(array('choices' => $arregloTS));
     $this->widgetSchema->setLabel('idtratamiento', '<p align="left">Tratamiento:</p>');
 
-    $arregloMeses = array('1' => 'Enero', '2' => 'Febrero','3' => 'Marzo', '4' => 'Abril','5' => 'Mayo', '6' => 'Junio','7' => 'Julio', '8' => 'Agosto','9' => 'Setiembre', '10' => 'Octubre','11' => 'Noviembre', '12' => 'Diciembre');
+   /* $arregloMeses = array('1' => 'Enero', '2' => 'Febrero','3' => 'Marzo', '4' => 'Abril','5' => 'Mayo', '6' => 'Junio','7' => 'Julio', '8' => 'Agosto','9' => 'Setiembre', '10' => 'Octubre','11' => 'Noviembre', '12' => 'Diciembre');
     $this->widgetSchema['mes'] = new sfWidgetFormSelect(array('choices' => $arregloMeses));
     $this->widgetSchema->setLabel('mes', '<p align="left">Mes:</p>');
 
@@ -66,7 +66,7 @@ class AtencionesForm extends BaseAtencionesForm
     $this->widgetSchema->setLabel('mes', '<p align="left">Mes:</p>');
 
     $this->widgetSchema['anio'] = new sfWidgetFormSelect(array('choices' => $arregloAnio));
-    $this->widgetSchema->setLabel('anio', '<p align="left">Año:</p>');
+    $this->widgetSchema->setLabel('anio', '<p align="left">Año:</p>');*/
 
     $dt = new DateTime();
     $dtf = $dt->format('Y-m-d H:i:s');
@@ -88,8 +88,8 @@ class AtencionesForm extends BaseAtencionesForm
    $this->setValidators(array(
       'id'           => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
       'nrodoc'       => new sfValidatorString(array('max_length' => 80, 'required' => false)),
-      'mes'          => new sfValidatorInteger(array('required' => false)),
-      'anio'         => new sfValidatorInteger(array('required' => false)),
+     // 'mes'          => new sfValidatorInteger(array('required' => false)),
+     // 'anio'         => new sfValidatorInteger(array('required' => false)),
       'idobrasocial' => new sfValidatorInteger(array('required' => false)),
       'idtratamiento' => new sfValidatorInteger(array('required' => false)),
       'matricula'    => new sfValidatorString(array('max_length' => 10, 'required' => false)),
