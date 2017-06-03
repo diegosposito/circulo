@@ -92,8 +92,17 @@
 		<!-- Navigation -->
 		<div id="navigation">
 			<ul>
-				<li>
-					<a title="Profesionales" href="<?php echo url_for('ingreso/index') ?>"><span class="sep-left"></span>Inicio<span class="sep-right"></span></a>
+			    <li>
+					<a title="Institucionales" href="#"><span class="sep-left"></span>Gestión<span class="sep-right"></span></a>
+					<div class="dd">
+						<ul>
+							<li><a title="Inicio" href="<?php echo url_for('ingreso/index') ?>"><span class="sep-left"></span>Inicio</a></li>
+							<?php if ($autenticated){ ?>
+                                  <li><a title="Historia" href="<?php echo url_for('atenciones/index') ?>"><span class="sep-left"></span>Atenciones</a></li>
+							
+							<?php } ?>
+						</ul>
+					</div>
 				</li>
 				<li>
 					<a title="Profesionales" href="<?php echo url_for('informes/profesionales') ?>"><span class="sep-left"></span>Profesionales<span class="sep-right"></span></a>
