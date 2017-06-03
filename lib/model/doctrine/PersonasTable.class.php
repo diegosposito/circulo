@@ -52,9 +52,9 @@ class PersonasTable extends Doctrine_Table
     public static function obtenerProfesionalxUser($user_id)
     {
         $sql ="SELECT per.idpersona, per.nombre, per.horarios, per.mostrarinfoemail, per.mostrarinfocelular, per.apellido, per.direccion, per.nrodoc, per.nrolector as matricula, per.email, per.telefono, per.celular, per.ciudad
-        FROM personas per JOIN sf_guard_user sgu ON per.email =  sgu.email_address ";
+        FROM personas per ";
 
-        $sql .=  " WHERE sgu.id = ".$user_id." "; 
+        $sql .=  " WHERE per.idusuario = ".$user_id." "; 
 
         $q = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($sql);
 
