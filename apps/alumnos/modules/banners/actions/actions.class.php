@@ -20,13 +20,13 @@ class bannersActions extends sfActions
     $this->bannerss = Doctrine_Core::getTable('Banners')
       ->createQuery('a')
       ->orderby(nombre)
-      ->execute();  
+      ->execute();
 
-    $this->ficheros = array();  
+    $this->ficheros = array();
 
     foreach($banners as $archivos){
-        $targetFolder = sfConfig::get('app_pathfiles_folder')."/../banners".'/'.$archivos->getNombre();  
-         
+        $targetFolder = sfConfig::get('app_pathfiles_folder')."/../banners".'/'.$archivos->getNombre();
+
       $image_file = 'image.png';
       switch (pathinfo($archivos->getImagefile(), PATHINFO_EXTENSION)) {
           case 'pdf':
@@ -40,26 +40,26 @@ class bannersActions extends sfActions
               break;
           case 'xls':
               $image_file = 'excel.png';
-              break;        
+              break;
           case 'xlsx':
               $image_file = 'excel.png';
               break;
           case 'txt':
               $image_file = 'wordpad.png';
-              break; 
+              break;
           case 'ppt':
               $image_file = 'ppt.png';
               break;
           case 'pptx':
               $image_file = 'ppt.png';
-              break;           
+              break;
       }
 
       $this->ficheros[] = array($archivos->getNombre(), $archivos->getImagefile(), $image_file, $archivos->getId(), $archivos->getVisible());
-    
+
       sort($this->ficheros);
-      
-    }  
+
+    }
   }
 
   public function executeDeletefile(sfWebRequest $request)
@@ -74,7 +74,7 @@ class bannersActions extends sfActions
 
       $archivo->delete();
 
-      return true;  
+      return true;
 
   }
 
@@ -140,31 +140,38 @@ class bannersActions extends sfActions
       } else {
         $banners->setVisible(0);
       }
-      $idorden = intval($request->getPostParameter('$banners[idorden]'));
+      $idorden = $request->getPostParameter('$banners[idorden]');
+      $coord = $request->getPostParameter('$banners[coordenada]');
+      $url2 = $request->getPostParameter('$banners[urlsecundaria]');
+      $coord2 = $request->getPostParameter('$banners[coordenadasec]');
+
+      $banners->setCoordenada($coord);
+      $banners->setUrlsecundaria($url2);
+      $banners->setCoordenadasec($coord2);
 
       if (($idorden<>"") && ($idorden !== NULL) && ($idorden>0)){
             $banners->setIdorden($idorden);
       }
-      
+
 
 
       $folder_path_name = sfConfig::get('app_pathfiles_folder')."/../banners";
-      
+
       if (!is_dir($folder_path_name) && !mkdir($folder_path_name)){
           die("Error creando carpeta $uploaddir");
       }
-      
+
       $hasfile =false;
       foreach ($request->getFiles() as $fileName) {
            $targetFolder = sfConfig::get('app_pathfiles_folder')."/../banners".'/'.$fileName['imagefile']['name'];
            move_uploaded_file($fileName['imagefile']['tmp_name'], $targetFolder);
            $hasfile = true;
-     
+
       }
-    
-      if ($hasfile && trim($fileName['imagefile']['name'])<>'') 
+
+      if ($hasfile && trim($fileName['imagefile']['name'])<>'')
          $banners->setImagefile($fileName['imagefile']['name']);
-   
+
 
       $banners->save();
 
