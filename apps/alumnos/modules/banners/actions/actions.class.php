@@ -140,10 +140,11 @@ class bannersActions extends sfActions
       } else {
         $banners->setVisible(0);
       }
-      $idorden = $request->getPostParameter('$banners[idorden]');
-      $coord = $request->getPostParameter('$banners[coordenada]');
-      $url2 = $request->getPostParameter('$banners[urlsecundaria]');
-      $coord2 = $request->getPostParameter('$banners[coordenadasec]');
+      $idorden = $request->getPostParameter('banners[idorden]');
+      $coord = $request->getPostParameter('banners[coordenada]');
+      $url2 = $request->getPostParameter('banners[urlsecundaria]');
+      $coord2 = $request->getPostParameter('banners[coordenadasec]');
+
 
       $banners->setCoordenada($coord);
       $banners->setUrlsecundaria($url2);
