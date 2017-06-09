@@ -207,7 +207,7 @@
                </a>
                <map name="<?php echo $banner->getImagefile();?>">
                  <area shape="rect" coords="<?php echo $banner->getCoordenada(); ?>" alt="" target="_blank" href="<?php echo $banner->getUrl(); ?>">
-                 <area shape="rect" coords="<?php echo $banner->getCoordenadasec(); ?>" alt="" href="<?php echo $banner->getUrlsecundaria(); ?>">
+                 <area shape="rect" coords="<?php echo $banner->getCoordenadasec(); ?>" alt="" target="_blank" href="<?php echo $banner->getUrlsecundaria(); ?>">
                </map>
  						</div>
           <?php  } ?>
