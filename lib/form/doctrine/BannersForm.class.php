@@ -34,13 +34,18 @@ class BannersForm extends BaseBannersForm
 
       $this->widgetSchema['nombre'] = new sfWidgetFormInputText(array(), array("style"=>'width: 200px;'));
       $this->widgetSchema['url'] = new sfWidgetFormInputText(array(), array("style"=>'width: 400px;'));
-
-
+      $this->widgetSchema['coordenada'] = new sfWidgetFormInputText(array(), array("style"=>'width: 400px;'));
+      $this->widgetSchema['urlsecundaria'] = new sfWidgetFormInputText(array(), array("style"=>'width: 400px;'));
+      $this->widgetSchema['coordenadasec'] = new sfWidgetFormInputText(array(), array("style"=>'width: 400px;'));
 
       $this->widgetSchema->setLabel('imagefile', '<p align="left">Archivo:</p>');
        $this->widgetSchema->setLabel('nombre', '<p align="left">Nombre de Archivo:</p>');
         $this->widgetSchema->setLabel('idorden', '<p align="left">Orden:</p>');
         $this->widgetSchema->setLabel('url', '<p align="left">URL:</p>');
+        $this->widgetSchema->setLabel('coordenada', '<p align="left">Coordenada:</p>');
+        $this->widgetSchema->setLabel('urlsecundaria', '<p align="left">URL Secundaria:</p>');
+        $this->widgetSchema->setLabel('coordenadasec', '<p align="left">Coord Secundaria:</p>');
+
 
 
       $this->setValidators(array(
