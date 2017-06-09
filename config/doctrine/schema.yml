@@ -771,6 +771,9 @@ Banners:
     id: { type: integer, primary: true, autoincrement: true }
     nombre: { type: string(100), primary: false, autoincrement: false, default: '' }
     url: { type: string(254), primary: false, autoincrement: false, default: '' }
+    coordenada: { type: string(254), primary: false, autoincrement: false, default: '' }
+    urlsecundaria: { type: string(254), primary: false, autoincrement: false, default: '' }
+    coordenadasec: { type: string(254), primary: false, autoincrement: false, default: '' }
     visible: { type: boolean, primary: false, notnull: true, default: 1 }
     idorden: { type: integer, primary: false, autoincrement: false, default: '1' }
     imagefile: { type: string(254), primary: false, autoincrement: false, default: '' }
@@ -2709,7 +2712,7 @@ Tratamientos:
     PlanesObras:
       local: idplan
       foreign: id
-      foreignAlias: PlanesObras  
+      foreignAlias: PlanesObras
 
 GrupoTratamiento:
   actAs:
