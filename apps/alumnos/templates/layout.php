@@ -6,10 +6,10 @@
     <?php include_metas() ?>
     <?php include_title() ?>
     <link rel="shortcut icon" href="/favicon.ico" />
-    
+
     <?php use_stylesheet('jquery-ui-1.8.20.custom.css') ?>
     <?php use_stylesheet('menu.css') ?>
-    <?php use_stylesheet('ui.jqgrid.css') ?>   
+    <?php use_stylesheet('ui.jqgrid.css') ?>
     <?php use_stylesheet('jquery.ui.timepicker.css') ?>
     <?php use_stylesheet('jquery.tablescroll.css') ?>
     <?php use_stylesheet('superfish-verticalfish.css') ?>
@@ -18,17 +18,17 @@
     <?php use_stylesheet('ddaccordion.css') ?>
     <?php use_stylesheet('style.css') ?>
     <?php use_stylesheet('prettyCheckboxes.css') ?>
-    
-    <?php //use_javascript('webcam.js') ?>       
+
+    <?php //use_javascript('webcam.js') ?>
     <?php use_javascript('hoverIntent.js') ?>
-    <?php use_javascript('superfish.js') ?>        
-	<?php use_javascript('jquery.validator.js') ?>      
+    <?php use_javascript('superfish.js') ?>
+	<?php use_javascript('jquery.validator.js') ?>
     <?php use_javascript('grid.locale-es.js') ?>
     <?php use_javascript('jquery.jqGrid.min.js') ?>
-    <?php use_javascript('tiny_mce/tiny_mce.js') ?>    
+    <?php use_javascript('tiny_mce/tiny_mce.js') ?>
     <?php use_javascript('jquery.ui.timepicker.js') ?>
     <?php use_javascript('jquery.tablescroll.js') ?>
-    
+
     <?php use_javascript('jquery.jcarousel.js') ?>
     <?php use_javascript('DD_belatedPNG-min.js') ?>
     <?php use_javascript('functions.js') ?>
@@ -36,25 +36,25 @@
     <?php use_javascript('prettyCheckboxes.js') ?>
 
     <?php use_javascript('jquery-1.7.min.js') ?>
-   
- 
+
+
     <?php include_stylesheets() ?>
     <?php include_javascripts() ?>
 </head>
 <body>
 <?php
 	$autenticated =false;
-	if ($sf_user->isAuthenticated()) { 
+	if ($sf_user->isAuthenticated()) {
 	    $esalumno = false;
 	    $autenticated =true;
 	    $credencial = '';
 		$arrCredenciales = array();
 		foreach ($sf_user->getCredentials() as $credencial) {
-			array_push($arrCredenciales, $credencial); 
+			array_push($arrCredenciales, $credencial);
 		}
 		$sis=$sf_user->getGuardUser()->obtenerSistemas();
 		$sf_user->setAttribute('idsede',$sf_user->getProfile()->getIdsede());
-	}	
+	}
 ?>
 
 	<div class="shell">
@@ -67,16 +67,16 @@
 			<?php if ($autenticated){ ?>
 			<p align="right"><?php echo '<b>Usuario:</b> '.$sf_user->getGuardUser()->getUsername(); ?> </p>
 			<?php } else { ?>
-            <div align="right">     
+            <div align="right">
 			<form action="/login" name="login" id="formLogin" method="post">
 				  <table border="0">
-				    <tbody>	  
+				    <tbody>
 				    	<tr>
 						  <th><label for="signin_username"><p align="right">Usuario</p></label></th>
 						  <td><input type="text" name="signin[username]" id="signin_username" /></td>
 						  <th><label for="signin_password"><p align="right">Contraseña</p></label></th>
 						  <td><input type="password" name="signin[password]" id="signin_password" /></td>
-						  <td><input type="submit" value="Ingresar"></td> 
+						  <td><input type="submit" value="Ingresar"></td>
 						</tr>
 			</tbody>
 			</table>
@@ -84,9 +84,9 @@
 			</div>
 
 			<?php } ?>
-			
-		
-			<!-- END Top Navigation -->	
+
+
+			<!-- END Top Navigation -->
 		</div>
 		<!-- END Header -->
 		<!-- Navigation -->
@@ -99,7 +99,7 @@
 							<li><a title="Inicio" href="<?php echo url_for('ingreso/index') ?>"><span class="sep-left"></span>Inicio</a></li>
 							<?php if ($autenticated){ ?>
                                   <li><a title="Historia" href="<?php echo url_for('atenciones/index') ?>"><span class="sep-left"></span>Atenciones</a></li>
-							
+
 							<?php } ?>
 						</ul>
 					</div>
@@ -139,13 +139,13 @@
 		<!-- Main  -->
 		<div id="main">
 			<!-- Slider -->
-			<!-- <div id="slider-holder">				
-				
+			<!-- <div id="slider-holder">
+
 			</div> -->
 			<!-- END Slider -->
 
             <!-- Content -->
-			<div id="content">				
+			<div id="content">
 				 <?php echo $sf_content; ?>
 			</div>
 			<!-- ЕND Content  -->
@@ -157,9 +157,9 @@
 							<ul>
 							    <?php   if ($autenticated){
 							                if ($sf_user->getGuardUser()->getIsSuperAdmin()) {
-							    	            echo '<li>'.link_to('Usuarios', 'sf_guard_user').'</li>' ; 
-							    	        } 
-							    	    } ?>   
+							    	            echo '<li>'.link_to('Usuarios', 'sf_guard_user').'</li>' ;
+							    	        }
+							    	    } ?>
 								<?php echo '<li>'.link_to('Profesionales', 'personas/buscar').'</li>' ; ?>
 								<?php echo '<li>'.link_to('Pacientes', 'pacientes/index').'</li>' ; ?>
 								<?php echo '<li>'.link_to('Obras Sociales', 'obrassociales/index').'</li>' ; ?>
@@ -175,31 +175,45 @@
 								<?php echo '<li>'.link_to('Salir', 'sf_guard_signout').'</li>' ; ?>
 							</ul>
 						</div>
-					</div>	
+					</div>
 			<?php } else { ?>
-			         <?php 
-			         
+			         <?php
+
 			         $banners = Doctrine_Core::getTable('Banners')
 				      ->createQuery('a')
 				      ->where('visible')
 				      ->orderby(idorden)
 				      ->execute();
-                     
-                     ?>  	
+
+                     ?>
 				     <div id="sidebar">
 
-				        <div class="box" style="width=200px"><br></div>	
-                        
-                        <?php foreach($banners as $banner){ ?>				        
+				        <div class="box" style="width=200px"><br></div>
+
+      <?php foreach($banners as $banner){ ?>
 					    <div class="box" style="background-color:#7dbf0d;width=200px">
 								<p style="margin-left: 0em;text-align:center;color:#ffffff;font-weight:bold"><a target="_blank" style="text-align:left;color:#ffffff;font-weight:bold" href="<?php echo $banner->getUrl(); ?>"><?php echo $banner->getNombre(); ?></a></p>
-						</div>
-						<div class="box" style="width=200px">
-							<a target="_blank" href="<?php echo $banner->getUrl(); ?>"><img alt="Smiley face" height="100" width="220"  src="<?php echo $sf_request->getRelativeUrlRoot();?>/banners/<?php echo $banner->getImagefile();?>"></a>
-						</div>
-                        
-                        <br>
-                        <?php } ?>
+			 			 </div>
+            <?php if ($banner->getUrlsecundaria()=='') { ?>
+                    <div class="box" style="width=200px">
+                     <a target="_blank" href="<?php echo $banner->getUrl(); ?>">
+                        <img alt="Smiley face" height="100" width="220"  src="<?php echo $sf_request->getRelativeUrlRoot();?>/banners/<?php echo $banner->getImagefile();?>">
+                      </a>
+                   </div>
+           <?php  } else { ?>
+             <div class="box" style="width=200px">
+ 							<a target="_blank" href="<?php echo $banner->getUrl(); ?>">
+                 <img alt="Smiley face" usemap="#<?php echo $banner->getImagefile();?>" height="100" width="220"  src="<?php echo $sf_request->getRelativeUrlRoot();?>/banners/<?php echo $banner->getImagefile();?>">
+               </a>
+               <map name="<?php echo $banner->getImagefile();?>">
+                 <area shape="rect" coords="<?php echo $banner->getCoordenada(); ?>" alt="" target="_blank" href="<?php echo $banner->getUrl(); ?>">
+                 <area shape="rect" coords="<?php echo $banner->getCoordenadasec(); ?>" alt="" href="<?php echo $banner->getUrlsecundaria(); ?>">
+               </map>
+ 						</div>
+          <?php  } ?>
+
+            <br>
+        <?php } ?>
 
                         <?php if ($autenticated && !$sf_user->getGuardUser()->getIsSuperAdmin()){ ?>
                         	<div class="box" style="background-color:#7dbf0d;width=200px">
@@ -207,15 +221,15 @@
 						</div>
                         <br>
                         <?php } ?>
-					
-					</div>	 
-			<?php } ?>	
+
+					</div>
+			<?php } ?>
 			<!-- END Sidebar -->
 			<div class="cl"></div>
 			<!-- Feartured Products -->
 			<div class="products featured">
 			</div>
-			<!-- END Featured Products -->			
+			<!-- END Featured Products -->
 			<!-- Footer  -->
 			<div id="footer">
 				<!--<div id="footer-top"></div>
@@ -234,7 +248,7 @@
 					</div>
 					<div class="col newsletter">
 						<h3>Newsletter</h3>
-						 <form name="registrarse" method="post" action="<?php echo url_for('ingreso/index' ) ?>"> 
+						 <form name="registrarse" method="post" action="<?php echo url_for('ingreso/index' ) ?>">
 							<div class="field-holder"><input type="text" class="field" value="Ingrese su Email" title="Ingrese su Email" /></div>
 							<div class="cl"></div>
 							<input type="checkbox" name="check-box" value="" id="check-box" />
@@ -251,6 +265,6 @@
 			<!-- END Footer -->
 		</div>
 		<!-- END Main -->
-	</div>	
+	</div>
 </body>
 </html>
