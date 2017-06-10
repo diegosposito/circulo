@@ -12,15 +12,15 @@ class BannersForm extends BaseBannersForm
 {
   public function configure()
   {
-  	   unset( $this['created_at'], $this['updated_at'], $this['created_by'], $this['updated_by'] );
+  	   unset( $this['created_at'], $this['updated_at'], $this['created_by'], $this['updated_by'], $this['coordenada'], $this['coordenadasec']);
 
       // Se define los labels
 	  $this->widgetSchema->setLabel('nombre', '<p align="left">Nombre de Archivo:</p>');
  	  $this->widgetSchema->setLabel('visible', '<p align="left">Visible:</p>');
  	  $this->widgetSchema->setLabel('url', '<p align="left">URL:</p>');
-    $this->widgetSchema->setLabel('coordenada', '<p align="left">Coordenada:</p>');
+   // $this->widgetSchema->setLabel('coordenada', '<p align="left">Coordenada:</p>');
     $this->widgetSchema->setLabel('urlsecundaria', '<p align="left">URL Secundaria:</p>');
-    $this->widgetSchema->setLabel('coordenadasec', '<p align="left">Coord Secundaria:</p>');
+   // $this->widgetSchema->setLabel('coordenadasec', '<p align="left">Coord Secundaria:</p>');
       $this->widgetSchema->setLabel('imagefile', '<p align="left">Imágen:</p>');
        $this->widgetSchema->setLabel('idorden', '<p align="left">Orden:</p>');
 
@@ -34,17 +34,17 @@ class BannersForm extends BaseBannersForm
 
       $this->widgetSchema['nombre'] = new sfWidgetFormInputText(array(), array("style"=>'width: 200px;'));
       $this->widgetSchema['url'] = new sfWidgetFormInputText(array(), array("style"=>'width: 400px;'));
-      $this->widgetSchema['coordenada'] = new sfWidgetFormInputText(array(), array("style"=>'width: 400px;'));
+    //  $this->widgetSchema['coordenada'] = new sfWidgetFormInputText(array(), array("style"=>'width: 400px;'));
       $this->widgetSchema['urlsecundaria'] = new sfWidgetFormInputText(array(), array("style"=>'width: 400px;'));
-      $this->widgetSchema['coordenadasec'] = new sfWidgetFormInputText(array(), array("style"=>'width: 400px;'));
+    //  $this->widgetSchema['coordenadasec'] = new sfWidgetFormInputText(array(), array("style"=>'width: 400px;'));
 
       $this->widgetSchema->setLabel('imagefile', '<p align="left">Archivo:</p>');
        $this->widgetSchema->setLabel('nombre', '<p align="left">Nombre de Archivo:</p>');
         $this->widgetSchema->setLabel('idorden', '<p align="left">Orden:</p>');
         $this->widgetSchema->setLabel('url', '<p align="left">URL:</p>');
-        $this->widgetSchema->setLabel('coordenada', '<p align="left">Coordenada:</p>');
+     //   $this->widgetSchema->setLabel('coordenada', '<p align="left">Coordenada:</p>');
         $this->widgetSchema->setLabel('urlsecundaria', '<p align="left">URL Secundaria:</p>');
-        $this->widgetSchema->setLabel('coordenadasec', '<p align="left">Coord Secundaria:</p>');
+   //     $this->widgetSchema->setLabel('coordenadasec', '<p align="left">Coord Secundaria:</p>');
 
 
 
