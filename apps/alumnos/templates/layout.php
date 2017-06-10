@@ -201,15 +201,11 @@
                       </a>
                    </div>
            <?php  } else { ?>
-             <div class="box" style="width=200px">
- 							<a target="_blank" href="<?php echo $banner->getUrl(); ?>">
-                 <img alt="Smiley face" usemap="#<?php echo $banner->getImagefile();?>" height="100" width="220"  src="<?php echo $sf_request->getRelativeUrlRoot();?>/banners/<?php echo $banner->getImagefile();?>">
-               </a>
-               <map name="<?php echo $banner->getImagefile();?>">
-                 <area shape="rect" coords="<?php echo $banner->getCoordenada(); ?>" alt="" target="_blank" href="<?php echo $banner->getUrl(); ?>">
-                 <area shape="rect" coords="<?php echo $banner->getCoordenadasec(); ?>" alt="" target="_blank" href="<?php echo $banner->getUrlsecundaria(); ?>">
-               </map>
- 						</div>
+                    <div class="box" onclick="window.open('<?php echo $banner->getUrl(); ?>')" style="width=200px">
+                     <a target="_blank" onclick="window.open('<?php echo $banner->getUrlsecundaria(); ?>')">
+                        <img alt="Smiley face" height="100" width="220"  src="<?php echo $sf_request->getRelativeUrlRoot();?>/banners/<?php echo $banner->getImagefile();?>">
+                      </a>
+                   </div>
           <?php  } ?>
 
             <br>
