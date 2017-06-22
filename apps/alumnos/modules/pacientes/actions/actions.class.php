@@ -21,8 +21,14 @@ class pacientesActions extends sfActions
     if ( $request->getParameter('idobrasocial')>0)
       $f_idobrasocial = $request->getParameter('idobrasocial');
 
+    $this->idestado = true;
+    $estado = 1;
+    if ($request->isMethod(sfRequest::POST) && $request->getParameter('idestado') != 'on') {
+        $this->idestado = false;
+        $estado=0;
+    }
 
-    $this->pacientess = Doctrine_Core::getTable('Pacientes')->obtenerPacientes($f_apellido,$f_idobrasocial,NULL, 1000);
+    $this->pacientess = Doctrine_Core::getTable('Pacientes')->obtenerPacientes($f_apellido,$f_idobrasocial,NULL, $estado, 700);
 
     $this->obss = Doctrine_Core::getTable('ObrasSociales')
       ->createQuery('a')
@@ -119,7 +125,20 @@ class pacientesActions extends sfActions
     $request->checkCSRFProtection();
 
     $this->forward404Unless($pacientes = Doctrine_Core::getTable('Pacientes')->find(array($request->getParameter('id'))), sprintf('Object pacientes does not exist (%s).', $request->getParameter('id')));
-    $pacientes->delete();
+    //$pacientes->delete();
+    $pacientes->setActivo(0);
+    $pacientes->save();
+
+    $this->redirect('pacientes/index');
+  }
+
+  public function executeActivar(sfWebRequest $request)
+  {
+
+    $this->forward404Unless($pacientes = Doctrine_Core::getTable('Pacientes')->find(array($request->getParameter('id'))), sprintf('Object pacientes does not exist (%s).', $request->getParameter('id')));
+    //$pacientes->delete();
+    $pacientes->setActivo(1);
+    $pacientes->save();
 
     $this->redirect('pacientes/index');
   }
