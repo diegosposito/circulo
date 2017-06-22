@@ -29,10 +29,10 @@ class PacientesTable extends Doctrine_Table
     }
 
     // Obtener pacientes
-    public static function obtenerPacientes($apellido=NULL,$idobrasocial=NULL, $nrodoc=NULL, $limit=NULL)
+    public static function obtenerPacientes($apellido=NULL,$idobrasocial=NULL, $nrodoc=NULL, $estado=1, $limit=NULL)
     {
         $sql ="SELECT pac.id, pac.nombre, pac.apellido, pac.idsexo, pac.nrodoc, pac.fechanac, pac.fechaingreso, pac.email, pac.nroafiliado, os.denominacion as obrasocial, os.abreviada
-            FROM pacientes pac LEFT JOIN obras_sociales os ON pac.idobrasocial = os.idobrasocial WHERE 1=1 ";
+            FROM pacientes pac LEFT JOIN obras_sociales os ON pac.idobrasocial = os.idobrasocial WHERE pac.activo = ".$estado." ";
 
         if($apellido !== NULL)
             $sql .=  " AND pac.apellido LIKE  '%".$apellido."%' ";
