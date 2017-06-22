@@ -204,5 +204,5 @@ include_partial('formpaciente', array('form' => $form, 'paciente' => $paciente, 
 
  <div id="Prestaciones" class="tabcontent">
  <?php // include_partial('formedit', array('form' => $form, 'paciente' => $paciente, 'atencioness' => $atencioness, 'selectedtab' => $selectedtab)) ?>
- <?php include_partial('formatenciones', array('form' => $form, 'paciente' => $paciente, 'atencioness' => $atencioness, 'selectedtab' => $selectedtab)) ?>
+ <?php include_partial('formatenciones', array('form' => $form, 'paciente' => $paciente, 'atencioness' => $atencioness, 'idprofesional' => $idprofesional , 'selectedtab' => $selectedtab)) ?>
 </div>
