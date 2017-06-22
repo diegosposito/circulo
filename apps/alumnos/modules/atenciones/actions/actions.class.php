@@ -24,7 +24,7 @@ class atencionesActions extends sfActions
           $f_nrodoc = $request->getParameter('idbuscarname');
     }
 
-    $this->pacientess = Doctrine_Core::getTable('Pacientes')->obtenerPacientes($f_apellido,NULL, $f_nrodoc, 300);
+    $this->pacientess = Doctrine_Core::getTable('Pacientes')->obtenerPacientes($f_apellido,NULL, $f_nrodoc, 1, 300);
 
     $this->criterio = $request->getParameter('idbuscarname');
     $this->idtipobusqueda = $request->getParameter('idtipobusqueda');
@@ -32,11 +32,11 @@ class atencionesActions extends sfActions
   }
 
     /** Actual month last day **/
-  public function data_last_month_day() { 
+  public function data_last_month_day() {
       $month = date('m');
       $year = date('Y');
       $day = date("d", mktime(0,0,0, $month+1, 0, $year));
- 
+
       return date('Y-m-d', mktime(0,0,0, $month, $day, $year));
   }
 
@@ -47,11 +47,11 @@ class atencionesActions extends sfActions
       return date('Y-m-d', mktime(0,0,0, $month, 1, $year));
   }
 
-  public function ultimo_dia_del_mes() { 
+  public function ultimo_dia_del_mes() {
       $month = date('m');
       $year = date('Y');
       $day = date("d", mktime(0,0,0, $month+1, 0, $year));
- 
+
       return date('d', mktime(0,0,0, $month, $day, $year));
   }
 
@@ -74,7 +74,7 @@ class atencionesActions extends sfActions
 
     $fechaactual = date('Y-m-j');
     $fechaanterior = strtotime ( '-1 month' , strtotime ( $fechaactual ) ) ;
-    
+
     // si es primer o segundo dia muestra periodo del mes anterior
     if (date('j')==1 OR date('j')==2){
         $this->periodo = date ( 'Y-m' , $fechaanterior );
@@ -85,10 +85,10 @@ class atencionesActions extends sfActions
         if (date('j')==$ultimo_dia OR date('j')==$anterior_ultimo_dia){
            $this->periodo = date('Y-m');
            $this->mostrar_boton_cerrar = true;
-        }  
+        }
     }
 
-   
+
    /* for( $i= $aniohasta ; $i >= $aniodesde ; $i-- )
     {
       $this->aAnios[$i] =  $i;
@@ -172,7 +172,7 @@ class atencionesActions extends sfActions
 
   public function executeCerrarperiodo(sfWebRequest $request)
   {
-     
+
     // Obtiene atenciones seleccionadoas para no cerrar
     $idcase = $request->getParameter('idcase', '');
     $periodo = $request->getParameter('periodo');
@@ -186,7 +186,7 @@ class atencionesActions extends sfActions
     $matricula = $persona[0]['matricula'];
 
     foreach($idcase as $seleccionados){
-      if(is_numeric($seleccionados)) 
+      if(is_numeric($seleccionados))
           $arr_asignaciones[] = $seleccionados;
     }
 
