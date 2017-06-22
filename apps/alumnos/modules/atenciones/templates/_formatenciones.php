@@ -70,6 +70,7 @@
       <td colspan="6" width="100%">Se han encontrado <?php echo count($atencioness); ?> coincidencias de la búsqueda.</td>
     </tr>
     <tr>
+      <td width="10%" align="center" class="hed">Matricula</td>
       <td width="10%" align="center" class="hed">Mes</td>
       <td width="10%" align="center" class="hed">Año</td>
       <td width="20%" align="center" class="hed">Fecha</td>
@@ -83,12 +84,27 @@
     <?php foreach($atencioness as $item){
       $fecha_formateada = date("d/m/Y", strtotime($item['fecha'])); ?>
     <tr class="fila_<?php echo $i%2 ; ?>">
+      <?php if ($item['idprofesional']==$idprofesional) { ?>
+        <td width="10%" align="center"><?php echo $item['matricula'] ?></td>
+      <?php } else { ?>  
+        <td width="10%" align="center"><?php echo '-' ?></td>
+      <?php  } ?>   
       <td width="10%" align="center"><?php echo $item['mesdetalle'] ?></td>
       <td width="10%" align="center"><?php echo $item['anio'] ?></td>
       <td width="20%" align="center"><?php echo $fecha_formateada ?></td>
       <td width="25%" align="center"><?php echo $item['tratamiento'] ?></td>
       <td width="15%" align="center"><?php echo $item['importe'] ?></td>
-      <td width="20%" align="center"> <a title="Editar registro" href="<?php echo url_for('atenciones/edit?id='.$item['id'].'&idpaciente='.$paciente->getId()) ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/edit.png' align='center' size='20'  height='20' width="20"  /></a></td>
+      <?php if ($item['idprofesional']==$idprofesional && $item['idestadoatencion']==1) { ?>
+        <td width="20%" align="center"> <a title="Editar registro" href="<?php echo url_for('atenciones/edit?id='.$item['id'].'&idpaciente='.$paciente->getId()) ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/edit.png' align='center' size='20'  height='20' width="20"  /></a></td>
+      <?php } else { ?>  
+        <td width="20%" align="center"><?php echo '-' ?></td>
+      <?php  } ?> 
+      <?php if ($item['idprofesional']==$idprofesional  && $item['idestadoatencion']==1) { ?>
+        <td width="20%" align="center"> <a title="Eliminar registro" href="<?php echo url_for('atenciones/delete?id='.$item['id']) ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/delete.png' align='center' size='20'  height='20' width="20"  /></a></td>
+      <?php } else { ?>  
+        <td width="20%" align="center"><?php echo '-' ?></td>
+      <?php  } ?>  
+      
 
     </tr>
           <?php $i++; ?>
