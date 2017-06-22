@@ -3,7 +3,7 @@
     a.tooltip {outline:none; }
 
     a.tooltip strong {line-height:30px;}
-    a.tooltip:hover {text-decoration:none;} 
+    a.tooltip:hover {text-decoration:none;}
     a.tooltip span {
         z-index:10;display:none; padding:14px 20px;
         margin-top:-30px; margin-left:28px;
@@ -13,7 +13,7 @@
         display:inline; position:absolute; color:#111;
         border:1px solid #DCA; background:#fffAF0;}
     .callout {z-index:20;position:absolute;top:30px;border:0;left:-12px;}
-        
+
     /*CSS3 extras*/
     a.tooltip span
     {
@@ -37,7 +37,7 @@
  <tr>
   <td><b>Obra Social:</b></td>
   <td align="left">
-    <SELECT name="idobrasocial" id="idobrasocial"> 
+    <SELECT name="idobrasocial" id="idobrasocial">
     <?php if (count($obss) > 0) {
       //el bucle para cargar las opciones
       echo "<option value='0' selected='selected' >----SELECCIONAR----</option>";
@@ -46,16 +46,23 @@
             echo "<option value=".$obs->getIdobrasocial() ." selected='selected'>".$obs->getAbreviada()."</option>";
         } else {
             echo "<option value=".$obs->getIdobrasocial() .">".$obs->getAbreviada()."</option>";
-        }    
+        }
       }
-    } ?> 
-    </SELECT> 
+    } ?>
+    </SELECT>
   </td>
 </tr>
-        
+<tr>
+ <td><b>Activos:</b></td>
+ <td align="left">
+    <?php //if(($estadolibredeuda==true) or ($tipo!=3)){ ?>
+      <input type="checkbox" id="idestado" name="idestado" <?php if ($idestado) echo "checked";?>>
+    <?php //}  ?>
+  </td>
+</tr>
 <tr>
   <td colspan="2" align="center"><input type="submit" value="Buscar" /></td>
-</tr>    
+</tr>
 </table>
 </form>
 <a href="<?php echo url_for('pacientes/new') ?>">Agregar Nuevos Pacientes</a>
@@ -66,7 +73,7 @@
   <?php } ?>
   </div>
 
-<?php if (count($pacientess) > 0){ ?>              
+<?php if (count($pacientess) > 0){ ?>
   <table cellspacing="0" class="stats">
       <tr>
         <td colspan="6" width="100%">Se han encontrado <?php echo count($pacientess); ?> coincidencias de la búsqueda.</td>
@@ -94,7 +101,11 @@
         <td width="15%" align="center"><?php echo $item['nroafiliado'] ?></td>
         <td width="15%" align="center"><?php echo $item['nrodoc'] ?></td>
         <td align="center"><?php echo link_to("Editar", 'pacientes/edit?id='.$item['id'] ,'class="mhead"'); ?></td>
-         <td align="center"><?php echo link_to('Eliminar', 'pacientes/delete?id='.$item['id'], array('method' => 'delete', 'confirm' => 'Estas seguro de borrar el Paciente?')) ?>
+        <?php if ($idestado){ ?>
+        <td align="center"><?php echo link_to('Eliminar', 'pacientes/delete?id='.$item['id'], array('method' => 'delete', 'confirm' => 'Estas seguro de borrar el Paciente?')) ?>
+        <?php } else { ?>
+        <td align="center"><?php echo link_to('Activar', 'pacientes/activar?id='.$item['id'], array('method' => 'delete', 'confirm' => 'Estas seguro de activar nuevamente el Paciente?')) ?>
+        <?php } ?>
       </tr>
             <?php $i++; ?>
       <?php } ?>
@@ -103,6 +114,5 @@
     </tbody>
   </table>
   <br>
-<?php } ?>  
+<?php } ?>
 </div>
-
