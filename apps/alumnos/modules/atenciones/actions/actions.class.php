@@ -205,6 +205,9 @@ class atencionesActions extends sfActions
   {
      // PRIMER TAB - Obtener paciente seleccionado
     $this->forward404Unless($pacientes = Doctrine_Core::getTable('Pacientes')->find(array($request->getParameter('id'))), sprintf('Object pacientes does not exist (%s).', $request->getParameter('id')));
+    
+    if (!$pacientes->getActivo())  $this->redirect('atenciones/index');  // tiene que estar activo para editarlo
+
     $this->form = new PacientesForm($pacientes);
     $this->paciente = $pacientes;
 
@@ -223,6 +226,11 @@ class atencionesActions extends sfActions
 
      if ( $request->getParameter('idobrasocial')>0)
        $f_idobrasocial = $request->getParameter('idobrasocial');
+
+    // Obtener usuario logueado
+    $user_id = $this->getUser()->getGuardUser()->getId();
+    $persona = Doctrine_Core::getTable('Personas')->obtenerProfesionalxUser($user_id);
+    $this->idprofesional = $persona[0]['idpersona'];
 
      $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerAtencionesPorPaciente($request->getParameter('id'));
 
@@ -353,6 +361,10 @@ class atencionesActions extends sfActions
     $persona = Doctrine_Core::getTable('Personas')->obtenerProfesionalxUser($user_id);
     $matricula = $persona[0]['matricula'];
 
+    if ($matricula<>$this->atenciones->getMatricula() || $this->atenciones->getIdEstadoAtencion()<>1){
+        $this->redirect('atenciones/index');
+    }  
+  
   }
 
   public function executeUpdate(sfWebRequest $request)
@@ -388,10 +400,18 @@ class atencionesActions extends sfActions
 
   public function executeDelete(sfWebRequest $request)
   {
-    $request->checkCSRFProtection();
+    //$request->checkCSRFProtection();
 
     $this->forward404Unless($atenciones = Doctrine_Core::getTable('Atenciones')->find(array($request->getParameter('id'))), sprintf('Object atenciones does not exist (%s).', $request->getParameter('id')));
-    $atenciones->delete();
+    
+    // Obtener usuario logueado
+    $user_id = $this->getUser()->getGuardUser()->getId();
+    $persona = Doctrine_Core::getTable('Personas')->obtenerProfesionalxUser($user_id);
+    $matricula = $persona[0]['matricula'];
+
+    if ($matricula==$atenciones->getMatricula() && $atenciones->getIdEstadoAtencion()==1){
+        $atenciones->delete();
+    }    
 
     $this->redirect('atenciones/index');
   }
