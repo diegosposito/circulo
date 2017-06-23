@@ -26,10 +26,10 @@
 </style>
 <h1 align="center" style="color:black;">Historial de atenciones</h1>
 <br>
-<?php if($sf_user->getGuardUser()->getIsSuperAdmin()){ ?>
+<?php //if($sf_user->getGuardUser()->getIsSuperAdmin()){ ?>
        <img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/new.png' align='center' size='20' />
        <a href="<?php echo url_for('atenciones/new?idpaciente='.$paciente->getId()) ?>">Registrar Nueva Atención</a>
-<?php } ?>
+<?php // } ?>
 <div align="center">
 <!--<form action="<?php echo url_for('atenciones/editar?id='.$paciente->getId()) ?>" method="post">
   <input type="hidden" name="selectedtab" id="selectedtab" value="<?php echo $selectedtab ?>">
