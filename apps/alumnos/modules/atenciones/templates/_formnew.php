@@ -52,7 +52,7 @@ function validarFormAtencion(){
 //Cargar estudios previos
 function cargarImportes(id){
   // obtener la lista de estudios previos de la persona
-  $.get("<?php echo url_for('tratamientos/obtenertratamiento'); ?>",
+  $.get("<?php echo url_for('atenciones/obtenertratamiento'); ?>",
       { idtratamiento: id },
     function(data){
       var fields = data.split('|');
