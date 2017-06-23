@@ -31,6 +31,11 @@ class atencionesActions extends sfActions
 
   }
 
+   // Obtiene tratamiento por idtratamiento
+  public function executeObtenertratamiento(sfWebRequest $request)  {
+    $this->tratamiento = Doctrine_Core::getTable('Tratamientos')->find($request->getParameter('idtratamiento'));
+  }
+
     /** Actual month last day **/
   public function data_last_month_day() {
       $month = date('m');
