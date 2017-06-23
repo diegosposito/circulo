@@ -80,9 +80,9 @@ class atencionesActions extends sfActions
         $this->periodo = date ( 'Y-m' , $fechaanterior );
         $this->mostrar_boton_cerrar = true;
     } else { // sino analiza si es ultimo o ante ultimo dia del mes
-        $ultimo_dia = $this->ultimo_dia_del_mes();
-        $anterior_ultimo_dia = $ultimo_dia - 1;
-        if (date('j')==$ultimo_dia OR date('j')==$anterior_ultimo_dia){
+        //$ultimo_dia = $this->ultimo_dia_del_mes();
+        //$anterior_ultimo_dia = $ultimo_dia - 1;
+        if (date('j')>=20){
            $this->periodo = date('Y-m');
            $this->mostrar_boton_cerrar = true;
         }
@@ -226,6 +226,10 @@ class atencionesActions extends sfActions
 
      if ( $request->getParameter('idobrasocial')>0)
        $f_idobrasocial = $request->getParameter('idobrasocial');
+
+    $this->superadmin = false;
+    if ($this->getUser()->getGuardUser()->getIsSuperAdmin())
+        $this->superadmin = true;
 
     // Obtener usuario logueado
     $user_id = $this->getUser()->getGuardUser()->getId();
