@@ -188,6 +188,8 @@
 <br>
 <h1 align="center" style="color:black;">Ficha del Paciente : <?php echo $paciente->getApellido().", ".$paciente->getNombre() ?></h1>
 <br>
+<a href="<?php echo url_for('atenciones/index') ?>"><b><-- Volver a buscar Pacientes</b></a>
+<br><br>
 
 <ul class="tab">
   <li><a href="javascript:void(0)" class="tablinks" onclick="openCity('Datos',0)">Datos Personales</a></li>
