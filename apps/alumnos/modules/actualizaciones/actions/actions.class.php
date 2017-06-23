@@ -97,8 +97,8 @@ class actualizacionesActions extends sfActions
       $nombre_archivo = sfConfig::get('app_pathfiles_folder')."/../actualizaciones".'/'.$archivo->getImagefile();
 
       // DATOS conexion
-      $dbhost = 'localhost';$dbname = 'circulo';  $dbuser = 'root'; $dbpass = 'root911';
-      //$dbhost = '172.17.0.2';$dbname = 'circulo';  $dbuser = 'circulo'; $dbpass = 'circulo911';
+      //$dbhost = 'localhost';$dbname = 'circulo';  $dbuser = 'root'; $dbpass = 'root911';
+      $dbhost = '172.17.0.2';$dbname = 'circulo';  $dbuser = 'circulo'; $dbpass = 'circulo911';
 
       $sqlTruncate = "TRUNCATE TABLE tmp_pacientes;";
 
@@ -217,9 +217,12 @@ class actualizacionesActions extends sfActions
       // INSERTAR NUEVOS PACIENTES
       Doctrine_Core::getTable('Actualizaciones')->insertarPacientes();
 
+      // DESACTIVAR REGISTROS QUE NO ESTEN EN EL ARCHIVO QUE SUBIERON PARA LA MISMA O SOCIAL
+      Doctrine_Core::getTable('Actualizaciones')->desactivarRegistros();
+
     // BOrrar tabla temporal para evitar problemas luego del proceso
-      $dbhost = 'localhost';$dbname = 'circulo';  $dbuser = 'root'; $dbpass = 'root911';
-      //$dbhost = '172.17.0.2';$dbname = 'circulo';  $dbuser = 'circulo'; $dbpass = 'circulo911';
+      //$dbhost = 'localhost';$dbname = 'circulo';  $dbuser = 'root'; $dbpass = 'root911';
+      $dbhost = '172.17.0.2';$dbname = 'circulo';  $dbuser = 'circulo'; $dbpass = 'circulo911';
       $sqlTruncate = "TRUNCATE TABLE tmp_pacientes;";
 
       $pdo = new \PDO('mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass, array(
