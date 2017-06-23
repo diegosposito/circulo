@@ -30,10 +30,8 @@
 <table cellspacing="0" width="80%">
 <tr>
 <td colspan="2" align="left">
-<?php if($sf_user->getGuardUser()->getIsSuperAdmin()){ ?>
        <img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/new.png' align='center' size='20' />
        <a href="<?php echo url_for('atenciones/cerrar') ?>"><b>Cierre de Períodos</b></a>
-<?php } ?>
 </td>
 </tr>
 </table>
