@@ -84,7 +84,7 @@
     <?php foreach($atencioness as $item){
       $fecha_formateada = date("d/m/Y", strtotime($item['fecha'])); ?>
     <tr class="fila_<?php echo $i%2 ; ?>">
-      <?php if ($item['idprofesional']==$idprofesional) { ?>
+      <?php if ($item['idprofesional']==$idprofesional || $superadmin) { ?>
         <td width="10%" align="center"><?php echo $item['matricula'] ?></td>
       <?php } else { ?>  
         <td width="10%" align="center"><?php echo '-' ?></td>
