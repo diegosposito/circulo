@@ -23,8 +23,22 @@ class ActualizacionesTable extends Doctrine_Table
     public static function prepararRegistros()
     {
 
-         // actualizar designaciones
+         // preparar registros que deben ser actualizados
         $sql ="UPDATE tmp_pacientes tmp JOIN pacientes pac ON tmp.documento = pac.nrodoc SET actualizar = 1;";
+
+        $q = Doctrine_Manager::getInstance()->getCurrentConnection();
+
+        return $q->execute($sql);
+
+    }
+
+    // Desactivar Registros
+    public static function desactivarRegistros()
+    {
+
+         // desactivar registros
+        $sql ="UPDATE pacientes pac JOIN (SELECT DISTINCT codOsocial FROM tmp_pacientes ) as tmp ON pac.idobrasocial = tmp.codOSocial LEFT JOIN tmp_pacientes tmppac ON pac.nrodoc = tmppac.documento
+                SET pac.activo = false WHERE tmppac.documento IS NULL;";
 
         $q = Doctrine_Manager::getInstance()->getCurrentConnection();
 
