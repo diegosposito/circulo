@@ -210,7 +210,7 @@ class atencionesActions extends sfActions
   {
      // PRIMER TAB - Obtener paciente seleccionado
     $this->forward404Unless($pacientes = Doctrine_Core::getTable('Pacientes')->find(array($request->getParameter('id'))), sprintf('Object pacientes does not exist (%s).', $request->getParameter('id')));
-    
+
     if (!$pacientes->getActivo())  $this->redirect('atenciones/index');  // tiene que estar activo para editarlo
 
     $this->form = new PacientesForm($pacientes);
@@ -329,6 +329,11 @@ class atencionesActions extends sfActions
     $persona = Doctrine_Core::getTable('Personas')->obtenerProfesionalxUser($user_id);
     $matricula = $persona[0]['matricula'];
 
+    // Si es el administrador, la matricula se obtiene del formulario POST
+    if ($this->getUser()->getGuardUser()->getIsSuperAdmin()){
+       $matricula = $request->getPostParameter('atenciones[matricula]');
+    }
+
     $atenciones = new Atenciones();
     $atenciones->setNrodoc($paciente->getNrodoc());
     $atenciones->setMatricula($matricula);
@@ -372,8 +377,8 @@ class atencionesActions extends sfActions
 
     if ($matricula<>$this->atenciones->getMatricula() || $this->atenciones->getIdEstadoAtencion()<>1){
         $this->redirect('atenciones/index');
-    }  
-  
+    }
+
   }
 
   public function executeUpdate(sfWebRequest $request)
@@ -412,7 +417,7 @@ class atencionesActions extends sfActions
     //$request->checkCSRFProtection();
 
     $this->forward404Unless($atenciones = Doctrine_Core::getTable('Atenciones')->find(array($request->getParameter('id'))), sprintf('Object atenciones does not exist (%s).', $request->getParameter('id')));
-    
+
     // Obtener usuario logueado
     $user_id = $this->getUser()->getGuardUser()->getId();
     $persona = Doctrine_Core::getTable('Personas')->obtenerProfesionalxUser($user_id);
@@ -420,7 +425,7 @@ class atencionesActions extends sfActions
 
     if ($matricula==$atenciones->getMatricula() && $atenciones->getIdEstadoAtencion()==1){
         $atenciones->delete();
-    }    
+    }
 
     $this->redirect('atenciones/index');
   }
