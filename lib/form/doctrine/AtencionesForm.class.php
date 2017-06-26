@@ -38,6 +38,12 @@ class AtencionesForm extends BaseAtencionesForm
         $arregloOS[$os->getIdObrasocial()] = $os->getAbreviada();
     }
 
+    $orden = 2;
+    $oprof = Doctrine_Core::getTable('Personas')->obtenerProfesionales(1, $orden);
+    foreach($oprof as $op){
+        $arregloProf[$op['matricula']] = $op['apellido'].', '.$op['nombre'].'('.$op['matricula'].')';
+    }
+
     if ($this->getOption('idpaciente')!==NULL){
       $tss = Doctrine_Core::getTable('Tratamientos')->obtenerPorPaciente($this->getOption('idpaciente'), 1);
       $arregloTS[0] = '---Seleccionar---';
@@ -81,6 +87,10 @@ class AtencionesForm extends BaseAtencionesForm
     $arregloAutorizacion = array('1' => 'No Autoriza', '2' => 'Autorización Previa','3' => 'Con Presentación de Orden', '4' => 'Con Bono de COCU');
     $this->widgetSchema['idautorizacion'] = new sfWidgetFormSelect(array('choices' => $arregloAutorizacion));
     $this->widgetSchema->setLabel('idautorizacion', '<p align="left">Autorización:</p>');
+
+    $this->widgetSchema['matricula'] = new sfWidgetFormSelect(array('choices' => $arregloProf));
+    $this->widgetSchema->setLabel('matricula', '<p align="left">Matrícula:</p>');
+
 
 
 
