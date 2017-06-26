@@ -96,4 +96,8 @@
 
 </script>
 
-<?php include_partial('formnew', array('form' => $form, 'paciente' => $paciente, 'idpaciente' => $idpaciente)) ?>
+<?php if ($sf_user->getGuardUser()->getIsSuperAdmin()) { ?>
+   <?php include_partial('formnewadmin', array('form' => $form, 'paciente' => $paciente, 'idpaciente' => $idpaciente)) ?>
+<?php } elseif ($sf_user->hasCredential('Profesionales')) { ?>
+   <?php include_partial('formnew', array('form' => $form, 'paciente' => $paciente, 'idpaciente' => $idpaciente)) ?>
+<?php } ?>
