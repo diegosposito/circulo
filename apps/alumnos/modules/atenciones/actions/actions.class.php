@@ -375,8 +375,15 @@ class atencionesActions extends sfActions
     $persona = Doctrine_Core::getTable('Personas')->obtenerProfesionalxUser($user_id);
     $matricula = $persona[0]['matricula'];
 
-    if ($matricula<>$this->atenciones->getMatricula() || $this->atenciones->getIdEstadoAtencion()<>1){
+    if ( $this->getUser()->getGuardUser()->getIsSuperAdmin() && $this->atenciones->getIdEstadoAtencion()<>1) {
         $this->redirect('atenciones/index');
+    }
+
+    // Si no es superadmin
+    if ( !$this->getUser()->getGuardUser()->getIsSuperAdmin()){
+      if ($matricula<>$this->atenciones->getMatricula() || $this->atenciones->getIdEstadoAtencion()<>1){
+          $this->redirect('atenciones/index');
+      }
     }
 
   }
@@ -423,9 +430,12 @@ class atencionesActions extends sfActions
     $persona = Doctrine_Core::getTable('Personas')->obtenerProfesionalxUser($user_id);
     $matricula = $persona[0]['matricula'];
 
-    if ($matricula==$atenciones->getMatricula() && $atenciones->getIdEstadoAtencion()==1){
+    if ( $this->getUser()->getGuardUser()->getIsSuperAdmin() && $atenciones->getIdEstadoAtencion()==1 ){
         $atenciones->delete();
+    } elseif ($matricula==$atenciones->getMatricula() && $atenciones->getIdEstadoAtencion()==1){
+            $atenciones->delete();
     }
+    
 
     $this->redirect('atenciones/index');
   }
