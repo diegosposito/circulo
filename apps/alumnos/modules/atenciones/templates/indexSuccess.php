@@ -39,7 +39,7 @@
 <form action="<?php echo url_for('atenciones/index') ?>" method="post">
 <table cellspacing="0" class="stats" width="80%">
 <tr>
-<td><b>Apellido:</b></td>
+<td><b>Apellido/DNI:</b></td>
 <td align="left"><INPUT type="text" id="idbuscarname" name="idbuscarname" size="30" value="<?php echo  $criterio  ?>"></td>
 </tr>
 <tr>
@@ -49,7 +49,6 @@
   <SELECT name="idtipobusqueda" id="idtipobusqueda">
   <?php if (count($tipobusqueda) > 0) {
     //el bucle para cargar las opciones
-    echo "<option value='0' selected='selected' >----SELECCIONAR----</option>";
     foreach ($tipobusqueda as $k => $v){
       if($k==$idtipobusqueda){
           echo "<option value=".$k ." selected='selected'>".$v."</option>";
