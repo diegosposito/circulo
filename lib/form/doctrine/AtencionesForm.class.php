@@ -41,7 +41,7 @@ class AtencionesForm extends BaseAtencionesForm
     $orden = 2;
     $oprof = Doctrine_Core::getTable('Personas')->obtenerProfesionales(1, $orden);
     foreach($oprof as $op){
-        $arregloProf[$op['matricula']] = $op['apellido'].', '.$op['nombre'].'('.$op['matricula'].')';
+        $arregloProf[$op['matricula']] = $op['matricula'].' - '.$op['apellido'].', '.$op['nombre'];
     }
 
     if ($this->getOption('idpaciente')!==NULL){
