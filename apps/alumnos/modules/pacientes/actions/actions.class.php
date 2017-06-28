@@ -182,8 +182,10 @@ class pacientesActions extends sfActions
          $paciente->setImagefile($imagefile_name);
 
     // Graba cambios si corresponde de imagenes o recupera anteriores
-      if (!$es_nuevo)
+      if (!$es_nuevo) {
+          $paciente->setActivo(true); 
           $paciente->save();
+      }    
 
 
       $folder_path_name = sfConfig::get('app_pathfiles_folder')."/pacientes/".$pacientes->getId();
@@ -208,7 +210,8 @@ class pacientesActions extends sfActions
            }
 
       }
-
+      
+      $pacientes->setActivo(true); 
       $pacientes->save();
 
       $this->redirect('pacientes/edit?id='.$pacientes->getId());
