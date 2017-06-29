@@ -84,6 +84,22 @@ class AtencionesTable extends Doctrine_Table
         return $q;
     }
 
+    // Desactivar Registros
+    public static function actualizarPreciosAtenciones($importe=0, $coseguro=0)
+    {
+
+         // desactivar registros
+        $sql ="UPDATE atenciones at JOIN tratamientos t ON at.idtratamiento = t.id 
+                SET at.importe = ".$importe.", at.coseguro = ".$coseguro." WHERE at.idestadoatencion = 1;";
+
+                echo $sql;exit;
+
+        $q = Doctrine_Manager::getInstance()->getCurrentConnection();
+
+        return $q->execute($sql);
+
+    }
+
     // Obtener obras sociales
     public static function obtenerAtencionesAbiertasPorProfesional($matricula)
     {
