@@ -20,7 +20,7 @@ class AtencionesTable extends Doctrine_Table
     // Obtener obras sociales
     public static function obtenerAtenciones()
     {
-        $sql ="SELECT at.id, at.nrodoc, at.mes, at.anio, at.matricula, at.fecha, at.pieza, at.caras, at.tratamiento, at.importe, at.coseguro, at.bono, at.importe, at.idestadoatencion, 
+        $sql ="SELECT at.id, at.nrodoc, at.mes, at.anio, at.matricula, at.fecha, at.pieza, at.caras, at.tratamiento, at.importe, at.coseguro, at.bono, at.importe, at.idestadoatencion,
             pac.apellido, pac.nombre, os.denominacion, os.abreviada as obrasocial, concat(per.apellido,', ' , per.nombre) as profesional
             FROM atenciones at JOIN pacientes pac ON at.nrodoc = pac.nrodoc
             JOIN obras_sociales os ON at.idobrasocial = os.idobrasocial
@@ -39,8 +39,8 @@ class AtencionesTable extends Doctrine_Table
     // Obtener obras sociales
     public static function obtenerAtencionesPorPaciente($idpaciente=NULL)
     {
-        $sql ="SELECT at.id, at.nrodoc, at.mes, at.anio, at.matricula, at.fecha, at.pieza, at.caras, at.tratamiento, at.importe, at.coseguro, at.bono, at.importe, at.idestadoatencion, 
-            pac.apellido, pac.nombre, os.denominacion, os.abreviada as obrasocial, concat(per.apellido,', ' , per.nombre) as profesional, per.idpersona as idprofesional, 
+        $sql ="SELECT at.id, at.nrodoc, at.mes, at.anio, at.matricula, at.fecha, at.pieza, at.caras, at.tratamiento, at.importe, at.coseguro, at.bono, at.importe, at.idestadoatencion,
+            pac.apellido, pac.nombre, os.denominacion, os.abreviada as obrasocial, concat(per.apellido,', ' , per.nombre) as profesional, per.idpersona as idprofesional,
             CASE at.mes WHEN 1 THEN 'Enero' WHEN 2 THEN 'Febrero' WHEN 3 THEN 'Marzo' WHEN 4 THEN 'Abril' WHEN 5 THEN 'Mayo' WHEN 6 THEN 'Junio' WHEN 7 THEN 'Julio' WHEN 8 THEN 'Agosto' WHEN 9 THEN 'Septiembre' WHEN 10 THEN 'Octubre' WHEN 11 THEN 'Noviembre' WHEN 12 THEN 'Diciembre'   ELSE ''  END as mesdetalle
             FROM atenciones at JOIN pacientes pac ON at.nrodoc = pac.nrodoc
             JOIN obras_sociales os ON at.idobrasocial = os.idobrasocial
@@ -89,10 +89,8 @@ class AtencionesTable extends Doctrine_Table
     {
 
          // desactivar registros
-        $sql ="UPDATE atenciones at JOIN tratamientos t ON at.idtratamiento = t.id 
+        $sql ="UPDATE atenciones at JOIN tratamientos t ON at.idtratamiento = t.id
                 SET at.importe = ".$importe.", at.coseguro = ".$coseguro." WHERE at.idestadoatencion = 1;";
-
-                echo $sql;exit;
 
         $q = Doctrine_Manager::getInstance()->getCurrentConnection();
 
@@ -125,7 +123,7 @@ class AtencionesTable extends Doctrine_Table
     // Cerrar atenciones por periodo por Profesional
     public static function cerrarAtencionesPorProfesionalPeriodo($matricula, $idmes, $idanio, $arrAtenciones)
     {
-        
+
         // Recorro atenciones que no deben cerrarse y preparo string
         $datos=''; $cantidad=0;
         if ( count($arrAtenciones)>0 ){
