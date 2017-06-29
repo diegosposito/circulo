@@ -56,7 +56,7 @@ class tratamientosActions extends sfActions
     $this->forward404Unless($tratamientos = Doctrine_Core::getTable('Tratamientos')->find(array($request->getParameter('id'))), sprintf('Object tratamientos does not exist (%s).', $request->getParameter('id')));
     $this->form = new TratamientosForm($tratamientos);
 
-    $this->processForm($request, $this->form);
+    $this->processEditForm($request, $this->form);
 
     $this->setTemplate('edit');
   }
@@ -77,6 +77,21 @@ class tratamientosActions extends sfActions
     if ($form->isValid())
     {
       $tratamientos = $form->save();
+
+      $this->redirect('tratamientos/edit?id='.$tratamientos->getId());
+    }
+  }
+
+  protected function processEditForm(sfWebRequest $request, sfForm $form)
+  {
+    $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
+    if ($form->isValid())
+    {
+      $tratamientos = $form->save();
+
+      $tratamiento = Doctrine_Core::getTable('Tratamientos')->find($tratamientos->getId());
+
+      Doctrine_Core::getTable('Atenciones')->actualizarPreciosAtenciones($tratamiento->getImporte(), $tratamiento->getCoseguro());
 
       $this->redirect('tratamientos/edit?id='.$tratamientos->getId());
     }
