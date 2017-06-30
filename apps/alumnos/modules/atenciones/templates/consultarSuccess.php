@@ -25,10 +25,12 @@
   p { margin-left:5em; /* Or another measurement unit, like px */ }
 </style>
 <br>
-<h1 align="center" style="color:black;">Cerrar Período</h1>
+<h1 align="center" style="color:black;">Consultar Atenciones</h1>
 <br>
 <div align="center">
-<!-- <form action="<?php echo url_for('atenciones/cerrar') ?>" method="post">
+
+
+<form action="<?php echo url_for('atenciones/consultar') ?>" method="post">
 <table cellspacing="0" class="stats" width="80%">
 <tr>
 <td><b>Año:</b></td>
@@ -48,75 +50,33 @@
 </td>
 </tr>
 <tr>
-<td><b>Mes:</b></td>
-<td align="left">
-  <SELECT name="idMes" id="idMes">
-  <?php
-    //el bucle para cargar las opciones
-    foreach ($aMeses as $k => $v){
-      if($k==$idMes){
-          echo "<option value=".$k ." selected='selected'>".$v."</option>";
-      } else {
-          echo "<option value=".$k .">".$v."</option>";
-      }
-    }
-  ?>
-  </SELECT>
-</td>
-</tr>
-
-<tr>
 <td colspan="2" align="center"><input type="submit" value="Buscar" /></td>
 </tr>
 </table>
-</form> -->
-
-<form action="<?php echo url_for('atenciones/cerrarperiodo') ?>" method="post">
-<input type="hidden" id="periodo" name="periodo" value="<?php echo $periodo; ?>">
-<table cellspacing="0" class="stats" width="80%">
-<?php if ($mostrar_boton_cerrar){ ?>
-<tr>
-<td colspan="2" align="center"><input type="submit" value="<?php echo "Cerrar Período ".$periodo; ?>" /></td>
-</tr>
-<?php }  else { ?>
-<tr>
-<td colspan="2" align="center"><b><?php echo "El Período actual no se encuentra habilitado aún para Cerrar"; ?></b></td>
-</tr>
-<?php }  ?>
-
-</table>
-
 
 
 <?php if (count($atencioness) > 0){ ?>
 <table cellspacing="0" class="stats">
     <tr>
-      <td colspan="6" width="100%">Por defecto todas las atenciones se cierran. <b>Marque las que no desee cerrar</b>.<br> Se han encontrado <?php echo count($atencioness); ?> coincidencias de la búsqueda.</td>
+      <td colspan="6" width="100%">Resumen de atenciones por Período. En <b>Ver Detalle</b> puede acceder a la información completa de cada período.<br> Se han encontrado <?php echo count($atencioness); ?> coincidencias de la búsqueda.</td>
     </tr>
     <tr>
-      <td width="2%" align="center" class="hed"></td>
-      <td width="14%" align="center" class="hed">Obra Social</td>
-      <td width="24%" align="center" class="hed">Paciente</td>
-      <td width="10%" align="center" class="hed">Fecha</td>
-      <td width="15%" align="center" class="hed">Tratamiento</td>
-      <td width="10%" align="center" class="hed">Importe</td>
-      <td width="10%" align="center" class="hed">Coseguro</td>
-      <td width="15%" align="center" class="hed">Estado</td>
+      <td width="30%" align="center" class="hed">Mes</td>
+      <td width="10%" align="center" class="hed">Año</td>
+      <td width="15%" align="center" class="hed">Importe</td>
+      <td width="15%" align="center" class="hed">Coseguro</td>
+      <td width="15%" align="center" class="hed">Ver Detalle</td>
     </tr>
   </thead>
   <tbody>
           <?php $i=0; ?>
-    <?php foreach($atencioness as $item){
-      $fecha_formateada = date("d/m/Y", strtotime($item['fecha'])); ?>
+    <?php foreach($atencioness as $item){ ?>
     <tr class="fila_<?php echo $i%2 ; ?>">
-      <td align="center"><input type="checkbox" id="idcase" class="idcase" name="idcase[]" value="<?php echo $item['id'] ?>" /></td>
-      <td width="14%" align="center"><?php echo $item['obrasocial'] ?></td>
-      <td width="24%" align="center"><?php echo $item['apellido'].', '.$item['nombre'] ?></td>
-      <td width="10%" align="center"><?php echo $fecha_formateada ?></td>
-      <td width="15%" align="center"><?php echo $item['tratamiento'] ?></td>
-      <td width="10%" align="center"><?php echo $item['importe'] ?></td>
-      <td width="10%" align="center"><?php echo $item['coseguro'] ?></td>
-      <td width="15%" align="center"><?php echo $item['estadoatencion'] ?></td>
+      <td width="30%" align="center"><?php echo $item['mesdetalle'] ?></td>
+      <td width="10%" align="center"><?php echo $item['anio'] ?></td>
+      <td width="15%" align="center"><?php echo $item['importe'] ?></td>
+      <td width="15%" align="center"><?php echo $item['coseguro'] ?></td>
+      <td width="20%" align="center"> <a title="Editar registro" href="<?php echo url_for('atenciones/detalle?idmes='.$item['mes'].'&idanio='.$item['anio']) ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/edit.png' align='center' size='20'  height='20' width="20"  /></a></td>
     </tr>
           <?php $i++; ?>
     <?php } ?>
