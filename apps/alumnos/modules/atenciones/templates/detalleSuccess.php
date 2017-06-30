@@ -25,8 +25,10 @@
   p { margin-left:5em; /* Or another measurement unit, like px */ }
 </style>
 <br>
-<h1 align="center" style="color:black;">Consultar Atenciones</h1>
+<h1 align="center" style="color:black;">Detalle Atenciones Cerradas</h1>
 <br>
+<h3 align="center" style="color:black;"><?php echo $profesional[0]['apellido'].', '.$profesional[0]['nombre'] ?></h3>
+
 <div align="center">
 
 
@@ -49,7 +51,7 @@
       <td width="20%" align="center" class="hed">Fecha</td>
       <td width="25%" align="center" class="hed">Tratamiento</td>
       <td width="15%" align="center" class="hed">Importe</td>
-      <td colspan="2" width="20%" align="center" class="hed">Edicion</td>
+      <td width="15%" align="center" class="hed">Coseguro</td>
     </tr>
   </thead>
   <tbody>
@@ -67,18 +69,7 @@
       <td width="20%" align="center"><?php echo $fecha_formateada ?></td>
       <td width="25%" align="center"><?php echo $item['tratamiento'] ?></td>
       <td width="15%" align="center"><?php echo $item['importe'] ?></td>
-      <?php if (($item['idprofesional']==$idprofesional || $sf_user->getGuardUser()->getIsSuperAdmin()) && $item['idestadoatencion']==1) { ?>
-        <td width="20%" align="center"> <a title="Editar registro" href="<?php echo url_for('atenciones/edit?id='.$item['id'].'&idpaciente='.$paciente->getId()) ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/edit.png' align='center' size='20'  height='20' width="20"  /></a></td>
-      <?php } else { ?>
-        <td width="20%" align="center"><?php echo '-' ?></td>
-      <?php  } ?>
-      <?php if (($item['idprofesional']==$idprofesional || $sf_user->getGuardUser()->getIsSuperAdmin()) && $item['idestadoatencion']==1) { ?>
-        <td width="20%" align="center"> <a title="Eliminar registro" href="<?php echo url_for('atenciones/delete?id='.$item['id']) ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/delete.png' align='center' size='20'  height='20' width="20"  /></a></td>
-      <?php } else { ?>
-        <td width="20%" align="center"><?php echo '-' ?></td>
-      <?php  } ?>
-
-
+      <td width="15%" align="center"><?php echo $item['coseguro'] ?></td>
     </tr>
           <?php $i++; ?>
     <?php } ?>
