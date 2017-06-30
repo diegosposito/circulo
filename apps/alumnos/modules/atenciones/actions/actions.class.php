@@ -255,11 +255,14 @@ class atencionesActions extends sfActions
   public function executeConsultar(sfWebRequest $request)
   {
 
-    /*$aniohasta = date ("Y");
+    //Filtros
+    $matricula = ''; $idAnio =''; $arrFiltro = '';
+
+    $aniohasta = date ("Y");
     $aniodesde = $aniohasta - 25;
 
     $this->aAnios = array();
-    $this->aMeses = array();*/
+    //$this->aMeses = array();
     $this->periodo = '';
     $this->mostrar_boton_cerrar =false;
 
@@ -267,103 +270,64 @@ class atencionesActions extends sfActions
     $user_id = $this->getUser()->getGuardUser()->getId();
     $persona = Doctrine_Core::getTable('Personas')->obtenerProfesionalxUser($user_id);
     $matricula = $persona[0]['matricula'];
-    $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerAtencionesAbiertasPorProfesional($matricula);
-
-    $fechaactual = date('Y-m-j');
-    $fechaanterior = strtotime ( '-1 month' , strtotime ( $fechaactual ) ) ;
-
-    // si es primer o segundo dia muestra periodo del mes anterior
-    if (date('j')==1 OR date('j')==2){
-        $this->periodo = date ( 'Y-m' , $fechaanterior );
-        $this->mostrar_boton_cerrar = true;
-    } else { // sino analiza si es ultimo o ante ultimo dia del mes
-        //$ultimo_dia = $this->ultimo_dia_del_mes();
-        //$anterior_ultimo_dia = $ultimo_dia - 1;
-        if (date('j')>=20){
-           $this->periodo = date('Y-m');
-           $this->mostrar_boton_cerrar = true;
-        }
-    }
-
-
-   /* for( $i= $aniohasta ; $i >= $aniodesde ; $i-- )
+  
+    for( $i= $aniohasta ; $i >= $aniodesde ; $i-- )
     {
       $this->aAnios[$i] =  $i;
     }
 
-    $mes = '';
+    if ($request->isMethod(sfRequest::POST)){
 
-    for( $i= 1 ; $i <= 12 ; $i++ )
-    {
-        switch($i) {
-          case 1:
-          $mes = 'Enero';
-          break;
+        if ($request->getParameter('idAnio') > 0) 
+            $idAnio = $request->getParameter('idAnio');
 
-          case 2:
-          $mes = 'Febrero';
-          break;
+        $arrFiltro = array('matricula'=> $matricula, 'anio' =>  $idAnio);
 
-          case 3:
-          $mes = 'Marzo';
-          break;
-
-          case 4:
-          $mes = 'abril';
-          break;
-
-          case 5:
-          $mes = 'Mayo';
-          break;
-
-          case 6:
-          $mes = 'Junio';
-          break;
-
-          case 7:
-          $mes = 'Julio';
-          break;
-
-          case 8:
-          $mes = 'Agosto';
-          break;
-
-          case 9:
-          $mes = 'Septiembre';
-          break;
-
-          case 10:
-          $mes = 'Octubre';
-          break;
-
-          case 11:
-          $mes = 'Noviembre';
-          break;
-
-          case 12:
-          $mes = 'Diciembre';
-          break;
-
-          default:
-
-          $mes = 'Enero';
-
-          }
-
-          $this->aMeses[$i] =  $mes;
-    }
-
-    $this->criterio = '';
-    $f_apellido = NULL; $f_nrodoc = NULL;
-
-    if ( $request->getParameter('idAnio')<>'' && $request->getParameter('idMes')<>''){
-
-      $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerAtencionesPorProfesionalPeriodo($matricula, $request->getParameter('idMes'), $request->getParameter('idAnio'));
+        $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerAtencionesCerradasFiltro($arrFiltro);
 
     }
 
     $this->idAnio = $request->getParameter('idAnio');
-    $this->idMes = $request->getParameter('idMes');*/
+    //$this->idMes = $request->getParameter('idMes');
+
+  }
+
+  public function executeDetalle(sfWebRequest $request)
+  {
+    
+    $aniohasta = date ("Y");
+    $aniodesde = $aniohasta - 25;
+
+    //Filtros 
+    if ($request->getParameter('idanio') <= 0) {
+       $idanio = date ("Y");
+    } else {
+       $idanio = $request->getParameter('idanio'); 
+    }
+
+
+    if ($request->getParameter('idmes') <= 0) {
+      $idmes = date ("m");
+    } else {
+       $idmes = $request->getParameter('idmes'); 
+    }
+
+    $idestado = 0;
+
+    // Obtener usuario logueado
+    $user_id = $this->getUser()->getGuardUser()->getId();
+    $persona = Doctrine_Core::getTable('Personas')->obtenerProfesionalxUser($user_id);
+    $matricula = $persona[0]['matricula'];
+  
+    for( $i= $aniohasta ; $i >= $aniodesde ; $i-- )
+    {
+      $this->aAnios[$i] =  $i;
+    }
+
+    $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerAtencionesPorProfesionalPeriodo($matricula, $idmes, $idanio, $idestado);
+
+    $this->idAnio = $idanio;
+    //$this->idMes = $request->getParameter('idMes'); 
 
   }
 
