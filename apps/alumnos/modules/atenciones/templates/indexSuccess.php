@@ -31,6 +31,12 @@
 <tr>
 <td colspan="2" align="left">
        <img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/new.png' align='center' size='20' />
+       <a href="<?php echo url_for('atenciones/consultar') ?>"><b>Consulta Atenciones x Período</b></a>
+</td>
+</tr>
+<tr>
+<td colspan="2" align="left">
+       <img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/new.png' align='center' size='20' />
        <a href="<?php echo url_for('atenciones/cerrar') ?>"><b>Cierre de Períodos</b></a>
 </td>
 </tr>
