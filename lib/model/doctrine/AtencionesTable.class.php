@@ -57,7 +57,7 @@ class AtencionesTable extends Doctrine_Table
     }
 
     // Obtener obras sociales
-    public static function obtenerAtencionesPorProfesionalPeriodo($matricula, $idmes, $idanio, $idestado=NULL)
+    public static function obtenerAtencionesPorProfesionalPeriodo($matricula, $idmes=NULL, $idanio=NULL, $idestado=NULL)
     {
         $sql ="SELECT at.id, at.nrodoc, at.mes, at.anio, at.matricula, at.fecha, at.pieza, at.caras, at.tratamiento, at.importe, at.coseguro, at.bono, at.importe,
             pac.apellido, pac.nombre, os.denominacion, os.abreviada as obrasocial, concat(per.apellido,', ' , per.nombre) as profesional,
@@ -90,7 +90,7 @@ class AtencionesTable extends Doctrine_Table
         // Obtener atenciones cerradas segun filtro
     public static function obtenerAtencionesCerradasFiltro($arrFiltros)
     {
-        $sql ="SELECT at.id, at.mes, at.anio, CONCAT(LPAD(at.mes,2,'0'),'-',at.anio) as periodo, SUM(at.importe) as importe, SUM(at.coseguro) as coseguro,
+        $sql ="SELECT COUNT(DISTINCT at.id) as cantidad, at.id, at.mes, at.anio, CONCAT(LPAD(at.mes,2,'0'),'-',at.anio) as periodo, SUM(at.importe) as importe, SUM(at.coseguro) as coseguro,
             CASE at.mes WHEN 1 THEN 'Enero' WHEN 2 THEN 'Febrero' WHEN 3 THEN 'Marzo' WHEN 4 THEN 'Abril' WHEN 5 THEN 'Mayo' WHEN 6 THEN 'Junio' WHEN 7 THEN 'Julio' WHEN 8 THEN 'Agosto' WHEN 9 THEN 'Septiembre' WHEN 10 THEN 'Octubre' WHEN 11 THEN 'Noviembre' WHEN 12 THEN 'Diciembre'   ELSE ''  END as mesdetalle,
             at.anio
             FROM atenciones at JOIN pacientes pac ON at.nrodoc = pac.nrodoc
