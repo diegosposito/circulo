@@ -25,7 +25,7 @@
   p { margin-left:5em; /* Or another measurement unit, like px */ }
 </style>
 <br>
-<h1 align="center" style="color:black;">Consultar Atenciones</h1>
+<h1 align="center" style="color:black;">Resume de Período de Atenciones</h1>
 <br>
 <div align="center">
 
@@ -48,12 +48,33 @@
   ?>
   </SELECT>
 </td>
+<?php if($sf_user->getGuardUser()->getIsSuperAdmin()){ ?>
 </tr>
+<td><b>Profesional:</b></td>
+<td align="left">
+<select name="idmatricula" id="idmatricula">
+    <?php if (count($arregloProf) > 0){
+      //echo "<option value='0' selected='selected' >----SELECCIONAR----</option>";
+      foreach ($arregloProf as $k => $v){
+        if($k==$idmatricula){
+            echo "<option value=".$k." selected='selected'>".$v."</option>";
+        } else {
+            echo "<option value=".$k.">".$v."</option>";
+        }
+      }
+    } ?>
+</select>
+  </td>
+</tr>
+<?php } ?>
 <tr>
 <td colspan="2" align="center"><input type="submit" value="Buscar" /></td>
 </tr>
 </table>
 
+<div align="left">
+<a title="Ver Detalle" href="<?php echo url_for('atenciones/detalleabiertas?idmatricula='.$idmatricula) ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/edit.png' align='center' size='20'  height='20' width="20"  /><b>Atenciones Abiertas</b></a>
+</div>
 
 <?php if (count($atencioness) > 0){ ?>
 <table cellspacing="0" class="stats">
@@ -63,6 +84,7 @@
     <tr>
       <td width="30%" align="center" class="hed">Mes</td>
       <td width="10%" align="center" class="hed">Año</td>
+      <td width="10%" align="center" class="hed">Cantidad</td>
       <td width="15%" align="center" class="hed">Importe</td>
       <td width="15%" align="center" class="hed">Coseguro</td>
       <td width="15%" align="center" class="hed">Ver Detalle</td>
@@ -74,9 +96,10 @@
     <tr class="fila_<?php echo $i%2 ; ?>">
       <td width="30%" align="center"><?php echo $item['mesdetalle'] ?></td>
       <td width="10%" align="center"><?php echo $item['anio'] ?></td>
+      <td width="10%" align="center"><?php echo $item['cantidad'] ?></td>
       <td width="15%" align="center"><?php echo $item['importe'] ?></td>
       <td width="15%" align="center"><?php echo $item['coseguro'] ?></td>
-      <td width="20%" align="center"> <a title="Editar registro" href="<?php echo url_for('atenciones/detalle?idmes='.$item['mes'].'&idanio='.$item['anio']) ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/edit.png' align='center' size='20'  height='20' width="20"  /></a></td>
+      <td width="15%" align="center"> <a title="Ver Detalle" href="<?php echo url_for('atenciones/detalle?idmes='.$item['mes'].'&idanio='.$item['anio'].'&idmatricula='.$idmatricula) ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/edit.png' align='center' size='20'  height='20' width="20"  /></a></td>
     </tr>
           <?php $i++; ?>
     <?php } ?>
