@@ -65,6 +65,19 @@ class PersonasTable extends Doctrine_Table
         return $q;
     }
 
+    // Obtener obras sociales
+    public static function obtenerProfesionalxMatricula($idmatricula)
+    {
+        $sql ="SELECT per.idpersona, per.nombre, per.horarios, per.mostrarinfoemail, per.mostrarinfocelular, per.apellido, per.direccion, per.nrodoc, per.nrolector as matricula, per.email, per.telefono, per.celular, per.ciudad
+        FROM personas per ";
+
+        $sql .=  " WHERE per.nrolector = ".$idmatricula." ";
+
+        $q = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($sql);
+
+        return $q;
+    }
+
     // Obtener designaciones por persona, filtrando tambien por area y sede
     public static function obtenerRecibosAGenerar()
     {
