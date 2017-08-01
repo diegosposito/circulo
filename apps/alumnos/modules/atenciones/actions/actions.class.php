@@ -346,7 +346,7 @@ class atencionesActions extends sfActions
     $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerAtencionesPorProfesionalPeriodo($matricula, $idmes, $idanio, $idestado);
 
     $this->idAnio = $idanio;
-    //$this->idMes = $request->getParameter('idMes');
+    $this->idmes = $request->getParameter('idmes');
 
   }
 
