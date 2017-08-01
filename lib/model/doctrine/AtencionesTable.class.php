@@ -57,7 +57,7 @@ class AtencionesTable extends Doctrine_Table
     }
 
     // Obtener obras sociales
-    public static function obtenerAtencionesPorProfesionalPeriodo($matricula, $idmes=NULL, $idanio=NULL, $idestado=NULL)
+    public static function obtenerAtencionesPorProfesionalPeriodo($matricula, $idmes=NULL, $idanio=NULL, $idestado=NULL, $orden=1)
     {
         $sql ="SELECT at.id, at.nrodoc, at.mes, at.anio, at.matricula, at.fecha, at.pieza, at.caras, at.tratamiento, at.importe, at.coseguro, at.bono, at.importe,
             pac.apellido, pac.nombre, os.denominacion, os.abreviada as obrasocial, concat(per.apellido,', ' , per.nombre) as profesional,
@@ -79,7 +79,7 @@ class AtencionesTable extends Doctrine_Table
 
         if($idestado !== NULL)
             $sql .=  " AND at.idestadoatencion = ".$idestado." ";
-
+    //ver
 		$sql .= " ORDER BY at.anio DESC, at.mes DESC, at.fecha DESC;";
 
         $q = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($sql);
