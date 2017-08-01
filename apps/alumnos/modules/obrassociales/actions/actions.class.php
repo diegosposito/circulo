@@ -108,9 +108,11 @@ class obrassocialesActions extends sfActions
               break;
       }
 
-      $this->ficheros[] = array($nombre_fichero, $this->obras_sociales->getIdObrasocial()."/".$nombre_fichero, $image_file);
+      if ($nombre_fichero <> '.' && $nombre_fichero <> '..') {
+          $this->ficheros[filemtime($directorio.'/'.$nombre_fichero)] = array($nombre_fichero, $this->obras_sociales->getIdObrasocial()."/".$nombre_fichero, $image_file);
+      }
     }
-    sort($this->ficheros);
+    krsort($this->ficheros);
 
   } // end function
 
