@@ -10,8 +10,8 @@
         }
       );
       return false;
-  } 
-         
+  }
+
 </script>
 
 <div id="mensajeInfo"></div>
@@ -23,7 +23,7 @@
         <input id='upload' name="upload[]" type="file" multiple="multiple" />
   </div>
   <?php } ?>
- <input type="hidden" name="idobrasocial" value="<?php echo $obras_sociales->getIdObrasocial(); ?>">   
+ <input type="hidden" name="idobrasocial" value="<?php echo $obras_sociales->getIdObrasocial(); ?>">
 <table>
   <tbody>
     <tr>
@@ -62,7 +62,7 @@
 <br>
 
 <?php if ($sf_user->getGuardUser()->getIsSuperAdmin()) { ?>
-<input type="submit" value="Actualizar archivos" id="botonGenerar"/> 
+<input type="submit" value="Actualizar archivos" id="botonGenerar"/>
 <?php } ?>
 
 </form>
@@ -78,21 +78,17 @@
       </tr>
     </thead>
     <tbody>
-      <?php $i=0; ?>
-      <?php foreach ($ficheros as $fichero){ 
-              if ($i>1){ ?>
+      <?php foreach ($ficheros as $fichero){  ?>
                 <tr class="fila_<?php echo $i%2 ; ?>">
                   <td width="60%" align="center"><?php echo $fichero[0] ?></td>
                   <td width="20%" align="center"> <a target="_blank" href="<?php echo $sf_request->getRelativeUrlRoot();?>/files/<?php echo $fichero[1] ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/<?php echo $fichero[2] ?>' align='center' size='24' height='24' width="24" /></a></td>
                   <?php if ($sf_user->getGuardUser()->getIsSuperAdmin()) { ?>
                       <td width="20%" align="center"> <a onclick='deleteFile("<?php echo $fichero[1];?>")'><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/delete.png' align='center' size='24' height='24' width="24" /></a></td>
-                  <?php } ?>                
+                  <?php } ?>
                  </tr>
-       <?php  } ?>           
-      <?php $i++; ?>
       <?php } ?>
 
       <br>
-  
+
     </tbody>
   </table>
