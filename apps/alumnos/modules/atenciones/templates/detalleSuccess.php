@@ -28,6 +28,7 @@
 <h1 align="center" style="color:black;">Detalle Atenciones Cerradas</h1>
 <br>
 <h3 align="center" style="color:black;"><?php echo $profesional[0]['apellido'].', '.$profesional[0]['nombre'] ?></h3>
+<h3 align="center" style="color:black;"><?php echo "Período : ".str_pad($idmes, 2, '0', STR_PAD_LEFT).'-'.$idAnio ?></h5>
 
 <div align="center">
 
@@ -45,9 +46,12 @@
       <td colspan="6" width="100%">Se han encontrado <?php echo count($atencioness); ?> coincidencias de la búsqueda.</td>
     </tr>
     <tr>
-      <td width="10%" align="center" class="hed">Matricula</td>
-      <td width="10%" align="center" class="hed">Mes</td>
-      <td width="10%" align="center" class="hed">Año</td>
+
+      <?php if ($superadmin) { ?>
+        <td width="10%" align="center" class="hed">Matricula</td>
+      <?php } ?>
+      <td width="10%" align="center" class="hed">Obra S.</td>
+      <td width="30%" align="center" class="hed">Paciente</td>
       <td width="20%" align="center" class="hed">Fecha</td>
       <td width="25%" align="center" class="hed">Tratamiento</td>
       <td width="15%" align="center" class="hed">Importe</td>
@@ -59,13 +63,11 @@
     <?php foreach($atencioness as $item){
       $fecha_formateada = date("d/m/Y", strtotime($item['fecha'])); ?>
     <tr class="fila_<?php echo $i%2 ; ?>">
-      <?php if ($item['idprofesional']==$idprofesional || $superadmin) { ?>
+      <?php if ($superadmin) { ?>
         <td width="10%" align="center"><?php echo $item['matricula'] ?></td>
-      <?php } else { ?>
-        <td width="10%" align="center"><?php echo '-' ?></td>
-      <?php  } ?>
-      <td width="10%" align="center"><?php echo $item['mesdetalle'] ?></td>
-      <td width="10%" align="center"><?php echo $item['anio'] ?></td>
+      <?php } ?>
+      <td width="10%" align="center"><?php echo $item['obrasocial'] ?></td>
+      <td width="30%" align="center"><?php echo $item['apellido'].', '.$item['nombre'] ?></td>
       <td width="20%" align="center"><?php echo $fecha_formateada ?></td>
       <td width="25%" align="center"><?php echo $item['tratamiento'] ?></td>
       <td width="15%" align="center"><?php echo $item['importe'] ?></td>
