@@ -73,7 +73,7 @@
 </table>
 
 <div align="left">
-<a title="Ver Detalle" href="<?php echo url_for('atenciones/detalleabiertas?idmatricula='.$idmatricula) ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/edit.png' align='center' size='20'  height='20' width="20"  /><b>Atenciones Abiertas</b></a>
+<a title="Ver Detalle" href="<?php echo url_for('atenciones/generarcsv?idmes='.$idmes.'&idAnio='.$idAnio) ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/edit.png' align='center' size='20'  height='20' width="20"  /><b>Generar Archivo</b></a>
 </div>
 
 <?php
