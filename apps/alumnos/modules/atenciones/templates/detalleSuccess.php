@@ -46,16 +46,12 @@
       <td colspan="6" width="100%">Se han encontrado <?php echo count($atencioness); ?> coincidencias de la búsqueda.</td>
     </tr>
     <tr>
-
-      <?php if ($superadmin) { ?>
-        <td width="10%" align="center" class="hed">Matricula</td>
-      <?php } ?>
-      <td width="10%" align="center" class="hed">Obra S.</td>
+      <td width="20%" align="center" class="hed">Obra S.</td>
       <td width="30%" align="center" class="hed">Paciente</td>
-      <td width="20%" align="center" class="hed">Fecha</td>
-      <td width="25%" align="center" class="hed">Tratamiento</td>
-      <td width="15%" align="center" class="hed">Importe</td>
-      <td width="15%" align="center" class="hed">Coseguro</td>
+      <td width="10%" align="center" class="hed">Fecha</td>
+      <td width="20%" align="center" class="hed">Tratamiento</td>
+      <td width="10%" align="center" class="hed">Importe</td>
+      <td width="10%" align="center" class="hed">Coseguro</td>
     </tr>
   </thead>
   <tbody>
@@ -63,15 +59,12 @@
     <?php foreach($atencioness as $item){
       $fecha_formateada = date("d/m/Y", strtotime($item['fecha'])); ?>
     <tr class="fila_<?php echo $i%2 ; ?>">
-      <?php if ($superadmin) { ?>
-        <td width="10%" align="center"><?php echo $item['matricula'] ?></td>
-      <?php } ?>
-      <td width="10%" align="center"><?php echo $item['obrasocial'] ?></td>
+      <td width="20%" align="center"><?php echo $item['obrasocial'] ?></td>
       <td width="30%" align="center"><?php echo $item['apellido'].', '.$item['nombre'] ?></td>
-      <td width="20%" align="center"><?php echo $fecha_formateada ?></td>
-      <td width="25%" align="center"><?php echo $item['tratamiento'] ?></td>
-      <td width="15%" align="center"><?php echo $item['importe'] ?></td>
-      <td width="15%" align="center"><?php echo $item['coseguro'] ?></td>
+      <td width="10%" align="center"><?php echo $fecha_formateada ?></td>
+      <td width="20%" align="center"><?php echo $item['tratamiento'] ?></td>
+      <td width="10%" align="center"><?php echo $item['importe'] ?></td>
+      <td width="10%" align="center"><?php echo $item['coseguro'] ?></td>
     </tr>
           <?php $i++; ?>
     <?php } ?>
