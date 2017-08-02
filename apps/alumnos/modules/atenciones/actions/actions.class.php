@@ -320,6 +320,10 @@ class atencionesActions extends sfActions
     $mes = '';
 
     $this->idmes = $request->getParameter('idmes');
+    
+    if(!$this->idmes>0)
+        $this->idmes = date('n');
+
     $mesnombre = $this->aMeses[$this->idmes];
     
 
@@ -341,7 +345,7 @@ class atencionesActions extends sfActions
        $matricula = $request->getParameter('idmatricula');
     }
 
-    $orden = 2;
+    $orden = 2; 
     $oprof = Doctrine_Core::getTable('Personas')->obtenerProfesionales(1, $orden);
     foreach($oprof as $op){
         $this->arregloProf[$op['matricula']] = $op['matricula'].' - '.$op['apellido'].', '.$op['nombre'];
@@ -357,16 +361,14 @@ class atencionesActions extends sfActions
         if ($request->getParameter('idAnio') > 0)
             $idAnio = $request->getParameter('idAnio');
 
-        $arrFiltro = array('matricula'=> $matricula, 'anio' =>  $idAnio);
+        $arrFiltro = array('idmes'=> $this->idmes, 'anio' =>  $idAnio, 'idestadoatencion' => '0');
 
-        $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerAtencionesCerradasFiltro($arrFiltro);
+        $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerDetalleAtencionesFiltro($arrFiltro);
 
     }
 
     $this->idAnio = $request->getParameter('idAnio');
-    
-    $this->idMes = $request->getParameter('idMes');
-
+   
   }
 
   public function executeDetalle(sfWebRequest $request)
