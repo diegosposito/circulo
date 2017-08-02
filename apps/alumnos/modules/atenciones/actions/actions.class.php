@@ -371,6 +371,71 @@ class atencionesActions extends sfActions
    
   }
 
+  public function executeGenerarcsv(sfWebRequest $request)
+  {
+    
+    // solo administrador puede gestionar este modulo
+    if (!$this->getUser()->getGuardUser()->getIsSuperAdmin()){
+       $this->redirect('atenciones/index');
+    }
+
+    if ($request->getParameter('idAnio') > 0)
+        $idAnio = $request->getParameter('idAnio');
+    else
+        $idAnio = date ("Y");   
+
+    if ($request->getParameter('idmes') > 0)
+        $idMes = $request->getParameter('idmes');
+    else
+        $idMes = date ("n");        
+
+    //Filtros
+    $arrFiltro = array('idmes'=> $idMes, 'anio' =>  $idAnio, 'idestadoatencion' => '0');
+
+    $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerDetalleAtencionesFiltro($arrFiltro);
+
+    // verificacion de existencia del objeto alumnos  (if*1)
+    if($this->atencioness){
+      //Creamos el archivo temporal de exportación
+      $file = 'atenciones.csv';
+  
+      $fh = fopen($file,"w+") or die ("No se puede abrir el archivo");
+  
+      $titulo = "Id, Legajo, Apellido, Nombre, Nro. de documento, Fecha de egreso, Carrera, Facultad, Sede, Area,\n";
+      fwrite($fh,$titulo);
+      
+      foreach ($this->alumnos as $alumno){
+        $areaDestino = "";
+        if ($alumno['idexpediente']) {
+          $oExpediente = Doctrine_Core::getTable('ExpedientesEgresados')->find($alumno['idexpediente']);
+          $oDerivacion = $oExpediente->obtenerUltimaDerivacion();
+          $areaDestino = $oDerivacion->obtenerAreaDestino();
+        }   
+        $row = $alumno['idalumno'].",".$alumno['legajo'].",".$alumno['nombre'].",".$alumno['nrodoc'].",".$alumno['fechaegreso'].",".$alumno['carrera'].",".$alumno['facultad'].",".$alumno['sede'].",".$areaDestino.","."\n";
+        
+        fwrite($fh,$row);
+      }
+    }
+  
+    // Close file
+    fclose($fh);
+  
+    header("Content-Type: application/vnd.ms-excel");
+    header("Content-Type: application/force-download");
+    header("Content-Transfer-Encoding: binary");
+    header("Content-Disposition: attachment;filename=".$file );
+    header("Content-Length: ".filesize($file));
+    header("Pragma: no-cache");
+    header("Expires: 0");
+    readfile($file);
+  
+    // stop symfony process
+    throw new sfStopException();
+  
+    return sfView::NONE;
+
+  }
+
   public function executeDetalle(sfWebRequest $request)
   {
 
