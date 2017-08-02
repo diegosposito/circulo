@@ -79,9 +79,16 @@ class AtencionesTable extends Doctrine_Table
 
         if($idestado !== NULL)
             $sql .=  " AND at.idestadoatencion = ".$idestado." ";
-    //ver
-		$sql .= " ORDER BY at.anio DESC, at.mes DESC, at.fecha DESC;";
 
+        switch ($orden) {
+          case '1':
+              $sql .= " ORDER BY at.anio DESC, at.mes DESC, at.fecha DESC;";
+              break;
+          case '2':
+              $sql .= " ORDER BY os.abreviada, pac.apellido, pac.nombre; ";
+              break;
+        }
+   
         $q = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($sql);
 
         return $q;
