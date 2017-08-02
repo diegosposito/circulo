@@ -30,7 +30,7 @@
 <div align="center">
 
 
-<form action="<?php echo url_for('atenciones/consultar') ?>" method="post">
+<form action="<?php echo url_for('atenciones/revisarperiodos') ?>" method="post">
 <table cellspacing="0" class="stats" width="80%">
 <tr>
 <td><b>Año:</b></td>
@@ -56,7 +56,7 @@
     <?php if (count($aMeses) > 0){
       //echo "<option value='0' selected='selected' >----SELECCIONAR----</option>";
       foreach ($aMeses as $k => $v){
-        if($k==$idMes){
+        if($k==$idmes){
             echo "<option value=".$k." selected='selected'>".$v."</option>";
         } else {
             echo "<option value=".$k.">".$v."</option>";
@@ -77,31 +77,31 @@
 </div>
 
 <?php
-if ($idmatricula>0){  
   if (count($atencioness) > 0){ ?>
   <table cellspacing="0" class="stats">
       <tr>
-        <td colspan="6" width="100%">Resumen de atenciones por Período. En <b>Ver Detalle</b> puede acceder a la información completa de cada período.<br> Se han encontrado <?php echo count($atencioness); ?> coincidencias de la búsqueda.</td>
+        <td colspan="6" width="100%">Detalle de atenciones del período seleccionado. Puede <b>Generar Archivo</b> para acceder a la información detallada.<br> Se han encontrado <?php echo count($atencioness); ?> coincidencias de la búsqueda.</td>
       </tr>
       <tr>
-        <td width="30%" align="center" class="hed">Mes</td>
-        <td width="10%" align="center" class="hed">Año</td>
-        <td width="10%" align="center" class="hed">Cantidad</td>
-        <td width="15%" align="center" class="hed">Importe</td>
-        <td width="15%" align="center" class="hed">Coseguro</td>
-        <td width="15%" align="center" class="hed">Ver Detalle</td>
+        <td width="25%" align="center" class="hed">Obra Social</td>
+        <td width="25%" align="center" class="hed">Paciente</td>
+        <td width="25%" align="center" class="hed">Profesional</td>
+        <td width="5%" align="center" class="hed">Fecha Atención</td>
+        <td width="10%" align="center" class="hed">Importe</td>
+        <td width="10%" align="center" class="hed">Coseguro</td>
       </tr>
     </thead>
     <tbody>
             <?php $i=0; ?>
-      <?php foreach($atencioness as $item){ ?>
+      <?php foreach($atencioness as $item){ 
+          $fecha_formateada = date("d/m/Y", strtotime($item['fecha'])); ?>
       <tr class="fila_<?php echo $i%2 ; ?>">
-        <td width="30%" align="center"><?php echo $item['mesdetalle'] ?></td>
-        <td width="10%" align="center"><?php echo $item['anio'] ?></td>
-        <td width="10%" align="center"><?php echo $item['cantidad'] ?></td>
-        <td width="15%" align="center"><?php echo $item['importe'] ?></td>
-        <td width="15%" align="center"><?php echo $item['coseguro'] ?></td>
-        <td width="15%" align="center"> <a title="Ver Detalle" href="<?php echo url_for('atenciones/detalle?idmes='.$item['mes'].'&idanio='.$item['anio'].'&idmatricula='.$idmatricula) ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/edit.png' align='center' size='20'  height='20' width="20"  /></a></td>
+        <td width="25%" align="center"><?php echo $item['obrasocial'] ?></td>
+        <td width="25%" align="center"><?php echo $item['paciente'] ?></td>
+        <td width="25%" align="center"><?php echo $item['profesional'] ?></td>
+        <td width="5%" align="center"><?php echo $fecha_formateada; ?></td>
+        <td width="10%" align="center"><?php echo $item['importe'] ?></td>
+        <td width="10%" align="center"><?php echo $item['coseguro'] ?></td>
       </tr>
             <?php $i++; ?>
       <?php } ?>
@@ -111,6 +111,5 @@ if ($idmatricula>0){
   </table>
 </form>
 <br>
-<?php } 
-} ?>
+<?php } ?>
 </div>
