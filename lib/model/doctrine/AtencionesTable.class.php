@@ -94,7 +94,7 @@ class AtencionesTable extends Doctrine_Table
         return $q;
     }
 
-        // Obtener atenciones cerradas segun filtro
+    // Obtener atenciones cerradas segun filtro
     public static function obtenerAtencionesCerradasFiltro($arrFiltros)
     {
         $sql ="SELECT COUNT(DISTINCT at.id) as cantidad, at.id, at.mes, at.anio, CONCAT(LPAD(at.mes,2,'0'),'-',at.anio) as periodo, SUM(at.importe) as importe, SUM(at.coseguro) as coseguro,
@@ -117,6 +117,36 @@ class AtencionesTable extends Doctrine_Table
 
             return $q;
         }
+
+     // Obtener detalle de atenciones segun criterio
+    public static function obtenerDetalleAtencionesFiltro($arrFiltros, $arrGroup=null, $arrOrder=null)
+    {
+        $sql ="SELECT at.id, at.mes, at.anio, CONCAT(LPAD(at.mes,2,'0'),'-',at.anio) as periodo, at.importe, at.coseguro,
+            CASE at.mes WHEN 1 THEN 'Enero' WHEN 2 THEN 'Febrero' WHEN 3 THEN 'Marzo' WHEN 4 THEN 'Abril' WHEN 5 THEN 'Mayo' WHEN 6 THEN 'Junio' WHEN 7 THEN 'Julio' WHEN 8 THEN 'Agosto' WHEN 9 THEN 'Septiembre' WHEN 10 THEN 'Octubre' WHEN 11 THEN 'Noviembre' WHEN 12 THEN 'Diciembre'   ELSE ''  END as mesdetalle, 
+            pac.apellido, pac.nombre, per.apellido, per.nombre, concat(pac.apellido,', ', pac.nombre) as paciente,
+            concat(per.apellido, ', ', per.nombre) as profesional, at.fecha, os.abreviada as obrasocial   
+            FROM atenciones at 
+            JOIN pacientes pac ON at.nrodoc = pac.nrodoc
+            JOIN obras_sociales os ON at.idobrasocial = os.idobrasocial
+            JOIN personas per ON at.matricula = per.nrolector
+            WHERE 1=1 ";
+
+        if($arrFiltros['matricula'] <> '')
+            $sql .=  " AND at.matricula = ".$arrFiltros['matricula']." ";
+
+        if($arrFiltros['idestadoatencion'] <> '')
+            $sql .=  " AND at.idestadoatencion = ".$arrFiltros['idestadoatencion']." ";
+
+        if($arrFiltros['anio'] <> '')
+            $sql .=  " AND at.anio = ".$arrFiltros['anio']." ";
+
+        if($arrFiltros['idmes'] <> '')
+            $sql .=  " AND at.mes = ".$arrFiltros['idmes']." ";
+
+        $q = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($sql);
+
+        return $q;
+    }   
 
     // Desactivar Registros
     public static function actualizarPreciosAtenciones($importe=0, $coseguro=0)
