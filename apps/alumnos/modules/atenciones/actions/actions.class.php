@@ -306,7 +306,7 @@ class atencionesActions extends sfActions
 
   public function executeRevisarperiodos(sfWebRequest $request)
   {
-    
+
     // solo administrador puede gestionar este modulo
     if (!$this->getUser()->getGuardUser()->getIsSuperAdmin()){
        $this->redirect('atenciones/index');
@@ -320,12 +320,12 @@ class atencionesActions extends sfActions
     $mes = '';
 
     $this->idmes = $request->getParameter('idmes');
-    
+
     if(!$this->idmes>0)
         $this->idmes = date('n');
 
     $mesnombre = $this->aMeses[$this->idmes];
-    
+
 
     $aniohasta = date ("Y");
     $aniodesde = $aniohasta - 25;
@@ -345,7 +345,7 @@ class atencionesActions extends sfActions
        $matricula = $request->getParameter('idmatricula');
     }
 
-    $orden = 2; 
+    $orden = 2;
     $oprof = Doctrine_Core::getTable('Personas')->obtenerProfesionales(1, $orden);
     foreach($oprof as $op){
         $this->arregloProf[$op['matricula']] = $op['matricula'].' - '.$op['apellido'].', '.$op['nombre'];
@@ -368,12 +368,12 @@ class atencionesActions extends sfActions
     }
 
     $this->idAnio = $request->getParameter('idAnio');
-   
+
   }
 
   public function executeGenerarcsv(sfWebRequest $request)
   {
-    
+
     // solo administrador puede gestionar este modulo
     if (!$this->getUser()->getGuardUser()->getIsSuperAdmin()){
        $this->redirect('atenciones/index');
@@ -382,12 +382,12 @@ class atencionesActions extends sfActions
     if ($request->getParameter('idAnio') > 0)
         $idAnio = $request->getParameter('idAnio');
     else
-        $idAnio = date ("Y");   
+        $idAnio = date ("Y");
 
     if ($request->getParameter('idmes') > 0)
         $idMes = $request->getParameter('idmes');
     else
-        $idMes = date ("n");        
+        $idMes = date ("n");
 
     //Filtros
     $arrFiltro = array('idmes'=> $idMes, 'anio' =>  $idAnio, 'idestadoatencion' => '0');
@@ -398,28 +398,28 @@ class atencionesActions extends sfActions
     if($this->atencioness){
       //Creamos el archivo temporal de exportación
       $file = 'atenciones.csv';
-  
+
       $fh = fopen($file,"w+") or die ("No se puede abrir el archivo");
-  
-      $titulo = "Id, Legajo, Apellido, Nombre, Nro. de documento, Fecha de egreso, Carrera, Facultad, Sede, Area,\n";
+
+      $titulo = "ID, MATRICULA, PROFESIONAL, PACIENTENRODOC, PACIENTE, MES, ANIO, IDOBRASOCIAL, OBRASOCIAL, IDTRATAMIENTO, TRATAMIENTO, PIEZA, CARAS, IMPORTE, COSEGURO, BONO, IMPORTEOS, FECHA,\n";
       fwrite($fh,$titulo);
-      
-      foreach ($this->alumnos as $alumno){
+
+      foreach ($this->atencioness as $atencion){
         $areaDestino = "";
         if ($alumno['idexpediente']) {
           $oExpediente = Doctrine_Core::getTable('ExpedientesEgresados')->find($alumno['idexpediente']);
           $oDerivacion = $oExpediente->obtenerUltimaDerivacion();
           $areaDestino = $oDerivacion->obtenerAreaDestino();
-        }   
-        $row = $alumno['idalumno'].",".$alumno['legajo'].",".$alumno['nombre'].",".$alumno['nrodoc'].",".$alumno['fechaegreso'].",".$alumno['carrera'].",".$alumno['facultad'].",".$alumno['sede'].",".$areaDestino.","."\n";
-        
+        }
+        $row = $atencion['id'].",".$atencion['matricula'].",".$atencion['profesional'].",".$atencion['nrodoc'].",".$atencion['paciente'].",".$atencion['mes'].",".$atencion['anio'].",".$atencion['idobrasocial'].",".$atencion['obrasocial'].",".$atencion['idtratamiento'].",".$atencion['tratamiento'].",".$atencion['pieza'].",".$atencion['caras'].",".$atencion['importe'].",".$atencion['coseguro'].",".$atencion['bono'].",".$atencion['importeos'].",".$atencion['fecha'].","."\n";
+
         fwrite($fh,$row);
       }
     }
-  
+
     // Close file
     fclose($fh);
-  
+
     header("Content-Type: application/vnd.ms-excel");
     header("Content-Type: application/force-download");
     header("Content-Transfer-Encoding: binary");
@@ -428,10 +428,10 @@ class atencionesActions extends sfActions
     header("Pragma: no-cache");
     header("Expires: 0");
     readfile($file);
-  
+
     // stop symfony process
     throw new sfStopException();
-  
+
     return sfView::NONE;
 
   }
@@ -474,7 +474,7 @@ class atencionesActions extends sfActions
     {
       $this->aAnios[$i] =  $i;
     }
-    
+
     $orden = 2; //obra social y luego apellido
     $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerAtencionesPorProfesionalPeriodo($matricula, $idmes, $idanio, $idestado, $orden);
 
