@@ -93,7 +93,7 @@
     </thead>
     <tbody>
             <?php $i=0; ?>
-      <?php foreach($atencioness as $item){ 
+      <?php foreach($atencioness as $item){
           $fecha_formateada = date("d/m/Y", strtotime($item['fecha'])); ?>
       <tr class="fila_<?php echo $i%2 ; ?>">
         <td width="25%" align="center"><?php echo $item['obrasocial'] ?></td>
