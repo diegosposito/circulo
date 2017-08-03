@@ -282,7 +282,7 @@ class actualizacionesatenActions extends sfActions
 
     $this->ficheros = array();
 
-    $directorio = sfConfig::get('app_pathfiles_folder')."/../actualizacionesaten";
+    $directorio = sfConfig::get('app_pathfiles_folder')."/../fixperiodos";
 
     $gestor_dir = opendir($directorio);
     $this->ficheros = array();
@@ -303,41 +303,7 @@ class actualizacionesatenActions extends sfActions
   }
   public function executeCreatecerrada(sfWebRequest $request)
   {
-    $this->forward404Unless($request->isMethod(sfRequest::POST));
-
-    $this->form = new ActualizacionesatenForm();
-
-    $this->processFormCerrada($request, $this->form);
-
-    $this->setTemplate('new');
-  }
-
-  public function executeUpdatecerrada(sfWebRequest $request)
-  {
-    $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
-    $this->forward404Unless($actualizacionesaten = Doctrine_Core::getTable('Actualizacionesaten')->find(array($request->getParameter('id'))), sprintf('Object actualizacionesaten does not exist (%s).', $request->getParameter('id')));
-    $this->form = new ActualizacionesatenForm($actualizacionesaten);
-
-    $this->processFormCerrada($request, $this->form);
-
-    $this->setTemplate('edit');
-  }
-
-  protected function processFormCerrada(sfWebRequest $request, sfForm $form)
-  {
-    $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
-    if ($form->isValid())
-    {
-      $actualizacionesaten = $form->save();
-
-      $idorden = intval($request->getPostParameter('$archivos_profesionales[idorden]'));
-
-      if (($idorden<>"") && ($idorden !== NULL) && ($idorden>0)){
-            $actualizacionesaten->setIdorden($idorden);
-      }
-
-
-      $folder_path_name = sfConfig::get('app_pathfiles_folder')."/../actualizacionesaten";
+      $folder_path_name = sfConfig::get('app_pathfiles_folder')."/../fixperiodos";
 
       if (!is_dir($folder_path_name) && !mkdir($folder_path_name)){
           die("Error creando carpeta $folder_path_name");
@@ -345,19 +311,108 @@ class actualizacionesatenActions extends sfActions
 
       $hasfile =false;
       foreach ($request->getFiles() as $fileName) {
-           $targetFolder = sfConfig::get('app_pathfiles_folder')."/../actualizacionesaten".'/'.$fileName['imagefile']['name'];
-           move_uploaded_file($fileName['imagefile']['tmp_name'], $targetFolder);
-           $hasfile = true;
+             $targetFolder = sfConfig::get('app_pathfiles_folder')."/../fixperiodos".'/'.$fileName['imagefile']['name'];
+             move_uploaded_file($fileName['imagefile']['tmp_name'], $targetFolder);
+             $hasfile = true;
 
       }
 
-      if ($hasfile && trim($fileName['imagefile']['name'])<>'')
-         $actualizacionesaten->setImagefile($fileName['imagefile']['name']);
-
-
-      $actualizacionesaten->save();
-
-      $this->redirect('actualizacionesaten/edit?id='.$actualizacionesaten->getId());
-    }
+      $this->redirect('actualizacionesaten/cerradas');
   }
+
+  public function executeUpdatecerrada(sfWebRequest $request)
+  {
+    
+    $folder_path_name = sfConfig::get('app_pathfiles_folder')."/../fixperiodos";
+
+    if (!is_dir($folder_path_name) && !mkdir($folder_path_name)){
+        die("Error creando carpeta $folder_path_name");
+    }
+
+    $hasfile =false;
+    foreach ($request->getFiles() as $fileName) {
+           $targetFolder = sfConfig::get('app_pathfiles_folder')."/../fixperiodos".'/'.$fileName['imagefile']['name'];
+           move_uploaded_file($fileName['imagefile']['tmp_name'], $targetFolder);
+           $hasfile = true;
+
+    }
+
+    $this->redirect('actualizacionesaten/cerradas');
+
+  }
+
+  public function executeDeletefileperiodo(sfWebRequest $request)
+  {
+    // Redirige al inicio si no tiene acceso
+      if (!$this->getUser()->getGuardUser()->getIsSuperAdmin())
+         $this->redirect('ingreso');
+
+     
+      $archivo_nombre = sfConfig::get('app_pathfiles_folder')."/../fixperiodos".'/'.$request['id'];
+     
+      if (file_exists($archivo_nombre)) unlink($archivo_nombre);
+
+      return true;
+
+  }
+
+
+  // PASO 1  Procesar Archivo : agrega la informacion a la tabla tmp_pacientes
+   public function executeProcesarfileperiodo(sfWebRequest $request)
+  {
+    // Redirige al inicio si no tiene acceso
+      if (!$this->getUser()->getGuardUser()->getIsSuperAdmin())
+         $this->redirect('ingreso');
+
+      $nombre_archivo = sfConfig::get('app_pathfiles_folder')."/../fixperiodos".'/'.$request['id'];
+
+      // DATOS conexion
+      $dbhost = 'localhost';$dbname = 'circulo';  $dbuser = 'root'; $dbpass = 'root911';
+
+      $sqlTruncate = "TRUNCATE TABLE tmp_periodos;";
+
+      $sqlLoadInput = "LOAD DATA LOCAL INFILE '".$nombre_archivo."'
+         INTO TABLE tmp_periodos
+         CHARACTER SET UTF8
+         FIELDS TERMINATED BY ';'
+         OPTIONALLY ENCLOSED BY '\"'
+         LINES TERMINATED BY '\n'
+         IGNORE 1 LINES;";
+
+     
+      $pdo = new \PDO('mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass, array(
+        \PDO::MYSQL_ATTR_LOCAL_INFILE => true
+      ));
+
+      //TRUNCAR TABLA TEMPORAL
+      $query = $pdo->prepare($sqlTruncate);
+      $query->execute();
+
+      //PROCESAR INFORMACON DEL ARCHIVO
+      $query = $pdo->prepare($sqlLoadInput);
+      $query->execute();
+
+      return true;
+
+  }
+
+
+ // PASO 2, se ejecuta la actualizacion de la tabla pacientes
+  public function executeEjecutarfileperiodo(sfWebRequest $request)
+  {
+
+    // Redirige al inicio si no tiene acceso
+      if (!$this->getUser()->getGuardUser()->getIsSuperAdmin())
+         $this->redirect('ingreso');
+
+      // INSERTAR NUEVOS PACIENTES
+      Doctrine_Core::getTable('Actualizacionesaten')->actualizarPeriodoCerrado();
+
+      // ACTUALIZAR PACIENTES EXISTENTES
+      //exec("/home/projects/circulo/web/Actualizacionesaten/process.sh");
+
+      return true;
+
+  }
+
 }
