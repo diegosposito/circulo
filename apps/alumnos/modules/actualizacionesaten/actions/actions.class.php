@@ -109,7 +109,7 @@ class actualizacionesatenActions extends sfActions
          LINES TERMINATED BY '\n'
          IGNORE 1 LINES;";
 
-      
+
       $pdo = new \PDO('mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass, array(
         \PDO::MYSQL_ATTR_LOCAL_INFILE => true
       ));
@@ -239,6 +239,119 @@ class actualizacionesatenActions extends sfActions
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)
+  {
+    $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
+    if ($form->isValid())
+    {
+      $actualizacionesaten = $form->save();
+
+      $idorden = intval($request->getPostParameter('$archivos_profesionales[idorden]'));
+
+      if (($idorden<>"") && ($idorden !== NULL) && ($idorden>0)){
+            $actualizacionesaten->setIdorden($idorden);
+      }
+
+
+      $folder_path_name = sfConfig::get('app_pathfiles_folder')."/../actualizacionesaten";
+
+      if (!is_dir($folder_path_name) && !mkdir($folder_path_name)){
+          die("Error creando carpeta $folder_path_name");
+      }
+
+      $hasfile =false;
+      foreach ($request->getFiles() as $fileName) {
+           $targetFolder = sfConfig::get('app_pathfiles_folder')."/../actualizacionesaten".'/'.$fileName['imagefile']['name'];
+           move_uploaded_file($fileName['imagefile']['tmp_name'], $targetFolder);
+           $hasfile = true;
+
+      }
+
+      if ($hasfile && trim($fileName['imagefile']['name'])<>'')
+         $actualizacionesaten->setImagefile($fileName['imagefile']['name']);
+
+
+      $actualizacionesaten->save();
+
+      $this->redirect('actualizacionesaten/edit?id='.$actualizacionesaten->getId());
+    }
+  }
+
+  // ATENCIONES cerradas periodos
+  public function executeCerradas(sfWebRequest $request)
+  {
+
+    $this->archivos_profesionaless = Doctrine_Core::getTable('Actualizacionesaten')
+      ->createQuery('a')
+      ->orderby(nombre)
+      ->execute();
+
+    $this->ficheros = array();
+
+    foreach($this->archivos_profesionaless as $archivos){
+        $targetFolder = sfConfig::get('app_pathfiles_folder')."/../actualizacionesaten".'/'.$archivos->getNombre();
+
+      $image_file = 'image.png';
+      switch (pathinfo($archivos->getImagefile(), PATHINFO_EXTENSION)) {
+          case 'pdf':
+              $image_file = 'pdf.png';
+              break;
+          case 'doc':
+              $image_file = 'word.png';
+              break;
+          case 'docx':
+              $image_file = 'word.png';
+              break;
+          case 'xls':
+              $image_file = 'excel.png';
+              break;
+          case 'xlsx':
+              $image_file = 'excel.png';
+              break;
+          case 'txt':
+              $image_file = 'wordpad.png';
+              break;
+          case 'ppt':
+              $image_file = 'ppt.png';
+              break;
+          case 'pptx':
+              $image_file = 'ppt.png';
+              break;
+      }
+
+      $this->ficheros[] = array($archivos->getNombre(), $archivos->getImagefile(), $image_file, $archivos->getId());
+
+      sort($this->ficheros);
+    }
+
+  }
+
+  public function executeNewcerrada(sfWebRequest $request)
+  {
+    $this->form = new ActualizacionesatenForm();
+  }
+  public function executeCreatecerrada(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod(sfRequest::POST));
+
+    $this->form = new ActualizacionesatenForm();
+
+    $this->processFormCerrada($request, $this->form);
+
+    $this->setTemplate('new');
+  }
+
+  public function executeUpdatecerrada(sfWebRequest $request)
+  {
+    $this->forward404Unless($request->isMethod(sfRequest::POST) || $request->isMethod(sfRequest::PUT));
+    $this->forward404Unless($actualizacionesaten = Doctrine_Core::getTable('Actualizacionesaten')->find(array($request->getParameter('id'))), sprintf('Object actualizacionesaten does not exist (%s).', $request->getParameter('id')));
+    $this->form = new ActualizacionesatenForm($actualizacionesaten);
+
+    $this->processFormCerrada($request, $this->form);
+
+    $this->setTemplate('edit');
+  }
+
+  protected function processFormCerrada(sfWebRequest $request, sfForm $form)
   {
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
     if ($form->isValid())
