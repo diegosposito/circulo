@@ -280,49 +280,21 @@ class actualizacionesatenActions extends sfActions
   public function executeCerradas(sfWebRequest $request)
   {
 
-    $this->archivos_profesionaless = Doctrine_Core::getTable('Actualizacionesaten')
-      ->createQuery('a')
-      ->orderby(nombre)
-      ->execute();
-
     $this->ficheros = array();
 
-    foreach($this->archivos_profesionaless as $archivos){
-        $targetFolder = sfConfig::get('app_pathfiles_folder')."/../actualizacionesaten".'/'.$archivos->getNombre();
+    $directorio = sfConfig::get('app_pathfiles_folder')."/../actualizacionesaten";
 
-      $image_file = 'image.png';
-      switch (pathinfo($archivos->getImagefile(), PATHINFO_EXTENSION)) {
-          case 'pdf':
-              $image_file = 'pdf.png';
-              break;
-          case 'doc':
-              $image_file = 'word.png';
-              break;
-          case 'docx':
-              $image_file = 'word.png';
-              break;
-          case 'xls':
-              $image_file = 'excel.png';
-              break;
-          case 'xlsx':
-              $image_file = 'excel.png';
-              break;
-          case 'txt':
-              $image_file = 'wordpad.png';
-              break;
-          case 'ppt':
-              $image_file = 'ppt.png';
-              break;
-          case 'pptx':
-              $image_file = 'ppt.png';
-              break;
+    $gestor_dir = opendir($directorio);
+    $this->ficheros = array();
+    while (false !== ($nombre_fichero = readdir($gestor_dir))) {
+
+      if ($nombre_fichero <> '.' && $nombre_fichero <> '..') {
+          $this->ficheros[filemtime($directorio.'/'.$nombre_fichero)] = array($nombre_fichero, $directorio.'/'.$nombre_fichero);
       }
 
-      $this->ficheros[] = array($archivos->getNombre(), $archivos->getImagefile(), $image_file, $archivos->getId());
-
-      sort($this->ficheros);
     }
-
+    sort($this->ficheros);
+    
   }
 
   public function executeNewcerrada(sfWebRequest $request)
