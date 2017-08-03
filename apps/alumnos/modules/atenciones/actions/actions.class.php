@@ -401,7 +401,7 @@ class atencionesActions extends sfActions
 
       $fh = fopen($file,"w+") or die ("No se puede abrir el archivo");
 
-      $titulo = "ID, MATRICULA, PROFESIONAL, PACIENTENRODOC, PACIENTE, MES, ANIO, IDOBRASOCIAL, OBRASOCIAL, IDTRATAMIENTO, TRATAMIENTO, PIEZA, CARAS, IMPORTE, COSEGURO, BONO, IMPORTEOS, FECHA,\n";
+      $titulo = "ID;MATRICULA;PROFESIONAL;PACIENTENRODOC;PACIENTE;MES;ANIO;IDOBRASOCIAL;OBRASOCIAL;IDTRATAMIENTO;TRATAMIENTO;PIEZA;CARAS;IMPORTE;COSEGURO;BONO;IMPORTEOS;FECHA;\n";
       fwrite($fh,$titulo);
 
       foreach ($this->atencioness as $atencion){
@@ -411,7 +411,7 @@ class atencionesActions extends sfActions
           $oDerivacion = $oExpediente->obtenerUltimaDerivacion();
           $areaDestino = $oDerivacion->obtenerAreaDestino();
         }
-        $row = $atencion['id'].",".$atencion['matricula'].",".$atencion['profesional'].",".$atencion['nrodoc'].",".$atencion['paciente'].",".$atencion['mes'].",".$atencion['anio'].",".$atencion['idobrasocial'].",".$atencion['obrasocial'].",".$atencion['idtratamiento'].",".$atencion['tratamiento'].",".$atencion['pieza'].",".$atencion['caras'].",".$atencion['importe'].",".$atencion['coseguro'].",".$atencion['bono'].",".$atencion['importeos'].",".$atencion['fecha'].","."\n";
+        $row = $atencion['id'].";".$atencion['matricula'].";".$atencion['profesional'].";".$atencion['nrodoc'].";".$atencion['paciente'].";".$atencion['mes'].";".$atencion['anio'].";".$atencion['idobrasocial'].";".$atencion['obrasocial'].";".$atencion['idtratamiento'].";".$atencion['tratamiento'].";".$atencion['pieza'].";".$atencion['caras'].";".$atencion['importe'].";".$atencion['coseguro'].";".$atencion['bono'].";".$atencion['importeos'].";".$atencion['fecha'].";"."\n";
 
         fwrite($fh,$row);
       }
