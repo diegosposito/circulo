@@ -29,6 +29,20 @@ class ActualizacionesatenTable extends Doctrine_Table
 
     }
 
+    public static function actualizarPeriodoCerrado()
+    {
+
+         // actualizar AtencionesCerradas
+        $sql ="update atenciones at JOIN tmp_periodos tp ON at.id = tp.id
+                SET at.matricula= tp.matricula, at.nrodoc = tp.nrodoc, at.mes = tp.mes, at.anio = tp.anio, at.idobrasocial = tp.idobrasocial, at.idtratamiento = tp.idtratamiento, at.tratamiento = tp.tratamiento, 
+                at.pieza = tp.pieza, at.caras = tp.caras, at.importe = tp.importe, at.coseguro = tp.coseguro, at.bono = tp.bono, at.importeos = tp.importeos, at.fecha = tp.fecha;";
+
+        $q = Doctrine_Manager::getInstance()->getCurrentConnection();
+
+        return $q->execute($sql);
+
+    }
+
     // Obtener obras sociales
     public static function insertarAtenciones()
     {
