@@ -39,12 +39,15 @@
 
 </script>
 <br>
+  <a href="<?php echo url_for('atenciones/revisarperiodos') ?>">Volver al Resumen de Períodos</a>
+<br>
+<br>
 <?php if($sf_user->getGuardUser()->getIsSuperAdmin()){ ?>
          <img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/new.png' align='center' size='20' />
          <a href="<?php echo url_for('actualizacionesaten/newcerrada') ?>">Subir archivo con periodo a actualizar</a>
   <?php } ?>
 
-<br>
+
 <div align="center">
  <a href="<?php echo url_for('actualizacionesaten/cerradas') ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/refresh.png' align='center' size='20' height='28' width="28" /></a>
 </div>
