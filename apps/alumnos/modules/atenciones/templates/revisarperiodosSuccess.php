@@ -25,7 +25,7 @@
   p { margin-left:5em; /* Or another measurement unit, like px */ }
 </style>
 <br>
-<h1 align="center" style="color:black;">Resume de Período de Atenciones</h1>
+<h1 align="center" style="color:black;">Resumen de Período de Atenciones</h1>
 <br>
 <div align="center">
 
@@ -73,7 +73,11 @@
 </table>
 
 <div align="left">
-<a title="Ver Detalle" href="<?php echo url_for('atenciones/generarcsv?idmes='.$idmes.'&idAnio='.$idAnio) ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/edit.png' align='center' size='20'  height='20' width="20"  /><b>Generar Archivo</b></a>
+<a title="Ver Detalle" href="<?php echo url_for('atenciones/generarcsv?idmes='.$idmes.'&idAnio='.$idAnio) ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/edit.png' align='center' size='20'  height='20' width="20"  /><b>Generar Archivo de Período Seleccionado</b></a>
+</div>
+
+<div align="left">
+<a title="Ver Detalle" href="<?php echo url_for('actualizacionesaten/cerradas') ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/edit.png' align='center' size='20'  height='20' width="20"  /><b>Gestión de Archivos por Período</b></a>
 </div>
 
 <?php
