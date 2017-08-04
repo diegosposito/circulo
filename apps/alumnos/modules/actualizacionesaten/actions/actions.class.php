@@ -294,12 +294,12 @@ class actualizacionesatenActions extends sfActions
 
     }
     sort($this->ficheros);
-    
+
   }
 
   public function executeNewcerrada(sfWebRequest $request)
   {
-    $this->form = new ActualizacionesatenForm();
+    $this->form = new ActualizacionesatencerrForm();
   }
   public function executeCreatecerrada(sfWebRequest $request)
   {
@@ -322,7 +322,7 @@ class actualizacionesatenActions extends sfActions
 
   public function executeUpdatecerrada(sfWebRequest $request)
   {
-    
+
     $folder_path_name = sfConfig::get('app_pathfiles_folder')."/../fixperiodos";
 
     if (!is_dir($folder_path_name) && !mkdir($folder_path_name)){
@@ -347,9 +347,9 @@ class actualizacionesatenActions extends sfActions
       if (!$this->getUser()->getGuardUser()->getIsSuperAdmin())
          $this->redirect('ingreso');
 
-     
+
       $archivo_nombre = sfConfig::get('app_pathfiles_folder')."/../fixperiodos".'/'.$request['id'];
-     
+
       if (file_exists($archivo_nombre)) unlink($archivo_nombre);
 
       return true;
@@ -379,7 +379,7 @@ class actualizacionesatenActions extends sfActions
          LINES TERMINATED BY '\n'
          IGNORE 1 LINES;";
 
-     
+
       $pdo = new \PDO('mysql:host=' . $dbhost . ';dbname=' . $dbname, $dbuser, $dbpass, array(
         \PDO::MYSQL_ATTR_LOCAL_INFILE => true
       ));
