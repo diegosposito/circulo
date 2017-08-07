@@ -65,8 +65,8 @@
 			<img alt="Smiley face" height="142" width="940" src="<?php echo $sf_request->getRelativeUrlRoot();?>/images/headerlogo2.png">
 
 			<?php if ($autenticated){ ?>
-			<p align="right"><?php echo '<b>Usuario:</b> '.$sf_user->getGuardUser()->getUsername(); ?> </p>
-			<?php } else { ?>
+			<p align="right"><?php echo '<b>Usuario:</b> '.$sf_user->getGuardUser()->getUsername().'&nbsp;&nbsp;'.link_to('>>', 'sf_guard_signout'); ; ?> </p>
+    	<?php } else { ?>
             <div align="right">
 			<form action="/login" name="login" id="formLogin" method="post">
 				  <table border="0">
@@ -144,11 +144,18 @@
 			</div> -->
 			<!-- END Slider -->
 
-            <!-- Content -->
-			<div id="content">
+      <!-- Content -->
+    <?php if ($autenticated && !$sf_user->getGuardUser()->getIsSuperAdmin()){ ?>
+			<div id="content" style="width:890px">
 				 <?php echo $sf_content; ?>
 			</div>
+    <?php } else { ?>
+      <div id="content">
+				 <?php echo $sf_content; ?>
+			</div>
+    <?php } ?>
 			<!-- ЕND Content  -->
+
 			<!-- Sidebar -->
 			<?php if ($autenticated && $sf_user->getGuardUser()->getIsSuperAdmin()){ ?>
 					<div id="sidebar">
@@ -177,7 +184,8 @@
 						</div>
 					</div>
 			<?php } else { ?>
-			         <?php
+
+               <?php
 
 			         $banners = Doctrine_Core::getTable('Banners')
 				      ->createQuery('a')
@@ -185,10 +193,10 @@
 				      ->orderby(idorden)
 				      ->execute();
 
-                     ?>
-				     <div id="sidebar">
+   if (!$autenticated){ ?>
+		<div id="sidebar">
 
-				        <div class="box" style="width=200px"><br></div>
+			<div class="box" style="width=200px"><br></div>
 
       <?php foreach($banners as $banner){ ?>
 					    <div class="box" style="background-color:#7dbf0d;width=200px">
@@ -214,12 +222,15 @@
                         <?php if ($autenticated && !$sf_user->getGuardUser()->getIsSuperAdmin()){ ?>
                         	<div class="box" style="background-color:#7dbf0d;width=200px">
 								<p style="margin-left: 0em;text-align:center;color:#000000;font-weight:bold"><?php echo link_to('Salir', 'sf_guard_signout') ?></p>
-						</div>
+						              </div>
                         <br>
                         <?php } ?>
 
-					</div>
-			<?php } ?>
+		</div>
+
+			<?php } // end if (!$autenticated){
+      }  // end <?php if ($autenticated && $sf_user->getGuardUser()->getIsSuperAdmin()){
+      ?>
 			<!-- END Sidebar -->
 			<div class="cl"></div>
 			<!-- Feartured Products -->
