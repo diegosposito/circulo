@@ -9,7 +9,7 @@ $(document).ready(function(){
       $('#atenciones_importe').attr('disabled', false);
       $('#atenciones_coseguro').attr('disabled',false);
       var validado = validarFormAtencion();
-      $('#botonGuardarAtencion').attr("disabled","disabled").delay(5000);
+      $('#botonGuardarAtencion').attr("disabled","disabled").delay(50000000);
       if(validado == true) {
             // guardar la informacion personal del alumnos ingresada
           $.post("<?php echo url_for('atenciones/create'); ?>",
@@ -28,7 +28,7 @@ $(document).ready(function(){
       $('#mensajeError').html(validado);
       $('#mensajeSuccess').html('');
     }
-      window.setTimeout( function(){ $('#botonGuardarAtencion').removeAttr("disabled") }, 5000 );
+      window.setTimeout( function(){ $('#botonGuardarAtencion').removeAttr("disabled") }, 50000000 );
       //$('#botonGuardarInfoPersonal').removeAttr("disabled");
     return false;
     });
