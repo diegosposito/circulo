@@ -499,10 +499,12 @@ class atencionesActions extends sfActions
        $matricula = $request->getParameter('idmatricula');
     }
 
-    $this->profesional = Doctrine_Core::getTable('Personas')->obtenerProfesionalxMatricula($matricula);
+    if ( $matricula<>''){
+      $this->profesional = Doctrine_Core::getTable('Personas')->obtenerProfesionalxMatricula($matricula);
 
-    $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerAtencionesPorProfesionalPeriodo($matricula, NULL, NULL, $idestado);
-
+      $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerAtencionesPorProfesionalPeriodo($matricula, NULL, NULL, $idestado);
+    }
+    
     $this->idAnio = $idanio;
     //$this->idMes = $request->getParameter('idMes');
 
