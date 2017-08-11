@@ -124,10 +124,11 @@ class AtencionesTable extends Doctrine_Table
         $sql ="SELECT at.id, at.mes, at.anio, CONCAT(LPAD(at.mes,2,'0'),'-',at.anio) as periodo, at.matricula, at.importe, at.coseguro, at.bono, at.importeos,at.pieza, at.caras, at.idtratamiento, at.tratamiento, at.idobrasocial,
             CASE at.mes WHEN 1 THEN 'Enero' WHEN 2 THEN 'Febrero' WHEN 3 THEN 'Marzo' WHEN 4 THEN 'Abril' WHEN 5 THEN 'Mayo' WHEN 6 THEN 'Junio' WHEN 7 THEN 'Julio' WHEN 8 THEN 'Agosto' WHEN 9 THEN 'Septiembre' WHEN 10 THEN 'Octubre' WHEN 11 THEN 'Noviembre' WHEN 12 THEN 'Diciembre'   ELSE ''  END as mesdetalle,
             pac.apellido, pac.nombre, pac.nrodoc, per.apellido, per.nombre, concat(pac.apellido,' ', pac.nombre) as paciente,
-            concat(per.apellido, ' ', per.nombre) as profesional, at.fecha, os.abreviada as obrasocial
+            concat(per.apellido, ' ', per.nombre) as profesional, at.fecha, os.abreviada as obrasocial, at.idplan as idplanobrasocial, po.nombre as planobrasocial, at.idestadopago 
             FROM atenciones at
             JOIN pacientes pac ON at.nrodoc = pac.nrodoc
-            JOIN obras_sociales os ON at.idobrasocial = os.idobrasocial
+            JOIN obras_sociales os ON at.idobrasocial = os.idobrasocial 
+            JOIN planes_obras po ON at.idplan = po.id 
             JOIN personas per ON at.matricula = per.nrolector
             WHERE 1=1 ";
 
