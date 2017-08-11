@@ -579,7 +579,9 @@ class atencionesActions extends sfActions
 
     $this->forward404Unless($paciente = Doctrine_Core::getTable('Pacientes')->find(array($request->getParameter('idpaciente'))), sprintf('Object pacientes does not exist (%s).', $request->getParameter('id')));
     $this->forward404Unless($tratamiento = Doctrine_Core::getTable('Tratamientos')->find(array($request->getPostParameter('atenciones[idtratamiento]'))), sprintf('Object pacientes does not exist (%s).', $request->getPostParameter('atenciones[idtratamiento]')));
-
+    $this->forward404Unless($obrasocial = Doctrine_Core::getTable('ObrasSociales')->find(array($paciente->getIdobrasocial())), sprintf('Object pacientes does not exist (%s).', $paciente->getIdobrasocial()));
+    $this->forward404Unless($planobrasoc = Doctrine_Core::getTable('PlanesObras')->find(array($paciente->getIdplan())), sprintf('Object pacientes does not exist (%s).', $paciente->getIdplan()));
+    
     // Obtener usuario logueado
     $user_id = $this->getUser()->getGuardUser()->getId();
     $persona = Doctrine_Core::getTable('Personas')->obtenerProfesionalxUser($user_id);
@@ -594,6 +596,9 @@ class atencionesActions extends sfActions
     $atenciones->setNrodoc($paciente->getNrodoc());
     $atenciones->setMatricula($matricula);
     $atenciones->setIdobrasocial($paciente->getIdobrasocial());
+    $atenciones->setIdplan($paciente->getIdplan());
+    $atenciones->setObrasocial($obrasocial->getDenominacion());
+    $atenciones->setPlanobrasocial($planobrasoc->getNombre());
     $atenciones->setIdtratamiento($tratamiento->getId());
     $atenciones->setTratamiento($tratamiento->getNombre());
     $atenciones->setMes($request->getPostParameter('atenciones[mes]'));
