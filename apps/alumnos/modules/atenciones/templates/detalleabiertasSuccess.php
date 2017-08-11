@@ -27,9 +27,13 @@
 <br>
 <h1 align="center" style="color:black;">Atenciones Abiertas</h1>
 <br>
-<h3 align="center" style="color:black;"><?php echo $profesional[0]['apellido'].', '.$profesional[0]['nombre'] ?></h3>
-<div align="center">
+<?php if ($profesional[0]['apellido']<>'' && $profesional[0]['nombre']<>''){ ?>
+    <h3 align="center" style="color:black;"><?php echo $profesional[0]['apellido'].', '.$profesional[0]['nombre'] ?></h3>
+<?php } else { ?>
+    <h3 align="center" style="color:black;"><?php echo 'Debe seleccionar un paciente y presionar Buscar para ver sus atenciones' ?></h3>
+<?php } ?>
 
+<div align="center">
 
 <form action="<?php echo url_for('atenciones/consultar') ?>" method="post">
 <table cellspacing="0" class="stats" width="80%">
