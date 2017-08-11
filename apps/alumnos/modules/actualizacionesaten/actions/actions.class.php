@@ -137,6 +137,8 @@ class actualizacionesatenActions extends sfActions
     // Variables
     $sqlUpdate='';
 
+    // ESTE MODULO NO HACE NADA
+
     // Redirige al inicio si no tiene acceso
       if (!$this->getUser()->getGuardUser()->getIsSuperAdmin())
          $this->redirect('ingreso');
