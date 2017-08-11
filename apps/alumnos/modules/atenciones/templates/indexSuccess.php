@@ -30,11 +30,17 @@
 <table cellspacing="0" width="80%">
 
 <?php if ( $sf_user->getGuardUser()->getIsSuperAdmin()) { ?>
+<tr>
+<td colspan="2" align="left">
+       <img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/new.png' align='center' size='20' />
+       <a href="<?php echo url_for('actualizacionesaten/masivas') ?>"><b>Gestión Masiva de Atenciones</b></a>
+</td>
+</tr>
 
 <tr>
 <td colspan="2" align="left">
        <img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/new.png' align='center' size='20' />
-       <a href="<?php echo url_for('atenciones/revisarperiodos') ?>"><b>Revisar Períodos</b></a>
+       <a href="<?php echo url_for('atenciones/revisarperiodos') ?>"><b>Revisar Períodos Cerrados</b></a>
 </td>
 </tr>
 <?php } ?>
