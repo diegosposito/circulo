@@ -2734,6 +2734,9 @@ Atenciones:
     mes: { type: integer, primary: false, autoincrement: false }
     anio: { type: integer, primary: false, autoincrement: false }
     idobrasocial: { type: integer, primary: false, default: '0' }
+    idplan: { type: integer, primary: false, default: '0' }
+    obrasocial: { type: string(200), primary: false, autoincrement: false, default: '' }
+    planobrasocial: { type: string(200), primary: false, autoincrement: false, default: '' }
     idtratamiento: { type: integer, notnull: true, default: '0' }
     matricula: { type: string(10), primary: false, autoincrement: false, default: '' }
     fecha: { type: date(25), primary: false, notnull: true }
