@@ -73,10 +73,11 @@
       <td width="10%" align="center" class="hed">Matricula</td>
       <td width="10%" align="center" class="hed">Mes</td>
       <td width="10%" align="center" class="hed">Año</td>
-      <td width="20%" align="center" class="hed">Fecha</td>
-      <td width="25%" align="center" class="hed">Tratamiento</td>
+      <td width="10%" align="center" class="hed">Fecha</td>
+      <td width="15%" align="center" class="hed">Tratamiento</td>
       <td width="15%" align="center" class="hed">Importe</td>
-      <td colspan="2" width="20%" align="center" class="hed">Edicion</td>
+      <td width="15%" align="center" class="hed">EstadoPago</td>
+      <td colspan="2" width="15%" align="center" class="hed">Edicion</td>
     </tr>
   </thead>
   <tbody>
@@ -94,6 +95,7 @@
       <td width="20%" align="center"><?php echo $fecha_formateada ?></td>
       <td width="25%" align="center"><?php echo $item['tratamiento'] ?></td>
       <td width="15%" align="center"><?php echo $item['importe'] ?></td>
+      <td width="15%" align="center"><?php echo $item['estadopago'] ?></td>
       <?php if (($item['idprofesional']==$idprofesional || $sf_user->getGuardUser()->getIsSuperAdmin()) && $item['idestadoatencion']==1) { ?>
         <td width="20%" align="center"> <a title="Editar registro" href="<?php echo url_for('atenciones/edit?id='.$item['id'].'&idpaciente='.$paciente->getId()) ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/edit.png' align='center' size='20'  height='20' width="20"  /></a></td>
       <?php } else { ?>
