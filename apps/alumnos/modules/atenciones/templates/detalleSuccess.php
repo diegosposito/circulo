@@ -49,9 +49,10 @@
       <td width="20%" align="center" class="hed">Obra S.</td>
       <td width="30%" align="center" class="hed">Paciente</td>
       <td width="10%" align="center" class="hed">Fecha</td>
-      <td width="20%" align="center" class="hed">Tratamiento</td>
+      <td width="10%" align="center" class="hed">Tratamiento</td>
       <td width="10%" align="center" class="hed">Importe</td>
       <td width="10%" align="center" class="hed">Coseguro</td>
+      <td width="10%" align="center" class="hed">EstadoPago</td>
     </tr>
   </thead>
   <tbody>
@@ -62,9 +63,10 @@
       <td width="20%" align="center"><?php echo $item['obrasocial'] ?></td>
       <td width="30%" align="center"><?php echo $item['apellido'].', '.$item['nombre'] ?></td>
       <td width="10%" align="center"><?php echo $fecha_formateada ?></td>
-      <td width="20%" align="center"><?php echo $item['tratamiento'] ?></td>
+      <td width="10%" align="center"><?php echo $item['tratamiento'] ?></td>
       <td width="10%" align="center"><?php echo $item['importe'] ?></td>
       <td width="10%" align="center"><?php echo $item['coseguro'] ?></td>
+      <td width="10%" align="center"><?php echo $item['estadopago'] ?></td>
     </tr>
           <?php $i++; ?>
     <?php } ?>
