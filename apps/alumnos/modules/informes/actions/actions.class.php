@@ -239,10 +239,12 @@ class informesActions extends sfActions
               $image_file = 'wordpad.png';
               break;    
       }
-
-      $this->ficheros[] = array($nombre_fichero, $this->obras_sociales->getIdObrasocial()."/".$nombre_fichero, $image_file);
+      
+      if ($nombre_fichero <> '.' && $nombre_fichero <> '..') {
+           $this->ficheros[] = array($nombre_fichero, $this->obras_sociales->getIdObrasocial()."/".$nombre_fichero, $image_file);
+      }
     }
-    sort($this->ficheros);
+    krsort($this->ficheros);
 
   } // end function
 
