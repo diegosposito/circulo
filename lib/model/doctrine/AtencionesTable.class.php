@@ -63,7 +63,8 @@ class AtencionesTable extends Doctrine_Table
         $sql ="SELECT at.id, at.nrodoc, at.mes, at.anio, at.matricula, at.fecha, at.pieza, at.caras, at.tratamiento, at.importe, at.coseguro, at.bono, at.importe,
             pac.apellido, pac.nombre, os.denominacion, os.abreviada as obrasocial, concat(per.apellido,', ' , per.nombre) as profesional,
             CASE at.mes WHEN 1 THEN 'Enero' WHEN 2 THEN 'Febrero' WHEN 3 THEN 'Marzo' WHEN 4 THEN 'Abril' WHEN 5 THEN 'Mayo' WHEN 6 THEN 'Junio' WHEN 7 THEN 'Julio' WHEN 8 THEN 'Agosto' WHEN 9 THEN 'Septiembre' WHEN 10 THEN 'Octubre' WHEN 11 THEN 'Noviembre' WHEN 12 THEN 'Diciembre'   ELSE ''  END as mesdetalle,
-            CASE at.idestadoatencion WHEN 1 THEN 'Abierta' WHEN 0 THEN 'Cerrada' END as estadoatencion
+            CASE at.idestadoatencion WHEN 1 THEN 'Abierta' WHEN 0 THEN 'Cerrada' END as estadoatencion,
+            CASE at.idestadopago WHEN 1 THEN 'Pendiente' WHEN 2 THEN 'Pagado' WHEN 3 THEN 'Debitado' ELSE ''  END as estadopago  
             FROM atenciones at JOIN pacientes pac ON at.nrodoc = pac.nrodoc
             JOIN obras_sociales os ON at.idobrasocial = os.idobrasocial
             JOIN personas per ON at.matricula = per.nrolector
