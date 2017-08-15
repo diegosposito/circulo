@@ -244,7 +244,7 @@ class informesActions extends sfActions
            $this->ficheros[] = array($nombre_fichero, $this->obras_sociales->getIdObrasocial()."/".$nombre_fichero, $image_file);
       }
     }
-    krsort($this->ficheros);
+    krsort($this->ficheros); 
 
   } // end function
 
