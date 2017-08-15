@@ -34,8 +34,8 @@ class ActualizacionesatenTable extends Doctrine_Table
 
          // actualizar AtencionesCerradas
         $sql ="update atenciones at JOIN tmp_periodos tp ON at.id = tp.id
-                SET at.matricula= tp.matricula, at.nrodoc = tp.nrodoc, at.mes = tp.mes, at.anio = tp.anio, at.idobrasocial = tp.idobrasocial, at.idplan = tp.idplanobrasocial, at.idtratamiento = tp.idtratamiento, at.tratamiento = tp.tratamiento, 
-                at.pieza = tp.pieza, at.caras = tp.caras, at.importe = tp.importe, at.coseguro = tp.coseguro, at.bono = tp.bono, at.importeos = tp.importeos, at.idestadopago = tp.idestadopago, at.fecha = tp.fecha;";
+                SET at.matricula= tp.matricula, at.nrodoc = tp.nrodoc, at.mes = tp.mes, at.anio = tp.anio, at.idobrasocial = tp.idobrasocial, at.idplan = tp.idplanobrasocial, at.idtratamiento = tp.idtratamiento, at.tratamiento = tp.tratamiento,
+                at.pieza = tp.pieza, at.caras = tp.caras, at.importe = tp.importe, at.coseguro = tp.coseguro, at.bono = tp.bono, at.importeos = tp.importeos, at.idestadopago = tp.idestadopago, at.fecha = STR_TO_DATE(tp.fecha, '%d/%m/%Y');";
 
         $q = Doctrine_Manager::getInstance()->getCurrentConnection();
 
@@ -49,8 +49,8 @@ class ActualizacionesatenTable extends Doctrine_Table
 
          // actualizar designaciones
         $sql ="INSERT INTO `atenciones`
-                SELECT NULL,ta.nrodoc,ta.mes,ta.anio,ta.idobrasocial, ta.obrasocial, ta.idplanobrasocial, ta.planobrasocial, ta.idtratamiento, ta.matricula, ta.pieza, ta.caras, ta.tratamiento,ta.importe,ta.coseguro,ta.bono,ta.importeos,now(),now(),1,1,1,1,1,1,'','','',ta.fecha 
-                FROM tmp_atenciones ta JOIN tratamientos t ON ta.tratamiento = t.nombre WHERE ta.actualizar = 0;";
+                SELECT NULL,ta.nrodoc,ta.mes,ta.anio,ta.idobrasocial, ta.obrasocial, ta.idplanobrasocial, ta.planobrasocial, ta.idtratamiento, ta.matricula, ta.pieza, ta.caras, ta.tratamiento,ta.importe,ta.coseguro,ta.bono,ta.importeos,now(),now(),1,1,1,1,1,1,'','','',STR_TO_DATE(ta.fecha, '%d/%m/%Y')
+                 FROM tmp_atenciones ta JOIN tratamientos t ON ta.tratamiento = t.nombre WHERE ta.actualizar = 0;";
 
         $q = Doctrine_Manager::getInstance()->getCurrentConnection();
 
