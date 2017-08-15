@@ -472,7 +472,7 @@ class atencionesActions extends sfActions
 
     for( $i= $aniohasta ; $i >= $aniodesde ; $i-- )
     {
-      $this->aAnios[$i] =  $i;
+      $this->aAnios[$i] =  $i; 
     }
 
     $orden = 2; //obra social y luego apellido
