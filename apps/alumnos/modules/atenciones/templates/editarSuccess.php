@@ -177,6 +177,9 @@
          case 2:
              $('input[name="selectedtab"]').val('2');
              break;
+         case 3:
+             $('input[name="selectedtab"]').val('3');
+             break;    
          default:
              $('input[name="selectedtab"]').val('0');
      }
@@ -194,6 +197,7 @@
 <ul class="tab">
   <li><a href="javascript:void(0)" class="tablinks" onclick="openCity('Datos',0)">Datos Personales</a></li>
   <li><a href="javascript:void(0)" class="tablinks" onclick="openCity('Prestaciones',1)">Prestaciones</a></li>
+  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity('Facturacion',2)">Facturación</a></li>
   <li><a href="javascript:void(0)" class="tablinks" onclick="openCity('Documentacion',2)">Odontograma</a></li>
 </ul>
 
@@ -205,6 +209,11 @@ include_partial('formpaciente', array('form' => $form, 'paciente' => $paciente, 
 </div>
 
  <div id="Prestaciones" class="tabcontent">
+ <?php // include_partial('formedit', array('form' => $form, 'paciente' => $paciente, 'atencioness' => $atencioness, 'selectedtab' => $selectedtab)) ?>
+ <?php include_partial('formatenciones', array('form' => $form, 'paciente' => $paciente, 'atencioness' => $atencioness, 'idprofesional' => $idprofesional, 'superadmin' => $superadmin , 'selectedtab' => $selectedtab)) ?>
+</div>
+
+<div id="Facturacion" class="tabcontent">
  <?php // include_partial('formedit', array('form' => $form, 'paciente' => $paciente, 'atencioness' => $atencioness, 'selectedtab' => $selectedtab)) ?>
  <?php include_partial('formatenciones', array('form' => $form, 'paciente' => $paciente, 'atencioness' => $atencioness, 'idprofesional' => $idprofesional, 'superadmin' => $superadmin , 'selectedtab' => $selectedtab)) ?>
 </div>
