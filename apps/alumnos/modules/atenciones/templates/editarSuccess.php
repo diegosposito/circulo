@@ -55,8 +55,11 @@
            openCity('Prestaciones',1);
            break;
        case '2':
-           openCity('Documentacion',2);
+           openCity('Facturacion',2);
            break;
+       case '3':
+           openCity('Odontograma',3);
+           break;    
        default:
             openCity('Datos',0);
    }
@@ -198,7 +201,7 @@
   <li><a href="javascript:void(0)" class="tablinks" onclick="openCity('Datos',0)">Datos Personales</a></li>
   <li><a href="javascript:void(0)" class="tablinks" onclick="openCity('Prestaciones',1)">Prestaciones</a></li>
   <li><a href="javascript:void(0)" class="tablinks" onclick="openCity('Facturacion',2)">Facturación</a></li>
-  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity('Documentacion',2)">Odontograma</a></li>
+  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity('Odontograma',3)">Odontograma</a></li>
 </ul>
 
 
@@ -214,6 +217,11 @@ include_partial('formpaciente', array('form' => $form, 'paciente' => $paciente, 
 </div>
 
 <div id="Facturacion" class="tabcontent">
+ <?php // include_partial('formedit', array('form' => $form, 'paciente' => $paciente, 'atencioness' => $atencioness, 'selectedtab' => $selectedtab)) ?>
+ <?php include_partial('formfacturacion', array('form' => $form, 'paciente' => $paciente, 'atencioness' => $atencioness, 'idprofesional' => $idprofesional, 'superadmin' => $superadmin , 'selectedtab' => $selectedtab)) ?>
+</div>
+
+<div id="Odontograma" class="tabcontent">
  <?php // include_partial('formedit', array('form' => $form, 'paciente' => $paciente, 'atencioness' => $atencioness, 'selectedtab' => $selectedtab)) ?>
  <?php include_partial('formatenciones', array('form' => $form, 'paciente' => $paciente, 'atencioness' => $atencioness, 'idprofesional' => $idprofesional, 'superadmin' => $superadmin , 'selectedtab' => $selectedtab)) ?>
 </div>
