@@ -146,6 +146,7 @@ class AtencionesTable extends Doctrine_Table
         if($arrFiltros['idmes'] <> '')
             $sql .=  " AND at.mes = ".$arrFiltros['idmes']." ";
 
+      
         $q = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($sql);
 
         return $q;
