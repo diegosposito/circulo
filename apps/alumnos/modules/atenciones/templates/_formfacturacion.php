@@ -21,44 +21,40 @@
       box-shadow: 5px 5px 8px #CCC;
   }
 </style>
+<script>
+$(document).ready(function(){
+    // add multiple select / deselect functionality
+    $("#selectall").click(function () {
+          $('.case').attr('checked', this.checked);
+    });
+ 
+    // if all checkbox are selected, check the selectall checkbox
+    // and viceversa
+    $(".case").click(function(){
+        if($(".case").length == $(".case:checked").length) {
+            $("#selectall").attr("checked", "checked");
+        } else {
+            $("#selectall").removeAttr("checked");
+        }
+    });   
+    
+});
+
+</script>
 <style type="text/css">
   p { margin-left:5em; /* Or another measurement unit, like px */ }
 </style>
-<h1 align="center" style="color:black;">Facturación</h1>
+<h1 align="center" style="color:black;">Detalle de atenciones abiertas de : <?php echo $profesional ?></h1>
 <br>
 <div align="center">
-<!--<form action="<?php echo url_for('atenciones/editar?id='.$paciente->getId()) ?>" method="post">
+<form action="<?php echo url_for('atenciones/editar?id='.$paciente->getId()) ?>" method="post">
   <input type="hidden" name="selectedtab" id="selectedtab" value="<?php echo $selectedtab ?>">
 <table cellspacing="0" class="stats" width="80%">
-<tr>
-<td><b>Apellido:</b></td>
-<td align="left"><INPUT type="text" id="idbuscarname" name="idbuscarname" size="30" value="<?php echo  $criterio  ?>"></td>
-</tr>
-<tr>
-<?php $tipobusqueda = array(1 => 'Apellido', 2 => 'D.N.I.'); ?>
-<td><b>Tipo búsqueda:</b></td>
-<td align="left">
-  <SELECT name="idtipobusqueda" id="idtipobusqueda">
-  <?php if (count($tipobusqueda) > 0) {
-    //el bucle para cargar las opciones
-    echo "<option value='0' selected='selected' >----SELECCIONAR----</option>";
-    foreach ($tipobusqueda as $k => $v){
-      if($k==$idtipobusqueda){
-          echo "<option value=".$k ." selected='selected'>".$v."</option>";
-      } else {
-          echo "<option value=".$k .">".$v."</option>";
-      }
-    }
-  } ?>
-  </SELECT>
-</td>
-</tr>
-
 <tr>
 <td colspan="2" align="center"><input type="submit" value="Buscar" /></td>
 </tr>
 </table>
-</form>  -->
+
 
 <?php if (count($atencioness) > 0){ ?>
 <table cellspacing="0" class="stats">
@@ -66,21 +62,21 @@
       <td colspan="6" width="100%">Se han encontrado <?php echo count($atencioness); ?> coincidencias de la búsqueda.</td>
     </tr>
     <tr>
+      <td align="center" class="hed"><input type="checkbox" id="selectall" checked /></td>
       <td width="10%" align="center" class="hed">Matricula</td>
       <td width="10%" align="center" class="hed">Mes</td>
       <td width="10%" align="center" class="hed">Año</td>
       <td width="10%" align="center" class="hed">Fecha</td>
       <td width="15%" align="center" class="hed">Tratamiento</td>
       <td width="15%" align="center" class="hed">Importe</td>
-      <td width="15%" align="center" class="hed">EstadoPago</td>
-      <td colspan="2" width="15%" align="center" class="hed">Edicion</td>
     </tr>
   </thead>
   <tbody>
           <?php $i=0; ?>
-    <?php foreach($atencioness as $item){
+    <?php foreach($atencioness as $item){ 
       $fecha_formateada = date("d/m/Y", strtotime($item['fecha'])); ?>
     <tr class="fila_<?php echo $i%2 ; ?>">
+      <td align="center"><input type="checkbox" class="case" name="case[]" value="<?php echo $item['id'] ?>" <?php echo ($item['id'])?"checked":""; ?> /></td>
       <?php if ($item['idprofesional']==$idprofesional || $superadmin) { ?>
         <td width="10%" align="center"><?php echo $item['matricula'] ?></td>
       <?php } else { ?>
@@ -91,19 +87,7 @@
       <td width="20%" align="center"><?php echo $fecha_formateada ?></td>
       <td width="25%" align="center"><?php echo $item['tratamiento'] ?></td>
       <td width="15%" align="center"><?php echo $item['importe'] ?></td>
-      <td width="15%" align="center"><?php echo $item['estadopago'] ?></td>
-      <?php if (($item['idprofesional']==$idprofesional || $sf_user->getGuardUser()->getIsSuperAdmin()) && $item['idestadoatencion']==1) { ?>
-        <td width="20%" align="center"> <a title="Editar registro" href="<?php echo url_for('atenciones/edit?id='.$item['id'].'&idpaciente='.$paciente->getId()) ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/edit.png' align='center' size='20'  height='20' width="20"  /></a></td>
-      <?php } else { ?>
-        <td width="20%" align="center"><?php echo '-' ?></td>
-      <?php  } ?>
-      <?php if (($item['idprofesional']==$idprofesional || $sf_user->getGuardUser()->getIsSuperAdmin()) && $item['idestadoatencion']==1) { ?>
-        <td width="20%" align="center"> <a title="Eliminar registro" href="<?php echo url_for('atenciones/delete?id='.$item['id']) ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/delete.png' align='center' size='20'  height='20' width="20"  /></a></td>
-      <?php } else { ?>
-        <td width="20%" align="center"><?php echo '-' ?></td>
-      <?php  } ?>
-
-
+      
     </tr>
           <?php $i++; ?>
     <?php } ?>
@@ -111,6 +95,7 @@
    <br>
   </tbody>
 </table>
+</form>  
 <br>
 <?php } ?>
 </div>
