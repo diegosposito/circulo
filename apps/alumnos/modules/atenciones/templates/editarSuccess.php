@@ -218,7 +218,7 @@ include_partial('formpaciente', array('form' => $form, 'paciente' => $paciente, 
 
 <div id="Facturacion" class="tabcontent">
  <?php // include_partial('formedit', array('form' => $form, 'paciente' => $paciente, 'atencioness' => $atencioness, 'selectedtab' => $selectedtab)) ?>
- <?php include_partial('formfacturacion', array('form' => $form, 'paciente' => $paciente, 'atencioness' => $atencioness, 'idprofesional' => $idprofesional, 'superadmin' => $superadmin , 'selectedtab' => $selectedtab)) ?>
+ <?php include_partial('formfacturacion', array('form' => $form, 'paciente' => $paciente, 'atencioness' => $atencionessa, 'idprofesional' => $idprofesional, 'profesional' => $profesional, 'superadmin' => $superadmin , 'selectedtab' => $selectedtab)) ?>
 </div>
 
 <div id="Odontograma" class="tabcontent">
