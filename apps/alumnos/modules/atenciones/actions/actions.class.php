@@ -239,6 +239,7 @@ class atencionesActions extends sfActions
     // Obtener usuario logueado
     $user_id = $this->getUser()->getGuardUser()->getId();
     $persona = Doctrine_Core::getTable('Personas')->obtenerProfesionalxUser($user_id);
+    $this->profesional = $persona[0]['apellido'].', '.$persona[0]['nombre'];
     $this->idprofesional = $persona[0]['idpersona'];
 
      $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerAtencionesPorPaciente($request->getParameter('id'));
