@@ -243,6 +243,10 @@ class atencionesActions extends sfActions
 
      $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerAtencionesPorPaciente($request->getParameter('id'));
 
+    // Obtener atenciones abiertas por profesional
+      $arrFiltro = array('idmatricula'=> $persona[0]['matricula'], 'idestadoatencion' => '1');
+      $this->atencionessa = Doctrine_Core::getTable('Atenciones')->obtenerDetalleAtencionesFiltro($arrFiltro);
+
      if ($request->getParameter('idatencion')>0){
        $this->forward404Unless($atencion = Doctrine_Core::getTable('Atenciones')->find(array($request->getParameter('idatencion'))), sprintf('Object atenciones does not exist (%s).', $request->getParameter('id')));
        $this->formatenciones = new AtencionesForm($atencion);
