@@ -47,12 +47,14 @@ $(document).ready(function(){
 <h1 align="center" style="color:black;">Detalle de atenciones abiertas de : <?php echo $profesional ?></h1>
 <br>
 <div align="center">
-<form action="<?php echo url_for('atenciones/editar?id='.$paciente->getId()) ?>" method="post">
+<form action="<?php echo url_for('atenciones/mostrarfactura') ?>" method="post">
   <input type="hidden" name="selectedtab" id="selectedtab" value="<?php echo $selectedtab ?>">
 <table cellspacing="0" class="stats" width="80%">
+<?php if(!$superadmin) { ?>
 <tr>
-<td colspan="2" align="center"><input type="submit" value="Buscar" /></td>
+<td colspan="2" align="center"><input type="submit" value="Facturar Seleccionados" /></td>
 </tr>
+<?php } ?>
 </table>
 
 
@@ -63,9 +65,7 @@ $(document).ready(function(){
     </tr>
     <tr>
       <td align="center" class="hed"><input type="checkbox" id="selectall" checked /></td>
-      <td width="10%" align="center" class="hed">Matricula</td>
-      <td width="10%" align="center" class="hed">Mes</td>
-      <td width="10%" align="center" class="hed">Año</td>
+      <td width="50%" align="center" class="hed">Paciente</td>
       <td width="10%" align="center" class="hed">Fecha</td>
       <td width="15%" align="center" class="hed">Tratamiento</td>
       <td width="15%" align="center" class="hed">Importe</td>
@@ -77,13 +77,7 @@ $(document).ready(function(){
       $fecha_formateada = date("d/m/Y", strtotime($item['fecha'])); ?>
     <tr class="fila_<?php echo $i%2 ; ?>">
       <td align="center"><input type="checkbox" class="case" name="case[]" value="<?php echo $item['id'] ?>" <?php echo ($item['id'])?"checked":""; ?> /></td>
-      <?php if ($item['idprofesional']==$idprofesional || $superadmin) { ?>
-        <td width="10%" align="center"><?php echo $item['matricula'] ?></td>
-      <?php } else { ?>
-        <td width="10%" align="center"><?php echo '-' ?></td>
-      <?php  } ?>
-      <td width="10%" align="center"><?php echo $item['mesdetalle'] ?></td>
-      <td width="10%" align="center"><?php echo $item['anio'] ?></td>
+      <td width="50%" align="center"><?php echo $item['paciente'] ?></td>
       <td width="20%" align="center"><?php echo $fecha_formateada ?></td>
       <td width="25%" align="center"><?php echo $item['tratamiento'] ?></td>
       <td width="15%" align="center"><?php echo $item['importe'] ?></td>
