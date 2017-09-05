@@ -57,6 +57,25 @@ class AtencionesTable extends Doctrine_Table
         return $q;
     }
 
+     // crear recibos de personas seleccionadas
+    public static function marcarComoFacturados($arrAtenciones)
+    {
+
+        // Definir elemenos para filtrar por IN
+        $datos=''; $cantidad=0;
+        foreach($arrAtenciones as $info)
+            $datos .= $info.', ';
+
+        $datos = substr($datos, 0, strlen($datos)-2);
+
+        // actualizar designaciones
+        $sql = "UPDATE atenciones set idestadopago = 3 WHERE id IN (".$datos.");";
+
+        $q = Doctrine_Manager::getInstance()->getCurrentConnection();
+
+        return $q->execute($sql);
+    }
+
     // Obtener obras sociales
     public static function obtenerAtencionesPorProfesionalPeriodo($matricula, $idmes=NULL, $idanio=NULL, $idestado=NULL, $orden=1)
     {
@@ -146,7 +165,16 @@ class AtencionesTable extends Doctrine_Table
         if($arrFiltros['idmes'] <> '')
             $sql .=  " AND at.mes = ".$arrFiltros['idmes']." ";
 
-      
+        if(count($arrFiltros['idatenciones']) >0 ){
+            $datos='';
+            foreach($arrFiltros['idatenciones'] as $info)
+               $datos .= $info.', ';
+
+            $datos = substr($datos, 0, strlen($datos)-2);
+
+            $sql .=  " AND at.id IN (".$datos.") ";
+        }
+
         $q = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($sql);
 
         return $q;
