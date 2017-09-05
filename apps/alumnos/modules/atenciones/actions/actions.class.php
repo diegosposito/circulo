@@ -257,6 +257,55 @@ class atencionesActions extends sfActions
      // TERCER TAB
   }
 
+  public function executeMostrarfactura(sfWebRequest $request)
+  {
+     $atenciones_seleccionadas = $request->getParameter('case');
+     $arrAtenciones = array();
+      
+    if(count($atenciones_seleccionadas) > 0) {
+      foreach ($atenciones_seleccionadas as $atencion) {
+        if($atencion>0)
+          $arrAtenciones[] = $atencion;
+      }
+    }
+
+    $arrFiltro = array('idatenciones'=> $arrAtenciones);
+
+    $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerDetalleAtencionesFiltro($arrFiltro);
+
+ 
+  }
+
+  public function executeFacturar(sfWebRequest $request)
+  {
+     $atenciones_seleccionadas = $request->getParameter('case');
+     $arrAtenciones = array();
+      
+    if(count($atenciones_seleccionadas) > 0) {
+      foreach ($atenciones_seleccionadas as $atencion) {
+        if($atencion>0)
+          $arrAtenciones[] = $atencion;
+      }
+    
+    
+
+    // FALTA AGREGAR EL TOTAL EN UNA NUEVA TABLA DE FACTURAS 
+
+    // Luego agregar el idfactura en atenciones 
+    Doctrine_Core::getTable('Atenciones')->marcarComoFacturados($arrAtenciones, $idfactura);
+
+    if (!$pacientes->getActivo())  $this->redirect('atenciones/edit');  // tiene que estar activo para editarlo
+
+       if($request->getParameter('selectedtab')>0)
+        $this->selectedtab = $request->getParameter('selectedtab');
+     else {
+        $this->selectedtab = '1';
+     }
+
+    }
+     // TERCER TAB
+  }
+
   public function executeConsultar(sfWebRequest $request)
   {
 
