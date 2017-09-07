@@ -139,7 +139,7 @@ class AtencionesTable extends Doctrine_Table
             return $q;
         }
 
-     // Obtener detalle de atenciones segun criterio
+    // Obtener detalle de atenciones segun criterio
     public static function obtenerDetalleAtencionesFiltro($arrFiltros, $arrGroup=null, $arrOrder=null)
     {
         $sql ="SELECT at.id, at.mes, at.anio, CONCAT(LPAD(at.mes,2,'0'),'-',at.anio) as periodo, at.matricula, at.importe, at.coseguro, at.bono, at.importeos,at.pieza, at.caras, at.idtratamiento, at.tratamiento, at.idobrasocial,
@@ -168,6 +168,9 @@ class AtencionesTable extends Doctrine_Table
         if($arrFiltros['idmes'] <> '')
             $sql .=  " AND at.mes = ".$arrFiltros['idmes']." ";
 
+         if($arrFiltros['idfacturacion'] <> '')
+            $sql .=  " AND at.idfacturacion = ".$arrFiltros['idfacturacion']." ";
+
         if(count($arrFiltros['idatenciones']) >0 ){
             $datos='';
             foreach($arrFiltros['idatenciones'] as $info)
@@ -176,6 +179,32 @@ class AtencionesTable extends Doctrine_Table
             $datos = substr($datos, 0, strlen($datos)-2);
 
             $sql .=  " AND at.id IN (".$datos.") ";
+        }
+
+        $q = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($sql);
+
+        return $q;
+    }
+
+    // Obtener detalle de facturas segun criterio
+    public static function obtenerFacturasFiltro($arrFiltros, $arrGroup=null, $arrOrder=null)
+    {
+        $sql ="SELECT fact.id, fact.matricula, fact.fecha, fact.importe FROM facturaciones fact WHERE 1=1 ";
+
+        if($arrFiltros['matricula'] <> '')
+            $sql .=  " AND fact.matricula = ".$arrFiltros['matricula']." ";
+
+        if($arrFiltros['anio'] <> '')
+            $sql .=  " AND YEAR(fact.fecha) = ".$arrFiltros['anio']." ";
+
+        if(count($arrFiltros['idfacturaciones']) >0 ){
+            $datos='';
+            foreach($arrFiltros['idfacturaciones'] as $info)
+               $datos .= $info.', ';
+
+            $datos = substr($datos, 0, strlen($datos)-2);
+
+            $sql .=  " AND fact.id IN (".$datos.") ";
         }
 
         $q = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($sql);
