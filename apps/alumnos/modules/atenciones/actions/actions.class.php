@@ -241,12 +241,15 @@ class atencionesActions extends sfActions
     $persona = Doctrine_Core::getTable('Personas')->obtenerProfesionalxUser($user_id);
     $this->profesional = $persona[0]['apellido'].', '.$persona[0]['nombre'];
     $this->idprofesional = $persona[0]['idpersona'];
+    $this->matricula = $persona[0]['matricula'];
 
      $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerAtencionesPorPaciente($request->getParameter('id'));
+     $this->idpaciente = $request->getParameter('id');
 
     // Obtener atenciones abiertas por profesional
       $arrFiltro = array('idmatricula'=> $persona[0]['matricula'], 'idestadoatencion' => '1', 'idestadopago' => '1');
       $this->atencionessa = Doctrine_Core::getTable('Atenciones')->obtenerDetalleAtencionesFiltro($arrFiltro);
+
 
      if ($request->getParameter('idatencion')>0){
        $this->forward404Unless($atencion = Doctrine_Core::getTable('Atenciones')->find(array($request->getParameter('idatencion'))), sprintf('Object atenciones does not exist (%s).', $request->getParameter('id')));
@@ -315,6 +318,39 @@ class atencionesActions extends sfActions
     }
    
   }
+
+  public function executeVerhistorialfacturacion(sfWebRequest $request)
+  {
+    
+    $this->superadmin = false;
+    if ($this->getUser()->getGuardUser()->getIsSuperAdmin())
+        $this->superadmin = true;
+
+     $matricula = $request->getParameter('matricula');
+     
+     $arrFiltro = array('matricula'=> $matricula);
+
+     $this->facturacionss = Doctrine_Core::getTable('Atenciones')->obtenerFacturasFiltro($arrFiltro);
+     $this->idpaciente = $request->getParameter('idpaciente');
+
+  }
+
+  public function executeVerdetallefacturacion(sfWebRequest $request)
+  {
+    
+    $this->superadmin = false;
+    if ($this->getUser()->getGuardUser()->getIsSuperAdmin())
+        $this->superadmin = true;
+
+    $arrFiltro = array('idfacturacion'=> $request->getParameter('id'));
+
+    $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerDetalleAtencionesFiltro($arrFiltro);
+
+    $this->idfactura = $request->getParameter('id');
+
+
+  }
+
 
   public function executeConsultar(sfWebRequest $request)
   {
