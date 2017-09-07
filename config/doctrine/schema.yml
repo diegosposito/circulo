@@ -2750,7 +2750,7 @@ Atenciones:
     idautorizacion: { type: integer, primary: false, default: '1' }
     idestadoatencion: { type: integer, primary: false, default: '1' }
     idestadopago: { type: integer, primary: false, default: '1' }
-    idfacturacion: { type: integer, primary: false, default: '1' }
+    idfacturacion: { type: integer, primary: false, default: null }
     autorizada: { type: boolean, notnull: true, default: 1 }
     anotacion: { type: string(4000), notnull: true }
     nombrearchivo: { type: string(200), primary: false, autoincrement: false, default: '' }
@@ -2777,4 +2777,4 @@ Facturaciones:
     id: { type: integer, primary: true, autoincrement: true }
     matricula: { type: string(10), primary: false, autoincrement: false, default: '' }
     fecha: { type: date(25), primary: false, notnull: true, default: '2002-01-01' }
-    importe: { type: string(25) }      
+    importe: { type: float, primary: false, notnull: true, default: '' }
