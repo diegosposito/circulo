@@ -58,7 +58,7 @@ class AtencionesTable extends Doctrine_Table
     }
 
      // crear recibos de personas seleccionadas
-    public static function marcarComoFacturados($arrAtenciones)
+    public static function marcarComoFacturados($arrAtenciones, $idfactura)
     {
 
         // Definir elemenos para filtrar por IN
@@ -69,7 +69,7 @@ class AtencionesTable extends Doctrine_Table
         $datos = substr($datos, 0, strlen($datos)-2);
 
         // actualizar designaciones
-        $sql = "UPDATE atenciones set idestadopago = 3 WHERE id IN (".$datos.");";
+        $sql = "UPDATE atenciones set idestadopago = 3, idfacturacion = ".$idfactura." WHERE id IN (".$datos.");";
 
         $q = Doctrine_Manager::getInstance()->getCurrentConnection();
 
@@ -158,6 +158,9 @@ class AtencionesTable extends Doctrine_Table
 
         if($arrFiltros['idestadoatencion'] <> '')
             $sql .=  " AND at.idestadoatencion = ".$arrFiltros['idestadoatencion']." ";
+
+        if($arrFiltros['idestadopago'] <> '')
+            $sql .=  " AND at.idestadopago = ".$arrFiltros['idestadopago']." ";
 
         if($arrFiltros['anio'] <> '')
             $sql .=  " AND at.anio = ".$arrFiltros['anio']." ";
