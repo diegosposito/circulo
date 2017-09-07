@@ -245,7 +245,7 @@ class atencionesActions extends sfActions
      $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerAtencionesPorPaciente($request->getParameter('id'));
 
     // Obtener atenciones abiertas por profesional
-      $arrFiltro = array('idmatricula'=> $persona[0]['matricula'], 'idestadoatencion' => '1');
+      $arrFiltro = array('idmatricula'=> $persona[0]['matricula'], 'idestadoatencion' => '1', 'idestadopago' => '1');
       $this->atencionessa = Doctrine_Core::getTable('Atenciones')->obtenerDetalleAtencionesFiltro($arrFiltro);
 
      if ($request->getParameter('idatencion')>0){
@@ -286,24 +286,34 @@ class atencionesActions extends sfActions
         if($atencion>0)
           $arrAtenciones[] = $atencion;
       }
+
+      $arrFiltro = array('idatenciones'=> $arrAtenciones);
+
+      $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerDetalleAtencionesFiltro($arrFiltro);
+
+      $total =  0; $matricula=0;
+      foreach($this->atencioness as $atencion){
+         $total+= $atencion['importe'];
+         $matricula = $atencion['matricula'];
+      }
+
+    // Grabar factura con importe total
+      $factura = new Facturaciones();
+      $factura->setMatricula($matricula);
+      $factura->setFecha(date('Y-m-j'));
+      // $fecha = $request->getPostParameter('atenciones[fecha][year]').'-'.$request->getPostParameter('atenciones[fecha][month]').'-'.$request->getPostParameter('atenciones[fecha][day]');
+      // $atenciones->setFecha($fecha);
+      $factura->setImporte($total);
+      $factura->save();
+      $idfactura = $factura->getId();
     
-    
+      // Luego agregar el idfactura en atenciones 
+      Doctrine_Core::getTable('Atenciones')->marcarComoFacturados($arrAtenciones, $idfactura);
 
-    // FALTA AGREGAR EL TOTAL EN UNA NUEVA TABLA DE FACTURAS 
-
-    // Luego agregar el idfactura en atenciones 
-    Doctrine_Core::getTable('Atenciones')->marcarComoFacturados($arrAtenciones, $idfactura);
-
-    if (!$pacientes->getActivo())  $this->redirect('atenciones/edit');  // tiene que estar activo para editarlo
-
-       if($request->getParameter('selectedtab')>0)
-        $this->selectedtab = $request->getParameter('selectedtab');
-     else {
-        $this->selectedtab = '1';
-     }
+      $this->redirect('atenciones/index');  // tiene que estar activo para editarlo
 
     }
-     // TERCER TAB
+   
   }
 
   public function executeConsultar(sfWebRequest $request)
