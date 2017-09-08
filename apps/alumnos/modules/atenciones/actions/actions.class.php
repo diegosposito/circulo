@@ -326,7 +326,13 @@ class atencionesActions extends sfActions
     if ($this->getUser()->getGuardUser()->getIsSuperAdmin())
         $this->superadmin = true;
 
-     $matricula = $request->getParameter('matricula');
+     // Obtener usuario logueado
+    $user_id = $this->getUser()->getGuardUser()->getId();
+    $persona = Doctrine_Core::getTable('Personas')->obtenerProfesionalxUser($user_id);
+    $matricula = $persona[0]['matricula'];
+    $this->persona = $persona[0]['apellido'].', '.$persona[0]['nombre'];
+
+    // $matricula = $request->getParameter('matricula');
      
      $arrFiltro = array('matricula'=> $matricula);
 
@@ -342,12 +348,17 @@ class atencionesActions extends sfActions
     if ($this->getUser()->getGuardUser()->getIsSuperAdmin())
         $this->superadmin = true;
 
-    $arrFiltro = array('idfacturacion'=> $request->getParameter('id'));
+    $id = $request->getParameter('id');
+    $method = "aes-256-cbc";
+    $password = '1,3,5,7,9,abc';
+
+    $idfacturacion = openssl_decrypt($id, $method, $password);
+    
+    $arrFiltro = array('idfacturacion'=> $idfacturacion);
 
     $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerDetalleAtencionesFiltro($arrFiltro);
 
-    $this->idfactura = $request->getParameter('id');
-
+    $this->idfactura = $idfacturacion;
 
   }
 
