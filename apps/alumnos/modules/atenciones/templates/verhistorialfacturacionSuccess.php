@@ -46,20 +46,41 @@ $(document).ready(function(){
 </style>
 <br>
 <h1 align="center" style="color:black;">Ver Historial de Facturación de : <?php echo $persona ?></h1>
-<div align="center">
-
 <a href="<?php echo url_for('atenciones/index') ?>"><?php echo "<< Volver" ?></a>
+<div align="center">
+<form action="<?php echo url_for('atenciones/verhistorialfacturacion') ?>" method="post">
+  <input type="hidden" name="selectedtab" id="selectedtab" value="<?php echo $selectedtab ?>">
+<table cellspacing="0" class="stats" width="30%">
+<tr>
+<td align="center">
+  <SELECT name="idAnio" id="idAnio">
+  <?php
+    //el bucle para cargar las opciones
+    foreach ($aAnios as $k => $v){
+      if($k==$idAnio){
+          echo "<option value=".$k ." selected='selected'>".$v."</option>";
+      } else {
+          echo "<option value=".$k .">".$v."</option>";
+      }
+    }
+  ?>
+  </SELECT>
+</td>
+</tr>
+<tr>
+<td colspan="2" align="center"><input type="submit" value="Actualizar" /></td>
+</tr>
+</table>
 
 <?php if (count($facturacionss) > 0){ ?>
 <table cellspacing="0" class="stats">
-    <tr>
-      <td colspan="6" width="100%">Se han encontrado <?php echo count($facturacionss); ?> coincidencias de la búsqueda.</td>
-    </tr>
+   
     <tr>
       <td width="25%" align="center" class="hed">Nro Factura</td>
       <td width="25%" align="center" class="hed">Fecha</td>
       <td width="25%" align="center" class="hed">Importe</td>
-      <td width="25%" align="center" class="hed">Ver Detalle</td>
+      <td width="15%" align="center" class="hed">Ver Detalle</td>
+      <td width="10%" align="center" class="hed">Imprimir</td>
     </tr>
   </thead>
   <tbody>
@@ -76,6 +97,9 @@ $(document).ready(function(){
         $id_encriptado = openssl_encrypt($item['id'], $method, $password);
       ?>
     <td align="center"><?php echo link_to("Ver Detalle", 'atenciones/verdetallefacturacion?id='.$id_encriptado ,'class="mhead"'); ?></td>
+    
+    <td width="20%" align="center"> <a target=_blank href="<?php echo url_for('atenciones/imprimirfact?id='.$item['id']) ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/print.png' align='center' size='20'  height='20' width="20"  /></a></td>
+
       <?php $total += $item['importe']; ?>
       
     </tr>
