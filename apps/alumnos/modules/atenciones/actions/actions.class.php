@@ -322,6 +322,17 @@ class atencionesActions extends sfActions
   public function executeVerhistorialfacturacion(sfWebRequest $request)
   {
     
+    $aniohasta = date ("Y");
+    $aniodesde = $aniohasta - 25;
+    $this->aAnios = array();
+
+    for( $i= $aniohasta ; $i >= $aniodesde ; $i-- )
+    {
+      $this->aAnios[$i] =  $i;
+    }
+
+    $this->idAnio = $request->getParameter('idAnio');
+
     $this->superadmin = false;
     if ($this->getUser()->getGuardUser()->getIsSuperAdmin())
         $this->superadmin = true;
@@ -334,10 +345,19 @@ class atencionesActions extends sfActions
 
     // $matricula = $request->getParameter('matricula');
      
-     $arrFiltro = array('matricula'=> $matricula);
+     $arrFiltro = array('matricula'=> $matricula, 'anio'=> $this->idAnio);
 
-     $this->facturacionss = Doctrine_Core::getTable('Atenciones')->obtenerFacturasFiltro($arrFiltro);
+     $arrGroup = array('iddesc'=> 'iddesc');
+
+     $this->facturacionss = Doctrine_Core::getTable('Atenciones')->obtenerFacturasFiltro($arrFiltro, NULL, $arrGroup);
      $this->idpaciente = $request->getParameter('idpaciente');
+
+  }
+
+  public function executeImprimirfact(sfWebRequest $request)
+  {
+    
+    echo "hola";exit;
 
   }
 
