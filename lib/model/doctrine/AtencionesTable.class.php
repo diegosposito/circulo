@@ -207,6 +207,9 @@ class AtencionesTable extends Doctrine_Table
             $sql .=  " AND fact.id IN (".$datos.") ";
         }
 
+        if($arrOrder['iddesc'] <> '')
+            $sql .=  " ORDER BY fact.id DESC ";
+
         $q = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($sql);
 
         return $q;
