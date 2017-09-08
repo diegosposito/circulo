@@ -44,11 +44,11 @@ $(document).ready(function(){
 <style type="text/css">
   p { margin-left:5em; /* Or another measurement unit, like px */ }
 </style>
-<h1 align="center" style="color:black;">Detalle de atenciones abiertas de : <?php echo $profesional ?></h1>
 <br>
+<h1 align="center" style="color:black;">Ver Historial de Facturación de : <?php echo $persona ?></h1>
 <div align="center">
 
-<a href="<?php echo url_for('atenciones/editar?id='.$idpaciente) ?>"><?php echo "<< Volver" ?></a>
+<a href="<?php echo url_for('atenciones/index') ?>"><?php echo "<< Volver" ?></a>
 
 <?php if (count($facturacionss) > 0){ ?>
 <table cellspacing="0" class="stats">
@@ -70,7 +70,12 @@ $(document).ready(function(){
       <td width="25%" align="center"><?php echo $item['id'] ?></td>
       <td width="25%" align="center"><?php echo $fecha_formateada ?></td>
       <td width="25%" align="center"><?php echo $item['importe'] ?></td>
-      <td align="center"><?php echo link_to("Ver Detalle", 'atenciones/verdetallefacturacion?id='.$item['id'] ,'class="mhead"'); ?></td>
+      <?php
+        $method = "aes-256-cbc";
+        $password = '1,3,5,7,9,abc';
+        $id_encriptado = openssl_encrypt($item['id'], $method, $password);
+      ?>
+    <td align="center"><?php echo link_to("Ver Detalle", 'atenciones/verdetallefacturacion?id='.$id_encriptado ,'class="mhead"'); ?></td>
       <?php $total += $item['importe']; ?>
       
     </tr>
@@ -78,7 +83,7 @@ $(document).ready(function(){
     <?php } ?>
 
    <tr>
-      <td colspan=2 />Total : </td>
+      <td colspan=3 />Total : </td>
       <td width="15%" align="center" class="hed"><?php echo "$ ".$total; ?></td>
     </tr>
 
