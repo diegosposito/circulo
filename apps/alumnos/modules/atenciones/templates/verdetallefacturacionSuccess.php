@@ -45,6 +45,7 @@ $(document).ready(function(){
   p { margin-left:5em; /* Or another measurement unit, like px */ }
 </style>
 <br>
+<?php echo link_to("<< Volver", 'atenciones/verhistorialfacturacion' ,'class="mhead"'); ?>
 <h1 align="center" style="color:black;">Factura Nro. : <?php echo $idfactura ?></h1>
 <div align="center">
 <?php if (count($atencioness) > 0){ ?>
