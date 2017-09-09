@@ -354,15 +354,10 @@ class atencionesActions extends sfActions
 
   }
 
-  public function executeImprimirfact(sfWebRequest $request)
-  {
-    
-    echo "hola";exit;
+ 
 
-  }
-
-  public function executeVerdetallefacturacion(sfWebRequest $request)
-  {
+public function executeVerdetallefacturacion(sfWebRequest $request)
+{
     
     $this->superadmin = false;
     if ($this->getUser()->getGuardUser()->getIsSuperAdmin())
@@ -380,7 +375,7 @@ class atencionesActions extends sfActions
 
     $this->idfactura = $idfacturacion;
 
-  }
+ }
 
 
   public function executeConsultar(sfWebRequest $request)
@@ -844,4 +839,101 @@ class atencionesActions extends sfActions
       $this->redirect('atenciones/edit?id='.$atenciones->getId());
     }
   }
+
+// IMPRIMIR FACTURA
+
+  public function executeImprimirfact(sfWebRequest $request)
+      {
+        
+          //$pdf = new PDF();
+          $pdf = new PDF('P','mm',array(148,210));
+          $pdf->setlinewidth(0);
+
+          $company = 'Compania';
+          $address = 'Direccion';
+          $email = 'spositod@gmail.com';
+          $telephone = '123-56-789';
+          $number = '123-321';
+          $item = 'item';
+          $price = '35.50';
+          $vat = 'vat';
+          $bank = 'bank';
+          $iban = 'iban';
+          $paypal = 'paypal';
+          $com = 'com';
+          $pay = 'Payment information';
+          $price = str_replace(",",".",$price);
+          $vat = str_replace(",",".",$vat);
+          $p = explode(" ",$price);
+          $v = explode(" ",$vat);
+          $re = $p[0] + $v[0];
+
+          $pdf->SetFont('Times','B',9);
+        //  $pdf->AliasNbPages();
+          $pdf->AddPage();
+          $pdf->Image('images/cop.jpeg',15,15,40);
+          $pdf->SetFont('Times','',9);
+          $pdf->SetTextColor(32);
+          $pdf->Cell(0,5,'REGISTRO DE PRESTACIONES ODONTOLOGICAS',0,1,'L');
+          $pdf->Cell(0,5,$company,0,1,'R');
+          $pdf->Cell(0,5,$address,0,1,'R');
+          $pdf->Cell(0,5,$email,0,1,'R');
+          $pdf->Cell(0,5,'Tel: '.$telephone,0,1,'R');
+          $pdf->Cell(0,30,'',0,1,'R');
+          $pdf->SetFillColor(200,220,255);
+          $this->ChapterTitle('Invoice Number ',$number,$pdf);
+          $this->ChapterTitle('Invoice Date ',date('d-m-Y'),$pdf);
+          $pdf->Cell(0,20,'',0,1,'R');
+          $pdf->SetFillColor(224,235,255);
+          $pdf->SetDrawColor(192,192,192);
+          $pdf->Cell(170,7,'Item',1,0,'L');
+          $pdf->Cell(20,7,'Price',1,1,'C');
+          $pdf->Cell(170,7,$item,1,0,'L',0);
+          $pdf->Cell(20,7,$price,1,1,'C',0);
+          $pdf->Cell(0,0,'',0,1,'R');
+          $pdf->Cell(170,7,'VAT',1,0,'R',0);
+          $pdf->Cell(20,7,$vat,1,1,'C',0);
+          $pdf->Cell(170,7,'Total',1,0,'R',0);
+          $pdf->Cell(20,7,$re." $",1,0,'C',0);
+          $pdf->Cell(0,20,'',0,1,'R');
+          $pdf->Cell(0,5,$pay,0,1,'L');
+          $pdf->Cell(0,5,$bank,0,1,'L');
+          $pdf->Cell(0,5,$iban,0,1,'L');
+          $pdf->Cell(0,20,'',0,1,'R');
+          $pdf->Cell(0,5,'PayPal:',0,1,'L');
+          $pdf->Cell(0,5,$paypal,0,1,'L');
+          $pdf->Cell(90,25,$com,0,0,'C');
+          $filename="invoice.pdf";
+          $pdf->Output($filename,'I');
+
+        //  $pdf->Output('solicitud-baja.pdf', 'I');
+      
+          // Stop symfony process
+          throw new sfStopException();
+
+          return sfView::NONE;
+    }
+
+    function Footer(&$pdf)
+    {
+      $pdf->SetY(-15);
+      $pdf->SetFont('Times','I',8);
+      $pdf->Cell(0,10,'Page '.$pdf->PageNo().'/{nb}',0,0,'C');
+    }
+
+    function ChapterTitle($num, $label,&$pdf)
+    {
+      $pdf->SetFont('Times','',9);
+      //$pdf->SetFillColor(200,220,255);
+      $pdf->Cell(0,6,"$num $label",0,1,'L',true);
+      //$pdf->Ln(0);
+    }
+
+    function ChapterTitle2($num, $label,&$pdf)
+    {
+        $pdf->SetFont('Times','',9);
+        //$pdf->SetFillColor(249,249,249);
+        $pdf->Cell(0,6,"$num $label",0,1,'L',true);
+        //$pdf->Ln(0);
+    }
 }
