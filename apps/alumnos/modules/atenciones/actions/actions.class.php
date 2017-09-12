@@ -871,6 +871,28 @@ public function executeVerdetallefacturacion(sfWebRequest $request)
           $pdf->SetFont('Times','B',9);
         //  $pdf->AliasNbPages();
           $pdf->AddPage();
+          $pdf->SetY(20);
+          $pdf->SetX(60);
+          $html='<table border="1" style="width:230px">
+                  <tr>
+                     <td style="height:35px;" witdth="10" colspan="10">demo</td><td style="height:25px;" colspan="11">ver</td>
+                  </tr>
+                  <tr>
+                     <td colspan="15">a</td><td colspan="6">v</td>
+                  </tr>
+                  <tr>
+                  <td>1</td><td>2</td><td>4</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> 
+                  </tr>
+                </table>';
+
+         $pdf->WriteHTML($html);      
+
+          $header=array('Columna 1','Columna 2','Columna 3','Columna 4');
+          $pdf->AliasNbPages();
+          $pdf->SetY(65);
+          $this->TablaSimple($header, $pdf);
+          $this->TablaSimple($header, $pdf);
+
           $pdf->Image('images/cop.jpeg',15,15,40);
           $pdf->SetFont('Times','',9);
           $pdf->SetTextColor(32);
@@ -913,6 +935,26 @@ public function executeVerdetallefacturacion(sfWebRequest $request)
 
           return sfView::NONE;
     }
+
+   function TablaSimple($header, &$pdf)
+   {
+    //Cabecera
+    $x = 20; $y=0;
+    $line = 1;
+    foreach($header as $col)
+    $pdf->Cell($x,7,$col,1);
+    $pdf->Ln();
+   
+      $pdf->Cell($x,$y,"hola",$line);
+      $pdf->Cell($x,$y,"hola2",$line);
+      $pdf->Cell($x,$y,"hola3",$line);
+      $pdf->Cell($x,$y,"hola4",$line);
+      $pdf->Ln();
+      $pdf->Cell($x,$y,"linea ",$line);
+      $pdf->Cell($x,$y,"linea 2",$line);
+      $pdf->Cell($x,$y,"linea 3",$line);
+      $pdf->Cell($x,$y,"linea 4",$line);
+   }
 
     function Footer(&$pdf)
     {
