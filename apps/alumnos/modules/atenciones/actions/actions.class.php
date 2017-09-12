@@ -847,8 +847,7 @@ public function executeVerdetallefacturacion(sfWebRequest $request)
         
           //$pdf = new PDF();
           $pdf = new PDF('P','mm',array(148,210));
-          $pdf->setlinewidth(0);
-
+         
           $company = 'Compania';
           $address = 'Direccion';
           $email = 'spositod@gmail.com';
@@ -868,63 +867,101 @@ public function executeVerdetallefacturacion(sfWebRequest $request)
           $v = explode(" ",$vat);
           $re = $p[0] + $v[0];
 
-          $pdf->SetFont('Times','B',9);
-        //  $pdf->AliasNbPages();
+          // setear fuente y agregar una pagina
+          $pdf->SetFont('Times','',9);
           $pdf->AddPage();
+
+          $pdf->setX(60);
+          $pdf->setY(15);
+          $pdf->Cell(0,5,'REGISTRO DE PRESTACIONES ODONTOLOGICAS',0,1,'L');
+
+
           $pdf->SetY(20);
-          $pdf->SetX(60);
-          $html='<table border="1" style="width:230px">
+          $pdf->SetX(55);
+
+          // TABLA de ficha nro arriba derecha
+          $html='<table border="1" style="width:250px">
                   <tr>
-                     <td style="height:35px;" witdth="10" colspan="10">demo</td><td style="height:25px;" colspan="11">ver</td>
+                     <td colspan="10"></td><td colspan="11">Ficha Nro.</td>
                   </tr>
                   <tr>
-                     <td colspan="15">a</td><td colspan="6">v</td>
+                     <td style="height:35px;" colspan="17">OBRA SOCIAL</td><td style="height:25px;" colspan="4">Nro.</td>
                   </tr>
                   <tr>
-                  <td>1</td><td>2</td><td>4</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> 
+                     <td colspan="21">Credencial Plan:</td>
+                  </tr>
+                  <tr>
+                  <td colspan="2" style="height:20px">Nro.</td><td>2</td><td>4</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> 
                   </tr>
                 </table>';
 
-         $pdf->WriteHTML($html);      
+          $pdf->WriteHTML($html); 
 
-          $header=array('Columna 1','Columna 2','Columna 3','Columna 4');
-          $pdf->AliasNbPages();
-          $pdf->SetY(65);
-          $this->TablaSimple($header, $pdf);
-          $this->TablaSimple($header, $pdf);
+          $pdf->setX(70);
+          $pdf->setY(40);
+          $pdf->Cell(0,5,'MES:     Setiembre',0,1,'L');
+          $pdf->Cell(0,5,'AÑO:     2017',0,1,'L');
 
-          $pdf->Image('images/cop.jpeg',15,15,40);
+          $pdf->SetY(50);
+          $pdf->SetX(10);
+
+          // TABLA de informacion del paciente
+          $htmlInfoPaciente='<table border="0.5" style="width:377px;">
+                  <tr style="border-bottom: 1px solid #ccc;">
+                     <td valign="center" style="width:100px;height:20px;">Paciente</td>
+                      <td style="width:150px;"><b>Juan Perez</b></td>
+                      <td style="width:60px;">Tipo y Nro. de Documento</td>
+                      <td style="width:67px;"><b>D.N.I. 34123231</b></td>
+                  </tr>
+                  <tr>
+                     <td style="width:100px;height:20px">Titular &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Si</td>
+                      <td style="width:150px;">Parentesco</td>
+                      <td style="width:60px;">Fecha de Nacimiento</td>
+                      <td style="width:67px;"><b>01/05/1987</b></td>
+                  </tr>
+                  <tr>
+                     <td style="width:100px;height:20px">Domicilio</td>
+                      <td style="width:150px;"><b>Alem 145</b></td>
+                      <td style="width:60px;"></td>
+                      <td style="width:67px;"><b>C.P.3260</b></td>
+                  </tr>
+                  <tr>
+                     <td style="width:100px;height:20px">Localidad</td>
+                      <td style="width:150px;"><b>Concepcion del Uruguay</b></td>
+                      <td style="width:60px;">Teléfono</td>
+                      <td style="width:67px;"><b>3442-15434534</b></td>
+                  </tr>
+                  <tr>
+                     <td style="width:100px;height:20px">Lugar de Trabajo del Titular</td>
+                      <td style="width:150px;"><b>Municipalidad</b></td>
+                      <td style="width:60px;">Jerarquía</td>
+                      <td style="width:67px;"><b>Plan 600</b></td>
+                  </tr>
+                </table>';
+
+           $pdf->WriteHTML($htmlInfoPaciente);       
+    
+
+          $header=array('FECHA','PIEZA Nro.','CARA','CODIGO','CONFORMIDAD','IMPORTE');
+          $pdf->SetY(90);
+          $this->TablaSimple($header, $pdf);
+         
+          $ximage=15; $yimage=20;
+          $pdf->Image('images/cop.jpeg',$ximage,$yimage,40);
+          
+          $total = "Total:                                                                                                                         $350.00";
+          $pdf->SetFont('Times','B',9);
+          $pdf->Cell(0,5, $total,0,1,'L');
           $pdf->SetFont('Times','',9);
-          $pdf->SetTextColor(32);
-          $pdf->Cell(0,5,'REGISTRO DE PRESTACIONES ODONTOLOGICAS',0,1,'L');
-          $pdf->Cell(0,5,$company,0,1,'R');
-          $pdf->Cell(0,5,$address,0,1,'R');
-          $pdf->Cell(0,5,$email,0,1,'R');
-          $pdf->Cell(0,5,'Tel: '.$telephone,0,1,'R');
-          $pdf->Cell(0,30,'',0,1,'R');
-          $pdf->SetFillColor(200,220,255);
-          $this->ChapterTitle('Invoice Number ',$number,$pdf);
-          $this->ChapterTitle('Invoice Date ',date('d-m-Y'),$pdf);
-          $pdf->Cell(0,20,'',0,1,'R');
-          $pdf->SetFillColor(224,235,255);
-          $pdf->SetDrawColor(192,192,192);
-          $pdf->Cell(170,7,'Item',1,0,'L');
-          $pdf->Cell(20,7,'Price',1,1,'C');
-          $pdf->Cell(170,7,$item,1,0,'L',0);
-          $pdf->Cell(20,7,$price,1,1,'C',0);
-          $pdf->Cell(0,0,'',0,1,'R');
-          $pdf->Cell(170,7,'VAT',1,0,'R',0);
-          $pdf->Cell(20,7,$vat,1,1,'C',0);
-          $pdf->Cell(170,7,'Total',1,0,'R',0);
-          $pdf->Cell(20,7,$re." $",1,0,'C',0);
-          $pdf->Cell(0,20,'',0,1,'R');
-          $pdf->Cell(0,5,$pay,0,1,'L');
-          $pdf->Cell(0,5,$bank,0,1,'L');
-          $pdf->Cell(0,5,$iban,0,1,'L');
-          $pdf->Cell(0,20,'',0,1,'R');
-          $pdf->Cell(0,5,'PayPal:',0,1,'L');
-          $pdf->Cell(0,5,$paypal,0,1,'L');
-          $pdf->Cell(90,25,$com,0,0,'C');
+          //$pdf->Cell(0,5,$address,0,1,'R');
+          //$pdf->Cell(0,5,$email,0,1,'R');
+          //$pdf->Cell(0,5,'Tel: '.$telephone,0,1,'R');
+          //$pdf->Cell(0,30,'',0,1,'R');
+          //$pdf->SetFillColor(200,220,255);
+        //  $this->ChapterTitle('Invoice Number ',$number,$pdf);
+        //  $this->ChapterTitle('Invoice Date ',date('d-m-Y'),$pdf);
+
+          // Mostrar PDF
           $filename="invoice.pdf";
           $pdf->Output($filename,'I');
 
@@ -939,21 +976,98 @@ public function executeVerdetallefacturacion(sfWebRequest $request)
    function TablaSimple($header, &$pdf)
    {
     //Cabecera
-    $x = 20; $y=0;
+    $x = 15; $y=0; $xancho = 28; $xanchoextra = 45;
     $line = 1;
-    foreach($header as $col)
-    $pdf->Cell($x,7,$col,1);
+    
+    // encabezado
+      $pdf->Cell($x,$y,$header[0],$line);
+      $pdf->Cell($x,$y,$header[1],$line);
+      $pdf->Cell($x,$y,$header[2],$line);
+      $pdf->Cell($x,$y,$header[3],$line);
+      $pdf->Cell($xanchoextra,$y,$header[4],$line);
+      $pdf->Cell($xancho,$y,$header[5],$line);
     $pdf->Ln();
    
-      $pdf->Cell($x,$y,"hola",$line);
-      $pdf->Cell($x,$y,"hola2",$line);
-      $pdf->Cell($x,$y,"hola3",$line);
-      $pdf->Cell($x,$y,"hola4",$line);
+      $pdf->Cell($x,$y,"1/1/2017",$line);
+      $pdf->Cell($x,$y,"PIEZA 1",$line);
+      $pdf->Cell($x,$y,"CARA 1",$line);
+      $pdf->Cell($x,$y,"CODIGO",$line);
+      $pdf->Cell($xanchoextra,$y,"conforme",$line);
+      $pdf->Cell($xancho,$y,"35.50",$line);
       $pdf->Ln();
-      $pdf->Cell($x,$y,"linea ",$line);
-      $pdf->Cell($x,$y,"linea 2",$line);
-      $pdf->Cell($x,$y,"linea 3",$line);
-      $pdf->Cell($x,$y,"linea 4",$line);
+
+       $pdf->Cell($x,$y,"1/1/2017",$line);
+      $pdf->Cell($x,$y,"PIEZA 2",$line);
+      $pdf->Cell($x,$y,"CARA 1",$line);
+      $pdf->Cell($x,$y,"CODIGO",$line);
+      $pdf->Cell($xanchoextra,$y,"conforme",$line);
+      $pdf->Cell($xancho,$y,"37.50",$line);
+      $pdf->Ln();
+
+       $pdf->Cell($x,$y,"1/1/2017",$line);
+      $pdf->Cell($x,$y,"PIEZA 5",$line);
+      $pdf->Cell($x,$y,"CARA 1",$line);
+      $pdf->Cell($x,$y,"CODIGO",$line);
+      $pdf->Cell($xanchoextra,$y,"conforme",$line);
+      $pdf->Cell($xancho,$y,"45.50",$line);
+      $pdf->Ln();
+
+       $pdf->Cell($x,$y,"1/1/2017",$line);
+      $pdf->Cell($x,$y,"PIEZA 8",$line);
+      $pdf->Cell($x,$y,"CARA 1",$line);
+      $pdf->Cell($x,$y,"CODIGO",$line);
+      $pdf->Cell($xanchoextra,$y,"conforme",$line);
+      $pdf->Cell($xancho,$y,"135.50",$line);
+      $pdf->Ln();
+
+       $pdf->Cell($x,$y,"1/1/2017",$line);
+      $pdf->Cell($x,$y,"PIEZA 15",$line);
+      $pdf->Cell($x,$y,"CARA 1",$line);
+      $pdf->Cell($x,$y,"CODIGO",$line);
+      $pdf->Cell($xanchoextra,$y,"conforme",$line);
+      $pdf->Cell($xancho,$y,"350.50",$line);
+      $pdf->Ln();
+
+       $pdf->Cell($x,$y,"1/1/2017",$line);
+      $pdf->Cell($x,$y,"PIEZA 16",$line);
+      $pdf->Cell($x,$y,"CARA 1",$line);
+      $pdf->Cell($x,$y,"CODIGO",$line);
+      $pdf->Cell($xanchoextra,$y,"conforme",$line);
+      $pdf->Cell($xancho,$y,"375.50",$line);
+      $pdf->Ln();
+
+       $pdf->Cell($x,$y,"1/1/2017",$line);
+      $pdf->Cell($x,$y,"PIEZA 5",$line);
+      $pdf->Cell($x,$y,"CARA 1",$line);
+      $pdf->Cell($x,$y,"CODIGO",$line);
+      $pdf->Cell($xanchoextra,$y,"conforme",$line);
+      $pdf->Cell($xancho,$y,"45.50",$line);
+      $pdf->Ln();
+
+       $pdf->Cell($x,$y,"1/1/2017",$line);
+      $pdf->Cell($x,$y,"PIEZA 8",$line);
+      $pdf->Cell($x,$y,"CARA 1",$line);
+      $pdf->Cell($x,$y,"CODIGO",$line);
+      $pdf->Cell($xanchoextra,$y,"conforme",$line);
+      $pdf->Cell($xancho,$y,"135.50",$line);
+      $pdf->Ln();
+
+       $pdf->Cell($x,$y,"1/1/2017",$line);
+      $pdf->Cell($x,$y,"PIEZA 15",$line);
+      $pdf->Cell($x,$y,"CARA 1",$line);
+      $pdf->Cell($x,$y,"CODIGO",$line);
+      $pdf->Cell($xanchoextra,$y,"conforme",$line);
+      $pdf->Cell($xancho,$y,"350.50",$line);
+      $pdf->Ln();
+
+       $pdf->Cell($x,$y,"1/1/2017",$line);
+      $pdf->Cell($x,$y,"PIEZA 16",$line);
+      $pdf->Cell($x,$y,"CARA 1",$line);
+      $pdf->Cell($x,$y,"CODIGO",$line);
+      $pdf->Cell($xanchoextra,$y,"conforme",$line);
+      $pdf->Cell($xancho,$y,"375.50",$line);
+      $pdf->Ln();
+      
    }
 
     function Footer(&$pdf)
