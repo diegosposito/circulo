@@ -45,7 +45,9 @@ $(document).ready(function(){
   p { margin-left:5em; /* Or another measurement unit, like px */ }
 </style>
 <h1 align="center" style="color:black;">Detalle de atenciones abiertas de : <?php echo $profesional ?></h1>
+<div align="center"><p style="color:red"><b> <?php echo $msgError ?> </b></p></div>
 <br>
+
 <div align="center">
 <form action="<?php echo url_for('atenciones/verhistorialfichas') ?>" method="post">
   <input type="hidden" name="selectedtab" id="selectedtab" value="<?php echo $selectedtab ?>">
@@ -62,6 +64,7 @@ $(document).ready(function(){
 
 <form action="<?php echo url_for('atenciones/mostrarficha') ?>" method="post">
   <input type="hidden" name="selectedtab" id="selectedtab" value="<?php echo $selectedtab ?>">
+  <input type="hidden" name="idpaciente" id="idpaciente" value="<?php echo $idpaciente ?>">
 <table cellspacing="0" class="stats" width="80%">
 <?php if(!$superadmin) { ?>
 <tr>
