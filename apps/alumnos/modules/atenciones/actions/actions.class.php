@@ -914,7 +914,7 @@ public function executeVerdetallefichas(sfWebRequest $request)
                      <td colspan="21">Credencial Plan:</td>
                   </tr>
                   <tr>
-                  <td colspan="2" style="height:20px">Nro.</td><td>2</td><td>4</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> 
+                     <td colspan="3">Nro.</td><td colspan="18">123123123123</td>
                   </tr>
                 </table>';
 
