@@ -222,6 +222,10 @@ class atencionesActions extends sfActions
         $this->selectedtab = '1';
      }
 
+     // Si hay algun mensaje de error del tab 2
+     if($request->getParameter('selectedtab')==2)
+         $this->error_tab2 = $request->getParameter('msgerror');
+
      // SEGUNDO TAB - Obtener pacientes segun filtro
      $this->criterio = '';
      $f_apellido = NULL; $f_idobrasocial = NULL;
@@ -247,7 +251,7 @@ class atencionesActions extends sfActions
      $this->idpaciente = $request->getParameter('id');
 
     // Obtener atenciones abiertas por profesional
-      $arrFiltro = array('idmatricula'=> $persona[0]['matricula'], 'idestadoatencion' => '1', 'idestadopago' => '1', 'pacientedoc' => $pacientes->getNrodoc(), 'nofacturadasenficha' => true);
+      $arrFiltro = array('matricula'=> $persona[0]['matricula'], 'idestadoatencion' => '1', 'idestadopago' => '1', 'pacientedoc' => $pacientes->getNrodoc(), 'nofacturadasenficha' => true);
       $this->atencionessa = Doctrine_Core::getTable('Atenciones')->obtenerDetalleAtencionesFiltro($arrFiltro);
 
 
@@ -264,18 +268,19 @@ class atencionesActions extends sfActions
   {
      $atenciones_seleccionadas = $request->getParameter('case');
      $arrAtenciones = array();
+     $this->idpaciente = $request->getParameter('idpaciente');
+     $this->selectedtab = 2;
       
     if(count($atenciones_seleccionadas) > 0) {
       foreach ($atenciones_seleccionadas as $atencion) {
         if($atencion>0)
           $arrAtenciones[] = $atencion;
       }
+    
+      $arrFiltro = array('idatenciones'=> $arrAtenciones);
+
+      $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerDetalleAtencionesFiltro($arrFiltro);
     }
-
-    $arrFiltro = array('idatenciones'=> $arrAtenciones);
-
-    $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerDetalleAtencionesFiltro($arrFiltro);
-
  
   }
 
@@ -283,6 +288,24 @@ class atencionesActions extends sfActions
   {
      $atenciones_seleccionadas = $request->getParameter('case');
      $arrAtenciones = array();
+
+     $idpaciente = $request->getParameter('idpaciente');
+     $tab_selected = $request->getParameter('selectedtab');
+     $msg_error = '';
+
+    if(count($atenciones_seleccionadas) > 10) {
+
+       $msg_error = 'ATENCION: Solo puede seleccionar hasta 10 atenciones por Ficha!!';
+       
+       $this->redirect('atenciones/editar?id='.$idpaciente.'&selectedtab='.$tab_selected.'&msgerror='.$msg_error);
+    }
+
+    if(count($atenciones_seleccionadas) == 0) {
+
+       $msg_error = 'ATENCION: Debe seleccionar al menos una atención para realizar la nueva ficha!!';
+       
+       $this->redirect('atenciones/editar?id='.$idpaciente.'&selectedtab='.$tab_selected.'&msgerror='.$msg_error);
+    }
       
     if(count($atenciones_seleccionadas) > 0) {
       foreach ($atenciones_seleccionadas as $atencion) {
@@ -315,7 +338,7 @@ class atencionesActions extends sfActions
 
       $this->redirect('atenciones/index');  // tiene que estar activo para editarlo
 
-    }
+    } 
    
   }
 
