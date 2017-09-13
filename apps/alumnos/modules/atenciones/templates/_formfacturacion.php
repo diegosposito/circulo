@@ -47,25 +47,25 @@ $(document).ready(function(){
 <h1 align="center" style="color:black;">Detalle de atenciones abiertas de : <?php echo $profesional ?></h1>
 <br>
 <div align="center">
-<form action="<?php echo url_for('atenciones/verhistorialfacturacion') ?>" method="post">
+<form action="<?php echo url_for('atenciones/verhistorialfichas') ?>" method="post">
   <input type="hidden" name="selectedtab" id="selectedtab" value="<?php echo $selectedtab ?>">
   <input type="hidden" name="matricula" id="matricula" value="<?php echo $matricula ?>">
   <input type="hidden" name="idpaciente" id="idpaciente" value="<?php echo $idpaciente ?>">
 <table cellspacing="0" class="stats" width="80%">
 <?php if(!$superadmin) { ?>
 <tr>
-<td colspan="2" align="center"><input type="submit" value="Ver Historial Facturación" /></td>
+<td colspan="2" align="center"><input type="submit" value="Ver Historial de Fichas" /></td>
 </tr>
 <?php } ?>
 </table>
 </form>
 
-<form action="<?php echo url_for('atenciones/mostrarfactura') ?>" method="post">
+<form action="<?php echo url_for('atenciones/mostrarficha') ?>" method="post">
   <input type="hidden" name="selectedtab" id="selectedtab" value="<?php echo $selectedtab ?>">
 <table cellspacing="0" class="stats" width="80%">
 <?php if(!$superadmin) { ?>
 <tr>
-<td colspan="2" align="center"><input type="submit" value="Facturar Seleccionados" /></td>
+<td colspan="2" align="center"><input type="submit" value="Crear Nueva Ficha con Atenciones Seleccionadas" /></td>
 </tr>
 <?php } ?>
 </table>
