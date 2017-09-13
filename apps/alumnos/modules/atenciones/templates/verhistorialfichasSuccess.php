@@ -76,7 +76,7 @@ $(document).ready(function(){
 <table cellspacing="0" class="stats">
    
     <tr>
-      <td width="25%" align="center" class="hed">Nro Factura</td>
+      <td width="25%" align="center" class="hed">Nro Ficha</td>
       <td width="25%" align="center" class="hed">Fecha</td>
       <td width="25%" align="center" class="hed">Importe</td>
       <td width="15%" align="center" class="hed">Ver Detalle</td>
