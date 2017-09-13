@@ -69,7 +69,7 @@ class AtencionesTable extends Doctrine_Table
         $datos = substr($datos, 0, strlen($datos)-2);
 
         // actualizar designaciones
-        $sql = "UPDATE atenciones set idestadopago = 3, idfacturacion = ".$idfactura." WHERE id IN (".$datos.");";
+        $sql = "UPDATE atenciones set idfacturacion = ".$idfactura." WHERE id IN (".$datos.");";
 
         $q = Doctrine_Manager::getInstance()->getCurrentConnection();
 
@@ -170,6 +170,12 @@ class AtencionesTable extends Doctrine_Table
 
          if($arrFiltros['idfacturacion'] <> '')
             $sql .=  " AND at.idfacturacion = ".$arrFiltros['idfacturacion']." ";
+
+        if($arrFiltros['pacientedoc'] <> '')
+            $sql .=  " AND at.nrodoc = ".$arrFiltros['pacientedoc']." ";
+
+        if($arrFiltros['nofacturadasenficha'] <> '')
+            $sql .=  " AND at.idfacturacion IS NULL ";
 
         if(count($arrFiltros['idatenciones']) >0 ){
             $datos='';
