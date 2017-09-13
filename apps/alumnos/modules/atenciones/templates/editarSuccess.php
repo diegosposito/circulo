@@ -200,7 +200,7 @@
 <ul class="tab">
   <li><a href="javascript:void(0)" class="tablinks" onclick="openCity('Datos',0)">Datos Personales</a></li>
   <li><a href="javascript:void(0)" class="tablinks" onclick="openCity('Prestaciones',1)">Prestaciones</a></li>
-  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity('Facturacion',2)">Facturación</a></li>
+  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity('Facturacion',2)">Fichas</a></li>
   <li><a href="javascript:void(0)" class="tablinks" onclick="openCity('Odontograma',3)">Odontograma</a></li>
 </ul>
 
