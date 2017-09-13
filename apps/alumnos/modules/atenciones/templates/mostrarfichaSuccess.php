@@ -48,6 +48,7 @@ $(document).ready(function(){
 <div align="center">
 <form action="<?php echo url_for('atenciones/facturar') ?>" method="post">
   <input type="hidden" name="selectedtab" id="selectedtab" value="<?php echo $selectedtab ?>">
+  <input type="hidden" name="idpaciente" id="idpaciente" value="<?php echo $idpaciente ?>">
 <table cellspacing="0" class="stats" width="80%">
 <?php if(!$superadmin) { ?>
 <tr>
