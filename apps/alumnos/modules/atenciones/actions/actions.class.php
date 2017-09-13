@@ -243,11 +243,11 @@ class atencionesActions extends sfActions
     $this->idprofesional = $persona[0]['idpersona'];
     $this->matricula = $persona[0]['matricula'];
 
-     $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerAtencionesPorPaciente($request->getParameter('id'));
+     $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerAtencionesPorPaciente($pacientes->getId());
      $this->idpaciente = $request->getParameter('id');
 
     // Obtener atenciones abiertas por profesional
-      $arrFiltro = array('idmatricula'=> $persona[0]['matricula'], 'idestadoatencion' => '1', 'idestadopago' => '1');
+      $arrFiltro = array('idmatricula'=> $persona[0]['matricula'], 'idestadoatencion' => '1', 'idestadopago' => '1', 'pacientedoc' => $pacientes->getNrodoc(), 'nofacturadasenficha' => true);
       $this->atencionessa = Doctrine_Core::getTable('Atenciones')->obtenerDetalleAtencionesFiltro($arrFiltro);
 
 
@@ -260,7 +260,7 @@ class atencionesActions extends sfActions
      // TERCER TAB
   }
 
-  public function executeMostrarfactura(sfWebRequest $request)
+  public function executeMostrarficha(sfWebRequest $request)
   {
      $atenciones_seleccionadas = $request->getParameter('case');
      $arrAtenciones = array();
@@ -319,7 +319,7 @@ class atencionesActions extends sfActions
    
   }
 
-  public function executeVerhistorialfacturacion(sfWebRequest $request)
+  public function executeVerhistorialfichas(sfWebRequest $request)
   {
     
     $aniohasta = date ("Y");
@@ -356,7 +356,7 @@ class atencionesActions extends sfActions
 
  
 
-public function executeVerdetallefacturacion(sfWebRequest $request)
+public function executeVerdetallefichas(sfWebRequest $request)
 {
     
     $this->superadmin = false;
@@ -842,7 +842,7 @@ public function executeVerdetallefacturacion(sfWebRequest $request)
 
 // IMPRIMIR FACTURA
 
-  public function executeImprimirfact(sfWebRequest $request)
+  public function executeImprimirficha(sfWebRequest $request)
       {
         
           //$pdf = new PDF();
