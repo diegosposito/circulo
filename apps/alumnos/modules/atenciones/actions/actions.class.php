@@ -902,7 +902,7 @@ public function executeVerdetallefichas(sfWebRequest $request)
           $pdf->WriteHTML($html); 
 
           $pdf->setX(70);
-          $pdf->setY(40);
+          $pdf->setY(39);
 
           $pdf->Cell(0,5,'MES: ',0);
           $pdf->setX(20);
@@ -917,12 +917,10 @@ public function executeVerdetallefichas(sfWebRequest $request)
           $pdf->Cell(0,5,'2017',0);
           $pdf->SetFont('Times','',9);
           $pdf->Ln();
-          $pdf->Ln();
-
-          
+                 
             
 
-          $pdf->SetY(50);
+          $pdf->SetY(49);
           $pdf->SetX(10);
 
           // TABLA de informacion del paciente
@@ -964,14 +962,11 @@ public function executeVerdetallefichas(sfWebRequest $request)
             // TABLA de informacion del paciente
           $htmlInfoProfesional='<table border="0.5" style="width:378px;">
                   <tr style="border-bottom: 1px solid #ccc;">
-                     <td style="width:280px;height:10px;">Odontólogo : <b>Fulano</b></td>
-                      <td style="width:46px;height:10px;">Matrícula</td>
-                      <td style="width:13px;height:10px;"><b>1</b></td>
-                      <td style="width:13px;height:10px;"><b>7</b></td>
-                      <td style="width:13px;height:10px;"><b>8</b></td>
-                      <td style="width:13px;height:10px;"><b>9</b></td>
+                     <td style="width:260px;height:10px;">Odontólogo : <b>Fulano</b></td>
+                      <td style="width:88px;height:10px;">Matrícula Profesional</td>
+                      <td style="width:30px;height:10px;"><b>1239</b></td>
                   </tr>
-                  </table><br>';
+                  </table>';
 
           $pdf->WriteHTML($htmlInfoProfesional);      
     
@@ -990,17 +985,18 @@ public function executeVerdetallefichas(sfWebRequest $request)
           
           $texto = "He sido informado por el profesional sobre la naturaleza y propósito del tratamiento, posibles complicaciones, riesgos alternativos y aceptación del mismo.";
 
-          $firma = "<b>Firma y aclaración del Paciente : ________________________________________</b>";
+          $firma = "<b><br><br>Firma y aclaración del Paciente : ___________________________</b><br>";
           
-           $htmlInfoPie='<table border="0.5" style="width:100px;">
+           $htmlInfoPie='<br><br><table border="0.5" style="width:260px;">
                   <tr style="border-bottom: 1px solid #ccc;">
-                     <td style="width:100px;height:50px;">'.$texto.'</td>
-                  </tr></table>
-                  <br>'.$firma;
+                     <td style="width:260px;height:50px;">'.$texto.'
+                     '.$firma.'</td>
+                  </tr></table>';
 
           $pdf->WriteHTML($htmlInfoPie);  
           
-          //$pdf->Cell(0,5,$email,0,1,'R');
+          $pdf->Cell(0,5,'____________________________',0,1,'C');
+          $pdf->Cell(0,5,'SELLO, FIRMA DEL PROFESIONAL',0,1,'C');
           //$pdf->Cell(0,5,'Tel: '.$telephone,0,1,'R');
           //$pdf->Cell(0,30,'',0,1,'R');
           //$pdf->SetFillColor(200,220,255);
