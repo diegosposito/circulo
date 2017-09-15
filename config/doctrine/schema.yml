@@ -2778,3 +2778,9 @@ Facturaciones:
     matricula: { type: string(10), primary: false, autoincrement: false, default: '' }
     fecha: { type: date(25), primary: false, notnull: true, default: '2002-01-01' }
     importe: { type: float, primary: false, notnull: true, default: '' }
+    idpaciente: { type: integer, primary: false, default: '0' }
+  relations:
+    Pacientes:
+      local: idpaciente
+      foreign: id
+      foreignAlias: Pacientes  
