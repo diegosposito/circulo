@@ -327,6 +327,7 @@ class atencionesActions extends sfActions
       $factura = new Facturaciones();
       $factura->setMatricula($matricula);
       $factura->setFecha(date('Y-m-j'));
+      $factura->setIdPaciente($idpaciente);
       // $fecha = $request->getPostParameter('atenciones[fecha][year]').'-'.$request->getPostParameter('atenciones[fecha][month]').'-'.$request->getPostParameter('atenciones[fecha][day]');
       // $atenciones->setFecha($fecha);
       $factura->setImporte($total);
@@ -868,6 +869,77 @@ public function executeVerdetallefichas(sfWebRequest $request)
   public function executeImprimirficha(sfWebRequest $request)
       {
         
+          // Obtener informacion de la ficha a imprimir
+          $oFicha = Doctrine_Core::getTable('Facturaciones')->find($request->getParameter('id'));
+
+          // Obtener informacion del Paciente
+          $oPaciente = Doctrine_Core::getTable('Pacientes')->find($oFicha->getIdpaciente());
+
+          // Obtener informacion de la Obra Social
+          $oOsocial = Doctrine_Core::getTable('ObrasSociales')->find($oPaciente->getIdobrasocial());
+
+          // Obtener informacion del plan de Obra Social
+          $oPlanOsocial = Doctrine_Core::getTable('PlanesObras')->find($oPaciente->getIdplan());
+
+          // Ciudad de Nacimiento
+          $oCiudad = Doctrine_Core::getTable('Ciudades')->find($oPaciente->getIdciudadnac());
+
+          // Obtener informacion del profesional logueado
+          // Obtener usuario logueado y matricula del profesional logueado
+          $user_id = $this->getUser()->getGuardUser()->getId();
+          $persona = Doctrine_Core::getTable('Personas')->obtenerProfesionalxUser($user_id);
+          $matricula = $persona[0]['matricula'];
+          $profesional = $persona[0]['apellido'].', '.$persona[0]['nombre'];
+
+          
+         // Obtener atenciones a  mostrar
+          $arrFiltro = array('idfacturacion'=> $oFicha->getId());
+          $atencioness = Doctrine_Core::getTable('Atenciones')->obtenerDetalleAtencionesFiltro($arrFiltro);
+
+         
+          $mes = date('m', strtotime($oFicha->getFecha()));
+          $anio = date('Y', strtotime($oFicha->getFecha()));
+          $mesd='';
+          if ($mes==1) $mesd='Enero';
+          if ($mes==2) $mesd='Febrero';
+          if ($mes==3) $mesd='Marzo';
+          if ($mes==4) $mesd='Abril';
+          if ($mes==5) $mesd='Mayo';
+          if ($mes==6) $mesd='Junio';
+          if ($mes==7) $mesd='Julio';
+          if ($mes==8) $mesd='Agosto';
+          if ($mes==9) $mesd='Septiembre';
+          if ($mes==10) $mesd='Octubre';
+          if ($mes==11) $mesd='Noviembre';
+          if ($mes==12) $mesd='Diciembre';
+
+          // Analisis parentesco
+          $parentesco = 'Titular';
+          switch ($oPaciente->getTitular()) {
+              case 1:
+                  $parentesco = "Titular";
+                  break;
+              case 2:
+                  $parentesco = "Esposo/a";
+                  break;
+              case 3:
+                  $parentesco = "Hijo/a";
+                  break;
+              case 4:
+                  $parentesco = "Hermano/a";
+                  break;
+              case 5:
+                  $parentesco = "Padre/Madre";
+                  break;
+              default:
+                  $parentesco = "Titular";   
+                  break;        
+          }
+
+          $fechacnac='';
+          $arrf = explode('-', $oPaciente->getFechanac());
+          $fechanac = $arrf[2]."/".$arrf[1]."/".$arrf[0];
+
           //$pdf = new PDF();
           $pdf = new PDF('P','mm',array(148,210));
          
@@ -886,16 +958,16 @@ public function executeVerdetallefichas(sfWebRequest $request)
           // TABLA de ficha nro arriba derecha
           $html='<table border="1" style="width:250px">
                   <tr>
-                     <td colspan="10"></td><td colspan="11">Ficha N°:</td>
+                     <td colspan="10"></td><td colspan="11">Ficha N°: '.$oFicha->getId().'</td>
                   </tr>
                   <tr>
-                     <td valign="bottom" style="height:35px;" colspan="17">OBRA SOCIAL</td><td valign="bottom" style="height:35px;" colspan="4">Nro.</td>
+                     <td valign="bottom" style="height:35px;" colspan="17">OBRA SOCIAL: '.$oOsocial->getAbreviada().'</td><td valign="bottom" style="height:35px;" colspan="4">Nro.</td>
                   </tr>
                   <tr>
-                     <td colspan="21">Credencial Plan:</td>
+                     <td colspan="21">Credencial Plan: '.$oPlanOsocial->getNombre().'</td>
                   </tr>
                   <tr>
-                     <td colspan="3">Nro.</td><td colspan="18">123123123123</td>
+                     <td colspan="3">Nro.</td><td colspan="18">'.$oPaciente->getNroafiliado().'</td>
                   </tr>
                 </table>';
 
@@ -907,18 +979,19 @@ public function executeVerdetallefichas(sfWebRequest $request)
           $pdf->Cell(0,5,'MES: ',0);
           $pdf->setX(20);
           $pdf->SetFont('Times','B',9);
-          $pdf->Cell(0,5,'Setiembre',0);
+          $pdf->Cell(0,5,$mesd,0);
           $pdf->SetFont('Times','',9);
           $pdf->Ln();
      
           $pdf->Cell(0,5,'AÑO: ',0);
           $pdf->SetFont('Times','B',9);
           $pdf->setX(20);
-          $pdf->Cell(0,5,'2017',0);
+          $pdf->Cell(0,5,$anio,0);
           $pdf->SetFont('Times','',9);
           $pdf->Ln();
                  
-            
+          $ximage=15; $yimage=20;
+          $pdf->Image('images/cop.jpeg',$ximage,$yimage,40);  
 
           $pdf->SetY(49);
           $pdf->SetX(10);
@@ -927,33 +1000,33 @@ public function executeVerdetallefichas(sfWebRequest $request)
           $htmlInfoPaciente='<table border="0.5" style="width:378px;">
                   <tr style="border-bottom: 1px solid #ccc;">
                      <td valign="center" style="width:80px;height:20px;">Paciente</td>
-                      <td style="width:150px;"><b>Juan Perez</b></td>
+                      <td style="width:150px;"><b>'.$oPaciente->getApellido().', '.$oPaciente->getNombre().'</b></td>
                       <td style="width:50px;">Tipo/Nro de Documento</td>
-                      <td style="width:97px;"><b>D.N.I. 34123231</b></td>
+                      <td style="width:97px;"><b>D.N.I. '.$oPaciente->getNrodoc().'</b></td>
                   </tr>
                   <tr>
-                     <td style="width:80px;height:20px">Titular &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Si</td>
-                      <td style="width:150px;">Parentesco</td>
+                     <td style="width:80px;height:20px">Titular &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '.($oPaciente->getTitular()==1 ? 'Si' : 'No').'</td>
+                      <td style="width:150px;">Parentesco: <b>'.$parentesco.'</b></td>
                       <td style="width:50px;">Fecha de Nacimiento</td>
-                      <td style="width:97px;"><b>01/05/1987</b></td>
+                      <td style="width:97px;"><b>'.$fechanac.'</b></td>
                   </tr>
                   <tr>
                      <td style="width:80px;height:20px">Domicilio</td>
-                      <td style="width:150px;"><b>Alem 145</b></td>
+                      <td style="width:150px;"><b>'.$oPaciente->getDireccion().'</b></td>
                       <td style="width:50px;"></td>
-                      <td style="width:97px;"><b>C.P.3260</b></td>
+                      <td style="width:97px;"><b>C.P.'.$oCiudad->getCodpostal().'</b></td>
                   </tr>
                   <tr>
                      <td style="width:80px;height:20px">Localidad</td>
-                      <td style="width:150px;"><b>Concepcion del Uruguay</b></td>
+                      <td style="width:150px;"><b>'.$oCiudad->getDescripcion().'</b></td>
                       <td style="width:50px;">Teléfono</td>
-                      <td style="width:97px;"><b>3442-15434534</b></td>
+                      <td style="width:97px;"><b>'.$oPaciente->getCelular().'</b></td>
                   </tr>
                   <tr>
                      <td style="width:80px;height:20px">Lugar de Trabajo del Titular</td>
-                      <td style="width:150px;"><b>Municipalidad</b></td>
+                      <td style="width:150px;"><b>'.$oPaciente->getTrabajo().'</b></td>
                       <td style="width:50px;">Jerarquía</td>
-                      <td style="width:97px;"><b>Plan 600</b></td>
+                      <td style="width:97px;"><b>'.$oPaciente->getJerarquia().'</b></td>
                   </tr>
                 </table>';
 
@@ -962,27 +1035,30 @@ public function executeVerdetallefichas(sfWebRequest $request)
             // TABLA de informacion del paciente
           $htmlInfoProfesional='<table border="0.5" style="width:378px;">
                   <tr style="border-bottom: 1px solid #ccc;">
-                     <td style="width:260px;height:10px;">Odontólogo : <b>Fulano</b></td>
+                     <td style="width:260px;height:10px;">Odontólogo : <b>'.$profesional.'</b></td>
                       <td style="width:88px;height:10px;">Matrícula Profesional</td>
-                      <td style="width:30px;height:10px;"><b>1239</b></td>
+                      <td style="width:30px;height:10px;"><b>'.$matricula.'</b></td>
                   </tr>
                   </table>';
+
+          $pdf->SetY(89);
 
           $pdf->WriteHTML($htmlInfoProfesional);      
     
 
-          $header=array('FECHA','PIEZA N°','CARA','CODIGO','CONFORMIDAD PACIENTE','IMPORTE');
-          $pdf->SetY(100);
-          $this->TablaSimple($header, $pdf);
+          $header=array(' FECHA ','PIEZA N°','CARA','CODIGO','CONFORMIDAD PACIENTE','IMPORTE');
+          $pdf->SetY(95);
+          $this->TablaSimple($header, $pdf, $atencioness);
          
-          $ximage=15; $yimage=20;
-          $pdf->Image('images/cop.jpeg',$ximage,$yimage,40);
+        
           
           $total = "Total:                                                                                                                         $350.00";
           $pdf->SetFont('Times','B',9);
           $pdf->Cell(0,5, $total,0,1,'L');
           $pdf->SetFont('Times','',9);
           
+
+          $pdf->SetY(140); 
           $texto = "He sido informado por el profesional sobre la naturaleza y propósito del tratamiento, posibles complicaciones, riesgos alternativos y aceptación del mismo.";
 
           $firma = "<b><br><br>Firma y aclaración del Paciente : ___________________________</b><br>";
@@ -993,15 +1069,30 @@ public function executeVerdetallefichas(sfWebRequest $request)
                      '.$firma.'</td>
                   </tr></table>';
 
+          $pdf->SetY(145);        
+
           $pdf->WriteHTML($htmlInfoPie);  
+
+          $pdf->SetY(165);  $pdf->SetX(90);
+          $pdf->Cell(0,5,'Cantidad de RX',0,1,'C'); 
+           $pdf->SetY(168);$pdf->SetX(86);
+          $pdf->Cell(0,5,'Adjuntas',0,1,'C'); 
+         
+          $pdf->SetY(165);$pdf->SetX(126);
+          $htmlTableRight ='<table border="0.5" style="width:20px;">
+                  <tr style="border-bottom: 1px solid #ccc;">
+                     <td style="width:20px;height:20px;"></td>
+                     <td style="width:20px;height:20px;"></td>
+                  </tr></table>';
+          $pdf->WriteHTML($htmlTableRight);            
           
-          $pdf->Cell(0,5,'____________________________',0,1,'C');
+          $pdf->SetX(0);  $pdf->SetY(180);
+          $pdf->Cell(0,5,'_____________________________________',0,1,'C');
+          $pdf->SetX(0);  $pdf->SetY(184);
           $pdf->Cell(0,5,'SELLO, FIRMA DEL PROFESIONAL',0,1,'C');
-          //$pdf->Cell(0,5,'Tel: '.$telephone,0,1,'R');
-          //$pdf->Cell(0,30,'',0,1,'R');
-          //$pdf->SetFillColor(200,220,255);
-        //  $this->ChapterTitle('Invoice Number ',$number,$pdf);
-        //  $this->ChapterTitle('Invoice Date ',date('d-m-Y'),$pdf);
+
+          
+               
 
           // Mostrar PDF
           $filename="invoice.pdf";
@@ -1015,12 +1106,12 @@ public function executeVerdetallefichas(sfWebRequest $request)
           return sfView::NONE;
     }
 
-   function TablaSimple($header, &$pdf)
-   {
+  function TablaSimple($header, &$pdf, &$atencioness)
+  {
     //Cabecera
-    $x = 15; $y=0; $xancho = 28; $xanchoextra = 45;
+    $x = 16; $y=0; $xancho = 28; $xanchoextra = 42;
     $line = 1;
-    
+
     // encabezado
       $pdf->Cell($x,$y,$header[0],$line);
       $pdf->Cell($x,$y,$header[1],$line);
@@ -1028,89 +1119,43 @@ public function executeVerdetallefichas(sfWebRequest $request)
       $pdf->Cell($x,$y,$header[3],$line);
       $pdf->Cell($xanchoextra,$y,$header[4],$line);
       $pdf->Cell($xancho,$y,$header[5],$line);
-    $pdf->Ln();
+      $pdf->Ln();
+
+    $fecha='';
+    $contador=0;
+    
+    foreach($atencioness as $item){ 
+
+          $arrf = explode('-', $item['fecha']);
+          $fecha = $arrf[2]."/".$arrf[1]."/".$arrf[0];
    
-      $pdf->Cell($x,$y,"1/1/2017",$line);
-      $pdf->Cell($x,$y,"PIEZA 1",$line);
-      $pdf->Cell($x,$y,"CARA 1",$line);
-      $pdf->Cell($x,$y,"CODIGO",$line);
-      $pdf->Cell($xanchoextra,$y,"conforme",$line);
-      $pdf->Cell($xancho,$y,"35.50",$line);
-      $pdf->Ln();
+          $pdf->Cell($x,$y,$fecha,$line);
+          $pdf->Cell($x,$y,$item['pieza'],$line);
+          $pdf->Cell($x,$y,$item['cara'],$line);
+          $pdf->Cell($x,$y,$item['tratamiento'],$line);
+          $pdf->Cell($xanchoextra,$y,"?????",$line);
+          $pdf->Cell($xancho,$y,$item['importe'],$line);
+          $pdf->Ln();
 
-       $pdf->Cell($x,$y,"1/1/2017",$line);
-      $pdf->Cell($x,$y,"PIEZA 2",$line);
-      $pdf->Cell($x,$y,"CARA 1",$line);
-      $pdf->Cell($x,$y,"CODIGO",$line);
-      $pdf->Cell($xanchoextra,$y,"conforme",$line);
-      $pdf->Cell($xancho,$y,"37.50",$line);
-      $pdf->Ln();
+          $contador++;
 
-       $pdf->Cell($x,$y,"1/1/2017",$line);
-      $pdf->Cell($x,$y,"PIEZA 5",$line);
-      $pdf->Cell($x,$y,"CARA 1",$line);
-      $pdf->Cell($x,$y,"CODIGO",$line);
-      $pdf->Cell($xanchoextra,$y,"conforme",$line);
-      $pdf->Cell($xancho,$y,"45.50",$line);
-      $pdf->Ln();
+    }
 
-       $pdf->Cell($x,$y,"1/1/2017",$line);
-      $pdf->Cell($x,$y,"PIEZA 8",$line);
-      $pdf->Cell($x,$y,"CARA 1",$line);
-      $pdf->Cell($x,$y,"CODIGO",$line);
-      $pdf->Cell($xanchoextra,$y,"conforme",$line);
-      $pdf->Cell($xancho,$y,"135.50",$line);
-      $pdf->Ln();
+    for( $i = $contador; $i<10; $i++ ) {
+           $arrf = explode('-', $item['fecha']);
+          $fecha = $arrf[2]."/".$arrf[1]."/".$arrf[0];
+   
+          $pdf->Cell($x,$y,'  /  /  ',$line);
+          $pdf->Cell($x,$y,'',$line);
+          $pdf->Cell($x,$y,'',$line);
+          $pdf->Cell($x,$y,'',$line);
+          $pdf->Cell($xanchoextra,$y,'',$line);
+          $pdf->Cell($xancho,$y,'',$line);
+          $pdf->Ln();
 
-       $pdf->Cell($x,$y,"1/1/2017",$line);
-      $pdf->Cell($x,$y,"PIEZA 15",$line);
-      $pdf->Cell($x,$y,"CARA 1",$line);
-      $pdf->Cell($x,$y,"CODIGO",$line);
-      $pdf->Cell($xanchoextra,$y,"conforme",$line);
-      $pdf->Cell($xancho,$y,"350.50",$line);
-      $pdf->Ln();
-
-       $pdf->Cell($x,$y,"1/1/2017",$line);
-      $pdf->Cell($x,$y,"PIEZA 16",$line);
-      $pdf->Cell($x,$y,"CARA 1",$line);
-      $pdf->Cell($x,$y,"CODIGO",$line);
-      $pdf->Cell($xanchoextra,$y,"conforme",$line);
-      $pdf->Cell($xancho,$y,"375.50",$line);
-      $pdf->Ln();
-
-       $pdf->Cell($x,$y,"1/1/2017",$line);
-      $pdf->Cell($x,$y,"PIEZA 5",$line);
-      $pdf->Cell($x,$y,"CARA 1",$line);
-      $pdf->Cell($x,$y,"CODIGO",$line);
-      $pdf->Cell($xanchoextra,$y,"conforme",$line);
-      $pdf->Cell($xancho,$y,"45.50",$line);
-      $pdf->Ln();
-
-       $pdf->Cell($x,$y,"1/1/2017",$line);
-      $pdf->Cell($x,$y,"PIEZA 8",$line);
-      $pdf->Cell($x,$y,"CARA 1",$line);
-      $pdf->Cell($x,$y,"CODIGO",$line);
-      $pdf->Cell($xanchoextra,$y,"conforme",$line);
-      $pdf->Cell($xancho,$y,"135.50",$line);
-      $pdf->Ln();
-
-       $pdf->Cell($x,$y,"1/1/2017",$line);
-      $pdf->Cell($x,$y,"PIEZA 15",$line);
-      $pdf->Cell($x,$y,"CARA 1",$line);
-      $pdf->Cell($x,$y,"CODIGO",$line);
-      $pdf->Cell($xanchoextra,$y,"conforme",$line);
-      $pdf->Cell($xancho,$y,"350.50",$line);
-      $pdf->Ln();
-
-       $pdf->Cell($x,$y,"1/1/2017",$line);
-      $pdf->Cell($x,$y,"PIEZA 16",$line);
-      $pdf->Cell($x,$y,"CARA 1",$line);
-      $pdf->Cell($x,$y,"CODIGO",$line);
-      $pdf->Cell($xanchoextra,$y,"conforme",$line);
-      $pdf->Cell($xancho,$y,"375.50",$line);
-      $pdf->Ln();
-      
-   }
+    }
+     
+  }
 
     function Footer(&$pdf)
     {
