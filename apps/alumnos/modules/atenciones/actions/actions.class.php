@@ -942,6 +942,8 @@ public function executeVerdetallefichas(sfWebRequest $request)
 
           //$pdf = new PDF();
           $pdf = new PDF('P','mm',array(160,235));
+          $pdf->setPrintHeader(false);
+          $pdf->setPrintFooter(false);
          
           // setear fuente y agregar una pagina
           $pdf->SetFont('Times','',9);
