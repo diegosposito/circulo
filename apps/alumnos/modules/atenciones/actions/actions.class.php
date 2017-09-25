@@ -941,7 +941,7 @@ public function executeVerdetallefichas(sfWebRequest $request)
           $fechanac = $arrf[2]."/".$arrf[1]."/".$arrf[0];
 
           //$pdf = new PDF();
-          $pdf = new PDF('P','mm',array(148,210));
+          $pdf = new PDF('P','mm',array(160,235));
          
           // setear fuente y agregar una pagina
           $pdf->SetFont('Times','',9);
@@ -956,18 +956,18 @@ public function executeVerdetallefichas(sfWebRequest $request)
           $pdf->SetX(55);
 
           // TABLA de ficha nro arriba derecha
-          $html='<table border="1" style="width:250px">
+          $html='<table border="1" style="width:275px">
                   <tr>
                      <td colspan="10"></td><td colspan="11">Ficha N°: '.$oFicha->getId().'</td>
                   </tr>
                   <tr>
-                     <td valign="bottom" style="height:35px;" colspan="17">OBRA SOCIAL: '.$oOsocial->getAbreviada().'</td><td valign="bottom" style="height:35px;" colspan="4">Nro.</td>
+                     <td valign="bottom" style="font-size:26px;height:35px;" colspan="17">OBRA SOCIAL: <br><b>'.$oOsocial->getAbreviada().'</b></td><td valign="bottom" style="height:35px;" colspan="4">Nro. <b>'.$oOsocial->getNinterno().'</b></td>
                   </tr>
                   <tr>
-                     <td colspan="21">Credencial Plan: '.$oPlanOsocial->getNombre().'</td>
+                     <td colspan="21">Credencial Plan: <b>'.$oPlanOsocial->getNombre().'</b></td>
                   </tr>
                   <tr>
-                     <td colspan="3">Nro.</td><td colspan="18">'.$oPaciente->getNroafiliado().'</td>
+                     <td colspan="3">Nro.</td><td colspan="18"><b>'.$oPaciente->getNroafiliado().'</b></td>
                   </tr>
                 </table>';
 
@@ -997,34 +997,34 @@ public function executeVerdetallefichas(sfWebRequest $request)
           $pdf->SetX(10);
 
           // TABLA de informacion del paciente
-          $htmlInfoPaciente='<table border="0.5" style="width:378px;">
+          $htmlInfoPaciente='<table border="0.5" style="width:403px;">
                   <tr style="border-bottom: 1px solid #ccc;">
                      <td valign="center" style="width:80px;height:20px;">Paciente</td>
-                      <td style="width:150px;"><b>'.$oPaciente->getApellido().', '.$oPaciente->getNombre().'</b></td>
-                      <td style="width:50px;">Tipo/Nro de Documento</td>
-                      <td style="width:97px;"><b>D.N.I. '.$oPaciente->getNrodoc().'</b></td>
+                      <td style="width:175px;"><b>'.$oPaciente->getApellido().', '.$oPaciente->getNombre().'</b></td>
+                      <td style="width:50px;">D.N.I.</td>
+                      <td style="width:97px;"><b>'.$oPaciente->getNrodoc().'</b></td>
                   </tr>
                   <tr>
                      <td style="width:80px;height:20px">Titular &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; '.($oPaciente->getTitular()==1 ? 'Si' : 'No').'</td>
-                      <td style="width:150px;">Parentesco: <b>'.$parentesco.'</b></td>
+                      <td style="width:175px;">Parentesco: <b>'.$parentesco.'</b></td>
                       <td style="width:50px;">Fecha de Nacimiento</td>
                       <td style="width:97px;"><b>'.$fechanac.'</b></td>
                   </tr>
                   <tr>
                      <td style="width:80px;height:20px">Domicilio</td>
-                      <td style="width:150px;"><b>'.$oPaciente->getDireccion().'</b></td>
-                      <td style="width:50px;"></td>
-                      <td style="width:97px;"><b>C.P.'.$oCiudad->getCodpostal().'</b></td>
+                      <td style="width:175px;"><b>'.$oPaciente->getDireccion().'</b></td>
+                      <td style="width:50px;">C.P.</td>
+                      <td style="width:97px;"><b>'.$oCiudad->getCodpostal().'</b></td>
                   </tr>
                   <tr>
                      <td style="width:80px;height:20px">Localidad</td>
-                      <td style="width:150px;"><b>'.$oCiudad->getDescripcion().'</b></td>
+                      <td style="width:175px;"><b>'.$oCiudad->getDescripcion().'</b></td>
                       <td style="width:50px;">Teléfono</td>
                       <td style="width:97px;"><b>'.$oPaciente->getCelular().'</b></td>
                   </tr>
                   <tr>
                      <td style="width:80px;height:20px">Lugar de Trabajo del Titular</td>
-                      <td style="width:150px;"><b>'.$oPaciente->getTrabajo().'</b></td>
+                      <td style="width:175px;"><b>'.$oPaciente->getTrabajo().'</b></td>
                       <td style="width:50px;">Jerarquía</td>
                       <td style="width:97px;"><b>'.$oPaciente->getJerarquia().'</b></td>
                   </tr>
@@ -1033,9 +1033,9 @@ public function executeVerdetallefichas(sfWebRequest $request)
           $pdf->WriteHTML($htmlInfoPaciente); 
 
             // TABLA de informacion del paciente
-          $htmlInfoProfesional='<table border="0.5" style="width:378px;">
+          $htmlInfoProfesional='<table border="0.5" style="width:403px;">
                   <tr style="border-bottom: 1px solid #ccc;">
-                     <td style="width:260px;height:10px;">Odontólogo : <b>'.$profesional.'</b></td>
+                     <td style="width:285px;height:10px;">Odontólogo : <b>'.$profesional.'</b></td>
                       <td style="width:88px;height:10px;">Matrícula Profesional</td>
                       <td style="width:30px;height:10px;"><b>'.$matricula.'</b></td>
                   </tr>
@@ -1052,13 +1052,21 @@ public function executeVerdetallefichas(sfWebRequest $request)
          
         
           
-          $total = "Total:                                                                                                                         $350.00";
-          $pdf->SetFont('Times','B',9);
+          $total = "                                                                                                                              Total: $".$oFicha->getImporte();
+          $pdf->SetFont('Times','B',10);
           $pdf->Cell(0,5, $total,0,1,'L');
           $pdf->SetFont('Times','',9);
+
+          $pdf->Cell(0,5, "Cantidad de RX Adjuntas",0,1,'L');
+          $pdf->SetY(146);$pdf->SetX(45);
+          $htmlTableRight ='<table border="0.5" style="width:16px;">
+                  <tr style="border-bottom: 1px solid #ccc;">
+                     <td style="width:16px;height:16px;"></td>
+                     <td style="width:16px;height:16px;"></td>
+                  </tr></table>';
+          $pdf->WriteHTML($htmlTableRight); 
           
 
-          $pdf->SetY(140); 
           $texto = "He sido informado por el profesional sobre la naturaleza y propósito del tratamiento, posibles complicaciones, riesgos alternativos y aceptación del mismo.";
 
           $firma = "<b><br><br>Firma y aclaración del Paciente : ___________________________</b><br>";
@@ -1069,27 +1077,16 @@ public function executeVerdetallefichas(sfWebRequest $request)
                      '.$firma.'</td>
                   </tr></table>';
 
-          $pdf->SetY(145);        
+          $pdf->SetY(155);        
 
           $pdf->WriteHTML($htmlInfoPie);  
 
-          $pdf->SetY(165);  $pdf->SetX(90);
-          $pdf->Cell(0,5,'Cantidad de RX',0,1,'C'); 
-           $pdf->SetY(168);$pdf->SetX(86);
-          $pdf->Cell(0,5,'Adjuntas',0,1,'C'); 
-         
-          $pdf->SetY(165);$pdf->SetX(126);
-          $htmlTableRight ='<table border="0.5" style="width:20px;">
-                  <tr style="border-bottom: 1px solid #ccc;">
-                     <td style="width:20px;height:20px;"></td>
-                     <td style="width:20px;height:20px;"></td>
-                  </tr></table>';
-          $pdf->WriteHTML($htmlTableRight);            
+                              
           
-          $pdf->SetX(0);  $pdf->SetY(180);
+          $pdf->SetY(195);$pdf->SetX(90);
           $pdf->Cell(0,5,'_____________________________________',0,1,'C');
-          $pdf->SetX(0);  $pdf->SetY(184);
-          $pdf->Cell(0,5,'SELLO, FIRMA DEL PROFESIONAL',0,1,'C');
+          $pdf->SetX(90);  $pdf->SetY(200);
+          $pdf->Cell(0,5,'SELLO, FIRMA DEL PROFESIONAL',0,1,'R');
 
           
                
@@ -1109,7 +1106,7 @@ public function executeVerdetallefichas(sfWebRequest $request)
   function TablaSimple($header, &$pdf, &$atencioness)
   {
     //Cabecera
-    $x = 16; $y=0; $xancho = 28; $xanchoextra = 42;
+    $x = 17; $y=0; $xancho = 30; $xanchoextra = 44;
     $line = 1;
 
     // encabezado
@@ -1133,7 +1130,7 @@ public function executeVerdetallefichas(sfWebRequest $request)
           $pdf->Cell($x,$y,$item['pieza'],$line);
           $pdf->Cell($x,$y,$item['cara'],$line);
           $pdf->Cell($x,$y,$item['tratamiento'],$line);
-          $pdf->Cell($xanchoextra,$y,"?????",$line);
+          $pdf->Cell($xanchoextra,$y,"",$line);
           $pdf->Cell($xancho,$y,$item['importe'],$line);
           $pdf->Ln();
 
