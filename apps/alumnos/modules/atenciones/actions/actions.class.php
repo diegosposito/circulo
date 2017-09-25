@@ -953,10 +953,10 @@ public function executeVerdetallefichas(sfWebRequest $request)
 
 
           $pdf->SetY(20);
-          $pdf->SetX(55);
+          $pdf->SetX(58);
 
           // TABLA de ficha nro arriba derecha
-          $html='<table border="1" style="width:275px">
+          $html='<table border="1" style="width:267px">
                   <tr>
                      <td colspan="10"></td><td colspan="11">Ficha N°: '.$oFicha->getId().'</td>
                   </tr>
@@ -974,8 +974,20 @@ public function executeVerdetallefichas(sfWebRequest $request)
           $pdf->WriteHTML($html); 
 
           $pdf->setX(70);
-          $pdf->setY(39);
+          $pdf->setY(22);
+          $pdf->SetFont('Times','',7);
+          $pdf->Cell(20,5,'                                  Círculo Odontológico',0,1,'L');
+          $pdf->setY(25);
+          $pdf->Cell(20,5,'                                  Concepción del Uruguay',0,1,'L');
+          $pdf->setY(28);
+          $pdf->Cell(20,5,'                                  T. Rocamora 471',0,1,'L');
+          $pdf->setY(31);
+          $pdf->Cell(20,5,'                                  03442-422957',0,1,'L');
 
+          $pdf->setX(70);
+          $pdf->setY(39);
+          
+          $pdf->SetFont('Times','',9);
           $pdf->Cell(0,5,'MES: ',0);
           $pdf->setX(20);
           $pdf->SetFont('Times','B',9);
@@ -990,8 +1002,8 @@ public function executeVerdetallefichas(sfWebRequest $request)
           $pdf->SetFont('Times','',9);
           $pdf->Ln();
                  
-          $ximage=15; $yimage=20;
-          $pdf->Image('images/cop.jpeg',$ximage,$yimage,40);  
+          $ximage=10; $yimage=22;
+          $pdf->Image('images/logcirculo.jpg',$ximage,$yimage,21);  
 
           $pdf->SetY(49);
           $pdf->SetX(10);
