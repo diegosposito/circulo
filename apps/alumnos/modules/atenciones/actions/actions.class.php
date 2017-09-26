@@ -388,12 +388,22 @@ public function executeVerdetallefichas(sfWebRequest $request)
         $this->superadmin = true;
 
     $id = $request->getParameter('id');
-    $method = "aes-256-cbc";
-    $password = '1,3,5,7,9,abc';
-
-    $idfacturacion = openssl_decrypt($id, $method, $password);
-    
+    $encrypt_method = "AES-256-CBC";
+    $secret_key = 'DieGo123';
+    $secret_iv = 'ReiNo123';
+           
+    // hash
+    $key = hash('sha256', $secret_key);
+             
+    // iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
+    $iv = substr(hash('sha256', $secret_iv), 0, 16);
+           
+    $idfacturacion = openssl_decrypt(base64_decode($id), $encrypt_method, $key, 0, $iv);
+   
     $arrFiltro = array('idfacturacion'=> $idfacturacion);
+
+    if(trim($idfacturacion)=='')
+         $this->redirect('atenciones/index');
 
     $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerDetalleAtencionesFiltro($arrFiltro);
 
@@ -869,8 +879,26 @@ public function executeVerdetallefichas(sfWebRequest $request)
   public function executeImprimirficha(sfWebRequest $request)
       {
         
+          $id = $request->getParameter('id');
+          $encrypt_method = "AES-256-CBC";
+          $secret_key = 'DieGo123';
+          $secret_iv = 'ReiNo123';
+           
+          // hash
+          $key = hash('sha256', $secret_key);
+              
+          // iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
+          $iv = substr(hash('sha256', $secret_iv), 0, 16);
+           
+          $idficha = openssl_decrypt(base64_decode($id), $encrypt_method, $key, 0, $iv);
+          //$id_encriptado = base64_encode($output);
+
+          if(trim($idficha)=='')
+              $this->redirect('atenciones/index');
+
+         
           // Obtener informacion de la ficha a imprimir
-          $oFicha = Doctrine_Core::getTable('Facturaciones')->find($request->getParameter('id'));
+          $oFicha = Doctrine_Core::getTable('Facturaciones')->find($idficha);
 
           // Obtener informacion del Paciente
           $oPaciente = Doctrine_Core::getTable('Pacientes')->find($oFicha->getIdpaciente());
