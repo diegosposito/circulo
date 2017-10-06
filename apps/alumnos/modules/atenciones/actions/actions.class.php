@@ -972,6 +972,7 @@ public function executeVerdetallefichas(sfWebRequest $request)
           $pdf = new PDF('P','mm',array(160,235));
           $pdf->setPrintHeader(false);
           $pdf->setPrintFooter(false);
+          $pdf->SetMargins(5, 20, 10, true);
          
           // setear fuente y agregar una pagina
           $pdf->SetFont('Times','',9);
@@ -983,7 +984,7 @@ public function executeVerdetallefichas(sfWebRequest $request)
 
 
           $pdf->SetY(20);
-          $pdf->SetX(58);
+          $pdf->SetX(53);
 
           // TABLA de ficha nro arriba derecha
           $html='<table border="1" style="width:267px">
@@ -1032,11 +1033,11 @@ public function executeVerdetallefichas(sfWebRequest $request)
           $pdf->SetFont('Times','',9);
           $pdf->Ln();
                  
-          $ximage=10; $yimage=22;
+          $ximage=5; $yimage=22;
           $pdf->Image('images/logcirculo.jpg',$ximage,$yimage,21);  
 
           $pdf->SetY(49);
-          $pdf->SetX(10);
+          $pdf->SetX(5);
 
           // TABLA de informacion del paciente
           $htmlInfoPaciente='<table border="0.5" style="width:403px;">
@@ -1125,10 +1126,10 @@ public function executeVerdetallefichas(sfWebRequest $request)
 
                               
           
-          $pdf->SetY(195);$pdf->SetX(90);
+          $pdf->SetY(195);$pdf->SetX(80);
           $pdf->Cell(0,5,'_____________________________________',0,1,'C');
-          $pdf->SetX(90);  $pdf->SetY(200);
-          $pdf->Cell(0,5,'SELLO, FIRMA DEL PROFESIONAL',0,1,'R');
+          $pdf->SetX(100);  $pdf->SetY(200);
+          $pdf->Cell(0,5,'SELLO, FIRMA DEL PROFESIONAL        ',0,1,'R');
 
           
                
