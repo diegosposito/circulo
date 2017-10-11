@@ -972,18 +972,18 @@ public function executeVerdetallefichas(sfWebRequest $request)
           $pdf = new PDF('P','mm',array(160,235));
           $pdf->setPrintHeader(false);
           $pdf->setPrintFooter(false);
-          $pdf->SetMargins(5, 20, 10, true);
+          $pdf->SetMargins(5, 20, 0, true);
          
           // setear fuente y agregar una pagina
           $pdf->SetFont('Times','',9);
           $pdf->AddPage();
 
           $pdf->setX(60);
-          $pdf->setY(15);
+          $pdf->setY(3);
           $pdf->Cell(0,5,'REGISTRO DE PRESTACIONES ODONTOLOGICAS',0,1,'L');
 
 
-          $pdf->SetY(20);
+          $pdf->SetY(8);
           $pdf->SetX(53);
 
           // TABLA de ficha nro arriba derecha
@@ -1005,18 +1005,18 @@ public function executeVerdetallefichas(sfWebRequest $request)
           $pdf->WriteHTML($html); 
 
           $pdf->setX(70);
-          $pdf->setY(22);
+          $pdf->setY(10);
           $pdf->SetFont('Times','',7);
           $pdf->Cell(20,5,'                                  Círculo Odontológico',0,1,'L');
-          $pdf->setY(25);
+          $pdf->setY(13);
           $pdf->Cell(20,5,'                                  Concepción del Uruguay',0,1,'L');
-          $pdf->setY(28);
+          $pdf->setY(16);
           $pdf->Cell(20,5,'                                  T. Rocamora 471',0,1,'L');
-          $pdf->setY(31);
+          $pdf->setY(19);
           $pdf->Cell(20,5,'                                  03442-422957',0,1,'L');
 
           $pdf->setX(70);
-          $pdf->setY(39);
+          $pdf->setY(27);
           
           $pdf->SetFont('Times','',9);
           $pdf->Cell(0,5,'MES: ',0);
@@ -1033,10 +1033,10 @@ public function executeVerdetallefichas(sfWebRequest $request)
           $pdf->SetFont('Times','',9);
           $pdf->Ln();
                  
-          $ximage=5; $yimage=22;
+          $ximage=5; $yimage=10;
           $pdf->Image('images/logcirculo.jpg',$ximage,$yimage,21);  
 
-          $pdf->SetY(49);
+          $pdf->SetY(37);
           $pdf->SetX(5);
 
           // TABLA de informacion del paciente
@@ -1084,13 +1084,13 @@ public function executeVerdetallefichas(sfWebRequest $request)
                   </tr>
                   </table>';
 
-          $pdf->SetY(89);
+          $pdf->SetY(77);
 
           $pdf->WriteHTML($htmlInfoProfesional);      
     
 
           $header=array(' FECHA ','PIEZA N°','CARA','CODIGO','CONFORMIDAD PACIENTE','IMPORTE');
-          $pdf->SetY(95);
+          $pdf->SetY(83);
           $this->TablaSimple($header, $pdf, $atencioness);
          
         
@@ -1101,7 +1101,7 @@ public function executeVerdetallefichas(sfWebRequest $request)
           $pdf->SetFont('Times','',9);
 
           $pdf->Cell(0,5, "Cantidad de RX Adjuntas",0,1,'L');
-          $pdf->SetY(146);$pdf->SetX(45);
+          $pdf->SetY(134);$pdf->SetX(45);
           $htmlTableRight ='<table border="0.5" style="width:16px;">
                   <tr style="border-bottom: 1px solid #ccc;">
                      <td style="width:16px;height:16px;"></td>
@@ -1120,15 +1120,15 @@ public function executeVerdetallefichas(sfWebRequest $request)
                      '.$firma.'</td>
                   </tr></table>';
 
-          $pdf->SetY(155);        
+          $pdf->SetY(143);        
 
           $pdf->WriteHTML($htmlInfoPie);  
 
                               
           
-          $pdf->SetY(195);$pdf->SetX(80);
+          $pdf->SetY(183);$pdf->SetX(80);
           $pdf->Cell(0,5,'_____________________________________',0,1,'C');
-          $pdf->SetX(100);  $pdf->SetY(200);
+          $pdf->SetX(100);  $pdf->SetY(188);
           $pdf->Cell(0,5,'SELLO, FIRMA DEL PROFESIONAL        ',0,1,'R');
 
           
