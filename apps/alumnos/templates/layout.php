@@ -164,7 +164,7 @@
 
       <!-- Content -->
     <?php if ($autenticated && !$sf_user->getGuardUser()->getIsSuperAdmin()){ ?>
-			<div id="content" style="width:930px">
+			<div id="content" style="width:930px" >
 				 <?php echo $sf_content; ?>
 			</div>
     <?php } else { ?>
