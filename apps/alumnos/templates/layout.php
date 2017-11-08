@@ -19,6 +19,12 @@
     <?php use_stylesheet('style.css') ?>
     <?php use_stylesheet('prettyCheckboxes.css') ?>
 
+    <?php //use_stylesheet('styleodo.css') ?>
+    <?php use_stylesheet('jquery-ui-1.8.17.custom.css') ?>
+    <?php use_stylesheet('jquery.svg.css') ?>
+    <?php use_stylesheet('odontograma.css') ?>
+
+   
     <?php //use_javascript('webcam.js') ?>
     <?php use_javascript('hoverIntent.js') ?>
     <?php use_javascript('superfish.js') ?>
@@ -37,6 +43,18 @@
 
     <?php use_javascript('jquery-1.7.min.js') ?>
 
+    <?php use_javascript('plugins.js') ?>
+    <?php use_javascript('jquery-ui-1.8.17.custom.min.js') ?>
+    <?php use_javascript('jquery.tmpl.js') ?>
+    <?php use_javascript('knockout-2.0.0.js') ?>
+    <?php use_javascript('jquery.svg.min.js') ?>
+    <?php use_javascript('jquery.svggraph.min.js') ?>
+    <?php use_javascript('odontograma.js') ?>
+    <?php use_javascript('modernizr-2.0.6.min.js') ?>
+    <?php use_javascript('tratamientos.js') ?>
+
+    
+   
 
     <?php include_stylesheets() ?>
     <?php include_javascripts() ?>
@@ -146,7 +164,7 @@
 
       <!-- Content -->
     <?php if ($autenticated && !$sf_user->getGuardUser()->getIsSuperAdmin()){ ?>
-			<div id="content" style="width:890px">
+			<div id="content" style="width:930px">
 				 <?php echo $sf_content; ?>
 			</div>
     <?php } else { ?>
