@@ -223,5 +223,5 @@ include_partial('formpaciente', array('form' => $form, 'paciente' => $paciente, 
 
 <div id="Odontograma" class="tabcontent">
  <?php // include_partial('formedit', array('form' => $form, 'paciente' => $paciente, 'atencioness' => $atencioness, 'selectedtab' => $selectedtab)) ?>
- <?php include_partial('formodontograma', array('form' => $form, 'paciente' => $paciente, 'atencioness' => $atencioness, 'idprofesional' => $idprofesional, 'superadmin' => $superadmin , 'selectedtab' => $selectedtab)) ?>
-</div>
+ <?php include_partial('formodontograma', array('form' => $form, 'jsonatenciones' => $jsonatenciones, 'paciente' => $paciente, 'idpaciente' => $idpaciente, 'atencioness' => $atencionessa, 'idprofesional' => $idprofesional, 'profesional' => $profesional, 'matricula' => $matricula, 'superadmin' => $superadmin , 'selectedtab' => $selectedtab, 'msgError' => $error_tab2)) ?>
+ </div>
