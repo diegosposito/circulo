@@ -34,6 +34,12 @@
 </head>
 
 <body>
+  
+  <form action="<?php echo url_for('atenciones/verhistorialfichas') ?>" method="post">
+  <input type="hidden" name="selectedtab" id="selectedtab" value="<?php echo $selectedtab ?>">
+  <input type="hidden" name="matricula" id="matricula" value="<?php echo $matricula ?>">
+  <input type="hidden" name="idpaciente" id="idpaciente" value="<?php echo $idpaciente ?>">
+  <input type="hidden" name="jsonatenciones" id="jsonatenciones" value="<?php echo $jsonatenciones ?>">
 
   <div id="container">
     <header>
@@ -81,6 +87,8 @@
     <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
     <script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
   <![endif]-->
+
+  </form>
   
 </body>
 </html>
