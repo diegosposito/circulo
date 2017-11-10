@@ -42,6 +42,8 @@ jQuery(function(){
 		var tratamientosAplicadosAlDiente = ko.utils.arrayFilter(vm.tratamientosAplicados(), function(t){
 			return t.diente.id == diente.id;
 		});
+		console.log(JSON.stringify(tratamientosAplicadosAlDiente));
+		//alert (JSON.stringify(tratamientosAplicadosAlDiente));
 		var caras = [];
 		caras['S'] = caraSuperior;
 		caras['C'] = caraCentral;
@@ -175,8 +177,11 @@ jQuery(function(){
 
 	ko.applyBindings(vm);
 
+	
+
+
 	//TODO: Cargo el estado del odontograma
-	renderSvg();
+	//renderSvg();
 
 
 	//Cargo los tratamientos
@@ -186,4 +191,31 @@ jQuery(function(){
 			vm.tratamientosPosibles.push(tratamiento);
 		};		
 	});
+    renderSvg();
+    var atenciones = $('#jsonatenciones').val();
+   // alert(atenciones);
+
+    JSON.parse($('#jsonatenciones').val(), function(d){
+    //JSON.parse(atenciones.diente, function(a,b, c){ 
+    	//alert(JSON.stringify(d)); 
+    	for (var i = d.length - 1; i >= 0; i--) {
+			var fila = d[i];
+			alert(fila);
+			//vm.tratamientosAplicados.push({diente: fila["diente"], cara: fila["cara"], tratamiento: fila["tratamiento"]});
+		};		
+  	
+	});
+
+    //Cargo los tratamientos
+
+	/*$.getJSON('../../../js/taplicados.js', function(d){
+		for (var i = d.length - 1; i >= 0; i--) {
+			var fila = d[i];
+			vm.tratamientosAplicados.push({diente: fila["diente"], cara: fila["cara"], tratamiento: fila["tratamiento"]});
+		};		
+	});*/
+
+	
+
+	renderSvg();
 });
