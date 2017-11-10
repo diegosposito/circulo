@@ -177,13 +177,6 @@ jQuery(function(){
 
 	ko.applyBindings(vm);
 
-	
-
-
-	//TODO: Cargo el estado del odontograma
-	//renderSvg();
-
-
 	//Cargo los tratamientos
 	$.getJSON('../../../js/tratamientos.js', function(d){
 		for (var i = d.length - 1; i >= 0; i--) {
@@ -192,19 +185,16 @@ jQuery(function(){
 		};		
 	});
     renderSvg();
-    var atenciones = $('#jsonatenciones').val();
-   // alert(atenciones);
+    
+    var jsonatenciones = JSON.parse($('#jsonatenciones').val());
 
-    JSON.parse($('#jsonatenciones').val(), function(d){
-    //JSON.parse(atenciones.diente, function(a,b, c){ 
-    	//alert(JSON.stringify(d)); 
-    	for (var i = d.length - 1; i >= 0; i--) {
-			var fila = d[i];
-			alert(fila);
-			//vm.tratamientosAplicados.push({diente: fila["diente"], cara: fila["cara"], tratamiento: fila["tratamiento"]});
-		};		
-  	
-	});
+	
+    for (var key in jsonatenciones) {
+     		//alert(JSON.stringify(jsonatenciones[key], null, 2));
+     		//alert(jsonatenciones[key]["diente"]);
+     		vm.tratamientosAplicados.push({diente: jsonatenciones[key]["diente"], cara: jsonatenciones[key]["cara"], tratamiento: jsonatenciones[key]["tratamiento"]});
+     	//	alert(JSON.stringify(jsonatenciones[key]["diente"], null, 2));
+	}
 
     //Cargo los tratamientos
 
