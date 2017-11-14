@@ -42,7 +42,7 @@ jQuery(function(){
 		var tratamientosAplicadosAlDiente = ko.utils.arrayFilter(vm.tratamientosAplicados(), function(t){
 			return t.diente.id == diente.id;
 		});
-		console.log(JSON.stringify(tratamientosAplicadosAlDiente));
+		//console.log(JSON.stringify(tratamientosAplicadosAlDiente));
 		//alert (JSON.stringify(tratamientosAplicadosAlDiente));
 		var caras = [];
 		caras['S'] = caraSuperior;
@@ -74,7 +74,10 @@ jQuery(function(){
 
 				//Validaciones
 				//Validamos el tratamiento
-				var tratamiento = vm.tratamientoSeleccionado();
+				var t = vm.tratamientoSeleccionado();
+				t.color = $("#selectedcolor").val();
+
+				var tratamiento = jQuery.extend({}, t);
 
 				if(cara == 'X' && !tratamiento.aplicaDiente){
 					alert('El tratamiento seleccionado no se puede aplicar a toda la pieza.');
@@ -87,7 +90,7 @@ jQuery(function(){
 				//TODO: Validaciones de si la cara tiene tratamiento o no, etc...
 
 				vm.tratamientosAplicados.push({diente: diente, cara: cara, tratamiento: tratamiento});
-				vm.tratamientoSeleccionado(null);
+				//vm.tratamientoSeleccionado(null);
 				
 				//Actualizo el SVG
 				renderSvg();
@@ -184,26 +187,24 @@ jQuery(function(){
 			vm.tratamientosPosibles.push(tratamiento);
 		};		
 	});
-    renderSvg();
     
     var jsonatenciones = JSON.parse($('#jsonatenciones').val());
-
 	
+	// Recorro tratamientos ya aplicados para visualizarlos al momento de cargar el odontograma
     for (var key in jsonatenciones) {
-     		//alert(JSON.stringify(jsonatenciones[key], null, 2));
-     		//alert(jsonatenciones[key]["diente"]);
      		vm.tratamientosAplicados.push({diente: jsonatenciones[key]["diente"], cara: jsonatenciones[key]["cara"], tratamiento: jsonatenciones[key]["tratamiento"]});
-     	//	alert(JSON.stringify(jsonatenciones[key]["diente"], null, 2));
-	}
+    }
 
     //Cargo los tratamientos
-
 	/*$.getJSON('../../../js/taplicados.js', function(d){
 		for (var i = d.length - 1; i >= 0; i--) {
 			var fila = d[i];
 			vm.tratamientosAplicados.push({diente: fila["diente"], cara: fila["cara"], tratamiento: fila["tratamiento"]});
 		};		
-	});*/
+	});
+	//alert(JSON.stringify(jsonatenciones[key], null, 2));
+     		//alert(jsonatenciones[key]["diente"]);
+     		*/
 
 	
 
