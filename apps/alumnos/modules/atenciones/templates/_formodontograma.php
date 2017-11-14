@@ -1,4 +1,4 @@
-<!doctype html>
+
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
 <!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
 <!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
@@ -31,7 +31,21 @@
   <!-- All JavaScript at the bottom, except for Modernizr / Respond.
        Modernizr enables HTML5 elements & feature detects; Respond is a polyfill for min/max-width CSS3 Media Queries
        For optimal performance, use a custom Modernizr build: www.modernizr.com/download/ -->
+
 </head>
+<script type="text/javascript">
+$(document).ready(function()
+{
+    $("input[name=color]").click(function () {   
+        if($('input:radio[name=color]:checked').val() == 'red'){
+          $("#selectedcolor").val("red");
+        } 
+        if($('input:radio[name=color]:checked').val() == 'blue'){
+          $("#selectedcolor").val("blue");
+        } 
+    });
+});
+</script>
 
 <body>
   
@@ -40,11 +54,18 @@
   <input type="hidden" name="matricula" id="matricula" value="<?php echo $matricula ?>">
   <input type="hidden" name="idpaciente" id="idpaciente" value="<?php echo $idpaciente ?>">
   <input type="hidden" name="jsonatenciones" id="jsonatenciones" value="<?php echo $jsonatenciones ?>">
+  <input type="hidden" name="selectedcolor" id="selectedcolor" value="<?php echo 'blue' ?>">
 
   <div id="container">
     <header>
       <h1>Clip Soluciones<h1>
     </header>
+    <div>
+      <form action="">
+        <input type="radio" name="color" value="red"> Color rojo: Prestaciones Existentes<br>
+        <input type="radio" name="color" value="blue" checked> Color azul : Prestaciones requeridas<br>
+      </form>
+    </div>
     <div id="main" role="main">      
       <div id="tratamiento">
         <h2>Tratamiento</h2>
@@ -91,4 +112,3 @@
   </form>
   
 </body>
-</html>
