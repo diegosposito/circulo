@@ -301,7 +301,7 @@ class atencionesActions extends sfActions
     $oOdontograma->setInfodontograma($request->getParameter('jsonatenciones'));
     $oOdontograma->save();
     
-    echo "Se ha guardado correctamente el odontograma.";
+    echo "Se ha guardado correctamente el odontograma";
     
     return sfView::NONE;  
   }
