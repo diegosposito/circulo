@@ -32,7 +32,7 @@ class OdontogramaTable extends Doctrine_Table
     public static function obtenerUltimoAnteriorAfecha($idpaciente, $fecha)
     {
         $sql ="SELECT o.id, o.matricula, o.idpaciente, o.infodontograma, o.created_at FROM odontograma o 
-        JOIN (SELECT MAX(DATE(created_at)) as maxfecha FROM odontograma WHERE DATE(created_at)<'".$fecha."' GROUP BY idpaciente HAVING idpaciente= ".$idpaciente.") as ultimo ON o.created_at= ultimo.maxfecha WHERE o.idpaciente = ".$idpaciente.";";
+        JOIN (SELECT MAX(created_at) as maxfecha FROM odontograma WHERE created_at<'".$fecha."' GROUP BY idpaciente HAVING idpaciente= ".$idpaciente.") as ultimo ON o.created_at= ultimo.maxfecha WHERE o.idpaciente = ".$idpaciente.";";
 
         $q = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($sql);
 
