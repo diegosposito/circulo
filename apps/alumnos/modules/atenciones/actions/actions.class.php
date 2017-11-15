@@ -267,6 +267,16 @@ class atencionesActions extends sfActions
      // Obtener json desde base de datos con atenciones para Odontograma
     $ultimoOdonto = Doctrine_Core::getTable('Odontograma')->obtenerUltimo($request->getParameter('id'));
 
+    $fecha = date("d/m/Y"); 
+    $arr = explode('/', $fecha);
+    $fec = $arr[2]."-".$arr[1]."-".$arr[0];
+   
+    if($request->getParameter('filtrofec')<>''){
+       $fecha = $request->getParameter('filtrofec');
+       $arr = explode('/', $fecha);
+       $fec = $arr[2]."-".$arr[1]."-".$arr[0];
+    } 
+
    // $ultimoOdonto = Doctrine_Core::getTable('Odontograma')->obtenerUltimoAnteriorAfecha($request->getParameter('id'), '2017-07-07');
 
     $jsonatenciones='[]';
