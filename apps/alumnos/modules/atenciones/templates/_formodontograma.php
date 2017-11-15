@@ -24,19 +24,18 @@ $(document).ready(function()
 
     });
 
-
 });
 </script>
 
  
- <form id="formGrabar" method="post">
+ <form action="" id="formGrabar" method="post">
     <input type="hidden" name="selectedtab" id="selectedtab" value="<?php echo $selectedtab ?>">
     <input type="hidden" name="matricula" id="matricula" value="<?php echo $matricula ?>">
     <input type="hidden" name="idpaciente" id="idpaciente" value="<?php echo $idpaciente ?>">
     <input type="hidden" name="jsonatenciones" id="jsonatenciones" value="<?php echo $jsonatenciones ?>">
     <input type="hidden" name="selectedcolor" id="selectedcolor" value="<?php echo 'blue' ?>">
 
-    <table cellspacing="0" class="stats" width="80%">
+    <table cellspacing="0" class="stats" width="100%">
     <?php if(!$superadmin) { ?>
     <tr>
     <td colspan="2" align="center"><input type="button" id="botonGrabar" value="Actualizar Odontograma" /></td>
