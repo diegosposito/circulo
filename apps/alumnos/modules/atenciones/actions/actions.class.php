@@ -268,6 +268,27 @@ class atencionesActions extends sfActions
      $this->jsonatenciones = '[{"diente":{"id":17,"x":25,"y":0},"cara":"S","tratamiento":{"id":"10.16.01","nombre":"Hasta 1 cm. de diámetro","aplicaCara":true,"aplicaDiente":true,"color":"blue"}},{"diente":{"id":18,"x":50,"y":0},"cara":"C","tratamiento":{"id":"10.16.01","nombre":"Hasta 1 cm. de diámetro","aplicaCara":true,"aplicaDiente":true,"color":"red"}}]';
   }
 
+  // Guarda la asignacion
+  public function executeGuardarodontograma(sfWebRequest $request) {  
+    $var1 = $request->getParameter('matricula');
+    $var2 = $idpaciente =$request->getParameter('idpaciente');
+    $var3 = $request->getParameter('selectedcolor');
+
+   // $oAsignacionClase = Doctrine_Core::getTable('AsignacionesClases')->find($arregloAsignaciones['idasignacion']);
+  
+   // $odontograma = new Odontograma();
+    
+  // Guarda la informacion de la asignacion
+ /* $oAsignacionClase->setIdaula($arregloAsignaciones['idaula']);
+  $oAsignacionClase->setDia($arregloAsignaciones['dia']);
+  $oAsignacionClase->setPeriodicidad($arregloAsignaciones['periodicidad']);
+  $oAsignacionClase->save();*/
+    
+  echo "Se ha guardado correctamente el odontograma.".$var1.$var2.$var3;
+    
+  return sfView::NONE;  
+  }
+
   public function executeMostrarficha(sfWebRequest $request)
   {
      $atenciones_seleccionadas = $request->getParameter('case');
