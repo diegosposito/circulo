@@ -72,6 +72,7 @@ $(document).ready(function(){
 </tr>
 <?php } ?>
 </table>
+</form>
 
 
 <?php if (count($atencioness) > 0){ ?>
@@ -105,7 +106,7 @@ $(document).ready(function(){
    <br>
   </tbody>
 </table>
-</form>  
+
 <br>
 <?php } ?>
 </div>
