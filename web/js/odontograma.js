@@ -90,6 +90,8 @@ jQuery(function(){
 				//TODO: Validaciones de si la cara tiene tratamiento o no, etc...
 
 				vm.tratamientosAplicados.push({diente: diente, cara: cara, tratamiento: tratamiento});
+				$('#jsonatenciones').val(JSON.stringify(vm.tratamientosAplicados()));
+				//alert (JSON.stringify(vm.tratamientosAplicados()));
 				//vm.tratamientoSeleccionado(null);
 				
 				//Actualizo el SVG
