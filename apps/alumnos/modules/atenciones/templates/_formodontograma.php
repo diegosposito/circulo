@@ -45,6 +45,18 @@ $(document).ready(function()
     </table>
 </form>
 
+<form action="<?php echo url_for('atenciones/editar?id='.$idpaciente) ?>" method="post">
+    <input type="hidden" name="selectedtab" id="selectedtab" value="<?php echo $selectedtab ?>">
+   
+    <table cellspacing="0" class="stats" width="100%">
+    <?php if(!$superadmin) { ?>
+    <tr><td colspan="2" align="center"><INPUT type="text" id="filtrofec" name="filtrofec" size="10" value="<?php echo date('d/m/Y'); ?>"></td></tr>
+
+    <tr><td colspan="2" align="center"><input type="submit" id="botonFiltrar" value="Filtrar por fecha" /></td></tr>
+    <?php } ?>
+    </table>
+</form>
+
   <div id="container">
     <div>
         <input type="radio" name="color" value="red"> Color rojo: Prestaciones Existentes<br>
