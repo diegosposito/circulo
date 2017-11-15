@@ -265,7 +265,7 @@ class atencionesActions extends sfActions
 
      // CUARTO TAB
      // Obtener json desde base de datos con atenciones para Odontograma
-    $ultimoOdonto = Doctrine_Core::getTable('Odontograma')->obtenerUltimo($request->getParameter('id'));
+   
 
     $fecha = date("d/m/Y"); 
     $arr = explode('/', $fecha);
@@ -277,15 +277,18 @@ class atencionesActions extends sfActions
        $fec = $arr[2]."-".$arr[1]."-".$arr[0];
     } 
 
-   // $ultimoOdonto = Doctrine_Core::getTable('Odontograma')->obtenerUltimoAnteriorAfecha($request->getParameter('id'), '2017-07-07');
+    // SI es un post verifico si fue una consulta y la fecha de la consulta para saber que mostrar en odontograma
+    if ($request->isMethod(sfRequest::POST) && ($fec<>date("Y-m-d"))){
+          $ultimoOdonto = Doctrine_Core::getTable('Odontograma')->obtenerUltimoAnteriorAfecha($request->getParameter('id'), $fec);
+     } else {
+         $ultimoOdonto = Doctrine_Core::getTable('Odontograma')->obtenerUltimo($request->getParameter('id'));
+     }
 
     $jsonatenciones='[]';
     foreach($ultimoOdonto as $datos){
         $jsonatenciones = $datos['infodontograma'];
     }  
-
-     $this->jsonatenciones = $jsonatenciones;
-
+    $this->jsonatenciones = $jsonatenciones;
     // $this->jsonatenciones = '[{"diente":{"id":17,"x":25,"y":0},"cara":"S","tratamiento":{"id":"10.16.01","nombre":"Hasta 1 cm. de diámetro","aplicaCara":true,"aplicaDiente":true,"color":"blue"}},{"diente":{"id":18,"x":50,"y":0},"cara":"C","tratamiento":{"id":"10.16.01","nombre":"Hasta 1 cm. de diámetro","aplicaCara":true,"aplicaDiente":true,"color":"red"}}]';
   }
 
