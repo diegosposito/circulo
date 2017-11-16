@@ -43,15 +43,19 @@ jQuery(function(){
 	    	{fill: 'navy', stroke: 'navy', strokeWidth: 0.1, style: 'font-size: 6pt;font-weight:normal'});
     	caraCompleto = $(caraCompleto).data('cara', 'X');
 
-        // Si es extraccion agrego cruz
-    	if (esExtraccion(diente)){
-			var caraSS = svg.polygon(dienteGroup,
-				[[0,0],[5,5],[10,10],[15,15]],  
+        // Si el diente tiene una extraccion entre sus tratamientos agrego una cruz
+      	if (esExtraccion(diente)[0]){
+    		
+    		// Cambio color del poligono, en este caso pinta las extracciones
+    		defaultPolygon = {fill: 'white', stroke: esExtraccion(diente)[1], strokeWidth: 0.5};
+
+    		var caraSS = svg.polygon(dienteGroup,
+				[[0,0],[5,5],[10,10],[20,20]],  
 			    defaultPolygon);
 		    caraSS = $(caraSS).data('cara', 'SS');
 		
 			var caraII =  svg.polygon(dienteGroup,
-				[[15,15],[15,10],[15,5],[15,0]],  
+				[[20,0],[15,5],[10,10],[0,20]],  
 			    defaultPolygon);			
 			caraII = $(caraII).data('cara', 'II');
 		};
@@ -73,7 +77,7 @@ jQuery(function(){
 		};*/
 
         // SOlo pinto si no es extraccion
-		if (!esExtraccion(diente)){
+		if (!esExtraccion(diente)[0]){
 			for (var i = 0; i <= tratamientosAplicadosAlDiente.length - 1; i++) {
 				var t = tratamientosAplicadosAlDiente[i];
 				caras[t.cara].attr('fill', t.tratamiento.color);
@@ -140,21 +144,25 @@ jQuery(function(){
 
 	function esExtraccion(diente){
 		
-		var esExtraccion = false;
+		var esExt = false;
+		var color = 'blue';
 
 		var trat_apli_al_diente = ko.utils.arrayFilter(vm.tratamientosAplicados(), function(t){
 			return t.diente.id == diente.id;
 		});	
 
-		//alert (JSON.stringify(trat_apli_al_diente));
-
+     
 		for (var i = 0; i <= trat_apli_al_diente.length - 1; i++) {
 			var t = trat_apli_al_diente[i];
-			if (t.id == "10.18")
-			  esExtraccion = true;
+            
+          	if (t.tratamiento.id == "10.18"){
+			  esExt = true;
+			  color = t.tratamiento.color;
+          	}  
 		};
 
-		return esExtraccion;
+        var salida=[esExt,color];
+		return salida;
 	}
 
 	//View Models
