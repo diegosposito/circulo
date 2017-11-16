@@ -5,6 +5,11 @@ jQuery(function(){
 		
 		var x = diente.x || 0,
 			y = diente.y || 0;
+
+		//Busco los tratamientos aplicados al diente
+		var tratamientosAplicadosAlDiente = ko.utils.arrayFilter(vm.tratamientosAplicados(), function(t){
+			return t.diente.id == diente.id;
+		});	
 		
 		var defaultPolygon = {fill: 'white', stroke: 'navy', strokeWidth: 0.5};
 		var dienteGroup = svg.group(parentGroup, {transform: 'translate(' + x + ',' + y + ')'});
@@ -37,11 +42,21 @@ jQuery(function(){
 	    var caraCompleto = svg.text(dienteGroup, 6, 30, diente.id.toString(), 
 	    	{fill: 'navy', stroke: 'navy', strokeWidth: 0.1, style: 'font-size: 6pt;font-weight:normal'});
     	caraCompleto = $(caraCompleto).data('cara', 'X');
+
+        // Si es extraccion agrego cruz
+    	if (esExtraccion(diente)){
+			var caraSS = svg.polygon(dienteGroup,
+				[[0,0],[5,5],[10,10],[15,15]],  
+			    defaultPolygon);
+		    caraSS = $(caraSS).data('cara', 'SS');
+		
+			var caraII =  svg.polygon(dienteGroup,
+				[[15,15],[15,10],[15,5],[15,0]],  
+			    defaultPolygon);			
+			caraII = $(caraII).data('cara', 'II');
+		};
     	
-		//Busco los tratamientos aplicados al diente
-		var tratamientosAplicadosAlDiente = ko.utils.arrayFilter(vm.tratamientosAplicados(), function(t){
-			return t.diente.id == diente.id;
-		});
+		
 		//console.log(JSON.stringify(tratamientosAplicadosAlDiente));
 		//alert (JSON.stringify(tratamientosAplicadosAlDiente));
 		var caras = [];
@@ -57,11 +72,14 @@ jQuery(function(){
 			caras[t.cara].attr('fill', t.tratamiento.color);
 		};*/
 
-		for (var i = 0; i <= tratamientosAplicadosAlDiente.length - 1; i++) {
-			var t = tratamientosAplicadosAlDiente[i];
-			caras[t.cara].attr('fill', t.tratamiento.color);
+        // SOlo pinto si no es extraccion
+		if (!esExtraccion(diente)){
+			for (var i = 0; i <= tratamientosAplicadosAlDiente.length - 1; i++) {
+				var t = tratamientosAplicadosAlDiente[i];
+				caras[t.cara].attr('fill', t.tratamiento.color);
+			}
 		};
-
+	
 		$.each([caraCentral, caraIzquierda, caraDerecha, caraInferior, caraSuperior, caraCompleto], function(index, value){
 	    	value.click(function(){
 	    		var me = $(this);
@@ -118,6 +136,25 @@ jQuery(function(){
 			var dienteUnwrapped = ko.utils.unwrapObservable(diente); 
 			drawDiente(svg, parentGroup, dienteUnwrapped);
 		};
+	}
+
+	function esExtraccion(diente){
+		
+		var esExtraccion = false;
+
+		var trat_apli_al_diente = ko.utils.arrayFilter(vm.tratamientosAplicados(), function(t){
+			return t.diente.id == diente.id;
+		});	
+
+		//alert (JSON.stringify(trat_apli_al_diente));
+
+		for (var i = 0; i <= trat_apli_al_diente.length - 1; i++) {
+			var t = trat_apli_al_diente[i];
+			if (t.id == "10.18")
+			  esExtraccion = true;
+		};
+
+		return esExtraccion;
 	}
 
 	//View Models
