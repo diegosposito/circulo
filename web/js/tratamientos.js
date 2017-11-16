@@ -110,6 +110,6 @@
 	{ "id":"10.17.01", "nombre":"Hasta 1 cm. de diámetro", "aplicaCara":true, "aplicaDiente":true ,"color":"blue"},
 	{ "id":"10.17.02", "nombre":"De 1 a 3 cm. de diámetro", "aplicaCara":true, "aplicaDiente":true ,"color":"blue"},
 	{ "id":"10.17.03", "nombre":"De mas de 3 cm. de diámetro", "aplicaCara":true, "aplicaDiente":true ,"color":"blue"},
-	{ "id":"10.18", "nombre":"Ext. alv. ext. y restos rad.", "aplicaCara":true, "aplicaDiente":true ,"color":"blue"},
-	{ "id":"84.01.01", "nombre":"extraccion prueba pintar rojo", "aplicaCara":true, "aplicaDiente":false ,"color":"red"}
+	{ "id":"10.18", "nombre":"Extracción", "aplicaCara":false, "aplicaDiente":true ,"color":"blue"},
+	{ "id":"84.01.01", "nombre":"Corona", "aplicaCara":false, "aplicaDiente":true ,"color":"red"}
 ]
