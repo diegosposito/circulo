@@ -47,15 +47,15 @@ jQuery(function(){
       	if (esExtraccion(diente)[0]){
     		
     		// Cambio color del poligono, en este caso pinta las extracciones
-    		defaultPolygon = {fill: 'white', stroke: esExtraccion(diente)[1], strokeWidth: 0.5};
+    		defaultPolygon = {fill: 'white', stroke: esExtraccion(diente)[1], strokeWidth: 1.5};
 
     		var caraSS = svg.polygon(dienteGroup,
-				[[0,0],[5,5],[10,10],[20,20]],  
+				[[-2,-2],[5,5],[10,10],[22,22]],  
 			    defaultPolygon);
 		    caraSS = $(caraSS).data('cara', 'SS');
 		
 			var caraII =  svg.polygon(dienteGroup,
-				[[20,0],[15,5],[10,10],[0,20]],  
+				[[22,-2],[15,5],[10,10],[-2,22]],  
 			    defaultPolygon);			
 			caraII = $(caraII).data('cara', 'II');
 		};
@@ -190,29 +190,29 @@ jQuery(function(){
 		var dientes = [];
 		//Dientes izquierdos
 		for(var i = 0; i < 8; i++){
-			dientes.push(new DienteModel(18 - i, i * 25, 0));	
+			dientes.push(new DienteModel(18 - i, i * 25, 5));	
 		}
 		for(var i = 3; i < 8; i++){
-			dientes.push(new DienteModel(58 - i, i * 25, 1 * 40));	
+			dientes.push(new DienteModel(58 - i, i * 25, 1 * 45));	
 		}
 		for(var i = 3; i < 8; i++){
-			dientes.push(new DienteModel(88 - i, i * 25, 2 * 40));	
+			dientes.push(new DienteModel(88 - i, i * 25, 2 * 45));	
 		}
 		for(var i = 0; i < 8; i++){
-			dientes.push(new DienteModel(48 - i, i * 25, 3 * 40));	
+			dientes.push(new DienteModel(48 - i, i * 25, 3 * 45));	
 		}
 		//Dientes derechos
 		for(var i = 0; i < 8; i++){
-			dientes.push(new DienteModel(21 + i, i * 25 + 210, 0));	
+			dientes.push(new DienteModel(21 + i, i * 25 + 210, 5));	
 		}
 		for(var i = 0; i < 5; i++){
-			dientes.push(new DienteModel(61 + i, i * 25 + 210, 1 * 40));	
+			dientes.push(new DienteModel(61 + i, i * 25 + 210, 1 * 45));	
 		}
 		for(var i = 0; i < 5; i++){
-			dientes.push(new DienteModel(71 + i, i * 25 + 210, 2 * 40));	
+			dientes.push(new DienteModel(71 + i, i * 25 + 210, 2 * 45));	
 		}
 		for(var i = 0; i < 8; i++){
-			dientes.push(new DienteModel(31 + i, i * 25 + 210, 3 * 40));	
+			dientes.push(new DienteModel(31 + i, i * 25 + 210, 3 * 45));	
 		}
 
 		self.dientes = ko.observableArray(dientes);
