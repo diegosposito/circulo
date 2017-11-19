@@ -59,6 +59,21 @@ jQuery(function(){
 			    defaultPolygon);			
 			caraII = $(caraII).data('cara', 'II');
 		};
+
+		// Si el diente tiene una corona entre sus tratamientos agrego una circulo
+      	if (esCorona(diente)[0]){
+    		
+    		// Cambio color del poligono, en este caso pinta las extracciones
+    		defaultPolygon = {fill: 'red', stroke: 'blue', strokeWidth: 1.0};
+
+    		/*var caraSS = svg.polygon(dienteGroup,
+				[[10,0],[9,0],[8,0],[7,0.5],[6,1],[5,1],[4,1],[3,1],[2,2],[1,4],[0,10]],  
+			    defaultPolygon);*/
+
+    		var caraSS = svg.circle(dienteGroup, 10, 10, 10, {fill: 'none', stroke: 'red', strokeWidth: 3});
+		    caraSS = $(caraSS).data('cara', 'SS');
+
+		};
     	
 		
 		//console.log(JSON.stringify(tratamientosAplicadosAlDiente));
@@ -70,14 +85,15 @@ jQuery(function(){
 		caras['Z'] = caraIzquierda;
 		caras['D'] = caraDerecha;
 		caras['I'] = caraInferior;
+		caras['SS'] = caraSS;
 
 		/*for (var i = tratamientosAplicadosAlDiente.length - 1; i >= 0; i--) {
 			var t = tratamientosAplicadosAlDiente[i];
 			caras[t.cara].attr('fill', t.tratamiento.color);
 		};*/
 
-        // SOlo pinto si no es extraccion
-		if (!esExtraccion(diente)[0]){
+        // SOlo pinto si no es extraccion, corona, 
+		if (!esExtraccion(diente)[0] && !esCorona(diente)[0]){
 			for (var i = 0; i <= tratamientosAplicadosAlDiente.length - 1; i++) {
 				var t = tratamientosAplicadosAlDiente[i];
 				caras[t.cara].attr('fill', t.tratamiento.color);
@@ -111,7 +127,7 @@ jQuery(function(){
 				}
 				//TODO: Validaciones de si la cara tiene tratamiento o no, etc...
 
-				vm.tratamientosAplicados.push({diente: diente, cara: cara, tratamiento: tratamiento});
+				vm.tratamientosAplicados.unshift({diente: diente, cara: cara, tratamiento: tratamiento});
 				$('#jsonatenciones').val(JSON.stringify(vm.tratamientosAplicados()));
 				//alert (JSON.stringify(vm.tratamientosAplicados()));
 				//vm.tratamientoSeleccionado(null);
@@ -155,13 +171,36 @@ jQuery(function(){
 		for (var i = 0; i <= trat_apli_al_diente.length - 1; i++) {
 			var t = trat_apli_al_diente[i];
             
-          	if (t.tratamiento.id == "10.18"){
+          	if (t.tratamiento.id == "01.02"){
 			  esExt = true;
 			  color = t.tratamiento.color;
           	}  
 		};
 
         var salida=[esExt,color];
+		return salida;
+	}
+
+	function esCorona(diente){
+		
+		var esCor = false;
+		var color = 'blue';
+
+		var trat_apli_al_diente = ko.utils.arrayFilter(vm.tratamientosAplicados(), function(t){
+			return t.diente.id == diente.id;
+		});	
+
+     
+		for (var i = 0; i <= trat_apli_al_diente.length - 1; i++) {
+			var t = trat_apli_al_diente[i];
+            
+          	if (t.tratamiento.id == "01.05"){
+			  esCor = true;
+			  color = t.tratamiento.color;
+          	}  
+		};
+
+        var salida=[esCor,color];
 		return salida;
 	}
 
@@ -239,21 +278,8 @@ jQuery(function(){
 	
 	// Recorro tratamientos ya aplicados para visualizarlos al momento de cargar el odontograma
     for (var key in jsonatenciones) {
-     		vm.tratamientosAplicados.push({diente: jsonatenciones[key]["diente"], cara: jsonatenciones[key]["cara"], tratamiento: jsonatenciones[key]["tratamiento"]});
+     		vm.tratamientosAplicados.unshift({diente: jsonatenciones[key]["diente"], cara: jsonatenciones[key]["cara"], tratamiento: jsonatenciones[key]["tratamiento"]});
     }
 
-    //Cargo los tratamientos
-	/*$.getJSON('../../../js/taplicados.js', function(d){
-		for (var i = d.length - 1; i >= 0; i--) {
-			var fila = d[i];
-			vm.tratamientosAplicados.push({diente: fila["diente"], cara: fila["cara"], tratamiento: fila["tratamiento"]});
-		};		
-	});
-	//alert(JSON.stringify(jsonatenciones[key], null, 2));
-     		//alert(jsonatenciones[key]["diente"]);
-     		*/
-
-	
-
-	renderSvg();
+   renderSvg();
 });
