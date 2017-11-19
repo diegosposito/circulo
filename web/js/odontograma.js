@@ -70,7 +70,7 @@ jQuery(function(){
 				[[10,0],[9,0],[8,0],[7,0.5],[6,1],[5,1],[4,1],[3,1],[2,2],[1,4],[0,10]],  
 			    defaultPolygon);*/
 
-    		var caraSS = svg.circle(dienteGroup, 10, 10, 10, {fill: 'none', stroke: 'red', strokeWidth: 3});
+    		var caraSS = svg.circle(dienteGroup, 10, 10, 10, {fill: 'none', stroke: esCorona(diente)[1], strokeWidth: 3});
 		    caraSS = $(caraSS).data('cara', 'SS');
 
 		};
