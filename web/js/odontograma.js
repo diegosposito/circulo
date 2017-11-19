@@ -64,7 +64,7 @@ jQuery(function(){
       	if (esCorona(diente)[0]){
     		
     		// Cambio color del poligono, en este caso pinta las extracciones
-    		defaultPolygon = {fill: 'red', stroke: 'blue', strokeWidth: 1.0};
+    		//defaultPolygon = {fill: 'red', stroke: 'blue', strokeWidth: 1.0};
 
     		/*var caraSS = svg.polygon(dienteGroup,
 				[[10,0],[9,0],[8,0],[7,0.5],[6,1],[5,1],[4,1],[3,1],[2,2],[1,4],[0,10]],  
@@ -72,6 +72,17 @@ jQuery(function(){
 
     		var caraSS = svg.circle(dienteGroup, 10, 10, 10, {fill: 'none', stroke: esCorona(diente)[1], strokeWidth: 3});
 		    caraSS = $(caraSS).data('cara', 'SS');
+
+		};
+
+		// Si el diente tiene tratamiento de conducto
+      	if (esConducto(diente)[0]){
+    		
+    		var caraSS = svg.text(dienteGroup, 6, -2, 'TC', 
+	    	{fill: esConducto(diente)[1], stroke: esConducto(diente)[1], strokeWidth: 0.1, style: 'font-size: 6pt;font-weight:normal'});
+    	    caraCompleto = $(caraCompleto).data('cara', 'X');
+
+    	    caraSS = $(caraSS).data('cara', 'SS');
 
 		};
     	
@@ -85,8 +96,7 @@ jQuery(function(){
 		caras['Z'] = caraIzquierda;
 		caras['D'] = caraDerecha;
 		caras['I'] = caraInferior;
-		caras['SS'] = caraSS;
-
+		
 		/*for (var i = tratamientosAplicadosAlDiente.length - 1; i >= 0; i--) {
 			var t = tratamientosAplicadosAlDiente[i];
 			caras[t.cara].attr('fill', t.tratamiento.color);
@@ -204,6 +214,29 @@ jQuery(function(){
 		return salida;
 	}
 
+	function esConducto(diente){
+		
+		var esCon = false;
+		var color = 'blue';
+
+		var trat_apli_al_diente = ko.utils.arrayFilter(vm.tratamientosAplicados(), function(t){
+			return t.diente.id == diente.id;
+		});	
+
+     
+		for (var i = 0; i <= trat_apli_al_diente.length - 1; i++) {
+			var t = trat_apli_al_diente[i];
+            
+          	if (t.tratamiento.id == "01.06"){
+			  esCon = true;
+			  color = t.tratamiento.color;
+          	}  
+		};
+
+        var salida=[esCon,color];
+		return salida;
+	}
+
 	//View Models
 	function DienteModel(id, x, y){
 		var self = this;
@@ -229,29 +262,29 @@ jQuery(function(){
 		var dientes = [];
 		//Dientes izquierdos
 		for(var i = 0; i < 8; i++){
-			dientes.push(new DienteModel(18 - i, i * 25, 5));	
+			dientes.push(new DienteModel(18 - i, i * 25, 10));	
 		}
 		for(var i = 3; i < 8; i++){
-			dientes.push(new DienteModel(58 - i, i * 25, 1 * 45));	
+			dientes.push(new DienteModel(58 - i, i * 25, 1 * 50));	
 		}
 		for(var i = 3; i < 8; i++){
-			dientes.push(new DienteModel(88 - i, i * 25, 2 * 45));	
+			dientes.push(new DienteModel(88 - i, i * 25, 2 * 50));	
 		}
 		for(var i = 0; i < 8; i++){
-			dientes.push(new DienteModel(48 - i, i * 25, 3 * 45));	
+			dientes.push(new DienteModel(48 - i, i * 25, 3 * 50));	
 		}
 		//Dientes derechos
 		for(var i = 0; i < 8; i++){
-			dientes.push(new DienteModel(21 + i, i * 25 + 210, 5));	
+			dientes.push(new DienteModel(21 + i, i * 25 + 210, 10));	
 		}
 		for(var i = 0; i < 5; i++){
-			dientes.push(new DienteModel(61 + i, i * 25 + 210, 1 * 45));	
+			dientes.push(new DienteModel(61 + i, i * 25 + 210, 1 * 50));	
 		}
 		for(var i = 0; i < 5; i++){
-			dientes.push(new DienteModel(71 + i, i * 25 + 210, 2 * 45));	
+			dientes.push(new DienteModel(71 + i, i * 25 + 210, 2 * 50));	
 		}
 		for(var i = 0; i < 8; i++){
-			dientes.push(new DienteModel(31 + i, i * 25 + 210, 3 * 45));	
+			dientes.push(new DienteModel(31 + i, i * 25 + 210, 3 * 50));	
 		}
 
 		self.dientes = ko.observableArray(dientes);
@@ -261,7 +294,7 @@ jQuery(function(){
 	
 	//Inicializo SVG
     $('#odontograma').svg({
-        settings:{ width: '620px', height: '250px' }
+        settings:{ width: '620px', height: '300px' }
     });
 
 	ko.applyBindings(vm);
