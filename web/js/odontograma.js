@@ -75,11 +75,22 @@ jQuery(function(){
 
 		};
 
-		// Si el diente tiene tratamiento de conducto
-      	if (esConducto(diente)[0]){
+		// Si el diente tiene tratamiento de conducto va conducto.
+      	if (esConducto(diente)[0]){ 
     		
     		var caraSS = svg.text(dienteGroup, 6, -2, 'TC', 
 	    	{fill: esConducto(diente)[1], stroke: esConducto(diente)[1], strokeWidth: 0.1, style: 'font-size: 6pt;font-weight:normal'});
+    	    caraCompleto = $(caraCompleto).data('cara', 'X');
+
+    	    caraSS = $(caraSS).data('cara', 'SS');
+
+		};																																																																																																																																																																																																																																																																																																																																																				
+
+		// Si el diente tiene radiografia y no tiene conducto, va radiografia
+      	if (esRadiografia(diente)[0] && !esConducto(diente)[0]){
+    		
+    		var caraSS = svg.text(dienteGroup, 6, -2, 'RX', 
+	    	{fill: esRadiografia(diente)[1], stroke: esRadiografia(diente)[1], strokeWidth: 0.1, style: 'font-size: 6pt;font-weight:normal'});
     	    caraCompleto = $(caraCompleto).data('cara', 'X');
 
     	    caraSS = $(caraSS).data('cara', 'SS');
@@ -211,6 +222,29 @@ jQuery(function(){
 		};
 
         var salida=[esCor,color];
+		return salida;
+	}
+
+	function esRadiografia(diente){
+		
+		var esRad = false;
+		var color = 'blue';
+
+		var trat_apli_al_diente = ko.utils.arrayFilter(vm.tratamientosAplicados(), function(t){
+			return t.diente.id == diente.id;
+		});	
+
+     
+		for (var i = 0; i <= trat_apli_al_diente.length - 1; i++) {
+			var t = trat_apli_al_diente[i];
+            
+          	if (t.tratamiento.id == "01.07"){
+			  esRad = true;
+			  color = t.tratamiento.color;
+          	}  
+		};
+
+        var salida=[esRad,color];
 		return salida;
 	}
 
