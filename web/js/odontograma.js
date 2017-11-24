@@ -367,6 +367,7 @@ jQuery(function(){
 
 		self.quitarTratamiento = function(tratamiento){
 			self.tratamientosAplicados.remove(tratamiento);
+			$('#jsonatenciones').val(JSON.stringify(self.tratamientosAplicados()));
 			renderSvg();
 		}
 
