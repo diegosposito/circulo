@@ -149,7 +149,8 @@ jQuery(function(){
 	    		var cara = me.data('cara');
 				
 				if(!vm.tratamientoSeleccionado()){
-					alert('Debe seleccionar un tratamiento previamente.');	
+					//alert('Debe seleccionar un tratamiento previamente.');	
+					tempAlert("Debe seleccionar un tratamiento previamente",2000,"red");
 					return false;
 				}
 
@@ -161,17 +162,20 @@ jQuery(function(){
 				var tratamiento = jQuery.extend({}, t);
 
 				if(cara == 'X' && !tratamiento.aplicaDiente){
-					alert('El tratamiento seleccionado no se puede aplicar a toda la pieza.');
+					//alert('El tratamiento seleccionado no se puede aplicar a toda la pieza.');
+					tempAlert("El tratamiento seleccionado no se puede aplicar a toda la pieza",2000,"red");
 					return false;
 				}
 				if(cara != 'X' && !tratamiento.aplicaCara){
-					alert('El tratamiento seleccionado no se puede aplicar a una cara.');
+					tempAlert("El tratamiento seleccionado no se puede aplicar a una cara",2000,"red");
+					//alert('El tratamiento seleccionado no se puede aplicar a una cara.');
 					return false;
 				}
 
 				// Si es implante y no tiene extraccion previa no se puede agregar
 				if (tratamiento.id=="01.04" && !esExtraccion(diente)[0]){ 
-    		        alert('El implamente necesita una extracción previa para poder aplicarse.');
+    		        //alert('El implamente necesita una extracción previa para poder aplicarse.');
+    		        tempAlert("El implamente necesita una extracción previa para poder aplicarse",2000,"red");
 					return false;
 				};		
 
@@ -345,6 +349,21 @@ jQuery(function(){
 
         var salida=[esImpl,color];
 		return salida;
+	}
+
+	function tempAlert(msg,duration,msgtype)
+	{
+	 var el = document.createElement("div");
+	 if(msgtype=="red"){
+	    el.setAttribute("style","height:30px;font-weight: bold;position:absolute;top:90%;left:40%;color:white;background-color:#FF0000;");
+	 } else {
+	 	el.setAttribute("style","height:30px;font-weight: bold;position:absolute;top:90%;left:40%;color:white;background-color:#7DBF0D;");
+	 }
+	 el.innerHTML = msg;
+	 setTimeout(function(){
+	  el.parentNode.removeChild(el);
+	 },duration);
+	 document.body.appendChild(el);
 	}
 	/* *FIN AGREGADOS POR MI PARA DETECTAR TIPO DE TRATAMIENTO */
 
