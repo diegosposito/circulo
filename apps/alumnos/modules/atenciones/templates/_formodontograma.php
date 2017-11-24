@@ -17,7 +17,14 @@ $(document).ready(function()
         $.post("<?php echo url_for('atenciones/guardarodontograma'); ?>",
           $("#formGrabar").serialize(),
         function(data) {
-            alert(data);
+         //   alert(data);
+            var el = document.createElement("div");
+            el.setAttribute("style","height:30px;font-weight: bold;position:absolute;top:90%;left:40%;color:white;background-color:#7DBF0D;");
+            el.innerHTML = "Se ha guardado correctamente el Odontograma";
+            setTimeout(function(){
+              el.parentNode.removeChild(el);
+            },3000);
+            document.body.appendChild(el);
            // $('#mensajeEstudio').html(data);
           }               
       );
