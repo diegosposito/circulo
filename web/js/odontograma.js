@@ -44,7 +44,7 @@ jQuery(function(){
     	caraCompleto = $(caraCompleto).data('cara', 'X');
 
         // Si el diente tiene una extraccion entre sus tratamientos agrego una cruz
-      	if (esExtraccion(diente)[0]){
+      	if (esExtraccion(diente)[0] && !esImplante(diente)[0]){
     		
     		// Cambio color del poligono, en este caso pinta las extracciones
     		defaultPolygon = {fill: 'white', stroke: esExtraccion(diente)[1], strokeWidth: 1.5};
@@ -75,8 +75,30 @@ jQuery(function(){
 
 		};
 
-		// Si el diente tiene tratamiento de conducto va conducto.
-      	if (esConducto(diente)[0]){ 
+		// Si es implanete, agrega Implante
+      	if (esImplante(diente)[0]){ 
+    		
+    		var caraSS = svg.text(dienteGroup, 6, -2, 'IMPL', 
+	    	{fill: esImplante(diente)[1], stroke: esImplante(diente)[1], strokeWidth: 0.1, style: 'font-size: 6pt;font-weight:normal'});
+    	    caraCompleto = $(caraCompleto).data('cara', 'X');
+
+    	    caraSS = $(caraSS).data('cara', 'SS');
+
+		};		
+
+		// Si el diente tiene Perno Muñon va PM
+      	if (esPernomunion(diente)[0]){ 
+    		
+    		var caraSS = svg.text(dienteGroup, 6, -2, 'PM', 
+	    	{fill: esPernomunion(diente)[1], stroke: esPernomunion(diente)[1], strokeWidth: 0.1, style: 'font-size: 6pt;font-weight:normal'});
+    	    caraCompleto = $(caraCompleto).data('cara', 'X');
+
+    	    caraSS = $(caraSS).data('cara', 'SS');
+
+		};																																																																																																																																																																																																																																																																																																																																																				
+
+		// Si el diente tiene tratamiento de conducto solamente va conducto.(pernomunion anula conducto)
+      	if (esConducto(diente)[0] && !esPernomunion(diente)[0]){ 
     		
     		var caraSS = svg.text(dienteGroup, 6, -2, 'TC', 
 	    	{fill: esConducto(diente)[1], stroke: esConducto(diente)[1], strokeWidth: 0.1, style: 'font-size: 6pt;font-weight:normal'});
@@ -86,8 +108,8 @@ jQuery(function(){
 
 		};																																																																																																																																																																																																																																																																																																																																																				
 
-		// Si el diente tiene radiografia y no tiene conducto, va radiografia
-      	if (esRadiografia(diente)[0] && !esConducto(diente)[0]){
+		// Si el diente tiene radiografia y no tiene conducto ni pernomunion, va radiografia
+      	if (esRadiografia(diente)[0] && !esConducto(diente)[0] && !esPernomunion(diente)[0]){
     		
     		var caraSS = svg.text(dienteGroup, 6, -2, 'RX', 
 	    	{fill: esRadiografia(diente)[1], stroke: esRadiografia(diente)[1], strokeWidth: 0.1, style: 'font-size: 6pt;font-weight:normal'});
@@ -146,6 +168,13 @@ jQuery(function(){
 					alert('El tratamiento seleccionado no se puede aplicar a una cara.');
 					return false;
 				}
+
+				// Si es implante y no tiene extraccion previa no se puede agregar
+				if (tratamiento.id=="01.04" && !esExtraccion(diente)[0]){ 
+    		        alert('El implamente necesita una extracción previa para poder aplicarse.');
+					return false;
+				};		
+
 				//TODO: Validaciones de si la cara tiene tratamiento o no, etc...
 
 				vm.tratamientosAplicados.unshift({diente: diente, cara: cara, tratamiento: tratamiento});
@@ -179,6 +208,7 @@ jQuery(function(){
 		};
 	}
 
+/* AGREGADOS POR MI PARA DETECTAR TIPO DE TRATAMIENTO */
 	function esExtraccion(diente){
 		
 		var esExt = false;
@@ -270,6 +300,54 @@ jQuery(function(){
         var salida=[esCon,color];
 		return salida;
 	}
+
+	function esPernomunion(diente){
+		
+		var esPer = false;
+		var color = 'blue';
+
+		var trat_apli_al_diente = ko.utils.arrayFilter(vm.tratamientosAplicados(), function(t){
+			return t.diente.id == diente.id;
+		});	
+
+     
+		for (var i = 0; i <= trat_apli_al_diente.length - 1; i++) {
+			var t = trat_apli_al_diente[i];
+            
+          	if (t.tratamiento.id == "01.08"){
+			  esPer = true;
+			  color = t.tratamiento.color;
+          	}  
+		};
+
+        var salida=[esPer,color];
+		return salida;
+	}
+
+	function esImplante(diente){
+		
+		var esImpl = false;
+		var color = 'blue';
+
+		var trat_apli_al_diente = ko.utils.arrayFilter(vm.tratamientosAplicados(), function(t){
+			return t.diente.id == diente.id;
+		});	
+
+     
+		for (var i = 0; i <= trat_apli_al_diente.length - 1; i++) {
+			var t = trat_apli_al_diente[i];
+            
+          	if (t.tratamiento.id == "01.04"){
+			  esImpl = true;
+			  color = t.tratamiento.color;
+          	}  
+		};
+
+        var salida=[esImpl,color];
+		return salida;
+	}
+	/* *FIN AGREGADOS POR MI PARA DETECTAR TIPO DE TRATAMIENTO */
+
 
 	//View Models
 	function DienteModel(id, x, y){
