@@ -421,10 +421,11 @@ jQuery(function(){
 	});
     
     var jsonatenciones = JSON.parse($('#jsonatenciones').val());
+    //alert(JSON.stringify(jsonatenciones));
 	
 	// Recorro tratamientos ya aplicados para visualizarlos al momento de cargar el odontograma
     for (var key in jsonatenciones) {
-     		vm.tratamientosAplicados.unshift({diente: jsonatenciones[key]["diente"], cara: jsonatenciones[key]["cara"], tratamiento: jsonatenciones[key]["tratamiento"]});
+     		vm.tratamientosAplicados.push({diente: jsonatenciones[key]["diente"], cara: jsonatenciones[key]["cara"], tratamiento: jsonatenciones[key]["tratamiento"]});
     }
 
    renderSvg();
