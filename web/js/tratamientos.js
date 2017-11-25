@@ -6,5 +6,6 @@
 	{ "id":"01.05", "nombre":"Corona", "aplicaCara":false, "aplicaDiente":true ,"color":"blue"},
 	{ "id":"01.06", "nombre":"Tratamiento de conducto", "aplicaCara":false, "aplicaDiente":true ,"color":"blue"},
 	{ "id":"01.07", "nombre":"Radiografía", "aplicaCara":false, "aplicaDiente":true ,"color":"blue"},
-	{ "id":"01.08", "nombre":"Perno Muñon", "aplicaCara":false, "aplicaDiente":true ,"color":"blue"}
+	{ "id":"01.08", "nombre":"Perno Muñon", "aplicaCara":false, "aplicaDiente":true ,"color":"blue"},
+	{ "id":"01.09", "nombre":"Puente", "aplicaCara":false, "aplicaDiente":true ,"color":"blue"}
 ]
