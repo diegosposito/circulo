@@ -118,6 +118,23 @@ jQuery(function(){
     	    caraSS = $(caraSS).data('cara', 'SS');
 
 		};
+
+		// Si el diente tiene puente a otro diente
+      	if (esPuente(diente)[0]){
+    		
+    		// Cambio color del poligono, en este caso pinta las extracciones
+    		defaultPolygon = {fill: 'white', stroke: esExtraccion(diente)[1], strokeWidth: 1.5};
+
+    		var caraSS = svg.polygon(dienteGroup,
+				[[-2,-2],[5,5],[10,10],[22,22]],  
+			    defaultPolygon);
+		    caraSS = $(caraSS).data('cara', 'SS');
+		
+			var caraII =  svg.polygon(dienteGroup,
+				[[22,-2],[15,5],[10,10],[-2,22]],  
+			    defaultPolygon);			
+			caraII = $(caraII).data('cara', 'II');
+		};	
     	
 		
 		//console.log(JSON.stringify(tratamientosAplicadosAlDiente));
@@ -348,6 +365,42 @@ jQuery(function(){
 		};
 
         var salida=[esImpl,color];
+		return salida;
+	}
+
+	function esPuente(diente){
+		
+		var esImpl = false;
+		var color = 'blue';
+		var pdiente = " "; //primer diente
+		var udiente = " ";   // ultimo diente
+
+		var trat_apli_al_diente = ko.utils.arrayFilter(vm.tratamientosAplicados(), function(t){
+		    var eldiente = t.diente.id.toString(); 
+			
+			if (eldiente.indexOf('_') > -1) { // tiene guion entonces es puente
+			   pdiente = eldiente.substring(0, eldiente.indexOf('_'));	
+			   udiente = eldiente.substring(eldiente.lastIndexOf('_')+1, eldiente.length - eldiente.lastIndexOf('_'));
+			  
+			   // si estan definidos ambos dientes del puente devuelvo el tratamiento
+			   if(pdiente>0 && udiente>0){ 
+			   	  eldiente = pdiente;
+			   }
+			}
+			return eldiente == diente.id;
+		});	
+
+    
+		for (var i = 0; i <= trat_apli_al_diente.length - 1; i++) {
+			var t = trat_apli_al_diente[i];
+            
+          	if (t.tratamiento.id == "01.09"){
+			  esImpl = true;
+			  color = t.tratamiento.color;
+          	}  
+		};
+
+        var salida=[esImpl,color,udiente];
 		return salida;
 	}
 
