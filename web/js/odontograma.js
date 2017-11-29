@@ -63,13 +63,6 @@ jQuery(function(){
 		// Si el diente tiene una corona entre sus tratamientos agrego una circulo
       	if (esCorona(diente)[0]){
     		
-    		// Cambio color del poligono, en este caso pinta las extracciones
-    		//defaultPolygon = {fill: 'red', stroke: 'blue', strokeWidth: 1.0};
-
-    		/*var caraSS = svg.polygon(dienteGroup,
-				[[10,0],[9,0],[8,0],[7,0.5],[6,1],[5,1],[4,1],[3,1],[2,2],[1,4],[0,10]],  
-			    defaultPolygon);*/
-
     		var caraSS = svg.circle(dienteGroup, 10, 10, 10, {fill: 'none', stroke: esCorona(diente)[1], strokeWidth: 3});
 		    caraSS = $(caraSS).data('cara', 'SS');
 
@@ -121,9 +114,9 @@ jQuery(function(){
 
 		// Si el diente tiene puente a otro diente
       	if (esPuente(diente)[0]){
-    		
-    		// Cambio color del poligono, en este caso pinta las extracciones
-    		defaultPolygon = {fill: 'white', stroke: esExtraccion(diente)[1], strokeWidth: 1.5};
+
+      		// Cambio color del poligono, en este caso pinta las extracciones
+    		defaultPolygon = {fill: 'white', stroke: esPuente(diente)[1], strokeWidth: 1.5};
 
     		var caraSS = svg.polygon(dienteGroup,
 				[[-2,-2],[5,5],[10,10],[22,22]],  
@@ -197,7 +190,8 @@ jQuery(function(){
 				};		
 
 				//TODO: Validaciones de si la cara tiene tratamiento o no, etc...
-
+                
+                alert (JSON.stringify(diente));
 				vm.tratamientosAplicados.unshift({diente: diente, cara: cara, tratamiento: tratamiento});
 				$('#jsonatenciones').val(JSON.stringify(vm.tratamientosAplicados()));
 				//alert (JSON.stringify(vm.tratamientosAplicados()));
@@ -377,10 +371,13 @@ jQuery(function(){
 
 		var trat_apli_al_diente = ko.utils.arrayFilter(vm.tratamientosAplicados(), function(t){
 		    var eldiente = t.diente.id.toString(); 
-			
-			if (eldiente.indexOf('_') > -1) { // tiene guion entonces es puente
+
+		   if (eldiente.indexOf('_') > -1) { // tiene guion entonces es puente
 			   pdiente = eldiente.substring(0, eldiente.indexOf('_'));	
 			   udiente = eldiente.substring(eldiente.lastIndexOf('_')+1, eldiente.length - eldiente.lastIndexOf('_'));
+
+			   alert('entro');
+			   alert(eldiente);
 			  
 			   // si estan definidos ambos dientes del puente devuelvo el tratamiento
 			   if(pdiente>0 && udiente>0){ 
@@ -390,17 +387,16 @@ jQuery(function(){
 			return eldiente == diente.id;
 		});	
 
-    
 		for (var i = 0; i <= trat_apli_al_diente.length - 1; i++) {
 			var t = trat_apli_al_diente[i];
             
           	if (t.tratamiento.id == "01.09"){
 			  esImpl = true;
 			  color = t.tratamiento.color;
-          	}  
+	      	}  
 		};
 
-        var salida=[esImpl,color,udiente];
+	    var salida=[esImpl,color,udiente];
 		return salida;
 	}
 
