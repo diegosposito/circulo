@@ -112,8 +112,8 @@ jQuery(function(){
 
 		};
 
-		// Si el diente tiene puente a otro diente
-      	if (esPuente(diente)[0]){
+		// Si el diente tiene puente a otro diente y si el puente esta completo
+      	if (esPuente(diente)[0] && esPuente(diente)[4]){
 
       		// Cambio color del poligono, en este caso pinta las extracciones
     		defaultPolygon = {fill: 'white', stroke: esPuente(diente)[1], strokeWidth: 1.5};
@@ -362,26 +362,27 @@ jQuery(function(){
 		return salida;
 	}
 
+    // Controla si es puente y si esta completo (si tiene principio y fin)
 	function esPuente(diente){
 		
-		var esImpl = false;
+		var esPuente = false;
 		var color = 'blue';
 		var pdiente = " "; //primer diente
 		var udiente = " ";   // ultimo diente
+		var puentecompleto = false;
 
 		var trat_apli_al_diente = ko.utils.arrayFilter(vm.tratamientosAplicados(), function(t){
 		    var eldiente = t.diente.id.toString(); 
 
-		   if (eldiente.indexOf('_') > -1) { // tiene guion entonces es puente
+	       // SI tiene guiones es puente completo
+		   if (eldiente.indexOf('_') > -1) { 
 			   pdiente = eldiente.substring(0, eldiente.indexOf('_'));	
 			   udiente = eldiente.substring(eldiente.lastIndexOf('_')+1, eldiente.length - eldiente.lastIndexOf('_'));
-
-			   alert('entro');
-			   alert(eldiente);
 			  
 			   // si estan definidos ambos dientes del puente devuelvo el tratamiento
 			   if(pdiente>0 && udiente>0){ 
 			   	  eldiente = pdiente;
+			   	  puentecompleto = true;
 			   }
 			}
 			return eldiente == diente.id;
@@ -391,12 +392,51 @@ jQuery(function(){
 			var t = trat_apli_al_diente[i];
             
           	if (t.tratamiento.id == "01.09"){
-			  esImpl = true;
+			  esPuente = true;
 			  color = t.tratamiento.color;
 	      	}  
 		};
 
-	    var salida=[esImpl,color,udiente];
+	    var salida=[esPuente,color,pdiente,udiente, puentecompleto];
+		return salida;
+	}
+
+	// Controla si es puente y si esta completo (si tiene principio y fin)
+	function completarSiHayPuenteIncompleto(){
+		
+		var esPuente = false;
+		var color = 'blue';
+		var pdiente = " "; //primer diente
+		var udiente = " ";   // ultimo diente
+		var puentecompleto = false;
+
+		var trat_apli_al_diente = ko.utils.arrayFilter(vm.tratamientosAplicados(), function(t){
+		    var eldiente = t.diente.id.toString(); 
+
+	       // SI tiene guiones es puente completo
+		   if (eldiente.indexOf('_') > -1) { 
+			   pdiente = eldiente.substring(0, eldiente.indexOf('_'));	
+			   udiente = eldiente.substring(eldiente.lastIndexOf('_')+1, eldiente.length - eldiente.lastIndexOf('_'));
+			  
+			   // si estan definidos ambos dientes del puente devuelvo el tratamiento
+			   if(pdiente>0 && udiente>0){ 
+			   	  eldiente = pdiente;
+			   	  puentecompleto = true;
+			   }
+			}
+			return eldiente == diente.id;
+		});	
+
+		for (var i = 0; i <= trat_apli_al_diente.length - 1; i++) {
+			var t = trat_apli_al_diente[i];
+            
+          	if (t.tratamiento.id == "01.09"){
+			  esPuente = true;
+			  color = t.tratamiento.color;
+	      	}  
+		};
+
+	    var salida=[esPuente,color,pdiente,udiente, puentecompleto];
 		return salida;
 	}
 
