@@ -118,15 +118,29 @@ jQuery(function(){
       		// Cambio color del poligono, en este caso pinta las extracciones
     		defaultPolygon = {fill: 'white', stroke: esPuente(diente)[1], strokeWidth: 1.5};
 
+    		// cara superior
     		var caraSS = svg.polygon(dienteGroup,
-				[[-2,-2],[5,5],[10,10],[22,22]],  
+				[[-2,-2],[48, -2]],  
+			    defaultPolygon);
+		    caraSS = $(caraSS).data('cara', 'SS');
+
+		    // cara inferior
+		    var caraSS = svg.polygon(dienteGroup,
+				[[-2,22],[48, 22]],  
 			    defaultPolygon);
 		    caraSS = $(caraSS).data('cara', 'SS');
 		
-			var caraII =  svg.polygon(dienteGroup,
-				[[22,-2],[15,5],[10,10],[-2,22]],  
-			    defaultPolygon);			
-			caraII = $(caraII).data('cara', 'II');
+			// cara vertical izquierda
+			var caraSS = svg.polygon(dienteGroup,
+				[[-2,-2],[-2, 22]],  
+			    defaultPolygon);
+		    caraSS = $(caraSS).data('cara', 'SS');
+
+		    // cara vertical derecha
+			var caraSS = svg.polygon(dienteGroup,
+				[[48,-2],[48, 22]],  
+			    defaultPolygon);
+		    caraSS = $(caraSS).data('cara', 'SS');
 		};	
     	
 		
@@ -198,12 +212,11 @@ jQuery(function(){
 
 				var agregar = true;
 
-				if (actualizarPuente(diente)[0]){
-                    agregar =false;
+				if (actualizarPuente(diente)){
+                    agregar = false;
 				}	
 
-				//TODO: Validaciones de si la cara tiene tratamiento o no, etc...
-                
+				// solo se agrega un puente si no hay uno abierto
                 if (agregar) {
                     vm.tratamientosAplicados.unshift({diente: diente, cara: cara, tratamiento: tratamiento});
 				}
@@ -434,9 +447,7 @@ jQuery(function(){
 		   	   t.diente.id += "_"+diente.id.toString();
 		   	   actualizarPuente = true;
 		       return true;
-			} else {
-				return false;
-			}
+			} 
 		});	
 
        return actualizarPuente;
