@@ -212,9 +212,9 @@ jQuery(function(){
 
 				var agregar = true;
 
-				if (actualizarPuente(diente)){
+				if (tratamiento.id=="01.09" && actualizarPuente(diente)){
                     agregar = false;
-				}	
+               }	
 
 				// solo se agrega un puente si no hay uno abierto
                 if (agregar) {
@@ -223,7 +223,13 @@ jQuery(function(){
 				
 				$('#jsonatenciones').val(JSON.stringify(vm.tratamientosAplicados()));
 				
-				//vm.tratamientoSeleccionado(null);
+				// Limpie el array observable y lo cargue de nuevo porque no detecta los eventos la lista desplegable
+				var jsonatenciones = JSON.parse($('#jsonatenciones').val());
+				vm.tratamientosAplicados.removeAll();
+			    for (var key in jsonatenciones) {
+			     		vm.tratamientosAplicados.push({diente: jsonatenciones[key]["diente"], cara: jsonatenciones[key]["cara"], tratamiento: jsonatenciones[key]["tratamiento"]});
+			    }
+				
 				
 				//Actualizo el SVG
 				renderSvg();
