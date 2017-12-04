@@ -118,6 +118,19 @@ jQuery(function(){
       		// Cambio color del poligono, en este caso pinta las extracciones
     		defaultPolygon = {fill: 'white', stroke: esPuente(diente)[1], strokeWidth: 1.5};
 
+    		var $dientei = esPuente(diente)[2]; 
+    		var $dientef = esPuente(diente)[3];
+    		var $diff = 0;
+
+    		if($dienteid > $dientef)
+    			$diff= $dienteid-$dientef;
+    		else
+    			$diff= $dienteif-$dientei;
+
+    		var $largo = 22;
+    		var $agregado = (6 * $diff) - 1;
+    		var $long = ($largo * $diff) + $agregado;
+
     		// cara superior
     		var caraSS = svg.polygon(dienteGroup,
 				[[-2,-2],[48, -2]],  
