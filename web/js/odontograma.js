@@ -114,40 +114,34 @@ jQuery(function(){
 
 		// Si el diente tiene puente a otro diente y si el puente esta completo
 		var $es_puente=esPuente(diente);
-		if ($es_puente[0] && $es_puente[4]){
+		if ($es_puente[0] && $es_puente[4] && $es_puente[2]==diente.id){
 
-      		// Cambio color del poligono, en este caso pinta las extracciones
+			// Cambio color del poligono, en este caso pinta las extracciones
     		defaultPolygon = {fill: 'white', stroke: $es_puente[1], strokeWidth: 1.5};
 
     		var $dientei = $es_puente[2]; 
     		var $dientef = $es_puente[3];
 
-    		alert($dientei);
-    		alert($dientef);
     		var $diff = 0;
 
     		if($dientei > $dientef)
-    			$diff= $dientei-$dientef;
+    			$diff= $dientei-$dientef+1;
     		else
-    			$diff= $dientef-$dientei;
-
-    		alert($diff);
+    			$diff= $dientef-$dientei+1;
 
     		var $largo = 22;
-    		var $agregado = (6 * $diff) - 1;
+    		var $agregado = (2 * $diff) + 1;
     		var $longitud = ($largo * $diff) + $agregado; 
-
-    		alert($longitud);
 
     		// cara superior
     		var caraSS = svg.polygon(dienteGroup,
-				[[-2,-2],[48, -2]],  
+				[[-2,-2],[$longitud, -2]],  
 			    defaultPolygon);
 		    caraSS = $(caraSS).data('cara', 'SS');
 
 		    // cara inferior
 		    var caraSS = svg.polygon(dienteGroup,
-				[[-2,22],[48, 22]],  
+				[[-2,22],[$longitud, 22]],  
 			    defaultPolygon);
 		    caraSS = $(caraSS).data('cara', 'SS');
 		
@@ -159,7 +153,7 @@ jQuery(function(){
 
 		    // cara vertical derecha
 			var caraSS = svg.polygon(dienteGroup,
-				[[48,-2],[48, 22]],  
+				[[$longitud,-2],[$longitud, 22]],  
 			    defaultPolygon);
 		    caraSS = $(caraSS).data('cara', 'SS');
 		};	
@@ -417,48 +411,56 @@ jQuery(function(){
 		return salida;
 	}
  
+
     /*  PRINCIPIO LOGICA DE PUENTE */
     // Controla si es puente y si esta completo (si tiene principio y fin)
 	function esPuente(diente){
 		
 		var esPuente = false;
 		var color = 'blue';
-		var pdiente = " "; //primer diente
-		var udiente = " ";   // ultimo diente
+		var pdiente = ""; //primer diente
+		var udiente = "";   // ultimo diente
 		var puentecompleto = false;
+		var salida ='';
 
-		var trat_apli_al_diente = ko.utils.arrayFilter(vm.tratamientosAplicados(), function(t){
-		    var eldiente = t.diente.id.toString(); 
+		var esCor = false;
+		var color = 'blue';
 
-		  //   alert(eldiente);
-
-		   // SI tiene guiones es puente completo
-		   if (eldiente.indexOf('_') > -1) { 
-			   pdiente = eldiente.substring(0, eldiente.indexOf('_'));	
-			   udiente = eldiente.substring(eldiente.lastIndexOf('_')+3, eldiente.length - eldiente.lastIndexOf('_'));
-
-               // si estan definidos ambos dientes del puente devuelvo el tratamiento
-			   if(pdiente>0 && udiente>0){ 
-			   	  eldiente = pdiente;
-			   	  puentecompleto = true;
-			   }
-			}
-			return eldiente == diente.id;
+		var trat_puentes = ko.utils.arrayFilter(vm.tratamientosAplicados(), function(t){
+			return t.tratamiento.id == "01.09";
 		});	
 
-		//alert(JSON.stringify(trat_apli_al_diente));
+		try {
 
-		for (var i = 0; i <= trat_apli_al_diente.length - 1; i++) {
-			var t = trat_apli_al_diente[i];
+     	for (var i = 0; i <= trat_puentes.length - 1; i++) {
+			var t = trat_puentes[i];
             
-          	if (t.tratamiento.id == "01.09"){
-			  esPuente = true;
-			  color = t.tratamiento.color;
-	      	}  
-		};
+            // Si esta completo el puente
+            if (t.diente.id.indexOf('_') > -1) { 
+		       pdiente = t.diente.id.substring(0, t.diente.id.indexOf('_'));	
+			   udiente = t.diente.id.substring(t.diente.id.lastIndexOf('_')+3, t.diente.id.length - t.diente.id.lastIndexOf('_'));
 
-	    var salida=[esPuente,color,pdiente,udiente, puentecompleto];
-		return salida;
+               // si estan definidos ambos dientes del puente devuelvo el tratamiento
+			   if(pdiente>0 && udiente>0 && diente.id==pdiente){ 
+			   	  esPuente = true;
+			   	  puentecompleto = true;
+			   	  salida=[esPuente,color,pdiente,udiente, puentecompleto];
+			   }
+			   // con que uno este definido ya es puente
+			   if(pdiente>0 && udiente>0 && diente.id==pdiente){ 
+			   	  esPuente = true;
+			   	  salida=[esPuente,color,pdiente,udiente, puentecompleto];
+			   }
+			  
+			} 
+		};
+        
+        }
+        catch(err) {
+		    
+		}
+      	return salida;
+
 	}
 
 	// Crea un nuevo puente o cierra alguno abierto
