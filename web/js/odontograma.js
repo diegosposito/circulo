@@ -112,15 +112,15 @@ jQuery(function(){
 
 		};
 
-		// Si el diente tiene puente a otro diente y si el puente esta completo
-		var $es_puente=esPuente(diente);
-		if ($es_puente[0] && $es_puente[4] && $es_puente[2]==diente.id){
+		// Si el diente tiene protesis fija a otro diente y esta completo
+		var $es_protesisf=esProtesisf(diente);
+		if ($es_protesisf[0] && $es_protesisf[4] && $es_protesisf[2]==diente.id){
 
 			// Cambio color del poligono, en este caso pinta las extracciones
-    		defaultPolygon = {fill: 'white', stroke: $es_puente[1], strokeWidth: 1.5};
+    		defaultPolygon = {fill: 'white', stroke: $es_protesisf[1], strokeWidth: 1.5};
 
-    		var $dientei = $es_puente[2]; 
-    		var $dientef = $es_puente[3];
+    		var $dientei = $es_protesisf[2]; 
+    		var $dientef = $es_protesisf[3];
 
     		var $diff = 0;
 
@@ -227,7 +227,7 @@ jQuery(function(){
 
 				var agregar = true;
 
-				if (tratamiento.id=="01.09" && actualizarPuente(diente)){
+				if (tratamiento.id=="01.09" && actualizarProtesisf(diente)){
                     agregar = false;
                }	
 
@@ -412,28 +412,28 @@ jQuery(function(){
 	}
  
 
-    /*  PRINCIPIO LOGICA DE PUENTE */
+    /*  PRINCIPIO LOGICA DE PROTESIS FIJA */
     // Controla si es puente y si esta completo (si tiene principio y fin)
-	function esPuente(diente){
+	function esProtesisf(diente){
 		
-		var esPuente = false;
+		var esProtesisf = false;
 		var color = 'blue';
 		var pdiente = ""; //primer diente
 		var udiente = "";   // ultimo diente
-		var puentecompleto = false;
+		var protesisfcompleto = false;
 		var salida ='';
 
 		var esCor = false;
 		var color = 'blue';
 
-		var trat_puentes = ko.utils.arrayFilter(vm.tratamientosAplicados(), function(t){
+		var trat_protesisf = ko.utils.arrayFilter(vm.tratamientosAplicados(), function(t){
 			return t.tratamiento.id == "01.09";
 		});	
 
 		try {
 
-     	for (var i = 0; i <= trat_puentes.length - 1; i++) {
-			var t = trat_puentes[i];
+     	for (var i = 0; i <= trat_protesisf.length - 1; i++) {
+			var t = trat_protesisf[i];
             
             // Si esta completo el puente
             if (t.diente.id.indexOf('_') > -1) { 
@@ -442,14 +442,14 @@ jQuery(function(){
 
                // si estan definidos ambos dientes del puente devuelvo el tratamiento
 			   if(pdiente>0 && udiente>0 && diente.id==pdiente){ 
-			   	  esPuente = true;
-			   	  puentecompleto = true;
-			   	  salida=[esPuente,color,pdiente,udiente, puentecompleto];
+			   	  esProtesisf = true;
+			   	  protesisfcompleto = true;
+			   	  salida=[esProtesisf,color,pdiente,udiente, protesisfcompleto];
 			   }
 			   // con que uno este definido ya es puente
 			   if(pdiente>0 && udiente>0 && diente.id==pdiente){ 
-			   	  esPuente = true;
-			   	  salida=[esPuente,color,pdiente,udiente, puentecompleto];
+			   	  esProtesisf = true;
+			   	  salida=[esProtesisf,color,pdiente,udiente, protesisfcompleto];
 			   }
 			  
 			} 
@@ -463,25 +463,25 @@ jQuery(function(){
 
 	}
 
-	// Crea un nuevo puente o cierra alguno abierto
-	function actualizarPuente(diente){
+	// Crea un nuevo protesis fija o cierra alguno abierto
+	function actualizarProtesisf(diente){
 		
-		var actualizarPuente = false;
+		var actualizarProtesis = false;
 	
-		var tratamiento_abierto_puente = ko.utils.arrayFilter(vm.tratamientosAplicados(), function(t){
+		var tratamiento_abierto_protesis = ko.utils.arrayFilter(vm.tratamientosAplicados(), function(t){
 		    var eldiente = t.diente.id.toString(); 
            
-            // SI no tienes guiones y es puente, esta imncompleto el puente
+            // SI no tienes guiones y es protesis fija, esta incompleta la protesis fija
 		    if (eldiente.indexOf('_') <= -1 && t.tratamiento.id == "01.09") { 
 		   	   t.diente.id += "_"+diente.id.toString();
-		   	   actualizarPuente = true;
+		   	   actualizarProtesis = true;
 		       return true;
 			} 
 		});	
 
-       return actualizarPuente;
+       return actualizarProtesis;
 	}
-	/* FIN LOGICA PUENTE */
+	/* FIN LOGICA Protesis fija */
 
 	
 	function tempAlert(msg,duration,msgtype)
