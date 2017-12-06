@@ -121,6 +121,9 @@ jQuery(function(){
 
     		var $dientei = $es_protesisf[2]; 
     		var $dientef = $es_protesisf[3];
+    		var extrasize = 0;
+
+    		extrasize = calcularExtraSizeProtesisf($dientei, $dientef);
 
     		var $diff = 0;
 
@@ -131,7 +134,7 @@ jQuery(function(){
 
     		var $largo = 22;
     		var $agregado = (2 * $diff) + 1;
-    		var $longitud = ($largo * $diff) + $agregado; 
+    		var $longitud = ($largo * $diff) + $agregado + extrasize; 
 
     		// cara superior
     		var caraSS = svg.polygon(dienteGroup,
@@ -225,9 +228,18 @@ jQuery(function(){
 					return false;
 				};	
 
+				// Intenta actualizar protesis fija
 				var agregar = true;
+				var actualizarp = actualizarProtesisf(diente);
 
-				if (tratamiento.id=="01.09" && actualizarProtesisf(diente)){
+				// Si no pudo actualizar protesis fija por mala seleccion avisa de la mala seleccion
+				if (tratamiento.id=="01.09" && actualizarp[0] && actualizarp[1]){ 
+    		        //alert('El implamente necesita una extracción previa para poder aplicarse.');
+    		        tempAlert("Hubo una mala selección de la Prótesis Fija",2000,"red");
+					return false;
+				};	
+
+				if (tratamiento.id=="01.09" && actualizarp[0]){
                     agregar = false;
                }	
 
@@ -467,19 +479,76 @@ jQuery(function(){
 	function actualizarProtesisf(diente){
 		
 		var actualizarProtesis = false;
+		var error = false;
 	
 		var tratamiento_abierto_protesis = ko.utils.arrayFilter(vm.tratamientosAplicados(), function(t){
 		    var eldiente = t.diente.id.toString(); 
            
             // SI no tienes guiones y es protesis fija, esta incompleta la protesis fija
 		    if (eldiente.indexOf('_') <= -1 && t.tratamiento.id == "01.09") { 
-		   	   t.diente.id += "_"+diente.id.toString();
-		   	   actualizarProtesis = true;
-		       return true;
-			} 
+		    	error = true;
+		    	actualizarProtesis = true; // esto es para que no agregue un registro
+
+		    	if((t.diente.id>=11 && t.diente.id<=28) && (diente.id>=11 && diente.id<=28)){
+		    		t.diente.id += "_"+diente.id.toString();
+		   	        error = false;
+		    	}
+		    	if((t.diente.id>=51 && t.diente.id<=65) && (diente.id>=51 && diente.id<=65)){
+		    		t.diente.id += "_"+diente.id.toString();
+		   	        error = false;
+		    	}
+		    	if((t.diente.id>=71 && t.diente.id<=85) && (diente.id>=71 && diente.id<=85)){
+		    		t.diente.id += "_"+diente.id.toString();
+		   	        error = false;
+		    	}
+		    	if((t.diente.id>=31 && t.diente.id<=48) && (diente.id>=31 && diente.id<=48)){
+		    		t.diente.id += "_"+diente.id.toString();
+		   	        error = false;
+		    	}
+
+		  	} 
 		});	
 
-       return actualizarProtesis;
+		var salida=[actualizarProtesis,error];
+		return salida;
+
+   }
+
+   function calcularExtraSizeProtesisf(diente1, diente2){
+		
+		var d1 = 0;
+		var d2 = 0;
+		var extrasize = 0;
+
+		if(diente1>=diente2){
+			d1 = diente2;
+			d2 = diente1;
+		}
+
+		if(diente2>=diente1){
+			d1 = diente1;
+			d2 = diente2;
+		}
+
+		// en este punto d1 es el menor valor y d2 el mayor
+
+		if((d1>=11 && d1<=18) && (d2>=21 && d2<=28)){
+            extrasize = 10;
+		}
+
+        if((d1>=51 && d1<=55) && (d2>=61 && d2<=65)){
+            extrasize = 10;
+        }
+
+        if((d1>=71 && d1<=75) && (d2>=81 && d2<=85)){
+            extrasize = 10;
+        }
+
+        if((d1>=31 && d1<=38) && (d2>=41 && d2<=48)){
+            extrasize = 10;
+        }
+		
+		return extrasize;
 	}
 	/* FIN LOGICA Protesis fija */
 
