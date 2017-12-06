@@ -122,19 +122,7 @@ jQuery(function(){
     		var $dientei = $es_protesisf[2]; 
     		var $dientef = $es_protesisf[3];
     		var extrasize = 0;
-
-    		extrasize = calcularExtraSizeProtesisf($dientei, $dientef);
-
-    		var $diff = 0;
-
-    		if($dientei > $dientef)
-    			$diff= $dientei-$dientef+1;
-    		else
-    			$diff= $dientef-$dientei+1;
-
-    		var $largo = 22;
-    		var $agregado = (2 * $diff) + 1;
-    		var $longitud = ($largo * $diff) + $agregado + extrasize; 
+            var $longitud = calcularDistanciaProtesisf($dientei, $dientef);
 
     		// cara superior
     		var caraSS = svg.polygon(dienteGroup,
@@ -514,11 +502,18 @@ jQuery(function(){
 
    }
 
-   function calcularExtraSizeProtesisf(diente1, diente2){
+   function calcularDistanciaProtesisf(diente1, diente2){
 		
 		var d1 = 0;
 		var d2 = 0;
+		var agregado=0;
 		var extrasize = 0;
+		var diff=0;
+		var diff1=0;
+		var diff2=0;
+		var longitud = 0;
+		var largo = 22;
+		var indice = 0;
 
 		if(diente1>=diente2){
 			d1 = diente2;
@@ -530,25 +525,83 @@ jQuery(function(){
 			d2 = diente2;
 		}
 
-		// en este punto d1 es el menor valor y d2 el mayor
+        // Diferencia normal entre dientes en el mismo sector se calcula por defecto
+		diff= d2-d1+1; 
+	    // en la misma banda despues de 4 dientes hay que mejorar el marcado
+		if (diff>4){
+           agregado = (2 * diff) + 5;
+		} else {
+			agregado = (2 * diff) + 1;
+		}
+    	longitud = (largo * diff) + agregado + extrasize; 
 
+    	
+		// en este punto d1 es el menor valor y d2 el mayor
 		if((d1>=11 && d1<=18) && (d2>=21 && d2<=28)){
             extrasize = 10;
-		}
+            diff1= d1-11; 
+            diff2=d2-21;
+            diff= diff1+diff2+2;
+            switch (diff)
+			{
+			    case 4: indice = 1;break; case 5: indice = 2;break; case 6: indice = 3;break; case 7: indice = 4;break; case 8: indice = 7;break;
+			    case 9: indice = 7;break; case 10: indice = 7;break; case 11: indice = 8;break; case 12: indice = 10;break; case 13: indice = 10;break;
+			    case 14: indice = 12;break; case 15: indice = 12;break; case 16: indice = 14;break; case 17: indice = 14;break; case 18: indice = 15;break;
+			    case (diff > 19):
+			        indice = 15;   
+			    break;
+			}
+	    	agregado = (2 * diff) + indice;
+	    	longitud = (largo * diff) + agregado + extrasize; 
+		} 
 
         if((d1>=51 && d1<=55) && (d2>=61 && d2<=65)){
             extrasize = 10;
-        }
+            diff1= d1-51; 
+            diff2=d2-61;
+            diff= diff1+diff2+2;
+            switch (diff)
+			{
+			    case 2: indice = 0; break; case 3: indice = 0; break; case 4: indice = 1;break; case 5: indice = 2;break; case 6: indice = 3;break; case 7: indice = 4;break; case 8: indice = 7;break;
+			    case 9: indice = 7;break; case 10: indice = 7;break;
+			}
+	    	agregado = (2 * diff) + indice;
+	    	longitud = (largo * diff) + agregado + extrasize;  
+        } 
 
         if((d1>=71 && d1<=75) && (d2>=81 && d2<=85)){
             extrasize = 10;
-        }
+            diff1= d1-71; 
+            diff2=d2-81;
+            diff= diff1+diff2+2;
+            switch (diff)
+			{
+			    case 2: indice = 0; break; case 3: indice = 0; break; case 4: indice = 1;break; case 5: indice = 2;break; case 6: indice = 3;break; case 7: indice = 4;break; case 8: indice = 7;break;
+			    case 9: indice = 7;break; case 10: indice = 7;break;
+			}
+	    	agregado = (2 * diff) + indice;
+	    	longitud = (largo * diff) + agregado + extrasize; 
+        } 
 
         if((d1>=31 && d1<=38) && (d2>=41 && d2<=48)){
             extrasize = 10;
-        }
+            diff1= d1-31; 
+            diff2=d2-41;
+            diff= diff1+diff2+2;
+            switch (diff)
+			{
+			    case 4: indice = 1;break; case 5: indice = 2;break; case 6: indice = 3;break; case 7: indice = 4;break; case 8: indice = 7;break;
+			    case 9: indice = 7;break; case 10: indice = 7;break; case 11: indice = 8;break; case 12: indice = 10;break; case 13: indice = 10;break;
+			    case 14: indice = 12;break; case 15: indice = 12;break; case 16: indice = 14;break; case 17: indice = 14;break; case 18: indice = 15;break;
+			    case (diff > 19):
+			        indice = 15;   
+			    break;
+			}
+	    	agregado = (2 * diff) + indice;
+	    	longitud = (largo * diff) + agregado + extrasize; 
+        } 
 		
-		return extrasize;
+		return longitud;
 	}
 	/* FIN LOGICA Protesis fija */
 
