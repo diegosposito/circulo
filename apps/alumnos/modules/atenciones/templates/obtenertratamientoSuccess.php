@@ -1,3 +1,3 @@
 <?php
-	echo $tratamiento->getImporte().'|'.$tratamiento->getCoseguro();
+	echo $tratamiento->getImporte().'|'.$tratamiento->getCoseguro().'|'.$tratamiento->getNormas();
 ?>
