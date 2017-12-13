@@ -59,8 +59,12 @@ function cargarImportes(id){
 
       var importe = fields[0];
       var coseguro = fields[1];
+      var norma = fields[2];
+
       $('#atenciones_importe').val(importe);
       $('#atenciones_coseguro').val(coseguro);
+      $('#tratamiento_norma').text(norma);
+     // $('#tratamiento_norma').val(norma);
     }
   );
 }
@@ -101,12 +105,13 @@ function cargarImportes(id){
           </td>
       </tr>
       <tr>
-          <td colspan="2"><?php echo ''.'</b>' ?></td>
-          <td colspan="2"><?php echo '<b>'.'Paciente : '.$paciente->getApellido().', '.$paciente->getNombre().'</b>' ?></td>
+          <td colspan="1"><?php echo ''.'</b>' ?></td>
+          <td colspan="3"><?php echo '<b>'.'Paciente : '.$paciente->getApellido().', '.$paciente->getNombre().'</b>' ?></td>
       </tr>
       <tr>
         <td colspan="1"><?php echo "<b>".$form['idtratamiento']->renderLabel()."</b>" ?></td>
-        <td colspan="3"><?php echo $form['idtratamiento'] ?></td>
+        <td colspan="2"><?php echo $form['idtratamiento'] ?></td>
+        <td align="center" colspan="1"><b><div id="tratamiento_norma" name="tratamiento_norma"></div></b></td>
       </tr>
        <tr>
         <td align="left"><?php echo "<b>".$form['caras']->renderLabel()."</b>" ?></td>
