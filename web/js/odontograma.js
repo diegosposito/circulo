@@ -676,6 +676,8 @@ jQuery(function(){
 
 		self.dientes = ko.observableArray(dientes);
 	};
+    
+    try{
 
 	vm = new ViewModel();
 	
@@ -703,4 +705,10 @@ jQuery(function(){
     }
 
    renderSvg();
+
+    }
+    catch(err) {
+		    
+	}
+
 });
