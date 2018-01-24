@@ -113,7 +113,7 @@ jQuery(function(){
 		};
 
 		// Si el diente tiene protesis fija a otro diente y esta completo
-		var $es_protesisf=esProtesisf(diente);
+		var $es_protesisf=esProtesisf(diente, "01.09");
 		if ($es_protesisf[0] && $es_protesisf[4] && $es_protesisf[2]==diente.id){
 
 			// Cambio color del poligono, en este caso pinta las extracciones
@@ -148,6 +148,58 @@ jQuery(function(){
 			    defaultPolygon);
 		    caraSS = $(caraSS).data('cara', 'SS');
 		};	
+
+		// Si el diente tiene protesis removible a otro diente y esta completo
+		var $es_protesisf=esProtesisf(diente, "01.10");
+		if ($es_protesisf[0] && $es_protesisf[4] && $es_protesisf[2]==diente.id){
+
+			// Cambio color del poligono, en este caso pinta las extracciones
+    		defaultPolygon = {fill: 'white', stroke: $es_protesisf[1], strokeWidth: 1.5};
+
+    		var $dientei = $es_protesisf[2]; 
+    		var $dientef = $es_protesisf[3];
+    		var extrasize = 0;
+            var $longitud = calcularDistanciaProtesisf($dientei, $dientef);
+
+    	    // cara inferior
+		    var caraSS = svg.polygon(dienteGroup,
+				[[-2,22],[$longitud, 22]],  
+			    defaultPolygon);
+		    caraSS = $(caraSS).data('cara', 'SS');
+		
+			// cara vertical izquierda
+			var caraSS = svg.polygon(dienteGroup,
+				[[-2,-2],[-2, 22]],  
+			    defaultPolygon);
+		    caraSS = $(caraSS).data('cara', 'SS');
+
+		    // cara vertical derecha
+			var caraSS = svg.polygon(dienteGroup,
+				[[$longitud,-2],[$longitud, 22]],  
+			    defaultPolygon);
+		    caraSS = $(caraSS).data('cara', 'SS');
+		};
+
+		// Si el diente tiene puente a otro diente y esta completo
+		var $es_protesisf=esProtesisf(diente, "01.03");
+		if ($es_protesisf[0] && $es_protesisf[4] && $es_protesisf[2]==diente.id){
+
+			// Cambio color del poligono, en este caso pinta las extracciones
+    		defaultPolygon = {fill: 'white', stroke: $es_protesisf[1], strokeWidth: 1.5};
+
+    		var $dientei = $es_protesisf[2]; 
+    		var $dientef = $es_protesisf[3];
+    		var extrasize = 0;
+            var $longitud = calcularDistanciaProtesisf($dientei, $dientef);
+
+    	    // cara inferior
+		    var caraSS = svg.polygon(dienteGroup,
+				[[-2,11],[$longitud, 11]],  
+			    defaultPolygon);
+		    caraSS = $(caraSS).data('cara', 'SS');
+		
+		};
+    	
     	
 		
 		//console.log(JSON.stringify(tratamientosAplicadosAlDiente));
@@ -218,7 +270,7 @@ jQuery(function(){
 
 				// Intenta actualizar protesis fija
 				var agregar = true;
-				var actualizarp = actualizarProtesisf(diente);
+				var actualizarp = actualizarProtesisf(diente, "01.09");
 
 				// Si no pudo actualizar protesis fija por mala seleccion avisa de la mala seleccion
 				if (tratamiento.id=="01.09" && actualizarp[0] && actualizarp[1]){ 
@@ -231,7 +283,36 @@ jQuery(function(){
                     agregar = false;
                }	
 
-				// solo se agrega un puente si no hay uno abierto
+				
+				// Intenta actualizar protesis removible
+				var actualizarp = actualizarProtesisf(diente, "01.10");
+
+				// Si no pudo actualizar protesis fija por mala seleccion avisa de la mala seleccion
+				if (tratamiento.id=="01.10" && actualizarp[0] && actualizarp[1]){ 
+    		        //alert('El implamente necesita una extracción previa para poder aplicarse.');
+    		        tempAlert("Hubo una mala selección de la Prótesis Removible",2000,"red");
+					return false;
+				};	
+
+				if (tratamiento.id=="01.10" && actualizarp[0]){
+                    agregar = false;
+               }
+
+               // Intenta actualizar puente
+				var actualizarp = actualizarProtesisf(diente, "01.03");
+
+				// Si no pudo actualizar protesis fija por mala seleccion avisa de la mala seleccion
+				if (tratamiento.id=="01.03" && actualizarp[0] && actualizarp[1]){ 
+    		        //alert('El implamente necesita una extracción previa para poder aplicarse.');
+    		        tempAlert("Hubo una mala selección del Puente",2000,"red");
+					return false;
+				};	
+
+				if (tratamiento.id=="01.03" && actualizarp[0]){
+                    agregar = false;
+               }		
+
+				// solo se agrega un puente, protesis fija o removible si no hay uno abierto
                 if (agregar) {
                     vm.tratamientosAplicados.unshift({diente: diente, cara: cara, tratamiento: tratamiento});
 				}
@@ -413,8 +494,8 @@ jQuery(function(){
  
 
     /*  PRINCIPIO LOGICA DE PROTESIS FIJA */
-    // Controla si es puente y si esta completo (si tiene principio y fin)
-	function esProtesisf(diente){
+    // Controla si es puente, prot fija o prot removible y si esta completo (si tiene principio y fin)
+	function esProtesisf(diente, codigopieza){
 		
 		var esProtesisf = false;
 		var color = 'blue';
@@ -427,7 +508,7 @@ jQuery(function(){
 		var color = 'blue';
 
 		var trat_protesisf = ko.utils.arrayFilter(vm.tratamientosAplicados(), function(t){
-			return t.tratamiento.id == "01.09";
+			return t.tratamiento.id == codigopieza;
 		});	
 
 		try {
@@ -464,7 +545,7 @@ jQuery(function(){
 	}
 
 	// Crea un nuevo protesis fija o cierra alguno abierto
-	function actualizarProtesisf(diente){
+	function actualizarProtesisf(diente, codigopieza){
 		
 		var actualizarProtesis = false;
 		var error = false;
@@ -473,7 +554,7 @@ jQuery(function(){
 		    var eldiente = t.diente.id.toString(); 
            
             // SI no tienes guiones y es protesis fija, esta incompleta la protesis fija
-		    if (eldiente.indexOf('_') <= -1 && t.tratamiento.id == "01.09") { 
+		    if (eldiente.indexOf('_') <= -1 && t.tratamiento.id == codigopieza) { 
 		    	error = true;
 		    	actualizarProtesis = true; // esto es para que no agregue un registro
 
