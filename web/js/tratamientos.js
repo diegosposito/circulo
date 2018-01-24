@@ -7,5 +7,6 @@
 	{ "id":"01.06", "nombre":"Tratamiento de conducto", "aplicaCara":false, "aplicaDiente":true ,"color":"blue"},
 	{ "id":"01.07", "nombre":"Radiografía", "aplicaCara":false, "aplicaDiente":true ,"color":"blue"},
 	{ "id":"01.08", "nombre":"Perno Muñon", "aplicaCara":false, "aplicaDiente":true ,"color":"blue"},
-	{ "id":"01.09", "nombre":"Prótesis Fija", "aplicaCara":false, "aplicaDiente":true ,"color":"blue"}
+	{ "id":"01.09", "nombre":"Prótesis Fija", "aplicaCara":false, "aplicaDiente":true ,"color":"blue"},
+	{ "id":"01.10", "nombre":"Prótesis Removible", "aplicaCara":false, "aplicaDiente":true ,"color":"blue"}
 ]
