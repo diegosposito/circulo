@@ -730,30 +730,30 @@ jQuery(function(){
 		var dientes = [];
 		//Dientes izquierdos
 		for(var i = 0; i < 8; i++){
-			dientes.push(new DienteModel(18 - i, i * 25, 10));	
+			dientes.push(new DienteModel(18 - i, i * 25 + 3, 10));	
 		}
 		for(var i = 0; i < 8; i++){
-			dientes.push(new DienteModel(48 - i, i * 25, 1 * 50));	
+			dientes.push(new DienteModel(48 - i, i * 25 + 3, 1 * 50));	
 		}
 		for(var i = 3; i < 8; i++){
-			dientes.push(new DienteModel(58 - i, i * 25, 2 * 50));	
+			dientes.push(new DienteModel(58 - i, i * 25 + 3, 2 * 50));	
 		}
 		for(var i = 3; i < 8; i++){
-			dientes.push(new DienteModel(88 - i, i * 25, 3 * 50));	
+			dientes.push(new DienteModel(88 - i, i * 25 + 3, 3 * 50));	
 		}
 		
 		//Dientes derechos
 		for(var i = 0; i < 8; i++){
-			dientes.push(new DienteModel(21 + i, i * 25 + 210, 10));	
+			dientes.push(new DienteModel(21 + i, i * 25 + 213, 10));	
 		}
 		for(var i = 0; i < 8; i++){
-			dientes.push(new DienteModel(31 + i, i * 25 + 210, 1 * 50));	
+			dientes.push(new DienteModel(31 + i, i * 25 + 213, 1 * 50));	
 		}
 		for(var i = 0; i < 5; i++){
-			dientes.push(new DienteModel(61 + i, i * 25 + 210, 2 * 50));	
+			dientes.push(new DienteModel(61 + i, i * 25 + 213, 2 * 50));	
 		}
 		for(var i = 0; i < 5; i++){
-			dientes.push(new DienteModel(71 + i, i * 25 + 210, 3 * 50));	
+			dientes.push(new DienteModel(71 + i, i * 25 + 213, 3 * 50));	
 		}
 		
 
