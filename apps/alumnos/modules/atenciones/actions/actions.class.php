@@ -1174,6 +1174,34 @@ public function executeVerdetallefichas(sfWebRequest $request)
           $pdf->Cell(0,5,'SELLO, FIRMA DEL PROFESIONAL        ',0,1,'R');
 
           
+          // Agregar pagina 2 donde se imprime el odontograma
+          $pdf->SetFont('Times','',9);
+          $pdf->AddPage();
+
+          $pdf->setX(3);
+          $pdf->setY(3);
+          
+         
+          // TABLA de ficha nro arriba derecha
+          $html='<table border="1" style="width:400px">
+                  <tr>
+                     <td valign="bottom" style="font-size:26px;height:100px;">RX <br><b></b></td>
+                     <td align="center" valign="bottom" style="height:100px;">RESERVADO OBRA SOCIAL</td>
+                  </tr>
+                  
+                </table>';
+          $html2='<table border="1" style="width:400px">
+                  <tr>
+                     <td valign="bottom" style="font-size:26px;height:50px;">REFERENCIAS <br><b></b></td>
+                  </tr>
+                  
+                </table>';   
+
+           $html3 ='<svg height="300px" width="620px" version="1.1"><g transform="scale(1.5)"><g transform="translate(313,150)"><polygon stroke-width="0.5" stroke="navy" fill="white" points="0,0 20,0 15,5 5,5"></polygon>="5,15 15,15 20,20 0,20"></polygon><polygon stroke-width="0.5" stroke="navy" fill="white" points="15,5 20,0 20,20 15,15"></polygon><polygon stroke-width="0.5" stroke="navy" fill="white" points="0,0 5,5 5,15 0,20"></polygon><polygon stroke-width="0.5" stroke="navy" fill="white" points="5,5 15,5 15,15 5,15"></polygon><text style="font-size: 6pt;font-weight:normal" stroke-width="0.1" stroke="navy" fill="navy" y="30" x="6">71</text></g><g transform="translate(313,100)"><polygon stroke-width="0.5" stroke="navy" fill="white" points="0,0 20,0 15,5 5,5"></polygon>';                
+
+          $pdf->WriteHTML($html.$html2.$html3); 
+
+          
                
 
           // Mostrar PDF
