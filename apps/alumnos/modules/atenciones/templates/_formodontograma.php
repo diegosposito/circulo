@@ -12,8 +12,18 @@ $(document).ready(function()
 
     $("#botonGrabar").click(function(){
     var elemento = $(this);
-    //var Id = elemento.attr("idinscripcion");
-    // asigno los alumnos a las mesas 
+
+     /* var node = document.getElementById('odontograma');
+        domtoimage.toPng(node)
+            .then(function (dataUrl) {
+               var img = new Image();
+               img.src = dataUrl;
+               $("#odontoimg").val(dataUrl);
+             })
+             .catch(function (error) {
+                 console.error('oops, something went wrong!', error);
+        });*/
+
         $.post("<?php echo url_for('atenciones/guardarodontograma'); ?>",
           $("#formGrabar").serialize(),
         function(data) {
@@ -28,17 +38,16 @@ $(document).ready(function()
            // $('#mensajeEstudio').html(data);
           }               
       );
-
+   
     });
 
      $("#botonPrint").click(function(){
-     var node = document.getElementById('odontograma');
-
-          domtoimage.toPng(node)
+             var node = document.getElementById('odontograma');
+             domtoimage.toPng(node)
               .then(function (dataUrl) {
                   var img = new Image();
                   img.src = dataUrl;
-                  document.body.appendChild(img);
+                  $("#odontoimg").val(dataUrl);
               })
               .catch(function (error) {
                   console.error('oops, something went wrong!', error);
@@ -55,14 +64,17 @@ $(document).ready(function()
     <input type="hidden" name="idpaciente" id="idpaciente" value="<?php echo $idpaciente ?>">
     <input type="hidden" name="jsonatenciones" id="jsonatenciones" value="<?php echo $jsonatenciones ?>">
     <input type="hidden" name="selectedcolor" id="selectedcolor" value="<?php echo 'blue' ?>">
-
+    <input type="hidden" name="odontoimg" id="odontoimg" value="">
+  
     <table cellspacing="0" class="stats" width="100%">
     <?php if(!$superadmin) { ?>
     <tr>
     <td colspan="2" align="center"><input type="button" id="botonGrabar" value="Actualizar Odontograma" /></td>
-     <td colspan="2" align="center"><input type="button" name="botonPrint" id="botonPrint" value="Print" /></td>
      <input type="button" value="Volver" onclick="location.href='<?php echo url_for('areas/index') ?>'">
     
+    </tr>
+    <tr>
+     <td colspan="2" align="center"><input type="button" name="botonPrint" id="botonPrint" value="Guardar Imagen odontograma" /></td>
     </tr>
     <?php } ?>
     </table>
