@@ -52,7 +52,9 @@
     <?php use_javascript('odontograma.js') ?>
     <?php use_javascript('modernizr-2.0.6.min.js') ?>
     <?php use_javascript('tratamientos.js') ?>
+    <?php use_javascript('dom-to-image.min.js') ?>
 
+  
     
    
 
