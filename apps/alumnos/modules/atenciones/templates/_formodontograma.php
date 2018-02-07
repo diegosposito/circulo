@@ -31,6 +31,20 @@ $(document).ready(function()
 
     });
 
+     $("#botonPrint").click(function(){
+     var node = document.getElementById('odontograma');
+
+          domtoimage.toPng(node)
+              .then(function (dataUrl) {
+                  var img = new Image();
+                  img.src = dataUrl;
+                  document.body.appendChild(img);
+              })
+              .catch(function (error) {
+                  console.error('oops, something went wrong!', error);
+              });
+    });
+
 });
 </script>
 
@@ -46,6 +60,8 @@ $(document).ready(function()
     <?php if(!$superadmin) { ?>
     <tr>
     <td colspan="2" align="center"><input type="button" id="botonGrabar" value="Actualizar Odontograma" /></td>
+     <td colspan="2" align="center"><input type="button" name="botonPrint" id="botonPrint" value="Print" /></td>
+     <input type="button" value="Volver" onclick="location.href='<?php echo url_for('areas/index') ?>'">
     
     </tr>
     <?php } ?>
