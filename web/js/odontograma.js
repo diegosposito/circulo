@@ -525,6 +525,10 @@ jQuery(function(){
 			   if(pdiente>0 && udiente>0 && diente.id==pdiente){ 
 			   	  esProtesisf = true;
 			   	  protesisfcompleto = true;
+
+		          if (t.tratamiento.id == "01.09" || t.tratamiento.id == "01.03" || t.tratamiento.id == "01.10"){
+					  color = t.tratamiento.color;
+		          }  
 			   	  salida=[esProtesisf,color,pdiente,udiente, protesisfcompleto];
 			   }
 			   // con que uno este definido ya es puente
