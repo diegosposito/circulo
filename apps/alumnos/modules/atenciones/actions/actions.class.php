@@ -294,6 +294,38 @@ class atencionesActions extends sfActions
 
   // Guarda la asignacion
   public function executeGuardarodontograma(sfWebRequest $request) {  
+
+    $filename = $request->getParameter('idpaciente') . '.png';
+    
+    $base64_string = $request->getParameter('odontoimg');
+    $ifp = fopen( $filename, 'wb' ); 
+
+    // split the string on commas
+    // $data[ 0 ] == "data:image/png;base64"
+    // $data[ 1 ] == <actual base64 string>
+    $data = explode( ',', $base64_string );
+
+    // we could add validation here with ensuring count( $data ) > 1
+    fwrite( $ifp, base64_decode( $data[ 1 ] ) );
+
+    // clean up the file resource
+    fclose( $ifp ); 
+
+    //Save the image
+    // $targetFolder = sfConfig::get('app_pathfiles_folder')."/../fotosodontograma".'/';
+    // move_uploaded_file($ifp, $targetFolder);
+
+    // echo $targetFolder;exit;
+
+    file_put_contents($filename, $ifp);
+
+
+  /*  $result = file_put_contents( "fotos/".$filename, file_get_contents('php://input') );
+    if (!$result) {
+      $resultado = "ERROR: No se pudo escribir el archivo $filename, verificar los permisos.\n";
+    } else {
+      $resultado = "EXITO: Se pudo escribir correctamente el archivo $filename.\n";
+    } */
   
     $oOdontograma = new Odontograma();
     $oOdontograma->setMatricula($request->getParameter('matricula'));
