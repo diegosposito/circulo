@@ -45,7 +45,7 @@ $(document).ready(function()
              var node = document.getElementById('odontograma');
              domtoimage.toPng(node)
               .then(function (dataUrl) {
-                  var img = new Image();
+                  var img = new Image(); 
                   img.src = dataUrl;
                   $("#odontoimg").val(dataUrl);
               })
