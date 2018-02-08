@@ -331,6 +331,7 @@ class atencionesActions extends sfActions
     $oOdontograma->setMatricula($request->getParameter('matricula'));
     $oOdontograma->setIdpaciente($request->getParameter('idpaciente'));
     $oOdontograma->setInfodontograma($request->getParameter('jsonatenciones'));
+    $oOdontograma->setImgodontograma($request->getParameter('odontoimg'));
     $oOdontograma->save();
     
     echo "Se ha guardado correctamente el odontograma";
@@ -449,6 +450,15 @@ class atencionesActions extends sfActions
 
      $this->facturacionss = Doctrine_Core::getTable('Atenciones')->obtenerFacturasFiltro($arrFiltro, NULL, $arrGroup);
      $this->idpaciente = $request->getParameter('idpaciente');
+
+     /* AGREGADO PARA GENERAR ODONTOGRAMA EN LA FICHA 
+     $ultimoOdonto = Doctrine_Core::getTable('Odontograma')->obtenerUltimo($this->idpaciente);
+     
+     $jsonatenciones='[]';
+     foreach($ultimoOdonto as $datos){
+        $jsonatenciones = $datos['infodontograma'];
+     }  
+     $this->jsonatenciones = $jsonatenciones; */
 
   }
 
@@ -986,6 +996,12 @@ public function executeVerdetallefichas(sfWebRequest $request)
           // Ciudad de Nacimiento
           $oCiudad = Doctrine_Core::getTable('Ciudades')->find($oPaciente->getIdciudadnac());
 
+          // Odontograma a imprimir   
+
+          //HARDCODEADO!!!!!!!!!!!!!
+          
+          $oOdontograma = Doctrine_Core::getTable('Odontograma')->find(23);
+
           // Obtener informacion del profesional logueado
           // Obtener usuario logueado y matricula del profesional logueado
           $user_id = $this->getUser()->getGuardUser()->getId();
@@ -1212,6 +1228,15 @@ public function executeVerdetallefichas(sfWebRequest $request)
 
           $pdf->setX(3);
           $pdf->setY(3);
+
+       /*   $h_img = fopen('4.png', "rb");
+$img = fread($h_img, filesize('4.png'));
+fclose($h_img);
+// prepare a base64 encoded "data url"
+$pic = 'data://text/plain;base64,' . base64_encode($img);
+// extract dimensions from image
+$info = getimagesize($pic);*/
+
           
          
           // TABLA de ficha nro arriba derecha
@@ -1222,16 +1247,38 @@ public function executeVerdetallefichas(sfWebRequest $request)
                   </tr>
                   
                 </table>';
-          $html2='<table border="1" style="width:400px">
-                  <tr>
-                     <td valign="bottom" style="font-size:26px;height:50px;">REFERENCIAS <br><b></b></td>
-                  </tr>
-                  
-                </table>';   
+          $html2='<table border="1" style="width:400px;height:400px">
+                 
+                </table>';  
 
-           $html3 ='<svg height="300px" width="620px" version="1.1"><g transform="scale(1.5)"><g transform="translate(313,150)"><polygon stroke-width="0.5" stroke="navy" fill="white" points="0,0 20,0 15,5 5,5"></polygon>="5,15 15,15 20,20 0,20"></polygon><polygon stroke-width="0.5" stroke="navy" fill="white" points="15,5 20,0 20,20 15,15"></polygon><polygon stroke-width="0.5" stroke="navy" fill="white" points="0,0 5,5 5,15 0,20"></polygon><polygon stroke-width="0.5" stroke="navy" fill="white" points="5,5 15,5 15,15 5,15"></polygon><text style="font-size: 6pt;font-weight:normal" stroke-width="0.1" stroke="navy" fill="navy" y="30" x="6">71</text></g><g transform="translate(313,100)"><polygon stroke-width="0.5" stroke="navy" fill="white" points="0,0 20,0 15,5 5,5"></polygon>';                
+          
+          $pdf->WriteHTML($html.$html2); 
+          $ximage=50; $yimage=00;
+       //   $pdf->Image($pic, 10, 30, $info[0], $info[1], 'png');
+       //  $pdf->Image('4.jpg',$ximage,$yimage,21);  
 
-          $pdf->WriteHTML($html.$html2.$html3); 
+         $pdf->Image('dientes.jpg',$ximage,$yimage,21);   
+
+ //  $tmpFile = 'tempimg.png';       
+
+ /*         $dataURI    = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAPCAMAAADarb8dAAAABlBMVEUAAADtHCTeKUOwAAAAF0lEQVR4AWOgAWBE4zISkMbDZQRyaQkABl4ADHmgWUYAAAAASUVORK5CYII=";
+$dataPieces = explode(',',$dataURI);
+$encodedImg = $dataPieces[1];
+$decodedImg = base64_decode($encodedImg);
+
+//  Check if image was properly decoded
+if( $decodedImg!==false )
+{
+    //  Save image to a temporary location
+    if( file_put_contents($tmpFile,$decodedImg)!==false )
+    {
+       
+        $pdf->Image($tmpFile);
+       
+        //  Delete image from server
+        unlink($tmpFile);
+    }
+}*/
 
           
                
