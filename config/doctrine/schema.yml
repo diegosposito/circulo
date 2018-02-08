@@ -2795,6 +2795,7 @@ Odontograma:
     fecha: { type: date(25), primary: false, notnull: true, default: '2002-01-01' }
     idpaciente: { type: integer, primary: false, default: '0' }
     infodontograma: { type: text, primary: false, default: NULL }
+    imgodontograma: { type: text, primary: false, default: NULL }
   relations:
     Pacientes:
       local: idpaciente
