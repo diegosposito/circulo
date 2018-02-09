@@ -295,7 +295,7 @@ class atencionesActions extends sfActions
   // Guarda la asignacion
   public function executeGuardarodontograma(sfWebRequest $request) {  
 
-    $filename = $request->getParameter('idpaciente') . '.png';
+   /* $filename = $request->getParameter('idpaciente') . '.png';
     
     $base64_string = $request->getParameter('odontoimg');
     $ifp = fopen( $filename, 'wb' ); 
@@ -317,7 +317,7 @@ class atencionesActions extends sfActions
 
     // echo $targetFolder;exit;
 
-    file_put_contents($filename, $ifp);
+    file_put_contents($filename, $ifp);*/
 
 
   /*  $result = file_put_contents( "fotos/".$filename, file_get_contents('php://input') );
@@ -332,6 +332,7 @@ class atencionesActions extends sfActions
     $oOdontograma->setIdpaciente($request->getParameter('idpaciente'));
     $oOdontograma->setInfodontograma($request->getParameter('jsonatenciones'));
     $oOdontograma->setImgodontograma($request->getParameter('odontoimg'));
+    $oOdontograma->setFecha(date("Y-m-d"));
     $oOdontograma->save();
     
     echo "Se ha guardado correctamente el odontograma";
@@ -1000,7 +1001,7 @@ public function executeVerdetallefichas(sfWebRequest $request)
 
           //HARDCODEADO!!!!!!!!!!!!!
           
-          $oOdontograma = Doctrine_Core::getTable('Odontograma')->find(23);
+          $oOdontograma = Doctrine_Core::getTable('Odontograma')->find(187);
 
           // Obtener informacion del profesional logueado
           // Obtener usuario logueado y matricula del profesional logueado
@@ -1242,46 +1243,66 @@ $info = getimagesize($pic);*/
           // TABLA de ficha nro arriba derecha
           $html='<table border="1" style="width:400px">
                   <tr>
-                     <td valign="bottom" style="font-size:26px;height:100px;">RX <br><b></b></td>
-                     <td align="center" valign="bottom" style="height:100px;">RESERVADO OBRA SOCIAL</td>
+                     <td valign="bottom" style="font-size:26px;height:150px;width:250px;">RX <br><b></b></td>
+                     <td align="center" valign="bottom" style="height:150px;width:150px;">RESERVADO OBRA SOCIAL</td>
                   </tr>
                   
                 </table>';
-          $html2='<table border="1" style="width:400px;height:400px">
-                 
-                </table>';  
+
+            // TABLA de ficha nro arriba derecha
+          $html2='<br><table border="1" style="width:400px">
+                  <tr>
+                     <td valign="bottom" style="font-size:26px;height:80px;width:400px;">REFERENCIAS<br><b></b></td>
+                  </tr>
+                  
+                </table>';   
+
+              // TABLA de ficha nro arriba derecha
+          $html3='<br><table border="1" style="width:400px">
+                  <tr>
+                     <td valign="bottom" style="font-size:26px;height:200px;width:400px;"><br><b></b></td>
+                  </tr>
+                  
+                </table>';          
+          
 
           
-          $pdf->WriteHTML($html.$html2); 
-          $ximage=50; $yimage=00;
-       //   $pdf->Image($pic, 10, 30, $info[0], $info[1], 'png');
-       //  $pdf->Image('4.jpg',$ximage,$yimage,21);  
+          $pdf->WriteHTML($html.$html2.$html3); 
+          $ximage=12; $yimage=97;
+     
+        $tmpfile = 'tmp.png';
 
-         $pdf->Image('dientes.jpg',$ximage,$yimage,21);   
+        $dataURI = $oOdontograma->getImgodontograma();
+        $dataPieces = explode(',',$dataURI);
+        $encodedImg = $dataPieces[1];
+        $decodedImg = base64_decode($encodedImg);
 
- //  $tmpFile = 'tempimg.png';       
-
- /*         $dataURI    = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAPCAMAAADarb8dAAAABlBMVEUAAADtHCTeKUOwAAAAF0lEQVR4AWOgAWBE4zISkMbDZQRyaQkABl4ADHmgWUYAAAAASUVORK5CYII=";
-$dataPieces = explode(',',$dataURI);
-$encodedImg = $dataPieces[1];
-$decodedImg = base64_decode($encodedImg);
-
-//  Check if image was properly decoded
-if( $decodedImg!==false )
-{
-    //  Save image to a temporary location
-    if( file_put_contents($tmpFile,$decodedImg)!==false )
-    {
-       
-        $pdf->Image($tmpFile);
-       
-        //  Delete image from server
-        unlink($tmpFile);
-    }
-}*/
-
-          
+        //  Check if image was properly decoded
+        if( $decodedImg!==false )
+        {
+            //  Save image to a temporary location
+            if( file_put_contents($tmpfile,$decodedImg)!==false )
+            {
+                //  Open new PDF document and print image
+                 $pdf->Image($tmpfile,$ximage,$yimage,130);  
+           //     $pdf->Image($tmpfile);
                
+                //  Delete image from server
+                unlink($tmpfile);
+            }
+        }
+
+        $pdf->SetXY(5, 166);
+        $pdf->Cell(15,5,'OBSERVACIONES:',0,0,'L'); 
+
+        $pdf->Line(33, 170, 146, 170);
+        $pdf->Line(5, 177, 146, 177);
+        $pdf->Line(5, 184, 146, 184);
+        $pdf->Line(5, 191, 146, 191);
+        $pdf->Line(5, 198, 146, 198);
+        $pdf->Line(5, 205, 146, 205);
+        $pdf->Line(5, 212, 146, 212);
+
 
           // Mostrar PDF
           $filename="invoice.pdf";
