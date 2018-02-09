@@ -10,10 +10,24 @@ $(document).ready(function()
         } 
     });
 
-    $("#botonGrabar").click(function(){
-    var elemento = $(this);
+    $('#formGrabar').submit(function() {
+       var node = document.getElementById('odontograma');
+            domtoimage.toPng(node)
+                .then(function (dataUrl) {
+                   var img = new Image();
+                   img.src = dataUrl;
+                   $("#odontoimg").val(dataUrl);
+                 })
+                 .catch(function (error) {
+                     console.error('oops, something went wrong!', error);
+            });
+        return true;         
+    });
 
-     /* var node = document.getElementById('odontograma');
+    $("#botonGrabar").click(function(){
+    
+
+        var node = document.getElementById('odontograma');
         domtoimage.toPng(node)
             .then(function (dataUrl) {
                var img = new Image();
@@ -22,26 +36,28 @@ $(document).ready(function()
              })
              .catch(function (error) {
                  console.error('oops, something went wrong!', error);
-        });*/
+        });
+
+        var elemento = $(this);
 
         $.post("<?php echo url_for('atenciones/guardarodontograma'); ?>",
-          $("#formGrabar").serialize(),
-        function(data) {
-         //   alert(data);
-            var el = document.createElement("div");
-            el.setAttribute("style","height:30px;font-weight: bold;position:absolute;top:90%;left:40%;color:white;background-color:#7DBF0D;");
-            el.innerHTML = "Se ha guardado correctamente el Odontograma";
-            setTimeout(function(){
-              el.parentNode.removeChild(el);
-            },3000);
-            document.body.appendChild(el);
-           // $('#mensajeEstudio').html(data);
-          }               
-      );
+              $("#formGrabar").serialize(),
+              function(data) {
+               //   alert(data);
+                  var el = document.createElement("div");
+                  el.setAttribute("style","height:30px;font-weight: bold;position:absolute;top:90%;left:40%;color:white;background-color:#7DBF0D;");
+                  el.innerHTML = "Se ha guardado correctamente el Odontograma";
+                  setTimeout(function(){
+                    el.parentNode.removeChild(el);
+                  },3000);
+                  document.body.appendChild(el);
+                 // $('#mensajeEstudio').html(data);
+                }               
+          ); // end post
    
-    });
+    }); //end botongrabar->click()
 
-     $("#botonPrint").click(function(){
+   /*  $("#botonPrint").click(function(){
              var node = document.getElementById('odontograma');
              domtoimage.toPng(node)
               .then(function (dataUrl) {
@@ -52,7 +68,7 @@ $(document).ready(function()
               .catch(function (error) {
                   console.error('oops, something went wrong!', error);
               });
-    });
+    });*/
 
 });
 </script>
@@ -73,9 +89,9 @@ $(document).ready(function()
      <input type="button" value="Volver" onclick="location.href='<?php echo url_for('areas/index') ?>'">
     
     </tr>
-    <tr>
+   <!-- <tr>
      <td colspan="2" align="center"><input type="button" name="botonPrint" id="botonPrint" value="Guardar Imagen odontograma" /></td>
-    </tr>
+    </tr> -->
     <?php } ?>
     </table>
 </form>
