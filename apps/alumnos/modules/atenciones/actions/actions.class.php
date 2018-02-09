@@ -1007,7 +1007,7 @@ public function executeVerdetallefichas(sfWebRequest $request)
 
              // Ultimo odontograma de un paciente atendido por el profesional logueado
           $idodontograma = 1;
-          $ultimoOdonto = Doctrine_Core::getTable('Odontograma')->obtenerUltimoOdontograma($matricula, $this->idpaciente);
+          $ultimoOdonto = Doctrine_Core::getTable('Odontograma')->obtenerUltimoOdontograma($matricula, $oFicha->getIdpaciente());
           foreach($ultimoOdonto as $datos){
             $idodontograma = $datos['id'];
           }  
