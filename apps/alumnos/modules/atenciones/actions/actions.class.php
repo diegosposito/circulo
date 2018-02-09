@@ -997,11 +997,6 @@ public function executeVerdetallefichas(sfWebRequest $request)
           // Ciudad de Nacimiento
           $oCiudad = Doctrine_Core::getTable('Ciudades')->find($oPaciente->getIdciudadnac());
 
-          // Odontograma a imprimir   
-
-          //HARDCODEADO!!!!!!!!!!!!!
-          
-          $oOdontograma = Doctrine_Core::getTable('Odontograma')->find(187);
 
           // Obtener informacion del profesional logueado
           // Obtener usuario logueado y matricula del profesional logueado
@@ -1010,7 +1005,17 @@ public function executeVerdetallefichas(sfWebRequest $request)
           $matricula = $persona[0]['matricula'];
           $profesional = $persona[0]['apellido'].', '.$persona[0]['nombre'];
 
-          
+             // Ultimo odontograma de un paciente atendido por el profesional logueado
+          $idodontograma = 1;
+          $ultimoOdonto = Doctrine_Core::getTable('Odontograma')->obtenerUltimoOdontograma($matricula, $this->idpaciente);
+          foreach($ultimoOdonto as $datos){
+            $idodontograma = $datos['id'];
+          }  
+
+          // Obtener Odontograma a imprimir   
+          $oOdontograma = Doctrine_Core::getTable('Odontograma')->find($idodontograma);
+
+         
          // Obtener atenciones a  mostrar
           $arrFiltro = array('idfacturacion'=> $oFicha->getId());
           $atencioness = Doctrine_Core::getTable('Atenciones')->obtenerDetalleAtencionesFiltro($arrFiltro);
