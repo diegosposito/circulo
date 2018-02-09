@@ -17,7 +17,7 @@ class OdontogramaTable extends Doctrine_Table
         return Doctrine_Core::getTable('Odontograma');
     }
 
-     // Obtener pacientes
+     // Obtener ultimo odontograma
     public static function obtenerUltimo($idpaciente)
     {
         $sql ="SELECT o.id, o.matricula, o.idpaciente, o.infodontograma, o.created_at FROM odontograma o JOIN 
@@ -28,7 +28,7 @@ class OdontogramaTable extends Doctrine_Table
         return $q;
     }
 
-    // Obtener pacientes
+    // Obtener ultimo odontograma anterior a fecha
     public static function obtenerUltimoAnteriorAfecha($idpaciente, $fecha)
     {
         $sql ="SELECT o.id, o.matricula, o.idpaciente, o.infodontograma, o.created_at FROM odontograma o 
@@ -38,5 +38,17 @@ class OdontogramaTable extends Doctrine_Table
 
         return $q;
     }
+
+     // Obtener ultimo odontograma
+    public static function obtenerUltimoOdontograma($matricula, $idpaciente)
+    {
+        $sql ="SELECT o.id, o.matricula, o.idpaciente, o.infodontograma, o.created_at FROM odontograma o JOIN 
+        (SELECT MAX(created_at) as maxfecha FROM odontograma WHERE idpaciente= ".$idpaciente." AND matricula= ".$matricula.") as ultimo ON o.created_at= ultimo.maxfecha WHERE o.idpaciente = ".$idpaciente." AND o.matricula= ".$matricula.";";
+
+        $q = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($sql);
+
+        return $q;
+    }
+
 
 }
