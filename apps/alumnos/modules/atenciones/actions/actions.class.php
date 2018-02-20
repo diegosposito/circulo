@@ -451,6 +451,8 @@ class atencionesActions extends sfActions
 
      $this->facturacionss = Doctrine_Core::getTable('Atenciones')->obtenerFacturasFiltro($arrFiltro, NULL, $arrGroup);
      $this->idpaciente = $request->getParameter('idpaciente');
+     $this->selectedtab = $request->getParameter('selectedtab');
+     $this->matricula = $persona[0]['matricula'];
 
      /* AGREGADO PARA GENERAR ODONTOGRAMA EN LA FICHA 
      $ultimoOdonto = Doctrine_Core::getTable('Odontograma')->obtenerUltimo($this->idpaciente);
