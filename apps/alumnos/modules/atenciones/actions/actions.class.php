@@ -433,6 +433,9 @@ class atencionesActions extends sfActions
 
     $this->idAnio = $request->getParameter('idAnio');
 
+    if($this->idAnio=='')
+      $this->idAnio = date('Y');
+
     $this->superadmin = false;
     if ($this->getUser()->getGuardUser()->getIsSuperAdmin())
         $this->superadmin = true;
