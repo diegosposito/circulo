@@ -46,7 +46,7 @@ $(document).ready(function(){
 </style>
 <br>
 <h1 align="center" style="color:black;">Ver Historial de Fichas de : <?php echo $persona ?></h1>
-<a href="<?php echo url_for('atenciones/index') ?>"><?php echo "<< Volver" ?></a>
+<?php echo link_to("<< Volver", 'atenciones/editar?id='.$idpaciente.'&selectedtab=2' ,'class="mhead"'); ?>
 <div align="center">
 <form action="<?php echo url_for('atenciones/verhistorialfichas') ?>" method="post">
   <input type="hidden" name="selectedtab" id="selectedtab" value="<?php echo $selectedtab ?>">
