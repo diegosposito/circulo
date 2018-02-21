@@ -1253,16 +1253,17 @@ $info = getimagesize($pic);*/
           // TABLA de ficha nro arriba derecha
           $html='<table border="1" style="width:400px">
                   <tr>
-                     <td valign="bottom" style="font-size:26px;height:150px;width:250px;">RX <br><b></b></td>
-                     <td align="center" valign="bottom" style="height:150px;width:150px;">RESERVADO OBRA SOCIAL</td>
+                     <td valign="bottom" style="font-size:26px;height:130px;width:250px;">RX: <br><b></b></td>
+                     <td align="center" valign="bottom" style="height:130px;width:150px;">RESERVADO OBRA SOCIAL</td>
                   </tr>
                   
                 </table>';
 
+          
             // TABLA de ficha nro arriba derecha
           $html2='<br><table border="1" style="width:400px">
                   <tr>
-                     <td valign="bottom" style="font-size:26px;height:80px;width:400px;">REFERENCIAS<br><b></b></td>
+                     <td valign="center" style="font-size:26px;height:80px;width:400px;"><img src="'.$request->getRelativeUrlRoot().'/images/referencias.png" height="75px" width="400px"><br><b></b></td>
                   </tr>
                   
                 </table>';   
@@ -1311,7 +1312,7 @@ $info = getimagesize($pic);*/
         $pdf->Line(5, 191, 146, 191);
         $pdf->Line(5, 198, 146, 198);
         $pdf->Line(5, 205, 146, 205);
-        $pdf->Line(5, 212, 146, 212);
+       // $pdf->Line(5, 212, 146, 212);
 
 
           // Mostrar PDF
