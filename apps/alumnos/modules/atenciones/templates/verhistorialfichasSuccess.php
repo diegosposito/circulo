@@ -23,20 +23,29 @@
 </style>
 <script>
 $(document).ready(function(){
-    // add multiple select / deselect functionality
-    $("#selectall").click(function () {
-          $('.case').attr('checked', this.checked);
-    });
- 
-    // if all checkbox are selected, check the selectall checkbox
-    // and viceversa
-    $(".case").click(function(){
-        if($(".case").length == $(".case:checked").length) {
-            $("#selectall").attr("checked", "checked");
-        } else {
-            $("#selectall").removeAttr("checked");
-        }
-    });   
+   
+   $("#botonGrabar").click(function(){
+
+       var idficha = $( "input:checked" ).val();
+      
+       var elemento = $(this);
+
+      $.post("<?php echo url_for('atenciones/guardarfichaseleccionada'); ?>",
+              {idf: idficha},
+              function(data) {
+               //   alert(data);
+                  var el = document.createElement("div");
+                  el.setAttribute("style","height:30px;font-weight: bold;position:absolute;top:40%;left:40%;color:white;background-color:#7DBF0D;");
+                  el.innerHTML = "Se ha guardado correctamente la ficha a imprimir";
+                  setTimeout(function(){
+                    el.parentNode.removeChild(el);
+                  },2000);
+                  document.body.appendChild(el);
+                 // $('#mensajeEstudio').html(data);
+                }               
+          ); // end post   */
+   
+    }); //end botongrabar->click()
     
 });
 
@@ -71,13 +80,18 @@ $(document).ready(function(){
 <tr>
 <td colspan="2" align="center"><input type="submit" value="Actualizar" /></td>
 </tr>
+<tr>
+<td colspan="2" align="center"><input type="button" id="botonGrabar" value="Grabar ficha para Impresión" /></td>
+</tr>
+
 </table>
 
 <?php if (count($facturacionss) > 0){ ?>
 <table cellspacing="0" class="stats">
    
     <tr>
-      <td width="25%" align="center" class="hed">Nro Ficha</td>
+      <td width="2%" align="center" class="hed"></td>
+      <td width="22%" align="center" class="hed">Nro Ficha</td>
       <td width="25%" align="center" class="hed">Fecha</td>
       <td width="25%" align="center" class="hed">Importe</td>
       <td width="15%" align="center" class="hed">Ver Detalle</td>
@@ -89,6 +103,7 @@ $(document).ready(function(){
     <?php foreach($facturacionss as $item){ 
       $fecha_formateada = date("d/m/Y", strtotime($item['fecha'])); ?>
     <tr class="fila_<?php echo $i%2 ; ?>">
+      <td align="center"><input type="radio" name="$item['id']" id="$item['id']" value="<?php echo $item['id'] ?>" <?php echo ($item['imprimir'])?"checked":""; ?> /></td> 
       <td width="25%" align="center"><?php echo $item['id'] ?></td>
       <td width="25%" align="center"><?php echo $fecha_formateada ?></td>
       <td width="25%" align="center"><?php echo $item['importe'] ?></td>
