@@ -192,10 +192,20 @@ class AtencionesTable extends Doctrine_Table
         return $q;
     }
 
+    // Obtener ficha de impresion por matricula lista para imprimir
+    public static function obtenerFichaImpresion($matricula)
+    {
+        $sql ="SELECT fact.id, fact.matricula, fact.fecha, fact.importe, fact.imprimir FROM facturaciones fact WHERE fact.imprimir AND fact.matricula= ".$matricula.";";
+
+        $q = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($sql);
+
+        return $q;
+    }
+
     // Obtener detalle de facturas segun criterio
     public static function obtenerFacturasFiltro($arrFiltros, $arrGroup=null, $arrOrder=null)
     {
-        $sql ="SELECT fact.id, fact.matricula, fact.fecha, fact.importe FROM facturaciones fact WHERE 1=1 ";
+        $sql ="SELECT fact.id, fact.matricula, fact.fecha, fact.importe, fact.imprimir FROM facturaciones fact WHERE 1=1 ";
 
         if($arrFiltros['matricula'] <> '')
             $sql .=  " AND fact.matricula = ".$arrFiltros['matricula']." ";
@@ -232,6 +242,26 @@ class AtencionesTable extends Doctrine_Table
         $q = Doctrine_Manager::getInstance()->getCurrentConnection();
 
         return $q->execute($sql);
+
+    }
+
+     // Desactivar Registros
+    public static function actualizarFichaImprimir($idficha)
+    {
+        
+         $q = Doctrine_Manager::getInstance()->getCurrentConnection();
+
+        // resetear todas las fichas del profesional logueado a NO IMPRIMIR
+        $sql ="UPDATE facturaciones fact JOIN
+        (SELECT matricula FROM facturaciones where id = ".$idficha.") as mat ON fact.matricula = mat.matricula
+        set fact.imprimir = false;";
+
+        $q->execute($sql);
+
+         // Setear la ficha elegida para imprimir
+        $sqlu ="UPDATE facturaciones set imprimir = true WHERE id =".$idficha.";";
+
+        $q->execute($sqlu);
 
     }
 
