@@ -247,6 +247,7 @@ class atencionesActions extends sfActions
     $this->idprofesional = $persona[0]['idpersona'];
     $this->matricula = $persona[0]['matricula'];
 
+  
      $this->atencioness = Doctrine_Core::getTable('Atenciones')->obtenerAtencionesPorPaciente($pacientes->getId());
      $this->idpaciente = $request->getParameter('id');
 
@@ -265,8 +266,12 @@ class atencionesActions extends sfActions
 
      // CUARTO TAB
      // Obtener json desde base de datos con atenciones para Odontograma
-   
-
+    $this->fichaimp=0;
+    $fichaimpresion= Doctrine_Core::getTable('Atenciones')->obtenerFichaImpresion($this->matricula);
+    foreach($fichaimpresion as $fichai){
+       $this->fichaimp=$fichai['id'];
+    }
+    
     $fecha = date("d/m/Y"); 
     $arr = explode('/', $fecha);
     $fec = $arr[2]."-".$arr[1]."-".$arr[0];
@@ -290,6 +295,16 @@ class atencionesActions extends sfActions
     }  
     $this->jsonatenciones = $jsonatenciones;
     // $this->jsonatenciones = '[{"diente":{"id":17,"x":25,"y":0},"cara":"S","tratamiento":{"id":"10.16.01","nombre":"Hasta 1 cm. de diámetro","aplicaCara":true,"aplicaDiente":true,"color":"blue"}},{"diente":{"id":18,"x":50,"y":0},"cara":"C","tratamiento":{"id":"10.16.01","nombre":"Hasta 1 cm. de diámetro","aplicaCara":true,"aplicaDiente":true,"color":"red"}}]';
+  }
+
+   // Guarda la asignacion
+  public function executeGuardarfichaseleccionada(sfWebRequest $request) {  
+
+      Doctrine_Core::getTable('Atenciones')->actualizarFichaImprimir($request->getParameter('idf'));
+    
+      echo "Se ha guardado correctamente el ficha a imprimir";
+    
+      return sfView::NONE;  
   }
 
   // Guarda la asignacion
