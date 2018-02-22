@@ -81,12 +81,28 @@ $(document).ready(function()
     <input type="hidden" name="jsonatenciones" id="jsonatenciones" value="<?php echo $jsonatenciones ?>">
     <input type="hidden" name="selectedcolor" id="selectedcolor" value="<?php echo 'blue' ?>">
     <input type="hidden" name="odontoimg" id="odontoimg" value="">
+
+     <?php
+        $encrypt_method = "AES-256-CBC";
+        $secret_key = 'DieGo123';
+        $secret_iv = 'ReiNo123';
+         
+        // hash
+        $key = hash('sha256', $secret_key);
+            
+        // iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
+        $iv = substr(hash('sha256', $secret_iv), 0, 16);
+         
+        $output = openssl_encrypt($item['id'], $encrypt_method, $key, 0, $iv);
+        $id_encriptado = base64_encode($output);
+      ?>
   
     <table cellspacing="0" class="stats" width="100%">
     <?php if(!$superadmin) { ?>
+    <tr>  <td width="20%" align="left"> <a target=_blank href="<?php echo url_for('atenciones/imprimirficha?id='.$id_encriptado) ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/print.png' align='center' size='20'  height='20' width="20"  /></a>Imprimir odontograma actual</td></tr>
+    <tr>  <td width="20%" align="left"> <a target=_blank href="<?php echo url_for('atenciones/imprimirficha?id='.$id_encriptado) ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/print.png' align='center' size='20'  height='20' width="20"  /></a>Imprimir odontograma en blanco</td></tr>
     <tr>
     <td colspan="2" align="center"><input type="button" id="botonGrabar" value="Actualizar Odontograma" /></td>
-     <input type="button" value="Volver" onclick="location.href='<?php echo url_for('areas/index') ?>'">
     
     </tr>
    <!-- <tr>
