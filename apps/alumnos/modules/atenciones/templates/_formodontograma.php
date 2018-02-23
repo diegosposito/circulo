@@ -10,23 +10,22 @@ $(document).ready(function()
         } 
     });
 
-    $('#formGrabar').submit(function() {
-       var node = document.getElementById('odontograma');
-            domtoimage.toPng(node)
-                .then(function (dataUrl) {
-                   var img = new Image();
-                   img.src = dataUrl;
-                   $("#odontoimg").val(dataUrl);
-                 })
-                 .catch(function (error) {
-                     console.error('oops, something went wrong!', error);
-            });
-        return true;         
+    $("#tratamientos").click(function(){
+    
+        var node = document.getElementById('odontograma');
+        domtoimage.toPng(node)
+            .then(function (dataUrl) {
+               var img = new Image();
+               img.src = dataUrl;
+               $("#odontoimg").val(dataUrl);
+             })
+             .catch(function (error) {
+                 console.error('oops, something went wrong!', error);
+        });
     });
 
     $("#botonGrabar").click(function(){
     
-
         var node = document.getElementById('odontograma');
         domtoimage.toPng(node)
             .then(function (dataUrl) {
@@ -131,7 +130,7 @@ $(document).ready(function()
     <div id="main" role="main">      
       <div id="tratamiento">
         <h2>Tratamiento</h2>
-        <select 
+        <select id="tratamientos" name="tratamientos"
           data-bind=" options: tratamientosPosibles, 
                       value: tratamientoSeleccionado, 
                       optionsText: function(item){ return item.nombre; },
