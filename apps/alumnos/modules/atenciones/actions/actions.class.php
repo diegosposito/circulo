@@ -983,7 +983,9 @@ public function executeVerdetallefichas(sfWebRequest $request)
 
   public function executeImprimirficha(sfWebRequest $request)
       {
-        
+          $estado ='';
+          $estado = $request->getParameter('estado');
+
           $id = $request->getParameter('id');
           $encrypt_method = "AES-256-CBC";
           $secret_key = 'DieGo123';
@@ -1299,6 +1301,14 @@ $info = getimagesize($pic);*/
         $tmpfile = 'tmp.png';
 
         $dataURI = $oOdontograma->getImgodontograma();
+
+        if($estado=="vacio"){
+
+           // el odontograma 1 actua como comodin, y tiene el odontograma vacio
+           $oOdo = Doctrine_Core::getTable('Odontograma')->find(1);
+           $dataURI = $oOdo->getImgodontograma();
+        }
+        
         $dataPieces = explode(',',$dataURI);
         $encodedImg = $dataPieces[1];
         $decodedImg = base64_decode($encodedImg);
