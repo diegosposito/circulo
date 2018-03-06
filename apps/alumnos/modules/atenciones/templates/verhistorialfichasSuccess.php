@@ -57,13 +57,8 @@ $(document).ready(function(){
 <h1 align="center" style="color:black;">Ver Historial de Fichas de : <?php echo $persona ?></h1>
 <?php echo link_to("<< Volver", 'atenciones/editar?id='.$idpaciente.'&selectedtab=2' ,'class="mhead"'); ?>
 <div align="center">
-<form action="<?php echo url_for('atenciones/verhistorialfichas') ?>" method="post">
-  <input type="hidden" name="selectedtab" id="selectedtab" value="<?php echo $selectedtab ?>">
-  <input type="hidden" name="idpaciente" id="idpaciente" value="<?php echo $idpaciente ?>">
+
 <table cellspacing="0" class="stats" width="30%">
-<tr>
-<td colspan="2" align="center"><input type="submit" value="Actualizar" /></td>
-</tr>
 <tr>
 <td colspan="2" align="center"><input type="button" id="botonGrabar" value="Grabar ficha para Impresión" /></td>
 </tr>
@@ -79,7 +74,6 @@ $(document).ready(function(){
       <td width="25%" align="center" class="hed">Fecha</td>
       <td width="25%" align="center" class="hed">Importe</td>
       <td width="15%" align="center" class="hed">Ver Detalle</td>
-      <td width="10%" align="center" class="hed">Imprimir</td>
     </tr>
   </thead>
   <tbody>
@@ -107,8 +101,7 @@ $(document).ready(function(){
       ?>
     <td align="center"><?php echo link_to("Ver Detalle", 'atenciones/verdetallefichas?id='.$id_encriptado ,'class="mhead"'); ?></td>
     
-    <td width="20%" align="center"> <a target=_blank href="<?php echo url_for('atenciones/imprimirficha?id='.$id_encriptado) ?>"><img src='<?php echo $sf_request->getRelativeUrlRoot();?>/images/print.png' align='center' size='20'  height='20' width="20"  /></a></td>
-
+  
       <?php $total += $item['importe']; ?>
       
     </tr>
