@@ -205,10 +205,13 @@ class AtencionesTable extends Doctrine_Table
     // Obtener detalle de facturas segun criterio
     public static function obtenerFacturasFiltro($arrFiltros, $arrGroup=null, $arrOrder=null)
     {
-        $sql ="SELECT fact.id, fact.matricula, fact.fecha, fact.importe, fact.imprimir FROM facturaciones fact WHERE 1=1 ";
+        $sql ="SELECT fact.id, fact.matricula, fact.fecha, fact.importe, fact.imprimir, fact.idpaciente FROM facturaciones fact WHERE 1=1 ";
 
         if($arrFiltros['matricula'] <> '')
             $sql .=  " AND fact.matricula = ".$arrFiltros['matricula']." ";
+
+         if($arrFiltros['idpaciente'] <> '')
+            $sql .=  " AND fact.idpaciente = ".$arrFiltros['idpaciente']." ";
 
         if($arrFiltros['anio'] <> '')
             $sql .=  " AND YEAR(fact.fecha) = ".$arrFiltros['anio']." ";
@@ -253,8 +256,8 @@ class AtencionesTable extends Doctrine_Table
 
         // resetear todas las fichas del profesional logueado a NO IMPRIMIR
         $sql ="UPDATE facturaciones fact JOIN
-        (SELECT matricula FROM facturaciones where id = ".$idficha.") as mat ON fact.matricula = mat.matricula
-        set fact.imprimir = false;";
+        (SELECT matricula, idpaciente FROM facturaciones where id = ".$idficha.") as mat ON fact.matricula = mat.matricula
+        set fact.imprimir = false WHERE fact.idpaciente = mat.idpaciente;";
 
         $q->execute($sql);
 
