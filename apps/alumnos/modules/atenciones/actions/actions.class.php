@@ -437,40 +437,29 @@ class atencionesActions extends sfActions
   public function executeVerhistorialfichas(sfWebRequest $request)
   {
     
-    $aniohasta = date ("Y");
-    $aniodesde = $aniohasta - 25;
-    $this->aAnios = array();
-
-    for( $i= $aniohasta ; $i >= $aniodesde ; $i-- )
-    {
-      $this->aAnios[$i] =  $i;
-    }
-
-    $this->idAnio = $request->getParameter('idAnio');
-
-    if($this->idAnio=='')
-      $this->idAnio = date('Y');
-
     $this->superadmin = false;
     if ($this->getUser()->getGuardUser()->getIsSuperAdmin())
         $this->superadmin = true;
 
+
      // Obtener usuario logueado
     $user_id = $this->getUser()->getGuardUser()->getId();
     $persona = Doctrine_Core::getTable('Personas')->obtenerProfesionalxUser($user_id);
-    $matricula = $persona[0]['matricula'];
     $this->persona = $persona[0]['apellido'].', '.$persona[0]['nombre'];
+
+    $this->idpaciente = $request->getParameter('idpaciente');
+    $this->selectedtab = $request->getParameter('selectedtab');
+    $this->matricula = $persona[0]['matricula'];  
 
     // $matricula = $request->getParameter('matricula');
      
-     $arrFiltro = array('matricula'=> $matricula, 'anio'=> $this->idAnio);
+     $arrFiltro = array('matricula'=> $this->matricula, 'idpaciente'=> $this->idpaciente);
 
      $arrGroup = array('iddesc'=> 'iddesc');
 
-     $this->facturacionss = Doctrine_Core::getTable('Atenciones')->obtenerFacturasFiltro($arrFiltro, NULL, $arrGroup);
-     $this->idpaciente = $request->getParameter('idpaciente');
-     $this->selectedtab = $request->getParameter('selectedtab');
-     $this->matricula = $persona[0]['matricula'];
+     if ($this->idpaciente>0)
+         $this->facturacionss = Doctrine_Core::getTable('Atenciones')->obtenerFacturasFiltro($arrFiltro, NULL, $arrGroup);
+     
 
      /* AGREGADO PARA GENERAR ODONTOGRAMA EN LA FICHA 
      $ultimoOdonto = Doctrine_Core::getTable('Odontograma')->obtenerUltimo($this->idpaciente);
