@@ -62,22 +62,6 @@ $(document).ready(function(){
   <input type="hidden" name="idpaciente" id="idpaciente" value="<?php echo $idpaciente ?>">
 <table cellspacing="0" class="stats" width="30%">
 <tr>
-<td align="center">
-  <SELECT name="idAnio" id="idAnio">
-  <?php
-    //el bucle para cargar las opciones
-    foreach ($aAnios as $k => $v){
-      if($k==$idAnio){
-          echo "<option value=".$k ." selected='selected'>".$v."</option>";
-      } else {
-          echo "<option value=".$k .">".$v."</option>";
-      }
-    }
-  ?>
-  </SELECT>
-</td>
-</tr>
-<tr>
 <td colspan="2" align="center"><input type="submit" value="Actualizar" /></td>
 </tr>
 <tr>
