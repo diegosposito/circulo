@@ -1244,10 +1244,10 @@ public function executeVerdetallefichas(sfWebRequest $request)
 
                               
           
-          $pdf->SetY(183);$pdf->SetX(80);
+          $pdf->SetY(183);$pdf->SetX(73);
           $pdf->Cell(0,5,'_____________________________________',0,1,'C');
           $pdf->SetX(100);  $pdf->SetY(188);
-          $pdf->Cell(0,5,'SELLO, FIRMA DEL PROFESIONAL        ',0,1,'R');
+          $pdf->Cell(0,5,'SELLO, FIRMA DEL PROFESIONAL                   ',0,1,'R');
 
           
           // Agregar pagina 2 donde se imprime el odontograma
