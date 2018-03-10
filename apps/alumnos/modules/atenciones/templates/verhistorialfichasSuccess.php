@@ -55,7 +55,7 @@ $(document).ready(function(){
 </style>
 <br>
 <h1 align="center" style="color:black;">Ver Historial de Fichas de : <?php echo $persona ?></h1>
-<?php echo link_to("<< Volver", 'atenciones/editar?id='.$idpaciente.'&selectedtab=2' ,'class="mhead"'); ?>
+<?php echo link_to("<< Volver", 'atenciones/editar?id='.$idpaciente.'&selectedtab=3' ,'class="mhead"'); ?>
 <div align="center">
 
 <table cellspacing="0" class="stats" width="30%">
